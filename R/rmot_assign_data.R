@@ -7,7 +7,7 @@
 #' @export
 #'
 #' @examples
-#' rmot_assign_data(X = Loblolly$age, Y = Loblolly$height)
+#' rmot_model("linear") |> rmot_assign_data(X = Loblolly$age, Y = Loblolly$height)
 rmot_assign_data <- function(model_template, ...){
   # Grab user expressions
   user_code <- rlang::enexprs(..., .check_assign = TRUE)

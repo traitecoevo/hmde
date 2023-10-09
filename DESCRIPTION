@@ -2,11 +2,14 @@ Package: rmot
 Title: What the Package Does (One Line, Title Case)
 Version: 0.0.0.9000
 Authors@R: 
-    person("First", "Last", , "first.last@example.com", role = c("aut", "cre"),
-           comment = c(ORCID = "YOUR-ORCID-ID"))
+    c(
+  person(given = "Daniel", family = "Falster", role = c("aut", "ctb"), email = "daniel.falster@unsw.edu.au", comment = c(ORCID = "0000-0002-9814-092X")),
+  person(given = "Tess", family = "O'Brien", role = c("aut", "cre", "cph"), email = "theresa.obrien@unsw.edu.au", comment = c(ORCID = "XXXX-XXXX-XXXX-XXXX")),
+  person(given = "Fonti", family = "Kar", role = c("ctb"), email = "f.kar@unsw.edu.au", comment = c(ORCID = "0000-0002-2760-3974")),
+  person(given = "David", family=  "Warton", role = c("aut", "ctb"), email = "david.warton@unsw.edu.au", comment = c(ORCID = "0000-0002-1642-628X"))
+    )
 Description: What the package does (one paragraph).
-License: `use_mit_license()`, `use_gpl3_license()` or friends to pick a
-    license
+License: MIT + file LICENSE
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.2.3
@@ -32,5 +35,7 @@ LinkingTo:
 SystemRequirements: GNU make
 Suggests: 
     knitr,
-    rmarkdown
+    rmarkdown,
+    testthat (>= 3.0.0)
 VignetteBuilder: knitr
+Config/testthat/edition: 3

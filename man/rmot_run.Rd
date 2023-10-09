@@ -20,7 +20,7 @@ Run a linear model in Stan
 \examples{
 rmot_model("linear") |>
   rmot_assign_data(X = Loblolly$age,
-                 Y = Loblolly$height,
-                 N = nrow(Loblolly)) |>
- rmot_run()
+                   Y = Loblolly$height,
+                   N = nrow(Loblolly)) |>
+  rmot_run()
 }
