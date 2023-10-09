@@ -4,6 +4,8 @@
 # rmot
 
 <!-- badges: start -->
+
+[![R-CMD-check](https://github.com/traitecoevo/rmot/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/traitecoevo/rmot/actions/workflows/R-CMD-check.yaml)
 <!-- badges: end -->
 
 The goal of ‘rmot’ is to …
