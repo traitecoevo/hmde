@@ -34,4 +34,7 @@ rmot_model("linear") |>
 
 ## Found a bug?
 
-Please lodge a GitHub Issue with details of the bug
+Please submit a [GitHub
+issue](https://github.com/traitecoevo/rmot/issues) with details of the
+bug. A [reprex](https://reprex.tidyverse.org/) would be particularly
+helpful with the bug-proofing process!
