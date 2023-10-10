@@ -19,20 +19,21 @@ knitr::opts_chunk$set(
 <!-- badges: start -->
 [![R-CMD-check](https://github.com/traitecoevo/rmot/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/traitecoevo/rmot/actions/workflows/R-CMD-check.yaml)
 [![Codecov test coverage](https://codecov.io/gh/traitecoevo/rmot/branch/master/graph/badge.svg)](https://app.codecov.io/gh/traitecoevo/rmot?branch=master)
+[![Lifecycle: experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://lifecycle.r-lib.org/articles/stages.html#experimental)
 <!-- badges: end -->
 
 The goal of 'rmot' is to ...
 
 ## Installation
 
-You can install the development version of 'rmot' from [GitHub](https://github.com/) with:
+'rmot' is under active development. You can install the current developmental version of 'rmot' from [GitHub](https://github.com/) with:
 
 ``` r
 # install.packages("remotes")
 remotes::install_github("traitecoevo/rmot")
 ```
 
-## Demo
+## Quick demo
 
 ```{r example}
 rmot_model("linear") |>
