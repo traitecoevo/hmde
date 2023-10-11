@@ -3,6 +3,9 @@
 #' @param model model name character string
 #'
 #' @return named list that matches Stan model parameters
+#' @details
+#' - X is the predictor
+#' - Y is the response
 #' @export
 #'
 #' @examples
