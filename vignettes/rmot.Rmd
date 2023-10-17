@@ -43,7 +43,7 @@ rmot_model("linear") |>
 
 ### Constant Growth - Single Species
 
-```{r}
+```{r, eval=FALSE}
 # Create data
 true <- c(seq(from=1, by=2.5, length.out=7),
           seq(from=2, by=2, length.out=7))
