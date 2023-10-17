@@ -51,3 +51,6 @@ rsconnect/
 inst/doc
 /doc/
 /Meta/
+
+# Pre-compiled stan files
+*.o
