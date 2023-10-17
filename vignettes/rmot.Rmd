@@ -41,7 +41,28 @@ rmot_model("linear") |>
   rmot_run()
 ```
 
-### Constant Growth - Single Species
+### Constant Growth - Single Individual
+
+```{r, eval=FALSE}
+# Create data
+true <- c(seq(from=1, by=2.5, length.out=7))
+y <- true + true*rnorm(n=7, 0, 0.02) + rnorm(n=7, 0, 0.2)
+
+# Configure model template
+const_single_ind_output <- rmot_model("constant_single_ind") |>
+  rmot_assign_data(n_obs = length(y), #integer
+                   y_obs = y, #vector length N_obs
+                   obs_index = rep(seq(from=1, to=7, by=1), times=2), #vector length N_obs
+                   time = rep(5, times=length(y)), #Vector length N_obs
+                   y_0_obs = y[1] #vector length N_ind
+                   )  |>
+  rmot_run()
+
+# Look at output
+const_single_ind_output
+```
+
+### Constant Growth - Multiple Individuals
 
 ```{r, eval=FALSE}
 # Create data
@@ -64,5 +85,3 @@ const_multi_ind_output <- rmot_model("constant_multi_ind") |>
 # Look at output
 const_multi_ind_output
 ```
-
-

@@ -14,6 +14,7 @@ rmot_model <- function(model=NULL){
 
   output <- switch(model,
                    linear = rmot_lm(),
+                   constant_single_ind = rmot_const_single_ind(),
                    constant_multi_ind = rmot_const_multi_ind())
 
   class(output) <- "rmot_object"
@@ -30,6 +31,19 @@ rmot_lm <- function(){
        Y = NULL,
        N = NULL,
        model = "linear")
+}
+
+#' Data configuration template for constant growth single individual model
+#' @keywords internal
+#' @noRd
+
+rmot_const_single_ind <- function(){
+  list(n_obs = NULL,
+       y_obs = NULL,
+       obs_index = NULL,
+       time = NULL,
+       y_0_obs = NULL,
+       model = "constant_single_ind")
 }
 
 #' Data configuration template for constant growth single species model
