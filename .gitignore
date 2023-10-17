@@ -54,3 +54,4 @@ inst/doc
 
 # Pre-compiled stan files
 *.o
+*.so
