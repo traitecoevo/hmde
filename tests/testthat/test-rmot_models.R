@@ -3,9 +3,9 @@ test_that("Execution and output", {
   expect_type(rmot_model("linear"), "list")
   expect_visible(rmot_model("linear"))
 
-  expect_named(rmot_model("constant_single"))
-  expect_type(rmot_model("constant_single"), "list")
-  expect_visible(rmot_model("constant_single"))
+  expect_named(rmot_model("constant_multi_ind"))
+  expect_type(rmot_model("constant_multi_ind"), "list")
+  expect_visible(rmot_model("constant_multi_ind"))
 
   lm_test <- rmot_model("linear") |>
     rmot_assign_data(X = Loblolly$age,

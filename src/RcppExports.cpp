@@ -13,12 +13,10 @@ Rcpp::Rostream<false>& Rcpp::Rcerr = Rcpp::Rcpp_cerr_get();
 
 
 RcppExport SEXP _rcpp_module_boot_stan_fit4constant_multi_ind_mod();
-RcppExport SEXP _rcpp_module_boot_stan_fit4constant_single_mod();
 RcppExport SEXP _rcpp_module_boot_stan_fit4linear_mod();
 
 static const R_CallMethodDef CallEntries[] = {
     {"_rcpp_module_boot_stan_fit4constant_multi_ind_mod", (DL_FUNC) &_rcpp_module_boot_stan_fit4constant_multi_ind_mod, 0},
-    {"_rcpp_module_boot_stan_fit4constant_single_mod", (DL_FUNC) &_rcpp_module_boot_stan_fit4constant_single_mod, 0},
     {"_rcpp_module_boot_stan_fit4linear_mod", (DL_FUNC) &_rcpp_module_boot_stan_fit4linear_mod, 0},
     {NULL, NULL, 0}
 };
