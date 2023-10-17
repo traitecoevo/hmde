@@ -81,34 +81,34 @@ static const std::vector<string> locations_array__ = {" (found before start of p
                                                       " (in 'constant_single', line 18, column 2 to column 35)",
                                                       " (in 'constant_single', line 20, column 2 to column 35)",
                                                       " (in 'constant_single', line 54, column 2 to column 20)",
-                                                      " (in 'constant_single', line 55, column 2 to column 20)",
-                                                      " (in 'constant_single', line 66, column 6 to column 19)",
+                                                      " (in 'constant_single', line 55, column 2 to column 24)",
+                                                      " (in 'constant_single', line 66, column 6 to column 23)",
                                                       " (in 'constant_single', line 65, column 11 to line 67, column 5)",
-                                                      " (in 'constant_single', line 59, column 8 to column 41)",
-                                                      " (in 'constant_single', line 58, column 22 to line 60, column 7)",
+                                                      " (in 'constant_single', line 59, column 8 to column 38)",
+                                                      " (in 'constant_single', line 58, column 25 to line 60, column 7)",
                                                       " (in 'constant_single', line 58, column 6 to line 60, column 7)",
-                                                      " (in 'constant_single', line 62, column 8 to column 42)",
-                                                      " (in 'constant_single', line 63, column 8 to column 62)",
+                                                      " (in 'constant_single', line 62, column 8 to column 43)",
+                                                      " (in 'constant_single', line 63, column 8 to column 65)",
                                                       " (in 'constant_single', line 61, column 19 to line 64, column 7)",
                                                       " (in 'constant_single', line 61, column 6 to line 64, column 7)",
-                                                      " (in 'constant_single', line 57, column 36 to line 65, column 5)",
+                                                      " (in 'constant_single', line 57, column 30 to line 65, column 5)",
                                                       " (in 'constant_single', line 57, column 4 to line 67, column 5)",
                                                       " (in 'constant_single', line 56, column 19 to line 68, column 3)",
                                                       " (in 'constant_single', line 56, column 2 to line 68, column 3)",
                                                       " (in 'constant_single', line 24, column 13 to column 18)",
                                                       " (in 'constant_single', line 24, column 2 to column 20)",
-                                                      " (in 'constant_single', line 25, column 13 to column 18)",
-                                                      " (in 'constant_single', line 25, column 2 to column 20)",
-                                                      " (in 'constant_single', line 36, column 6 to column 19)",
+                                                      " (in 'constant_single', line 25, column 17 to column 22)",
+                                                      " (in 'constant_single', line 25, column 2 to column 24)",
+                                                      " (in 'constant_single', line 36, column 6 to column 23)",
                                                       " (in 'constant_single', line 35, column 11 to line 37, column 5)",
-                                                      " (in 'constant_single', line 29, column 8 to column 41)",
-                                                      " (in 'constant_single', line 28, column 22 to line 30, column 7)",
+                                                      " (in 'constant_single', line 29, column 8 to column 38)",
+                                                      " (in 'constant_single', line 28, column 25 to line 30, column 7)",
                                                       " (in 'constant_single', line 28, column 6 to line 30, column 7)",
-                                                      " (in 'constant_single', line 32, column 8 to column 42)",
-                                                      " (in 'constant_single', line 33, column 8 to column 62)",
+                                                      " (in 'constant_single', line 32, column 8 to column 43)",
+                                                      " (in 'constant_single', line 33, column 8 to column 65)",
                                                       " (in 'constant_single', line 31, column 19 to line 34, column 7)",
                                                       " (in 'constant_single', line 31, column 6 to line 34, column 7)",
-                                                      " (in 'constant_single', line 27, column 36 to line 35, column 5)",
+                                                      " (in 'constant_single', line 27, column 30 to line 35, column 5)",
                                                       " (in 'constant_single', line 27, column 4 to line 37, column 5)",
                                                       " (in 'constant_single', line 26, column 19 to line 38, column 3)",
                                                       " (in 'constant_single', line 26, column 2 to line 38, column 3)",
@@ -122,28 +122,28 @@ static const std::vector<string> locations_array__ = {" (found before start of p
                                                       " (in 'constant_single', line 5, column 2 to column 12)",
                                                       " (in 'constant_single', line 6, column 13 to column 18)",
                                                       " (in 'constant_single', line 6, column 2 to column 20)",
-                                                      " (in 'constant_single', line 7, column 13 to column 18)",
-                                                      " (in 'constant_single', line 7, column 2 to column 20)",
-                                                      " (in 'constant_single', line 8, column 23 to column 28)",
-                                                      " (in 'constant_single', line 8, column 2 to column 30)",
-                                                      " (in 'constant_single', line 9, column 16 to column 21)",
-                                                      " (in 'constant_single', line 9, column 2 to column 23)",
+                                                      " (in 'constant_single', line 7, column 16 to column 21)",
+                                                      " (in 'constant_single', line 7, column 2 to column 23)",
+                                                      " (in 'constant_single', line 8, column 12 to column 17)",
+                                                      " (in 'constant_single', line 8, column 2 to column 19)",
+                                                      " (in 'constant_single', line 9, column 13 to column 18)",
+                                                      " (in 'constant_single', line 9, column 2 to column 20)",
                                                       " (in 'constant_single', line 10, column 15 to column 20)",
                                                       " (in 'constant_single', line 10, column 2 to column 22)",
                                                       " (in 'constant_single', line 15, column 24 to column 29)",
                                                       " (in 'constant_single', line 16, column 25 to column 30)",
                                                       " (in 'constant_single', line 54, column 13 to column 18)",
-                                                      " (in 'constant_single', line 55, column 13 to column 18)"};
+                                                      " (in 'constant_single', line 55, column 17 to column 22)"};
 #include <stan_meta_header.hpp>
 class model_constant_single final : public model_base_crtp<model_constant_single> {
 private:
-  int N_obs;
-  int N_ind;
-  std::vector<double> S_obs;
-  std::vector<int> census;
-  std::vector<double> census_interval;
-  std::vector<int> id_factor;
-  std::vector<double> S_0_obs;
+  int n_obs;
+  int n_ind;
+  std::vector<double> y_obs;
+  std::vector<int> obs_index;
+  std::vector<double> time;
+  std::vector<int> ind_id;
+  std::vector<double> y_0_obs;
  
 public:
   ~model_constant_single() { }
@@ -172,78 +172,77 @@ public:
       
       pos__ = 1;
       current_statement__ = 44;
-      context__.validate_dims("data initialization","N_obs","int",
+      context__.validate_dims("data initialization","n_obs","int",
           context__.to_vec());
-      N_obs = std::numeric_limits<int>::min();
+      n_obs = std::numeric_limits<int>::min();
       
       current_statement__ = 44;
-      N_obs = context__.vals_i("N_obs")[(1 - 1)];
+      n_obs = context__.vals_i("n_obs")[(1 - 1)];
       current_statement__ = 45;
-      context__.validate_dims("data initialization","N_ind","int",
+      context__.validate_dims("data initialization","n_ind","int",
           context__.to_vec());
-      N_ind = std::numeric_limits<int>::min();
+      n_ind = std::numeric_limits<int>::min();
       
       current_statement__ = 45;
-      N_ind = context__.vals_i("N_ind")[(1 - 1)];
+      n_ind = context__.vals_i("n_ind")[(1 - 1)];
       current_statement__ = 46;
-      validate_non_negative_index("S_obs", "N_obs", N_obs);
+      validate_non_negative_index("y_obs", "n_obs", n_obs);
       current_statement__ = 47;
-      context__.validate_dims("data initialization","S_obs","double",
-          context__.to_vec(N_obs));
-      S_obs = std::vector<double>(N_obs, std::numeric_limits<double>::quiet_NaN());
+      context__.validate_dims("data initialization","y_obs","double",
+          context__.to_vec(n_obs));
+      y_obs = std::vector<double>(n_obs, std::numeric_limits<double>::quiet_NaN());
       
       current_statement__ = 47;
-      assign(S_obs, nil_index_list(), context__.vals_r("S_obs"),
-        "assigning variable S_obs");
+      assign(y_obs, nil_index_list(), context__.vals_r("y_obs"),
+        "assigning variable y_obs");
       current_statement__ = 48;
-      validate_non_negative_index("census", "N_obs", N_obs);
+      validate_non_negative_index("obs_index", "n_obs", n_obs);
       current_statement__ = 49;
-      context__.validate_dims("data initialization","census","int",
-          context__.to_vec(N_obs));
-      census = std::vector<int>(N_obs, std::numeric_limits<int>::min());
+      context__.validate_dims("data initialization","obs_index","int",
+          context__.to_vec(n_obs));
+      obs_index = std::vector<int>(n_obs, std::numeric_limits<int>::min());
       
       current_statement__ = 49;
-      assign(census, nil_index_list(), context__.vals_i("census"),
-        "assigning variable census");
+      assign(obs_index, nil_index_list(), context__.vals_i("obs_index"),
+        "assigning variable obs_index");
       current_statement__ = 50;
-      validate_non_negative_index("census_interval", "N_obs", N_obs);
+      validate_non_negative_index("time", "n_obs", n_obs);
       current_statement__ = 51;
-      context__.validate_dims("data initialization","census_interval",
-          "double",context__.to_vec(N_obs));
-      census_interval = std::vector<double>(N_obs, std::numeric_limits<double>::quiet_NaN());
+      context__.validate_dims("data initialization","time","double",
+          context__.to_vec(n_obs));
+      time = std::vector<double>(n_obs, std::numeric_limits<double>::quiet_NaN());
       
       current_statement__ = 51;
-      assign(census_interval, nil_index_list(),
-        context__.vals_r("census_interval"),
-        "assigning variable census_interval");
+      assign(time, nil_index_list(), context__.vals_r("time"),
+        "assigning variable time");
       current_statement__ = 52;
-      validate_non_negative_index("id_factor", "N_obs", N_obs);
+      validate_non_negative_index("ind_id", "n_obs", n_obs);
       current_statement__ = 53;
-      context__.validate_dims("data initialization","id_factor","int",
-          context__.to_vec(N_obs));
-      id_factor = std::vector<int>(N_obs, std::numeric_limits<int>::min());
+      context__.validate_dims("data initialization","ind_id","int",
+          context__.to_vec(n_obs));
+      ind_id = std::vector<int>(n_obs, std::numeric_limits<int>::min());
       
       current_statement__ = 53;
-      assign(id_factor, nil_index_list(), context__.vals_i("id_factor"),
-        "assigning variable id_factor");
+      assign(ind_id, nil_index_list(), context__.vals_i("ind_id"),
+        "assigning variable ind_id");
       current_statement__ = 54;
-      validate_non_negative_index("S_0_obs", "N_ind", N_ind);
+      validate_non_negative_index("y_0_obs", "n_ind", n_ind);
       current_statement__ = 55;
-      context__.validate_dims("data initialization","S_0_obs","double",
-          context__.to_vec(N_ind));
-      S_0_obs = std::vector<double>(N_ind, std::numeric_limits<double>::quiet_NaN());
+      context__.validate_dims("data initialization","y_0_obs","double",
+          context__.to_vec(n_ind));
+      y_0_obs = std::vector<double>(n_ind, std::numeric_limits<double>::quiet_NaN());
       
       current_statement__ = 55;
-      assign(S_0_obs, nil_index_list(), context__.vals_r("S_0_obs"),
-        "assigning variable S_0_obs");
+      assign(y_0_obs, nil_index_list(), context__.vals_r("y_0_obs"),
+        "assigning variable y_0_obs");
       current_statement__ = 56;
-      validate_non_negative_index("ind_S_0", "N_ind", N_ind);
+      validate_non_negative_index("ind_y_0", "n_ind", n_ind);
       current_statement__ = 57;
-      validate_non_negative_index("ind_beta", "N_ind", N_ind);
+      validate_non_negative_index("ind_beta", "n_ind", n_ind);
       current_statement__ = 58;
-      validate_non_negative_index("S_hat", "N_obs", N_obs);
+      validate_non_negative_index("y_hat", "n_obs", n_obs);
       current_statement__ = 59;
-      validate_non_negative_index("G_hat", "N_obs", N_obs);
+      validate_non_negative_index("Delta_hat", "n_obs", n_obs);
     } catch (const std::exception& e) {
       stan::lang::rethrow_located(e, locations_array__[current_statement__]);
       // Next line prevents compiler griping about no return
@@ -252,8 +251,8 @@ public:
     num_params_r__ = 0U;
     
     try {
-      num_params_r__ += N_ind;
-      num_params_r__ += N_ind;
+      num_params_r__ += n_ind;
+      num_params_r__ += n_ind;
       num_params_r__ += 1;
       num_params_r__ += 1;
       num_params_r__ += 1;
@@ -278,38 +277,38 @@ public:
     (void) DUMMY_VAR__;  // suppress unused var warning
     
     try {
-      std::vector<local_scalar_t__> ind_S_0;
-      ind_S_0 = std::vector<local_scalar_t__>(N_ind, DUMMY_VAR__);
+      std::vector<local_scalar_t__> ind_y_0;
+      ind_y_0 = std::vector<local_scalar_t__>(n_ind, DUMMY_VAR__);
       
       current_statement__ = 1;
-      for (int sym1__ = 1; sym1__ <= N_ind; ++sym1__) {
+      for (int sym1__ = 1; sym1__ <= n_ind; ++sym1__) {
         current_statement__ = 1;
-        assign(ind_S_0, cons_list(index_uni(sym1__), nil_index_list()),
-          in__.scalar(), "assigning variable ind_S_0");}
+        assign(ind_y_0, cons_list(index_uni(sym1__), nil_index_list()),
+          in__.scalar(), "assigning variable ind_y_0");}
       current_statement__ = 1;
-      for (int sym1__ = 1; sym1__ <= N_ind; ++sym1__) {
+      for (int sym1__ = 1; sym1__ <= n_ind; ++sym1__) {
         current_statement__ = 1;
         if (jacobian__) {
           current_statement__ = 1;
-          assign(ind_S_0, cons_list(index_uni(sym1__), nil_index_list()),
-            stan::math::lb_constrain(ind_S_0[(sym1__ - 1)], 0, lp__),
-            "assigning variable ind_S_0");
+          assign(ind_y_0, cons_list(index_uni(sym1__), nil_index_list()),
+            stan::math::lb_constrain(ind_y_0[(sym1__ - 1)], 0, lp__),
+            "assigning variable ind_y_0");
         } else {
           current_statement__ = 1;
-          assign(ind_S_0, cons_list(index_uni(sym1__), nil_index_list()),
-            stan::math::lb_constrain(ind_S_0[(sym1__ - 1)], 0),
-            "assigning variable ind_S_0");
+          assign(ind_y_0, cons_list(index_uni(sym1__), nil_index_list()),
+            stan::math::lb_constrain(ind_y_0[(sym1__ - 1)], 0),
+            "assigning variable ind_y_0");
         }}
       std::vector<local_scalar_t__> ind_beta;
-      ind_beta = std::vector<local_scalar_t__>(N_ind, DUMMY_VAR__);
+      ind_beta = std::vector<local_scalar_t__>(n_ind, DUMMY_VAR__);
       
       current_statement__ = 2;
-      for (int sym1__ = 1; sym1__ <= N_ind; ++sym1__) {
+      for (int sym1__ = 1; sym1__ <= n_ind; ++sym1__) {
         current_statement__ = 2;
         assign(ind_beta, cons_list(index_uni(sym1__), nil_index_list()),
           in__.scalar(), "assigning variable ind_beta");}
       current_statement__ = 2;
-      for (int sym1__ = 1; sym1__ <= N_ind; ++sym1__) {
+      for (int sym1__ = 1; sym1__ <= n_ind; ++sym1__) {
         current_statement__ = 2;
         if (jacobian__) {
           current_statement__ = 2;
@@ -357,48 +356,49 @@ public:
       }
       {
         current_statement__ = 21;
-        validate_non_negative_index("S_hat", "N_obs", N_obs);
-        std::vector<local_scalar_t__> S_hat;
-        S_hat = std::vector<local_scalar_t__>(N_obs, DUMMY_VAR__);
+        validate_non_negative_index("y_hat", "n_obs", n_obs);
+        std::vector<local_scalar_t__> y_hat;
+        y_hat = std::vector<local_scalar_t__>(n_obs, DUMMY_VAR__);
         
         current_statement__ = 23;
-        validate_non_negative_index("G_hat", "N_obs", N_obs);
-        std::vector<local_scalar_t__> G_hat;
-        G_hat = std::vector<local_scalar_t__>(N_obs, DUMMY_VAR__);
+        validate_non_negative_index("Delta_hat", "n_obs", n_obs);
+        std::vector<local_scalar_t__> Delta_hat;
+        Delta_hat = std::vector<local_scalar_t__>(n_obs, DUMMY_VAR__);
         
         current_statement__ = 37;
-        for (int i = 1; i <= N_obs; ++i) {
+        for (int i = 1; i <= n_obs; ++i) {
           current_statement__ = 35;
-          if (logical_eq(id_factor[((i + 1) - 1)], id_factor[(i - 1)])) {
+          if (logical_eq(ind_id[((i + 1) - 1)], ind_id[(i - 1)])) {
             current_statement__ = 29;
-            if (logical_eq(census[(i - 1)], 1)) {
+            if (logical_eq(obs_index[(i - 1)], 1)) {
               current_statement__ = 27;
-              assign(S_hat, cons_list(index_uni(i), nil_index_list()),
-                ind_S_0[(id_factor[(i - 1)] - 1)], "assigning variable S_hat");
+              assign(y_hat, cons_list(index_uni(i), nil_index_list()),
+                ind_y_0[(ind_id[(i - 1)] - 1)], "assigning variable y_hat");
             } 
             current_statement__ = 33;
-            if (logical_lt(i, N_obs)) {
+            if (logical_lt(i, n_obs)) {
               current_statement__ = 30;
-              assign(G_hat, cons_list(index_uni(i), nil_index_list()),
-                ind_beta[(id_factor[(i - 1)] - 1)],
-                "assigning variable G_hat");
+              assign(Delta_hat, cons_list(index_uni(i), nil_index_list()),
+                ind_beta[(ind_id[(i - 1)] - 1)],
+                "assigning variable Delta_hat");
               current_statement__ = 31;
-              assign(S_hat, cons_list(index_uni((i + 1)), nil_index_list()),
-                (S_hat[(i - 1)] +
-                  (G_hat[(i - 1)] * census_interval[((i + 1) - 1)])),
-                "assigning variable S_hat");
+              assign(y_hat, cons_list(index_uni((i + 1)), nil_index_list()),
+                (y_hat[(i - 1)] +
+                  (Delta_hat[(i - 1)] *
+                    (time[((i + 1) - 1)] - time[(i - 1)]))),
+                "assigning variable y_hat");
             } 
           } else {
             current_statement__ = 25;
-            assign(G_hat, cons_list(index_uni(i), nil_index_list()), 0,
-              "assigning variable G_hat");
+            assign(Delta_hat, cons_list(index_uni(i), nil_index_list()), 0,
+              "assigning variable Delta_hat");
           }}
         current_statement__ = 38;
         lp_accum__.add(
-          normal_lpdf<propto__>(S_obs, S_hat, global_error_sigma));
+          normal_lpdf<propto__>(y_obs, y_hat, global_error_sigma));
         current_statement__ = 39;
         lp_accum__.add(
-          normal_lpdf<propto__>(ind_S_0, S_0_obs, global_error_sigma));
+          normal_lpdf<propto__>(ind_y_0, y_0_obs, global_error_sigma));
         current_statement__ = 40;
         lp_accum__.add(
           lognormal_lpdf<propto__>(ind_beta, species_beta_mu,
@@ -438,30 +438,30 @@ public:
     (void) DUMMY_VAR__;  // suppress unused var warning
     
     try {
-      std::vector<double> ind_S_0;
-      ind_S_0 = std::vector<double>(N_ind, std::numeric_limits<double>::quiet_NaN());
+      std::vector<double> ind_y_0;
+      ind_y_0 = std::vector<double>(n_ind, std::numeric_limits<double>::quiet_NaN());
       
       current_statement__ = 1;
-      for (int sym1__ = 1; sym1__ <= N_ind; ++sym1__) {
+      for (int sym1__ = 1; sym1__ <= n_ind; ++sym1__) {
         current_statement__ = 1;
-        assign(ind_S_0, cons_list(index_uni(sym1__), nil_index_list()),
-          in__.scalar(), "assigning variable ind_S_0");}
+        assign(ind_y_0, cons_list(index_uni(sym1__), nil_index_list()),
+          in__.scalar(), "assigning variable ind_y_0");}
       current_statement__ = 1;
-      for (int sym1__ = 1; sym1__ <= N_ind; ++sym1__) {
+      for (int sym1__ = 1; sym1__ <= n_ind; ++sym1__) {
         current_statement__ = 1;
-        assign(ind_S_0, cons_list(index_uni(sym1__), nil_index_list()),
-          stan::math::lb_constrain(ind_S_0[(sym1__ - 1)], 0),
-          "assigning variable ind_S_0");}
+        assign(ind_y_0, cons_list(index_uni(sym1__), nil_index_list()),
+          stan::math::lb_constrain(ind_y_0[(sym1__ - 1)], 0),
+          "assigning variable ind_y_0");}
       std::vector<double> ind_beta;
-      ind_beta = std::vector<double>(N_ind, std::numeric_limits<double>::quiet_NaN());
+      ind_beta = std::vector<double>(n_ind, std::numeric_limits<double>::quiet_NaN());
       
       current_statement__ = 2;
-      for (int sym1__ = 1; sym1__ <= N_ind; ++sym1__) {
+      for (int sym1__ = 1; sym1__ <= n_ind; ++sym1__) {
         current_statement__ = 2;
         assign(ind_beta, cons_list(index_uni(sym1__), nil_index_list()),
           in__.scalar(), "assigning variable ind_beta");}
       current_statement__ = 2;
-      for (int sym1__ = 1; sym1__ <= N_ind; ++sym1__) {
+      for (int sym1__ = 1; sym1__ <= n_ind; ++sym1__) {
         current_statement__ = 2;
         assign(ind_beta, cons_list(index_uni(sym1__), nil_index_list()),
           stan::math::lb_constrain(ind_beta[(sym1__ - 1)], 0),
@@ -485,9 +485,9 @@ public:
       global_error_sigma = in__.scalar();
       current_statement__ = 5;
       global_error_sigma = stan::math::lb_constrain(global_error_sigma, 0);
-      for (int sym1__ = 1; sym1__ <= N_ind; ++sym1__) {
-        vars__.emplace_back(ind_S_0[(sym1__ - 1)]);}
-      for (int sym1__ = 1; sym1__ <= N_ind; ++sym1__) {
+      for (int sym1__ = 1; sym1__ <= n_ind; ++sym1__) {
+        vars__.emplace_back(ind_y_0[(sym1__ - 1)]);}
+      for (int sym1__ = 1; sym1__ <= n_ind; ++sym1__) {
         vars__.emplace_back(ind_beta[(sym1__ - 1)]);}
       vars__.emplace_back(species_beta_mu);
       vars__.emplace_back(species_beta_sigma);
@@ -499,42 +499,42 @@ public:
       if (logical_negation(emit_generated_quantities__)) {
         return ;
       } 
-      std::vector<double> S_hat;
-      S_hat = std::vector<double>(N_obs, std::numeric_limits<double>::quiet_NaN());
+      std::vector<double> y_hat;
+      y_hat = std::vector<double>(n_obs, std::numeric_limits<double>::quiet_NaN());
       
-      std::vector<double> G_hat;
-      G_hat = std::vector<double>(N_obs, std::numeric_limits<double>::quiet_NaN());
+      std::vector<double> Delta_hat;
+      Delta_hat = std::vector<double>(n_obs, std::numeric_limits<double>::quiet_NaN());
       
       current_statement__ = 20;
-      for (int i = 1; i <= N_obs; ++i) {
+      for (int i = 1; i <= n_obs; ++i) {
         current_statement__ = 18;
-        if (logical_eq(id_factor[((i + 1) - 1)], id_factor[(i - 1)])) {
+        if (logical_eq(ind_id[((i + 1) - 1)], ind_id[(i - 1)])) {
           current_statement__ = 12;
-          if (logical_eq(census[(i - 1)], 1)) {
+          if (logical_eq(obs_index[(i - 1)], 1)) {
             current_statement__ = 10;
-            assign(S_hat, cons_list(index_uni(i), nil_index_list()),
-              ind_S_0[(id_factor[(i - 1)] - 1)], "assigning variable S_hat");
+            assign(y_hat, cons_list(index_uni(i), nil_index_list()),
+              ind_y_0[(ind_id[(i - 1)] - 1)], "assigning variable y_hat");
           } 
           current_statement__ = 16;
-          if (logical_lt(i, N_obs)) {
+          if (logical_lt(i, n_obs)) {
             current_statement__ = 13;
-            assign(G_hat, cons_list(index_uni(i), nil_index_list()),
-              ind_beta[(id_factor[(i - 1)] - 1)], "assigning variable G_hat");
+            assign(Delta_hat, cons_list(index_uni(i), nil_index_list()),
+              ind_beta[(ind_id[(i - 1)] - 1)], "assigning variable Delta_hat");
             current_statement__ = 14;
-            assign(S_hat, cons_list(index_uni((i + 1)), nil_index_list()),
-              (S_hat[(i - 1)] +
-                (G_hat[(i - 1)] * census_interval[((i + 1) - 1)])),
-              "assigning variable S_hat");
+            assign(y_hat, cons_list(index_uni((i + 1)), nil_index_list()),
+              (y_hat[(i - 1)] +
+                (Delta_hat[(i - 1)] * (time[((i + 1) - 1)] - time[(i - 1)]))),
+              "assigning variable y_hat");
           } 
         } else {
           current_statement__ = 8;
-          assign(G_hat, cons_list(index_uni(i), nil_index_list()), 0,
-            "assigning variable G_hat");
+          assign(Delta_hat, cons_list(index_uni(i), nil_index_list()), 0,
+            "assigning variable Delta_hat");
         }}
-      for (int sym1__ = 1; sym1__ <= N_obs; ++sym1__) {
-        vars__.emplace_back(S_hat[(sym1__ - 1)]);}
-      for (int sym1__ = 1; sym1__ <= N_obs; ++sym1__) {
-        vars__.emplace_back(G_hat[(sym1__ - 1)]);}
+      for (int sym1__ = 1; sym1__ <= n_obs; ++sym1__) {
+        vars__.emplace_back(y_hat[(sym1__ - 1)]);}
+      for (int sym1__ = 1; sym1__ <= n_obs; ++sym1__) {
+        vars__.emplace_back(Delta_hat[(sym1__ - 1)]);}
     } catch (const std::exception& e) {
       stan::lang::rethrow_located(e, locations_array__[current_statement__]);
       // Next line prevents compiler griping about no return
@@ -555,33 +555,33 @@ public:
       pos__ = std::numeric_limits<int>::min();
       
       pos__ = 1;
-      std::vector<double> ind_S_0;
-      ind_S_0 = std::vector<double>(N_ind, std::numeric_limits<double>::quiet_NaN());
+      std::vector<double> ind_y_0;
+      ind_y_0 = std::vector<double>(n_ind, std::numeric_limits<double>::quiet_NaN());
       
       current_statement__ = 1;
-      assign(ind_S_0, nil_index_list(), context__.vals_r("ind_S_0"),
-        "assigning variable ind_S_0");
-      std::vector<double> ind_S_0_free__;
-      ind_S_0_free__ = std::vector<double>(N_ind, std::numeric_limits<double>::quiet_NaN());
+      assign(ind_y_0, nil_index_list(), context__.vals_r("ind_y_0"),
+        "assigning variable ind_y_0");
+      std::vector<double> ind_y_0_free__;
+      ind_y_0_free__ = std::vector<double>(n_ind, std::numeric_limits<double>::quiet_NaN());
       
       current_statement__ = 1;
-      for (int sym1__ = 1; sym1__ <= N_ind; ++sym1__) {
+      for (int sym1__ = 1; sym1__ <= n_ind; ++sym1__) {
         current_statement__ = 1;
-        assign(ind_S_0_free__,
+        assign(ind_y_0_free__,
           cons_list(index_uni(sym1__), nil_index_list()),
-          stan::math::lb_free(ind_S_0[(sym1__ - 1)], 0),
-          "assigning variable ind_S_0_free__");}
+          stan::math::lb_free(ind_y_0[(sym1__ - 1)], 0),
+          "assigning variable ind_y_0_free__");}
       std::vector<double> ind_beta;
-      ind_beta = std::vector<double>(N_ind, std::numeric_limits<double>::quiet_NaN());
+      ind_beta = std::vector<double>(n_ind, std::numeric_limits<double>::quiet_NaN());
       
       current_statement__ = 2;
       assign(ind_beta, nil_index_list(), context__.vals_r("ind_beta"),
         "assigning variable ind_beta");
       std::vector<double> ind_beta_free__;
-      ind_beta_free__ = std::vector<double>(N_ind, std::numeric_limits<double>::quiet_NaN());
+      ind_beta_free__ = std::vector<double>(n_ind, std::numeric_limits<double>::quiet_NaN());
       
       current_statement__ = 2;
-      for (int sym1__ = 1; sym1__ <= N_ind; ++sym1__) {
+      for (int sym1__ = 1; sym1__ <= n_ind; ++sym1__) {
         current_statement__ = 2;
         assign(ind_beta_free__,
           cons_list(index_uni(sym1__), nil_index_list()),
@@ -612,9 +612,9 @@ public:
       
       current_statement__ = 5;
       global_error_sigma_free__ = stan::math::lb_free(global_error_sigma, 0);
-      for (int sym1__ = 1; sym1__ <= N_ind; ++sym1__) {
-        vars__.emplace_back(ind_S_0_free__[(sym1__ - 1)]);}
-      for (int sym1__ = 1; sym1__ <= N_ind; ++sym1__) {
+      for (int sym1__ = 1; sym1__ <= n_ind; ++sym1__) {
+        vars__.emplace_back(ind_y_0_free__[(sym1__ - 1)]);}
+      for (int sym1__ = 1; sym1__ <= n_ind; ++sym1__) {
         vars__.emplace_back(ind_beta_free__[(sym1__ - 1)]);}
       vars__.emplace_back(species_beta_mu);
       vars__.emplace_back(species_beta_sigma_free__);
@@ -629,30 +629,30 @@ public:
   inline void get_param_names(std::vector<std::string>& names__) const {
     
     names__.clear();
-    names__.emplace_back("ind_S_0");
+    names__.emplace_back("ind_y_0");
     names__.emplace_back("ind_beta");
     names__.emplace_back("species_beta_mu");
     names__.emplace_back("species_beta_sigma");
     names__.emplace_back("global_error_sigma");
-    names__.emplace_back("S_hat");
-    names__.emplace_back("G_hat");
+    names__.emplace_back("y_hat");
+    names__.emplace_back("Delta_hat");
     } // get_param_names() 
     
   inline void get_dims(std::vector<std::vector<size_t>>& dimss__) const {
     dimss__.clear();
-    dimss__.emplace_back(std::vector<size_t>{static_cast<size_t>(N_ind)});
+    dimss__.emplace_back(std::vector<size_t>{static_cast<size_t>(n_ind)});
     
-    dimss__.emplace_back(std::vector<size_t>{static_cast<size_t>(N_ind)});
-    
-    dimss__.emplace_back(std::vector<size_t>{});
+    dimss__.emplace_back(std::vector<size_t>{static_cast<size_t>(n_ind)});
     
     dimss__.emplace_back(std::vector<size_t>{});
     
     dimss__.emplace_back(std::vector<size_t>{});
     
-    dimss__.emplace_back(std::vector<size_t>{static_cast<size_t>(N_obs)});
+    dimss__.emplace_back(std::vector<size_t>{});
     
-    dimss__.emplace_back(std::vector<size_t>{static_cast<size_t>(N_obs)});
+    dimss__.emplace_back(std::vector<size_t>{static_cast<size_t>(n_obs)});
+    
+    dimss__.emplace_back(std::vector<size_t>{static_cast<size_t>(n_obs)});
     
     } // get_dims() 
     
@@ -662,11 +662,11 @@ public:
                                       bool emit_generated_quantities__ = true) const
     final {
     
-    for (int sym1__ = 1; sym1__ <= N_ind; ++sym1__) {
+    for (int sym1__ = 1; sym1__ <= n_ind; ++sym1__) {
       {
-        param_names__.emplace_back(std::string() + "ind_S_0" + '.' + std::to_string(sym1__));
+        param_names__.emplace_back(std::string() + "ind_y_0" + '.' + std::to_string(sym1__));
       }}
-    for (int sym1__ = 1; sym1__ <= N_ind; ++sym1__) {
+    for (int sym1__ = 1; sym1__ <= n_ind; ++sym1__) {
       {
         param_names__.emplace_back(std::string() + "ind_beta" + '.' + std::to_string(sym1__));
       }}
@@ -678,13 +678,13 @@ public:
     }
     
     if (emit_generated_quantities__) {
-      for (int sym1__ = 1; sym1__ <= N_obs; ++sym1__) {
+      for (int sym1__ = 1; sym1__ <= n_obs; ++sym1__) {
         {
-          param_names__.emplace_back(std::string() + "S_hat" + '.' + std::to_string(sym1__));
+          param_names__.emplace_back(std::string() + "y_hat" + '.' + std::to_string(sym1__));
         }}
-      for (int sym1__ = 1; sym1__ <= N_obs; ++sym1__) {
+      for (int sym1__ = 1; sym1__ <= n_obs; ++sym1__) {
         {
-          param_names__.emplace_back(std::string() + "G_hat" + '.' + std::to_string(sym1__));
+          param_names__.emplace_back(std::string() + "Delta_hat" + '.' + std::to_string(sym1__));
         }}
     }
     
@@ -696,11 +696,11 @@ public:
                                         bool emit_generated_quantities__ = true) const
     final {
     
-    for (int sym1__ = 1; sym1__ <= N_ind; ++sym1__) {
+    for (int sym1__ = 1; sym1__ <= n_ind; ++sym1__) {
       {
-        param_names__.emplace_back(std::string() + "ind_S_0" + '.' + std::to_string(sym1__));
+        param_names__.emplace_back(std::string() + "ind_y_0" + '.' + std::to_string(sym1__));
       }}
-    for (int sym1__ = 1; sym1__ <= N_ind; ++sym1__) {
+    for (int sym1__ = 1; sym1__ <= n_ind; ++sym1__) {
       {
         param_names__.emplace_back(std::string() + "ind_beta" + '.' + std::to_string(sym1__));
       }}
@@ -712,13 +712,13 @@ public:
     }
     
     if (emit_generated_quantities__) {
-      for (int sym1__ = 1; sym1__ <= N_obs; ++sym1__) {
+      for (int sym1__ = 1; sym1__ <= n_obs; ++sym1__) {
         {
-          param_names__.emplace_back(std::string() + "S_hat" + '.' + std::to_string(sym1__));
+          param_names__.emplace_back(std::string() + "y_hat" + '.' + std::to_string(sym1__));
         }}
-      for (int sym1__ = 1; sym1__ <= N_obs; ++sym1__) {
+      for (int sym1__ = 1; sym1__ <= n_obs; ++sym1__) {
         {
-          param_names__.emplace_back(std::string() + "G_hat" + '.' + std::to_string(sym1__));
+          param_names__.emplace_back(std::string() + "Delta_hat" + '.' + std::to_string(sym1__));
         }}
     }
     
@@ -726,13 +726,13 @@ public:
     
   inline std::string get_constrained_sizedtypes() const {
     stringstream s__;
-    s__ << "[{\"name\":\"ind_S_0\",\"type\":{\"name\":\"array\",\"length\":" << N_ind << ",\"element_type\":{\"name\":\"real\"}},\"block\":\"parameters\"},{\"name\":\"ind_beta\",\"type\":{\"name\":\"array\",\"length\":" << N_ind << ",\"element_type\":{\"name\":\"real\"}},\"block\":\"parameters\"},{\"name\":\"species_beta_mu\",\"type\":{\"name\":\"real\"},\"block\":\"parameters\"},{\"name\":\"species_beta_sigma\",\"type\":{\"name\":\"real\"},\"block\":\"parameters\"},{\"name\":\"global_error_sigma\",\"type\":{\"name\":\"real\"},\"block\":\"parameters\"},{\"name\":\"S_hat\",\"type\":{\"name\":\"array\",\"length\":" << N_obs << ",\"element_type\":{\"name\":\"real\"}},\"block\":\"generated_quantities\"},{\"name\":\"G_hat\",\"type\":{\"name\":\"array\",\"length\":" << N_obs << ",\"element_type\":{\"name\":\"real\"}},\"block\":\"generated_quantities\"}]";
+    s__ << "[{\"name\":\"ind_y_0\",\"type\":{\"name\":\"array\",\"length\":" << n_ind << ",\"element_type\":{\"name\":\"real\"}},\"block\":\"parameters\"},{\"name\":\"ind_beta\",\"type\":{\"name\":\"array\",\"length\":" << n_ind << ",\"element_type\":{\"name\":\"real\"}},\"block\":\"parameters\"},{\"name\":\"species_beta_mu\",\"type\":{\"name\":\"real\"},\"block\":\"parameters\"},{\"name\":\"species_beta_sigma\",\"type\":{\"name\":\"real\"},\"block\":\"parameters\"},{\"name\":\"global_error_sigma\",\"type\":{\"name\":\"real\"},\"block\":\"parameters\"},{\"name\":\"y_hat\",\"type\":{\"name\":\"array\",\"length\":" << n_obs << ",\"element_type\":{\"name\":\"real\"}},\"block\":\"generated_quantities\"},{\"name\":\"Delta_hat\",\"type\":{\"name\":\"array\",\"length\":" << n_obs << ",\"element_type\":{\"name\":\"real\"}},\"block\":\"generated_quantities\"}]";
     return s__.str();
     } // get_constrained_sizedtypes() 
     
   inline std::string get_unconstrained_sizedtypes() const {
     stringstream s__;
-    s__ << "[{\"name\":\"ind_S_0\",\"type\":{\"name\":\"array\",\"length\":" << N_ind << ",\"element_type\":{\"name\":\"real\"}},\"block\":\"parameters\"},{\"name\":\"ind_beta\",\"type\":{\"name\":\"array\",\"length\":" << N_ind << ",\"element_type\":{\"name\":\"real\"}},\"block\":\"parameters\"},{\"name\":\"species_beta_mu\",\"type\":{\"name\":\"real\"},\"block\":\"parameters\"},{\"name\":\"species_beta_sigma\",\"type\":{\"name\":\"real\"},\"block\":\"parameters\"},{\"name\":\"global_error_sigma\",\"type\":{\"name\":\"real\"},\"block\":\"parameters\"},{\"name\":\"S_hat\",\"type\":{\"name\":\"array\",\"length\":" << N_obs << ",\"element_type\":{\"name\":\"real\"}},\"block\":\"generated_quantities\"},{\"name\":\"G_hat\",\"type\":{\"name\":\"array\",\"length\":" << N_obs << ",\"element_type\":{\"name\":\"real\"}},\"block\":\"generated_quantities\"}]";
+    s__ << "[{\"name\":\"ind_y_0\",\"type\":{\"name\":\"array\",\"length\":" << n_ind << ",\"element_type\":{\"name\":\"real\"}},\"block\":\"parameters\"},{\"name\":\"ind_beta\",\"type\":{\"name\":\"array\",\"length\":" << n_ind << ",\"element_type\":{\"name\":\"real\"}},\"block\":\"parameters\"},{\"name\":\"species_beta_mu\",\"type\":{\"name\":\"real\"},\"block\":\"parameters\"},{\"name\":\"species_beta_sigma\",\"type\":{\"name\":\"real\"},\"block\":\"parameters\"},{\"name\":\"global_error_sigma\",\"type\":{\"name\":\"real\"},\"block\":\"parameters\"},{\"name\":\"y_hat\",\"type\":{\"name\":\"array\",\"length\":" << n_obs << ",\"element_type\":{\"name\":\"real\"}},\"block\":\"generated_quantities\"},{\"name\":\"Delta_hat\",\"type\":{\"name\":\"array\",\"length\":" << n_obs << ",\"element_type\":{\"name\":\"real\"}},\"block\":\"generated_quantities\"}]";
     return s__.str();
     } // get_unconstrained_sizedtypes() 
     

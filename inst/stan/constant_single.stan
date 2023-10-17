@@ -2,20 +2,20 @@
 
 // Data structure
 data {
-  int N_obs;
-  int N_ind;
-  real S_obs[N_obs];
-  int census[N_obs];
-  real census_interval[N_obs];
-  int id_factor[N_obs];
-  real S_0_obs[N_ind];
+  int n_obs;
+  int n_ind;
+  real y_obs[n_obs];
+  int obs_index[n_obs];
+  real time[n_obs];
+  int ind_id[n_obs];
+  real y_0_obs[n_ind];
 }
 
 // The parameters accepted by the model.
 parameters {
   //Individual level
-  real<lower=0> ind_S_0[N_ind];
-  real<lower=0> ind_beta[N_ind];
+  real<lower=0> ind_y_0[n_ind];
+  real<lower=0> ind_beta[n_ind];
 
   real species_beta_mu;
   real<lower=0> species_beta_sigma;
@@ -26,30 +26,30 @@ parameters {
 
 // The model to be estimated.
 model {
-  real S_hat[N_obs];
-  real G_hat[N_obs];
+  real y_hat[n_obs];
+  real Delta_hat[n_obs];
 
-  for(i in 1:N_obs){
-    if(id_factor[i+1]==id_factor[i]){
-      if(census[i]==1){//Fits the first size
-        S_hat[i] = ind_S_0[id_factor[i]];
+  for(i in 1:n_obs){
+    if(ind_id[i+1]==ind_id[i]){
+      if(obs_index[i]==1){//Fits the first size
+        y_hat[i] = ind_y_0[ind_id[i]];
       }
 
-      if(i < N_obs){ //Analytic solution
-        G_hat[i] = ind_beta[id_factor[i]];
-        S_hat[i+1] = S_hat[i] + G_hat[i]*census_interval[i+1];
+      if(i < n_obs){ //Analytic solution
+        Delta_hat[i] = ind_beta[ind_id[i]];
+        y_hat[i+1] = y_hat[i] + Delta_hat[i]*(time[i+1]-time[i]);
       }
     } else {
-      G_hat[i] = 0; //Gives 0 as the growth estimate for the last data point.
+      Delta_hat[i] = 0; //Gives 0 as the growth estimate for the last data point.
     }
   }
 
   //Likelihood
-  S_obs ~ normal(S_hat, global_error_sigma);
+  y_obs ~ normal(y_hat, global_error_sigma);
 
   //Priors
   //Individual level
-  ind_S_0 ~ normal(S_0_obs, global_error_sigma);
+  ind_y_0 ~ normal(y_0_obs, global_error_sigma);
   ind_beta ~ lognormal(species_beta_mu,
                     species_beta_sigma);
 
@@ -63,21 +63,21 @@ model {
 
 // The output
 generated quantities {
-  real S_hat[N_obs];
-  real G_hat[N_obs];
+  real y_hat[n_obs];
+  real Delta_hat[n_obs];
 
-  for(i in 1:N_obs){
-    if(id_factor[i+1]==id_factor[i]){
-      if(census[i]==1){//Fits the first size
-        S_hat[i] = ind_S_0[id_factor[i]];
+  for(i in 1:n_obs){
+    if(ind_id[i+1]==ind_id[i]){
+      if(obs_index[i]==1){//Fits the first size
+        y_hat[i] = ind_y_0[ind_id[i]];
       }
 
-      if(i < N_obs){ //Analytic solution
-        G_hat[i] = ind_beta[id_factor[i]];
-        S_hat[i+1] = S_hat[i] + G_hat[i]*census_interval[i+1];
+      if(i < n_obs){ //Analytic solution
+        Delta_hat[i] = ind_beta[ind_id[i]];
+        y_hat[i+1] = y_hat[i] + Delta_hat[i]*(time[i+1]-time[i]);
       }
     } else {
-      G_hat[i] = 0; //Gives 0 as the growth estimate for the last data point.
+      Delta_hat[i] = 0; //Gives 0 as the growth estimate for the last data point.
     }
   }
 }
