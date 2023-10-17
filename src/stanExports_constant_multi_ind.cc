@@ -2,12 +2,12 @@
 
 #include <Rcpp.h>
 using namespace Rcpp ;
-#include "stanExports_constant_single.h"
+#include "stanExports_constant_multi_ind.h"
 
-RCPP_MODULE(stan_fit4constant_single_mod) {
+RCPP_MODULE(stan_fit4constant_multi_ind_mod) {
 
 
-    class_<rstan::stan_fit<stan_model, boost::random::ecuyer1988> >("rstantools_model_constant_single")
+    class_<rstan::stan_fit<stan_model, boost::random::ecuyer1988> >("rstantools_model_constant_multi_ind")
 
     .constructor<SEXP,SEXP,SEXP>()
 
