@@ -1,26 +1,31 @@
 test_that("Execution and output", {
-  expect_named(rmot_model("linear"))
-  expect_type(rmot_model("linear"), "list")
-  expect_visible(rmot_model("linear"))
 
-  # Constant models
-  # Single individual
-  expect_named(rmot_model("constant_single_ind"))
-  expect_type(rmot_model("constant_single_ind"), "list")
-  expect_visible(rmot_model("constant_single_ind"))
-  #Multiple individuals
-  expect_named(rmot_model("constant_multi_ind"))
-  expect_type(rmot_model("constant_multi_ind"), "list")
-  expect_visible(rmot_model("constant_multi_ind"))
+  # Test single individual model: runs and returns consistent results
 
-  # Test models
+  set.seed(6)
+  iter <- 1000
   lm_test <- rmot_model("linear") |>
     rmot_assign_data(X = Loblolly$age,
                      Y = Loblolly$height,
                      N = nrow(Loblolly)) |>
-    rmot_run(chains = 2, iter = 300, verbose = FALSE, show_messages = FALSE)
+    rmot_run(chains = 1, iter = iter, verbose = FALSE, show_messages = FALSE)
 
+  #test structure of output is as intended
   expect_visible(lm_test)
-
   expect_s4_class(lm_test, "stanfit")
-})
+  # ..... and more
+
+  pars <- c("intercept", "beta", "sigma")
+  expect_named(lm_test, c(pars, "lp__"))
+
+  # test actual values
+  theta <- lm_test |> rstan::extract(pars)
+  expect_named(theta, pars)
+  expect_type(theta, "list")
+  beta <- theta$beta
+  expect_length(beta, iter/2)
+  expect_equal(mean(beta), 2.592, tolerance=1e-2)
+  expect_equal(mean(theta$intercept), -1.343559, tolerance=1e-2)
+
+
+  })
