@@ -35,11 +35,10 @@ model {
       y_hat[i] = ind_y_0;
     }
 
+    Delta_hat[i] = growth(y_hat[i], ind_beta);
+
     if(i < n_obs){ //Analytic solution
-      Delta_hat[i] = growth(y_hat[i], ind_beta);
       y_hat[i+1] = y_hat[i] + Delta_hat[i]*(time[i+1]-time[i]);
-    } else {
-      Delta_hat[i] = 0;
     }
   }
 
@@ -65,11 +64,10 @@ generated quantities {
       y_hat[i] = ind_y_0;
     }
 
+    Delta_hat[i] = growth(y_hat[i], ind_beta);
+
     if(i < n_obs){ //Analytic solution
-      Delta_hat[i] = growth(y_hat[i], ind_beta);
       y_hat[i+1] = y_hat[i] + Delta_hat[i]*(time[i+1]-time[i]);
-    } else {
-      Delta_hat[i] = 0;
     }
   }
 }
