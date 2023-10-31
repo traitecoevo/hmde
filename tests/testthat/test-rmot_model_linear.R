@@ -1,4 +1,4 @@
-test_that("Execution and output", {
+test_that("Execution and output of linear", {
 
   # Test single individual model: runs and returns consistent results
 
