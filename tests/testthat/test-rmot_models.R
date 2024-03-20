@@ -27,8 +27,9 @@ test_that("Execution and output: Linear", {
       rmot_run(chains = 2, iter = 300, verbose = FALSE, show_messages = FALSE)
   )
 
-  samps_linear_summary <- rstan::summary(lm_test)
-  expect_snapshot(samps_linear_summary)
+  samps_linear_summary_focal <- rstan::summary(lm_test)$summary
+
+  expect_equal(samps_linear_summary, samps_linear_summary_focal)
   expect_visible(lm_test)
   expect_s4_class(lm_test, "stanfit")
 })
@@ -50,8 +51,9 @@ test_that("Execution and output: Constant single individual", {
       rmot_run(chains = 2, iter = 300, verbose = FALSE, show_messages = FALSE)
   )
 
-  samps_const_single_ind_summary <- rstan::summary(constant_single_ind_test)
-  expect_snapshot(samps_const_single_ind_summary$summary)
+  samps_const_single_ind_focal <- rstan::summary(constant_single_ind_test)$summary
+
+  expect_equal(samps_const_single_ind_summary, samps_const_single_ind_focal)
   expect_visible(constant_single_ind_test)
   expect_s4_class(constant_single_ind_test, "stanfit")
 
@@ -76,8 +78,9 @@ test_that("Execution and output: Constant multiple individuals", {
       rmot_run(chains = 2, iter = 300, verbose = FALSE, show_messages = FALSE)
   )
 
-  samps_const_multi_ind_summary <- rstan::summary(constant_multi_ind_test)
-  expect_snapshot(samps_const_multi_ind_summary$summary)
+  samps_const_multi_ind_focal <- rstan::summary(constant_multi_ind_test)$summary
+
+  expect_equal(samps_const_multi_ind_summary, samps_const_multi_ind_focal)
   expect_visible(constant_multi_ind_test)
   expect_s4_class(constant_multi_ind_test, "stanfit")
 })
