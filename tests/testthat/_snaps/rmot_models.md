@@ -1,7 +1,7 @@
-# Execution and output
+# Execution and output: Linear
 
     Code
-      samps
+      samps_linear
     Output
       , , parameters = intercept
       
