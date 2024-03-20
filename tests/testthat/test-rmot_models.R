@@ -15,7 +15,6 @@ test_that("Model structures", {
 })
 
 test_that("Execution and output: Linear", {
-  skip_on_ci()
 
   # Test linear model
   set.seed(2024)
@@ -35,7 +34,6 @@ test_that("Execution and output: Linear", {
 })
 
 test_that("Execution and output: Constant single individual", {
-  skip_on_ci()
 
   # Test constant single individual
   set.seed(2024)
@@ -60,7 +58,6 @@ test_that("Execution and output: Constant single individual", {
 })
 
 test_that("Execution and output: Constant multiple individuals", {
-  skip_on_ci()
 
   # Test constant multi-individual
   set.seed(2024)
