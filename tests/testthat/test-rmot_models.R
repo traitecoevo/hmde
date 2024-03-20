@@ -25,8 +25,8 @@ test_that("Execution and output: Linear", {
       rmot_run(chains = 2, iter = 300, verbose = FALSE, show_messages = FALSE)
   )
 
-  samps_linear <- rstan::extract(lm_test, permuted=FALSE, inc_warmup=TRUE)
-  expect_snapshot(samps_linear)
+  samps_linear_summary <- rstan::summary(lm_test)
+  expect_snapshot(samps_linear_summary)
   expect_visible(lm_test)
   expect_s4_class(lm_test, "stanfit")
 })
@@ -34,8 +34,6 @@ test_that("Execution and output: Linear", {
 test_that("Execution and output: Constant single individual", {
   # Test constant single individual
   set.seed(2024)
-  true_single <- seq(from=1, by=2.5, length.out=7)
-  y_single <- true_single + true_single*rnorm(n=7, 0, 0.02) + rnorm(n=7, 0, 0.2)
 
   suppressWarnings( #Suppresses stan warnings
     constant_single_ind_test <- rmot_model("constant_single_ind") |>
@@ -48,9 +46,8 @@ test_that("Execution and output: Constant single individual", {
       rmot_run(chains = 2, iter = 300, verbose = FALSE, show_messages = FALSE)
   )
 
-  samps_const_single_ind <- rstan::extract(constant_single_ind_test,
-                                           permuted=FALSE, inc_warmup=TRUE)
-  expect_snapshot(samps_const_single_ind)
+  samps_const_single_ind_summary <- rstan::summary(constant_single_ind_test)
+  expect_snapshot(samps_const_single_ind_summary$summary)
   expect_visible(constant_single_ind_test)
   expect_s4_class(constant_single_ind_test, "stanfit")
 
@@ -59,9 +56,6 @@ test_that("Execution and output: Constant single individual", {
 test_that("Execution and output: Constant multiple individuals", {
   # Test constant multi-individual
   set.seed(2024)
-  true_multi <- c(seq(from=1, by=2.5, length.out=7),
-            seq(from=2, by=2, length.out=7))
-  y_multi <- true_multi + true_multi*rnorm(n=14, 0, 0.02) + rnorm(n=14, 0, 0.2)
 
   suppressWarnings( #Suppresses stan warnings
     constant_multi_ind_test <- rmot_model("constant_multi_ind") |>
@@ -76,9 +70,8 @@ test_that("Execution and output: Constant multiple individuals", {
       rmot_run(chains = 2, iter = 300, verbose = FALSE, show_messages = FALSE)
   )
 
-  samps_const_multi_ind <- rstan::extract(constant_multi_ind_test,
-                                          permuted=FALSE, inc_warmup=TRUE)
-  expect_snapshot(samps_const_multi_ind)
+  samps_const_multi_ind_summary <- rstan::summary(constant_multi_ind_test)
+  expect_snapshot(samps_const_multi_ind_summary$summary)
   expect_visible(constant_multi_ind_test)
   expect_s4_class(constant_multi_ind_test, "stanfit")
 })

@@ -19,7 +19,7 @@ rmot_assign_data <- function(model_template, ...){
 
   # Evaluate the RHS of expressions (the values)
   data <- purrr::map(user_code,
-                     eval)
+                     ~eval(.x))
 
   for(i in fields){
     model_template <- purrr::list_modify(model_template, !!!data[i])
