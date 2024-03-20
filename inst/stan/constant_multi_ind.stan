@@ -36,17 +36,21 @@ model {
   real Delta_hat[n_obs];
 
   for(i in 1:n_obs){
-    if(ind_id[i+1]==ind_id[i]){
-      if(obs_index[i]==1){//Fits the first size
-        y_hat[i] = ind_y_0[ind_id[i]];
-      }
 
-      if(i < n_obs){ //Analytic solution
-        Delta_hat[i] = growth(ind_beta[ind_id[i]]);
+    //Fits the first size
+    if(obs_index[i]==1){
+      y_hat[i] = ind_y_0[ind_id[i]];
+    }
+
+    // Estimate growth rate
+    Delta_hat[i] = growth(ind_beta[ind_id[i]]);
+
+    // Update next size if relevant
+    if(i < n_obs){
+      if(ind_id[i+1]==ind_id[i]){
+        //Analytic solution
         y_hat[i+1] = y_hat[i] + Delta_hat[i]*(time[i+1]-time[i]);
       }
-    } else {
-      Delta_hat[i] = 0; //Gives 0 as the growth estimate for the last data point.
     }
   }
 
@@ -73,17 +77,21 @@ generated quantities {
   real Delta_hat[n_obs];
 
   for(i in 1:n_obs){
-    if(ind_id[i+1]==ind_id[i]){
-      if(obs_index[i]==1){//Fits the first size
-        y_hat[i] = ind_y_0[ind_id[i]];
-      }
 
-      if(i < n_obs){ //Analytic solution
-        Delta_hat[i] = growth(ind_beta[ind_id[i]]);
+    //Fits the first size
+    if(obs_index[i]==1){
+      y_hat[i] = ind_y_0[ind_id[i]];
+    }
+
+    // Estimate growth rate
+    Delta_hat[i] = growth(ind_beta[ind_id[i]]);
+
+    // Update next size if relevant
+    if(i < n_obs){
+      if(ind_id[i+1]==ind_id[i]){
+        //Analytic solution
         y_hat[i+1] = y_hat[i] + Delta_hat[i]*(time[i+1]-time[i]);
       }
-    } else {
-      Delta_hat[i] = 0; //Gives 0 as the growth estimate for the last data point.
     }
   }
 }
