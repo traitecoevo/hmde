@@ -3,8 +3,10 @@ title: "rmot"
 output: rmarkdown::html_vignette
 vignette: >
   %\VignetteIndexEntry{rmot}
-  %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
+  %\VignetteEngine{knitr::rmarkdown}
+editor_options: 
+  chunk_output_type: console
 ---
 
 ```{r, include = FALSE}
@@ -52,7 +54,7 @@ y <- true + true*rnorm(n=7, 0, 0.02) + rnorm(n=7, 0, 0.2)
 const_single_ind_output <- rmot_model("constant_single_ind") |>
   rmot_assign_data(n_obs = length(y), #integer
                    y_obs = y, #vector length N_obs
-                   obs_index = rep(seq(from=1, to=7, by=1), times=2), #vector length N_obs
+                   obs_index = 1:7, #vector length N_obs
                    time = rep(5, times=length(y)), #Vector length N_obs
                    y_0_obs = y[1] #vector length N_ind
                    )  |>
