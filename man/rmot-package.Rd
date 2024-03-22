@@ -11,3 +11,18 @@ A DESCRIPTION OF THE PACKAGE
 \references{
 Stan Development Team (NA). RStan: the R interface to Stan. R package version 2.26.23. https://mc-stan.org
 }
+\author{
+\strong{Maintainer}: Tess O'Brien \email{theresa.obrien@unsw.edu.au} (\href{https://orcid.org/XXXX-XXXX-XXXX-XXXX}{ORCID}) [copyright holder]
+
+Authors:
+\itemize{
+  \item Daniel Falster \email{daniel.falster@unsw.edu.au} (\href{https://orcid.org/0000-0002-9814-092X}{ORCID}) [contributor]
+  \item David Warton \email{david.warton@unsw.edu.au} (\href{https://orcid.org/0000-0002-1642-628X}{ORCID}) [contributor]
+}
+
+Other contributors:
+\itemize{
+  \item Fonti Kar \email{f.kar@unsw.edu.au} (\href{https://orcid.org/0000-0002-2760-3974}{ORCID}) [contributor]
+}
+
+}

@@ -61,3 +61,4 @@ samps_const_multi_ind_summary <- rstan::summary(constant_multi_ind_test)$summary
 usethis::use_data(y_single, y_multi,
                   samps_linear_summary, samps_const_single_ind_summary, samps_const_multi_ind_summary,
                   overwrite = TRUE, internal = TRUE)
+
