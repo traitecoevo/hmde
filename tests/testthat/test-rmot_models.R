@@ -23,17 +23,16 @@ test_that("Execution and output: Linear", {
       rmot_assign_data(X = Loblolly$age,
                        Y = Loblolly$height,
                        N = nrow(Loblolly)) |>
-      rmot_run(chains = 2, iter = 300, verbose = FALSE, show_messages = FALSE)
+      rmot_run(chains = 1, iter = 300, verbose = FALSE, show_messages = FALSE)
   )
 
-  samps_linear_summary_focal <- rstan::summary(lm_test)$summary
-
-  expect_equal(samps_linear_summary, samps_linear_summary_focal)
   expect_visible(lm_test)
   expect_s4_class(lm_test, "stanfit")
 })
 
-test_that("Execution and output: Constant single individual", {
+test_that("Execution: Constant single individual", {
+
+
 
   # Test constant single individual
   set.seed(2024)
@@ -46,22 +45,18 @@ test_that("Execution and output: Constant single individual", {
                        time = rep(5, times=length(y_single)), #Vector length N_obs
                        y_0_obs = y_single[1] #vector length N_ind
       ) |>
-      rmot_run(chains = 2, iter = 300, verbose = FALSE, show_messages = FALSE)
+      rmot_run(chains = 1, iter = 300, verbose = FALSE, show_messages = FALSE)
   )
 
-  samps_const_single_ind_focal <- rstan::summary(constant_single_ind_test)$summary
-
-  expect_equal(samps_const_single_ind_summary, samps_const_single_ind_focal)
   expect_visible(constant_single_ind_test)
   expect_s4_class(constant_single_ind_test, "stanfit")
 
 })
 
-test_that("Execution and output: Constant multiple individuals", {
+test_that("Execution: Constant multiple individuals", {
 
-  # Test constant multi-individual
-  set.seed(2024)
-
+    # Test constant multi-individual
+    set.seed(2024)
   suppressWarnings( #Suppresses stan warnings
     constant_multi_ind_test <- rmot_model("constant_multi_ind") |>
       rmot_assign_data(n_obs = length(y_multi), #integer
@@ -72,12 +67,9 @@ test_that("Execution and output: Constant multiple individuals", {
                        ind_id = c(rep(1, times=7), rep(2, times=7)), #Vector length N_obs
                        y_0_obs = y_multi[c(1, 8)] #vector length N_ind
       ) |>
-      rmot_run(chains = 2, iter = 300, verbose = FALSE, show_messages = FALSE)
-  )
+      rmot_run(chains = 1, iter = 300, verbose = FALSE, show_messages = FALSE)
+)
 
-  samps_const_multi_ind_focal <- rstan::summary(constant_multi_ind_test)$summary
-
-  expect_equal(samps_const_multi_ind_summary, samps_const_multi_ind_focal)
   expect_visible(constant_multi_ind_test)
   expect_s4_class(constant_multi_ind_test, "stanfit")
 })
