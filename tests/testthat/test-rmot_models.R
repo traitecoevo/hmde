@@ -1,6 +1,3 @@
-
-
-
 test_that("Model structures", {
   expect_named(rmot_model("linear"))
   expect_type(rmot_model("linear"), "list")
@@ -19,9 +16,7 @@ test_that("Model structures", {
 
 test_that("Execution and output: Linear", {
   lm_data <- readRDS(test_path("fixtures", "linear", "lm_data.rds"))
-
-  print(rlang::caller_env())
-  print(globalenv())
+  lm_baseline_output <- readRDS(test_path("fixtures", "linear", "lm_baseline_output.rds"))
 
   # Test linear model
   set.seed(2024)
@@ -33,9 +28,9 @@ test_that("Execution and output: Linear", {
       rmot_run(chains = 1, iter = 300, verbose = FALSE, show_messages = FALSE)
   )
 
-
-expect_visible(lm_test)
-  # expect_s4_class(lm_test, "stanfit")
+  expect_equal(rstan::summary(lm_test)$summary, lm_baseline_output)
+  expect_visible(lm_test)
+  expect_s4_class(lm_test, "stanfit")
 })
 
 # test_that("Execution: Constant single individual", {
