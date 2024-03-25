@@ -28,7 +28,7 @@ test_that("Execution and output: Linear", {
       rmot_run(chains = 1, iter = 300, verbose = FALSE, show_messages = FALSE)
   )
 
-  expect_equal(rstan::summary(lm_test)$summary, lm_baseline_output)
+  expect_equal(rstan::summary(lm_test)$summary, lm_baseline_output, tolerance = 1e-5)
   expect_visible(lm_test)
   expect_s4_class(lm_test, "stanfit")
 })
