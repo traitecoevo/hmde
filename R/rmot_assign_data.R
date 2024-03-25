@@ -26,7 +26,7 @@ rmot_assign_data <- function(model_template, ...){
     model_template <- purrr::list_modify(model_template, !!!data[i])
   }
 
-  #TODO: Check if N is supplied, if not, assign by default to length(X) and give warning
+  #TODO: Check if N is supplied, if not, give error
 
   return(model_template)
 }

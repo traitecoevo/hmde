@@ -3,7 +3,7 @@ lm_data <- data.frame(X = Loblolly$age,
                       Y = Loblolly$height,
                       N = nrow(Loblolly))
 
-saveRDS(lm_data, file = "lm_data.rds")
+saveRDS(lm_data, file = "tests/testthat/fixtures/linear/lm_data.rds")
 
 # Run a baseline model for the data
 set.seed(2024)
@@ -18,4 +18,4 @@ suppressWarnings( #Suppresses stan warnings
 # Save output to compare as
 lm_baseline_output <- rstan::summary(lm_baseline)$summary
 
-saveRDS(lm_baseline_output, "lm_baseline_output.rds")
+saveRDS(lm_baseline_output, "tests/testthat/fixtures/linear/lm_baseline_output.rds")
