@@ -108,7 +108,8 @@ test_that("Execution: Canham single individual", {
 
   suppressWarnings( #Suppresses stan warnings
     canham_single_ind_test <- rmot_model("canham_single_ind") |>
-      rmot_assign_data(n_obs = canham_data$n_obs, #integer
+      rmot_assign_data(step_size = 1.0, #real
+                       n_obs = canham_data$n_obs, #integer
                        y_obs = canham_data$y_obs,
                        obs_index = canham_data$obs_index, #vector length N_obs
                        time = canham_data$time, #Vector length N_obs
@@ -133,7 +134,8 @@ test_that("Execution: Canham multiple individuals", {
   set.seed(2024)
   suppressWarnings( #Suppresses stan warnings
     canham_multi_ind_test <- rmot_model("canham_multi_ind") |>
-      rmot_assign_data(n_obs = canham_data$n_obs, #integer
+      rmot_assign_data(step_size = 1.0, #real
+                       n_obs = canham_data$n_obs, #integer
                        n_ind = canham_data$n_ind, #integer
                        y_obs = canham_data$y_obs, #vector length N_obs
                        obs_index = canham_data$obs_index, #vector length N_obs

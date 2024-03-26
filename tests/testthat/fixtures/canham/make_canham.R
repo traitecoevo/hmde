@@ -74,13 +74,14 @@ rmot_export_test_data(n_obs_per_ind,
                       true_data,
                       model_name)
 
-#run model
+#run models
 #Build model fit single ind
 set.seed(2024)
 canham_data <- readRDS("tests/testthat/fixtures/canham/canham_data_single_ind.rds")
 suppressWarnings( #Suppresses stan warnings
   canham_single_ind_test <- rmot_model("canham_single_ind") |>
-    rmot_assign_data(n_obs = canham_data$n_obs, #integer
+    rmot_assign_data(step_size = 1.0, #real
+                     n_obs = canham_data$n_obs, #integer
                      y_obs = canham_data$y_obs,
                      obs_index = canham_data$obs_index, #vector length N_obs
                      time = canham_data$time, #Vector length N_obs
@@ -96,7 +97,8 @@ set.seed(2024)
 canham_data <- readRDS("tests/testthat/fixtures/canham/canham_data_multi_ind.rds")
 suppressWarnings( #Suppresses stan warnings
   canham_multi_ind_test <- rmot_model("canham_multi_ind") |>
-    rmot_assign_data(n_obs = canham_data$n_obs, #integer
+    rmot_assign_data(step_size = 1.0, #real
+                     n_obs = canham_data$n_obs, #integer
                      n_ind = canham_data$n_ind, #integer
                      y_obs = canham_data$y_obs, #vector length N_obs
                      obs_index = canham_data$obs_index, #vector length N_obs
