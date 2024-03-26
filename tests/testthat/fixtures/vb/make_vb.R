@@ -68,6 +68,7 @@ suppressWarnings( #Suppresses stan warnings
 )
 saveRDS(rstan::summary(vb_single_ind_test)$summary,
         file = "tests/testthat/fixtures/vb/vb_baseline_output_single_ind.rds")
+set.seed(Sys.time())
 
 #Build model fit multiple inds
 set.seed(2024)
@@ -87,5 +88,4 @@ suppressWarnings( #Suppresses stan warnings
 )
 saveRDS(rstan::summary(vb_multi_ind_test)$summary,
         file = "tests/testthat/fixtures/vb/vb_baseline_output_multi_ind.rds")
-
 set.seed(Sys.time())

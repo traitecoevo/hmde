@@ -51,6 +51,7 @@ test_that("Execution and output: Linear", {
   expect_equal(rstan::summary(lm_test)$summary, lm_baseline_output, tolerance = 1e-5)
   expect_visible(lm_test)
   expect_s4_class(lm_test, "stanfit")
+  set.seed(Sys.time())
 })
 
 test_that("Execution: Constant single individual", {
@@ -61,7 +62,6 @@ test_that("Execution: Constant single individual", {
 
    # Test constant single individual
   set.seed(2024)
-
   suppressWarnings( #Suppresses stan warnings
     constant_single_ind_test <- rmot_model("constant_single_ind") |>
       rmot_assign_data(n_obs = const_data$n_obs, #integer
@@ -77,7 +77,7 @@ test_that("Execution: Constant single individual", {
                const_single_ind_baseline_output, tolerance = 1e-5)
   expect_visible(constant_single_ind_test)
   expect_s4_class(constant_single_ind_test, "stanfit")
-
+  set.seed(Sys.time())
 })
 
 test_that("Execution: Constant multiple individuals", {
@@ -105,6 +105,7 @@ test_that("Execution: Constant multiple individuals", {
                const_multi_ind_baseline_output, tolerance = 1e-5)
   expect_visible(constant_multi_ind_test)
   expect_s4_class(constant_multi_ind_test, "stanfit")
+  set.seed(Sys.time())
 })
 
 test_that("Execution: Canham single individual", {
@@ -115,7 +116,6 @@ test_that("Execution: Canham single individual", {
 
   # Test constant single individual
   set.seed(2024)
-
   suppressWarnings( #Suppresses stan warnings
     canham_single_ind_test <- rmot_model("canham_single_ind") |>
       rmot_assign_data(step_size = 1.0, #real
@@ -132,6 +132,7 @@ test_that("Execution: Canham single individual", {
                canham_single_ind_baseline_output, tolerance = 1e-5)
   expect_visible(canham_single_ind_test)
   expect_s4_class(canham_single_ind_test, "stanfit")
+  set.seed(Sys.time())
 })
 
 test_that("Execution: Canham multiple individuals", {
@@ -160,17 +161,17 @@ test_that("Execution: Canham multiple individuals", {
                canham_multi_ind_baseline_output, tolerance = 1e-5)
   expect_visible(canham_multi_ind_test)
   expect_s4_class(canham_multi_ind_test, "stanfit")
+  set.seed(Sys.time())
 })
 
 test_that("Execution: von Bertalanffy single individual", {
   vb_data <- readRDS(test_path("fixtures", "vb",
-                                   "vb_data_single_ind.rds"))
+                               "vb_data_single_ind.rds"))
   vb_single_ind_baseline_output <- readRDS(test_path("fixtures", "vb",
-                                                         "vb_baseline_output_single_ind.rds"))
+                                                     "vb_baseline_output_single_ind.rds"))
 
   # Test constant single individual
   set.seed(2024)
-
   suppressWarnings( #Suppresses stan warnings
     vb_single_ind_test <- rmot_model("vb_single_ind") |>
       rmot_assign_data(step_size = 1.0, #real
@@ -187,11 +188,12 @@ test_that("Execution: von Bertalanffy single individual", {
                vb_single_ind_baseline_output, tolerance = 1e-5)
   expect_visible(vb_single_ind_test)
   expect_s4_class(vb_single_ind_test, "stanfit")
+  set.seed(Sys.time())
 })
 
 test_that("Execution: von Bertalanffy multiple individuals", {
   vb_data <- readRDS(test_path("fixtures", "vb",
-                                   "vb_data_multi_ind.rds"))
+                               "vb_data_multi_ind.rds"))
   vb_multi_ind_baseline_output <- readRDS(test_path("fixtures", "vb",
                                                     "vb_baseline_output_multi_ind.rds"))
 
@@ -215,4 +217,5 @@ test_that("Execution: von Bertalanffy multiple individuals", {
                vb_multi_ind_baseline_output, tolerance = 1e-5)
   expect_visible(vb_multi_ind_test)
   expect_s4_class(vb_multi_ind_test, "stanfit")
+  set.seed(Sys.time())
 })
