@@ -14,9 +14,9 @@ rmot_rk4_est <- function(y_0, DE, pars, step_size, n_step){
   return(runge_kutta_int)
 }
 
-rmot_build_true_test_data <- function(n_ind, n_obs, interval,
+rmot_build_true_test_data <- function(n_ind, n_obs_per_ind, interval,
                                       DE_pars, initial_conditions, DE){
-  time <- seq(from = 0, by = interval, length.out = n_obs)
+  time <- seq(from = 0, by = interval, length.out = n_obs_per_ind)
 
   true_data <- data.frame()
   for(i in 1:n_ind){
@@ -25,17 +25,17 @@ rmot_build_true_test_data <- function(n_ind, n_obs, interval,
                                     DE = DE,
                                     pars = DE_pars[i,],
                                     step_size = 0.1,
-                                    n_step = (1 + n_obs*interval/0.1))
+                                    n_step = (1 + n_obs_per_ind*interval/0.1))
 
     #Take a subset of the estimates which are in line with survey structure
     runge_kutta_survey <- runge_kutta_int[seq(from=1,
                                            to = length(runge_kutta_int),
-                                           by = (length(runge_kutta_int)/n_obs))]
+                                           by = (length(runge_kutta_int)/n_obs_per_ind))]
 
     data_temp <- data.frame( #Build data frame
-      y_true = runge_kutta_survey,
+      y_true = as.numeric(runge_kutta_survey),
       time = time,
-      ind_id = rep(i, times=n_obs)
+      ind_id = rep(i, times=n_obs_per_ind)
     )
 
     #Concatenate data

@@ -15,7 +15,9 @@ rmot_model <- function(model=NULL){
   output <- switch(model,
                    linear = rmot_lm(),
                    constant_single_ind = rmot_const_single_ind(),
-                   constant_multi_ind = rmot_const_multi_ind())
+                   constant_multi_ind = rmot_const_multi_ind(),
+                   canham_single_ind = rmot_canham_single_ind(),
+                   canham_multi_ind = rmot_canham_multi_ind())
 
   class(output) <- "rmot_object"
 
@@ -61,5 +63,33 @@ rmot_const_multi_ind <- function(){
        model = "constant_multi_ind")
 }
 
+#' Data configuration template for Canham growth single individual model
+#' @keywords internal
+#' @noRd
 
+rmot_canham_single_ind <- function(){
+  list(step_size = NULL,
+       n_obs = NULL,
+       y_obs = NULL,
+       obs_index = NULL,
+       time = NULL,
+       y_0_obs = NULL,
+       model = "canham_single_ind")
+}
+
+#' Data configuration template for Canham growth multiple individuals model
+#' @keywords internal
+#' @noRd
+
+rmot_canham_multi_ind <- function(){
+  list(step_size = NULL,
+       n_obs = NULL,
+       n_ind = NULL,
+       y_obs = NULL,
+       obs_index = NULL,
+       time = NULL,
+       ind_id = NULL,
+       y_0_obs = NULL,
+       model = "canham_multi_ind")
+}
 

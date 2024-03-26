@@ -12,6 +12,16 @@ test_that("Model structures", {
   expect_named(rmot_model("constant_multi_ind"))
   expect_type(rmot_model("constant_multi_ind"), "list")
   expect_visible(rmot_model("constant_multi_ind"))
+
+  # Canham models
+  # Single individual
+  expect_named(rmot_model("canham_single_ind"))
+  expect_type(rmot_model("canham_single_ind"), "list")
+  expect_visible(rmot_model("canham_single_ind"))
+  #Multiple individuals
+  expect_named(rmot_model("canham_multi_ind"))
+  expect_type(rmot_model("canham_multi_ind"), "list")
+  expect_visible(rmot_model("canham_multi_ind"))
 })
 
 test_that("Execution and output: Linear", {
@@ -85,4 +95,57 @@ test_that("Execution: Constant multiple individuals", {
                const_multi_ind_baseline_output, tolerance = 1e-5)
   expect_visible(constant_multi_ind_test)
   expect_s4_class(constant_multi_ind_test, "stanfit")
+})
+
+test_that("Execution: Canham single individual", {
+  canham_data <- readRDS(test_path("fixtures", "canham",
+                                  "canham_data_single_ind.rds"))
+  canham_single_ind_baseline_output <- readRDS(test_path("fixtures", "canham",
+                                                        "canham_baseline_output_single_ind.rds"))
+
+  # Test constant single individual
+  set.seed(2024)
+
+  suppressWarnings( #Suppresses stan warnings
+    canham_single_ind_test <- rmot_model("canham_single_ind") |>
+      rmot_assign_data(n_obs = canham_data$n_obs, #integer
+                       y_obs = canham_data$y_obs,
+                       obs_index = canham_data$obs_index, #vector length N_obs
+                       time = canham_data$time, #Vector length N_obs
+                       y_0_obs = canham_data$y_0_obs #vector length N_ind
+      ) |>
+      rmot_run(chains = 1, iter = 300, verbose = FALSE, show_messages = FALSE)
+  )
+
+  expect_equal(rstan::summary(canham_single_ind_test)$summary,
+               canham_single_ind_baseline_output, tolerance = 1e-5)
+  expect_visible(canham_single_ind_test)
+  expect_s4_class(canham_single_ind_test, "stanfit")
+})
+
+test_that("Execution: Canham multiple individuals", {
+  canham_data <- readRDS(test_path("fixtures", "canham",
+                                  "canham_data_multi_ind.rds"))
+  canham_multi_ind_baseline_output <- readRDS(test_path("fixtures", "canham",
+                                                       "canham_baseline_output_multi_ind.rds"))
+
+  # Test constant multi-individual
+  set.seed(2024)
+  suppressWarnings( #Suppresses stan warnings
+    canham_multi_ind_test <- rmot_model("canham_multi_ind") |>
+      rmot_assign_data(n_obs = canham_data$n_obs, #integer
+                       n_ind = canham_data$n_ind, #integer
+                       y_obs = canham_data$y_obs, #vector length N_obs
+                       obs_index = canham_data$obs_index, #vector length N_obs
+                       time = canham_data$time, #Vector length N_obs
+                       ind_id = canham_data$ind_id, #Vector length N_obs
+                       y_0_obs = canham_data$y_0_obs #vector length N_ind
+      ) |>
+      rmot_run(chains = 1, iter = 300, verbose = FALSE, show_messages = FALSE)
+  )
+
+  expect_equal(rstan::summary(canham_multi_ind_test)$summary,
+               canham_multi_ind_baseline_output, tolerance = 1e-5)
+  expect_visible(canham_multi_ind_test)
+  expect_s4_class(canham_multi_ind_test, "stanfit")
 })
