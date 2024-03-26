@@ -22,6 +22,16 @@ test_that("Model structures", {
   expect_named(rmot_model("canham_multi_ind"))
   expect_type(rmot_model("canham_multi_ind"), "list")
   expect_visible(rmot_model("canham_multi_ind"))
+
+  # VB models
+  # Single individual
+  expect_named(rmot_model("vb_single_ind"))
+  expect_type(rmot_model("vb_single_ind"), "list")
+  expect_visible(rmot_model("vb_single_ind"))
+  #Multiple individuals
+  expect_named(rmot_model("vb_multi_ind"))
+  expect_type(rmot_model("vb_multi_ind"), "list")
+  expect_visible(rmot_model("vb_multi_ind"))
 })
 
 test_that("Execution and output: Linear", {
@@ -150,4 +160,59 @@ test_that("Execution: Canham multiple individuals", {
                canham_multi_ind_baseline_output, tolerance = 1e-5)
   expect_visible(canham_multi_ind_test)
   expect_s4_class(canham_multi_ind_test, "stanfit")
+})
+
+test_that("Execution: von Bertalanffy single individual", {
+  vb_data <- readRDS(test_path("fixtures", "vb",
+                                   "vb_data_single_ind.rds"))
+  vb_single_ind_baseline_output <- readRDS(test_path("fixtures", "vb",
+                                                         "vb_baseline_output_single_ind.rds"))
+
+  # Test constant single individual
+  set.seed(2024)
+
+  suppressWarnings( #Suppresses stan warnings
+    vb_single_ind_test <- rmot_model("vb_single_ind") |>
+      rmot_assign_data(step_size = 1.0, #real
+                       n_obs = vb_data$n_obs, #integer
+                       y_obs = vb_data$y_obs,
+                       obs_index = vb_data$obs_index, #vector length N_obs
+                       time = vb_data$time, #Vector length N_obs
+                       y_0_obs = vb_data$y_0_obs #vector length N_ind
+      ) |>
+      rmot_run(chains = 1, iter = 300, verbose = FALSE, show_messages = FALSE)
+  )
+
+  expect_equal(rstan::summary(vb_single_ind_test)$summary,
+               vb_single_ind_baseline_output, tolerance = 1e-5)
+  expect_visible(vb_single_ind_test)
+  expect_s4_class(vb_single_ind_test, "stanfit")
+})
+
+test_that("Execution: von Bertalanffy multiple individuals", {
+  vb_data <- readRDS(test_path("fixtures", "vb",
+                                   "vb_data_multi_ind.rds"))
+  vb_multi_ind_baseline_output <- readRDS(test_path("fixtures", "vb",
+                                                    "vb_baseline_output_multi_ind.rds"))
+
+  # Test vb multi-individual
+  set.seed(2024)
+  suppressWarnings( #Suppresses stan warnings
+    vb_multi_ind_test <- rmot_model("vb_multi_ind") |>
+      rmot_assign_data(step_size = 1.0, #real
+                       n_obs = vb_data$n_obs, #integer
+                       n_ind = vb_data$n_ind, #integer
+                       y_obs = vb_data$y_obs, #vector length N_obs
+                       obs_index = vb_data$obs_index, #vector length N_obs
+                       time = vb_data$time, #Vector length N_obs
+                       ind_id = vb_data$ind_id, #Vector length N_obs
+                       y_0_obs = vb_data$y_0_obs #vector length N_ind
+      ) |>
+      rmot_run(chains = 1, iter = 300, verbose = FALSE, show_messages = FALSE)
+  )
+
+  expect_equal(rstan::summary(vb_multi_ind_test)$summary,
+               vb_multi_ind_baseline_output, tolerance = 1e-5)
+  expect_visible(vb_multi_ind_test)
+  expect_s4_class(vb_multi_ind_test, "stanfit")
 })
