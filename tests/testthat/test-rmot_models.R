@@ -33,56 +33,56 @@ test_that("Execution and output: Linear", {
   expect_s4_class(lm_test, "stanfit")
 })
 
-# test_that("Execution: Constant single individual", {
-#
-#   ## Single
-#   true_single <- seq(from=1, by=2.5, length.out=7)
-#   set.seed(2024)
-#   y_single <- true_single + true_single*rnorm(n=7, 0, 0.02) + rnorm(n=7, 0, 0.2)
-#
-#
-#   # Test constant single individual
-#   set.seed(2024)
-#
-#   suppressWarnings( #Suppresses stan warnings
-#     constant_single_ind_test <- rmot_model("constant_single_ind") |>
-#       rmot_assign_data(n_obs = 7, #integer
-#                        y_obs = seq(from=1, by=2.5, length.out=7) + rnorm(n=7, 0, 0.2),
-#                        obs_index = 1:7, #vector length N_obs
-#                        time = rep(5, times=length(y_single)), #Vector length N_obs
-#                        y_0_obs = y_single[1] #vector length N_ind
-#       ) |>
-#       rmot_run(chains = 1, iter = 300, verbose = FALSE, show_messages = FALSE)
-#   )
-#
-#   expect_visible(constant_single_ind_test)
-#   expect_s4_class(constant_single_ind_test, "stanfit")
-#
-# })
-#
-# test_that("Execution: Constant multiple individuals", {
+test_that("Execution: Constant single individual", {
+  const_data <- readRDS(test_path("fixtures", "constant",
+                                   "constant_data_single_ind.rds"))
+  const_single_ind_baseline_output <- readRDS(test_path("fixtures", "constant",
+                                                        "constant_baseline_output_single_ind.rds"))
 
-#   set.seed(2024)
-#
-#   true_multi <- Sys.getenv("true_multi")
-#   y_multi <- true_multi + true_multi*rnorm(n=14, 0, 0.02) + rnorm(n=14, 0, 0.2)
-#
-#
-#     # Test constant multi-individual
-#     set.seed(2024)
-#   suppressWarnings( #Suppresses stan warnings
-#     constant_multi_ind_test <- rmot_model("constant_multi_ind") |>
-#       rmot_assign_data(n_obs = length(y_multi), #integer
-#                        n_ind = 2, #integer
-#                        y_obs = y_multi, #vector length N_obs
-#                        obs_index = rep(seq(from=1, to=7, by=1), times=2), #vector length N_obs
-#                        time = rep(5, times=length(y_multi)), #Vector length N_obs
-#                        ind_id = c(rep(1, times=7), rep(2, times=7)), #Vector length N_obs
-#                        y_0_obs = y_multi[c(1, 8)] #vector length N_ind
-#       ) |>
-#       rmot_run(chains = 1, iter = 300, verbose = FALSE, show_messages = FALSE)
-# )
-#
-#   expect_visible(constant_multi_ind_test)
-#   expect_s4_class(constant_multi_ind_test, "stanfit")
-# })
+   # Test constant single individual
+  set.seed(2024)
+
+  suppressWarnings( #Suppresses stan warnings
+    constant_single_ind_test <- rmot_model("constant_single_ind") |>
+      rmot_assign_data(n_obs = const_data$n_obs, #integer
+                       y_obs = const_data$y_obs,
+                       obs_index = const_data$obs_index, #vector length N_obs
+                       time = const_data$time, #Vector length N_obs
+                       y_0_obs = const_data$y_0_obs #vector length N_ind
+      ) |>
+      rmot_run(chains = 1, iter = 300, verbose = FALSE, show_messages = FALSE)
+  )
+
+  expect_equal(rstan::summary(constant_single_ind_test)$summary,
+               const_single_ind_baseline_output, tolerance = 1e-5)
+  expect_visible(constant_single_ind_test)
+  expect_s4_class(constant_single_ind_test, "stanfit")
+
+})
+
+test_that("Execution: Constant multiple individuals", {
+  const_data <- readRDS(test_path("fixtures", "constant",
+                                  "constant_data_multi_ind.rds"))
+  const_multi_ind_baseline_output <- readRDS(test_path("fixtures", "constant",
+                                                       "constant_baseline_output_multi_ind.rds"))
+
+  # Test constant multi-individual
+  set.seed(2024)
+  suppressWarnings( #Suppresses stan warnings
+    constant_multi_ind_test <- rmot_model("constant_multi_ind") |>
+      rmot_assign_data(n_obs = const_data$n_obs, #integer
+                       n_ind = const_data$n_ind, #integer
+                       y_obs = const_data$y_obs, #vector length N_obs
+                       obs_index = const_data$obs_index, #vector length N_obs
+                       time = const_data$time, #Vector length N_obs
+                       ind_id = const_data$ind_id, #Vector length N_obs
+                       y_0_obs = const_data$y_0_obs #vector length N_ind
+      ) |>
+      rmot_run(chains = 1, iter = 300, verbose = FALSE, show_messages = FALSE)
+  )
+
+  expect_equal(rstan::summary(constant_multi_ind_test)$summary,
+               const_multi_ind_baseline_output, tolerance = 1e-5)
+  expect_visible(constant_multi_ind_test)
+  expect_s4_class(constant_multi_ind_test, "stanfit")
+})
