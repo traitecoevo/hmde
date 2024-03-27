@@ -6,13 +6,12 @@ lm_data <- data.frame(X = Loblolly$age,
 saveRDS(lm_data, file = "tests/testthat/fixtures/linear/lm_data.rds")
 
 # Run a baseline model for the data
-set.seed(2024)
 suppressWarnings( #Suppresses stan warnings
   lm_baseline <- rmot_model("linear") |>
     rmot_assign_data(X = lm_data$X,
                      Y = lm_data$Y,
                      N = nrow(lm_data)) |>
-    rmot_run(chains = 1, iter = 300, verbose = FALSE, show_messages = FALSE)
+    rmot_run(chains = 1, iter = 300, verbose = FALSE, show_messages = FALSE, seed=1)
 )
 
 # Save output to compare as

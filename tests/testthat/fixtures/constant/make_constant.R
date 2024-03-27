@@ -1,5 +1,4 @@
 #Set required values
-set.seed(2024) #Guarantees same data each time.
 model_name <- "constant"
 n_ind <- 3 #Number of individuals for multi-individual data. Single individual takes the first.
 n_obs_per_ind <- 7 #How many observations per individual.
@@ -28,7 +27,6 @@ rmot_export_test_data(n_obs_per_ind,
                       model_name)
 
 #Build model fit single ind
-set.seed(2024)
 const_data <- readRDS(test_path("fixtures/constant/constant_data_single_ind.rds"))
 suppressWarnings( #Suppresses stan warnings
   constant_single_ind_test <- rmot_model("constant_single_ind") |>
@@ -38,14 +36,13 @@ suppressWarnings( #Suppresses stan warnings
                      time = const_data$time, #Vector length N_obs
                      y_0_obs = const_data$y_0_obs #vector length N_ind
     ) |>
-    rmot_run(chains = 1, iter = 300, verbose = FALSE, show_messages = FALSE)
+    rmot_run(chains = 1, iter = 300, verbose = FALSE, show_messages = FALSE, seed=1)
 )
 saveRDS(rstan::summary(constant_single_ind_test)$summary,
         file = test_path("fixtures/constant/constant_baseline_output_single_ind.rds")
 )
 
 #Build model fit multiple inds
-set.seed(2024)
 const_data <- readRDS(test_path("fixtures/constant/constant_data_multi_ind.rds"))
 suppressWarnings( #Suppresses stan warnings
   constant_multi_ind_test <- rmot_model("constant_multi_ind") |>
@@ -57,10 +54,9 @@ suppressWarnings( #Suppresses stan warnings
                      ind_id = const_data$ind_id, #Vector length N_obs
                      y_0_obs = const_data$y_0_obs #vector length N_ind
     ) |>
-    rmot_run(chains = 1, iter = 300, verbose = FALSE, show_messages = FALSE)
+    rmot_run(chains = 1, iter = 300, verbose = FALSE, show_messages = FALSE, seed=1)
 )
 saveRDS(rstan::summary(constant_multi_ind_test)$summary,
         file = test_path("fixtures/constant/constant_baseline_output_multi_ind.rds")
 )
 
-set.seed(NULL)
