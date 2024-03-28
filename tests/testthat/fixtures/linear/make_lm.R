@@ -14,7 +14,9 @@ suppressWarnings( #Suppresses stan warnings
     rmot_run(chains = 1, iter = 300, verbose = FALSE, show_messages = FALSE, seed=1)
 )
 
-# Save output to compare as
-lm_baseline_output <- rstan::summary(lm_baseline)$summary
+# Extract 100 rows of the samples
+lm_baseline_output <- rstan::extract(lm_baseline, permuted = FALSE, inc_warmup = FALSE) |>
+  as.data.frame() |>  head(n=100)
 
+# Save the output to compare againest
 saveRDS(lm_baseline_output, "tests/testthat/fixtures/linear/lm_baseline_output.rds")

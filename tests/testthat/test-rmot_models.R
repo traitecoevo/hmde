@@ -28,7 +28,12 @@ test_that("Execution and output: Linear", {
       seed = 1)
   )
 
-  expect_equal(rstan::summary(lm_test)$summary, lm_baseline_output, tolerance = 1e-5)
+  # Extract samples
+  lm_samples <- rstan::extract(lm_test, permuted = FALSE, inc_warmup = FALSE) |>
+    as.data.frame() |>
+    head(n=100)
+
+  expect_equal(lm_samples, lm_baseline_output, tolerance = 1e-5)
   expect_visible(lm_test)
   expect_s4_class(lm_test, "stanfit")
 })
@@ -52,7 +57,12 @@ test_that("Execution: Constant single individual", {
       seed = 1)
   )
 
-  expect_equal(rstan::summary(constant_single_ind_test)$summary,
+  # Extract samples
+  constant_ind_samples <- rstan::extract(constant_single_ind_test, permuted = FALSE, inc_warmup = FALSE) |>
+    as.data.frame() |>
+    head(n=100)
+
+  expect_equal(constant_ind_samples,
                const_single_ind_baseline_output, tolerance = 1e-5)
   expect_visible(constant_single_ind_test)
   expect_s4_class(constant_single_ind_test, "stanfit")
@@ -79,8 +89,13 @@ test_that("Execution: Constant multiple individuals", {
       rmot_run(chains = 1, iter = 300, verbose = FALSE, show_messages = FALSE,
       seed = 1)
   )
-  rstan::extract(constant_multi_ind_test, permuted = FALSE, inc_warmup = FALSE)
-  expect_equal(rstan::summary(constant_multi_ind_test)$summary,
+
+  # Extract samples
+  constant_multi_samples <- rstan::extract(constant_multi_ind_test, permuted = FALSE, inc_warmup = FALSE) |>
+    as.data.frame() |>
+    head(n=100)
+
+  expect_equal(constant_multi_samples,
                const_multi_ind_baseline_output, tolerance = 1e-5)
   expect_visible(constant_multi_ind_test)
   expect_s4_class(constant_multi_ind_test, "stanfit")

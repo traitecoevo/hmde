@@ -38,7 +38,14 @@ suppressWarnings( #Suppresses stan warnings
     ) |>
     rmot_run(chains = 1, iter = 300, verbose = FALSE, show_messages = FALSE, seed=1)
 )
-saveRDS(rstan::summary(constant_single_ind_test)$summary,
+
+# Extract 100 rows of the samples
+constant_baseline_output_single_ind <- rstan::extract(constant_single_ind_test, permuted = FALSE, inc_warmup = FALSE) |>
+  as.data.frame() |>
+  head(n=100)
+
+# Save the output to compare againest
+saveRDS(constant_baseline_output_single_ind,
         file = test_path("fixtures/constant/constant_baseline_output_single_ind.rds")
 )
 
@@ -56,7 +63,14 @@ suppressWarnings( #Suppresses stan warnings
     ) |>
     rmot_run(chains = 1, iter = 300, verbose = FALSE, show_messages = FALSE, seed=1)
 )
-saveRDS(rstan::summary(constant_multi_ind_test)$summary,
+
+# Extract 100 rows of the samples
+constant_baseline_output_multi_ind <- rstan::extract(constant_multi_ind_test, permuted = FALSE, inc_warmup = FALSE) |>
+  as.data.frame() |>
+  head(n=100)
+
+# Save the output to compare againest
+saveRDS(constant_baseline_output_multi_ind,
         file = test_path("fixtures/constant/constant_baseline_output_multi_ind.rds")
-)
+        )
 
