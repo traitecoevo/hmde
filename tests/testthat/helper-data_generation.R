@@ -1,6 +1,4 @@
-
 #General functions for data generation
-
 #Runge-Kutta 4th order
 rmot_rk4_est <- function(y_0, DE, pars, step_size, n_step){
   runge_kutta_int <- c(y_0)
@@ -46,6 +44,10 @@ rmot_build_true_test_data <- function(n_ind, n_obs, interval,
   return(true_data)
 }
 
+rmot_add_normal_error <- function(y, sigma_e=0.001){
+  return(y + rnorm(length(y), mean=0, sd=sigma_e))
+}
+
 #Save data to files
 rmot_export_test_data <- function(n_obs_per_ind,
                                   n_ind,
@@ -63,6 +65,7 @@ rmot_export_test_data <- function(n_obs_per_ind,
     obs_index = 1:n_obs_per_ind, #Vector indexed by n_obs
     time = time, #Vector indexed by n_obs
     y_0_obs = y_obs[1], #Number
+    n_pars = ncol(DE_pars), #Number
     single_true_data = list(
       DE_pars = DE_pars[1,],
       initial_conditions = initial_conditions[1,],
@@ -80,6 +83,7 @@ rmot_export_test_data <- function(n_obs_per_ind,
     time = rep(time, times=n_ind), #Vector indexed by n_obs
     ind_id = sort(rep(1:n_ind, times = n_obs_per_ind)), #Vector indexed by n_obs
     y_0_obs = y_obs[seq(from = 1, to=n_ind*n_obs_per_ind, by=n_obs_per_ind)], #Vector indexed by n_ind
+    n_pars = ncol(DE_pars),
     multi_true_data = list(
       DE_pars = DE_pars,
       initial_conditions = initial_conditions,
@@ -88,7 +92,7 @@ rmot_export_test_data <- function(n_obs_per_ind,
     )
   )
 
-  if(! exists(test_path("fixtures", model_name))) dir.create(test_path("fixtures", model_name))
+  if(! dir.exists(test_path("fixtures", model_name))) dir.create(test_path("fixtures", model_name))
   filename <- paste("tests/testthat/fixtures", "/", model_name, "/", model_name, "_data", sep="")
   saveRDS(single_ind_data, file=paste(filename, "single_ind.rds", sep="_"))
   saveRDS(multi_ind_data, file=paste(filename, "multi_ind.rds", sep="_"))
