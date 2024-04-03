@@ -1,3 +1,26 @@
+#Generates data for constant growth model testing
+#Differential equation governing dynamics.
+DE <- function(y, pars){
+  return(pars[1])
+}
+
+#Normally distributed error
+add_error_process <- function(y, sigma_e=0.001){
+  return(y + rnorm(length(y), mean=0, sd=sigma_e))
+}
+
+#Function to generate distribution of DE parameters
+DE_par_generation <- function(n_ind, pars=list(mean=0, sd=1)){
+  par_sample <- data.frame(beta=exp(rnorm(n_ind, mean = pars[[1]], sd=pars[[2]])))
+  return(par_sample)
+}
+
+#Generate initial conditions
+initial_condition_generation <- function(n_ind, pars=list(mean=2, sd=1)){
+  y_0_sample <- data.frame(y_0=exp(rnorm(n_ind, mean = pars[[1]], sd=pars[[2]])))
+  return(y_0_sample)
+}
+
 #Set required values
 model_name <- "constant"
 n_ind <- 3 #Number of individuals for multi-individual data. Single individual takes the first.
