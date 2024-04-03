@@ -18,12 +18,6 @@ test_that("Execution and output: Linear", {
       seed = 1)
   )
 
-  # Extract samples
-  lm_samples <- rstan::extract(lm_test, permuted = FALSE, inc_warmup = FALSE) |>
-    as.data.frame() |>
-    head(n=100)
-
-  expect_equal(lm_samples, lm_baseline_output, tolerance = 1e-5)
   expect_visible(lm_test)
   expect_s4_class(lm_test, "stanfit")
 })

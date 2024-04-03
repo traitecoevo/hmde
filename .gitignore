@@ -55,3 +55,6 @@ inst/doc
 # Pre-compiled stan files
 *.o
 *.so
+
+# Bugged directory from snapshot package
+tests/testthat/_snaps
