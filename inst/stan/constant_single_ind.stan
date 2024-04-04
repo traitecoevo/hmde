@@ -1,8 +1,12 @@
-//Constant Growth - Single species
+//Constant DE - Single species
 functions{
-  //Growth function
-  real growth(real y, real beta){
+  //DE function
+  real DE(real beta){
     return beta;
+  }
+
+  real size_step(real y, real beta, real time){
+    return y + DE(beta) * time;
   }
 }
 
@@ -28,17 +32,16 @@ parameters {
 // The model to be estimated.
 model {
   real y_hat[n_obs];
-  real Delta_hat[n_obs];
 
   for(i in 1:n_obs){
-    if(obs_index[i]==1){//Fits the first size
+    //Fits the first size
+    if(obs_index[i]==1){
       y_hat[i] = ind_y_0;
     }
 
-    Delta_hat[i] = growth(y_hat[i], ind_beta);
-
-    if(i < n_obs){ //Analytic solution
-      y_hat[i+1] = y_hat[i] + Delta_hat[i]*(time[i+1]-time[i]);
+    // Estimate next size
+    if(i < n_obs){
+      y_hat[i+1] = size_step(y_hat[i], ind_beta, (time[i+1]-time[i]));
     }
   }
 
@@ -60,14 +63,17 @@ generated quantities {
   real Delta_hat[n_obs];
 
   for(i in 1:n_obs){
-    if(obs_index[i]==1){//Fits the first size
+    //Fits the first size
+    if(obs_index[i]==1){
       y_hat[i] = ind_y_0;
     }
 
-    Delta_hat[i] = growth(y_hat[i], ind_beta);
-
-    if(i < n_obs){ //Analytic solution
-      y_hat[i+1] = y_hat[i] + Delta_hat[i]*(time[i+1]-time[i]);
+    // Estimate next size
+    if(i < n_obs){
+      y_hat[i+1] = size_step(y_hat[i], ind_beta, (time[i+1]-time[i]));
+      Delta_hat[i] = y_hat[i+1] - y_hat[i];
+    } else {
+      Delta_hat[i] = DE(ind_beta) * (time[i]-time[i-1]);
     }
   }
 }
