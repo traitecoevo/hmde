@@ -3,8 +3,10 @@ title: "rmot"
 output: rmarkdown::html_vignette
 vignette: >
   %\VignetteIndexEntry{rmot}
-  %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
+  %\VignetteEngine{knitr::rmarkdown}
+editor_options: 
+  chunk_output_type: console
 ---
 
 ```{r, include = FALSE}
@@ -41,28 +43,47 @@ rmot_model("linear") |>
   rmot_run()
 ```
 
-### Constant Growth - Single Species
+### Constant Growth - Single Individual
 
-```{r}
+```{r, eval=FALSE}
+# Create data
+true <- c(seq(from=1, by=2.5, length.out=7))
+y <- true + true*rnorm(n=7, 0, 0.02) + rnorm(n=7, 0, 0.2)
+
+# Configure model template
+const_single_ind_output <- rmot_model("constant_single_ind") |>
+  rmot_assign_data(n_obs = length(y), #integer
+                   y_obs = y, #vector length N_obs
+                   obs_index = 1:7, #vector length N_obs
+                   time = rep(5, times=length(y)), #Vector length N_obs
+                   y_0_obs = y[1] #vector length N_ind
+                   )  |>
+  rmot_run()
+
+# Look at output
+const_single_ind_output
+```
+
+### Constant Growth - Multiple Individuals
+
+```{r, eval=FALSE}
 # Create data
 true <- c(seq(from=1, by=2.5, length.out=7),
           seq(from=2, by=2, length.out=7))
 y <- true + true*rnorm(n=14, 0, 0.02) + rnorm(n=14, 0, 0.2)
 
 # Configure model template
-cgs_output <- rmot_model("constant_single") |>
-  rmot_assign_data(N_obs = length(y),
-                   N_ind = 2,
-                   S_obs = y,
-                   census = rep(seq(from=1, to=7, by=1), times=2), #vector length N_obs
-                   census_interval = rep(5, times=length(y)), #Vector length N_obs
-                   id_factor = c(rep(1, times=7), rep(2, times=7)), #Vector length N_obs
-                   S_0_obs = y[c(1, 8)] #vector length N_ind
+const_multi_ind_output <- rmot_model("constant_multi_ind") |>
+  rmot_assign_data(n_obs = length(y), #integer
+                   n_ind = 2, #integer
+                   y_obs = y, #vector length N_obs
+                   obs_index = rep(seq(from=1, to=7, by=1), times=2), #vector length N_obs
+                   time = rep(5, times=length(y)), #Vector length N_obs
+                   ind_id = c(rep(1, times=7), rep(2, times=7)), #Vector length N_obs
+                   y_0_obs = y[c(1, 8)] #vector length N_ind
                    )  |>
   rmot_run()
 
 # Look at output
-cgs_output
+const_multi_ind_output
 ```
-
-

@@ -6,3 +6,6 @@
 ^LICENSE\.md$
 ^\.github$
 ^codecov\.yml$
+^data-raw$
+^tests/testthat/_snaps/$
+

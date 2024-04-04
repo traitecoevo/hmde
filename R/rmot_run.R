@@ -17,7 +17,8 @@ rmot_run <- function(model_template, ...) {
   # Detect model
   out <- switch(model_template$model,
          linear = rstan::sampling(stanmodels$linear, data = model_template, ...),
-         constant_single = rstan::sampling(stanmodels$constant_single, data = model_template, ...))
+         constant_single_ind = rstan::sampling(stanmodels$constant_single_ind, data = model_template, ...),
+         constant_multi_ind = rstan::sampling(stanmodels$constant_multi_ind, data = model_template, ...))
 
   return(out)
 }
