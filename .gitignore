@@ -56,8 +56,5 @@ inst/doc
 *.o
 *.so
 
-# Generated file that winds up too big
-src/rmot.dll
-
 # Bugged directory from snapshot package
 tests/testthat/_snaps
