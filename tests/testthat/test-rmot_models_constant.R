@@ -1,13 +1,20 @@
 #Testing for constant model
 test_that("Model structures: Constant", {
   # Single individual
-  expect_named(rmot_model("constant_single_ind"))
-  expect_type(rmot_model("constant_single_ind"), "list")
-  expect_visible(rmot_model("constant_single_ind"))
+  single_model <- rmot_model("constant_single_ind")
+  expect_named(single_model, c("n_obs", "y_obs",
+                               "obs_index", "time", "y_0_obs",
+                               "model"))
+  expect_type(single_model, "list")
+  expect_visible(single_model)
+
   #Multiple individuals
-  expect_named(rmot_model("constant_multi_ind"))
-  expect_type(rmot_model("constant_multi_ind"), "list")
-  expect_visible(rmot_model("constant_multi_ind"))
+  multi_model <- rmot_model("constant_multi_ind")
+  expect_named(multi_model, c("n_obs", "n_ind", "y_obs",
+                              "obs_index", "time", "ind_id", "y_0_obs",
+                              "model"))
+  expect_type(multi_model, "list")
+  expect_visible(multi_model)
 })
 
 test_that("Execution: Constant single individual", {

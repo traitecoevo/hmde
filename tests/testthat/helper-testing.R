@@ -48,7 +48,7 @@ rmot_test_single_individual <- function(model_name,
   ind_samples <- rstan::extract(single_ind_test, permuted = TRUE,
                                          inc_warmup = FALSE)
   par_ests <- c()
-  for(i in 1:length(par_names)){
+  for(i in seq_along(par_names)){
     par_ests[i] <- mean(ind_samples[[par_names[i]]])
   }
 
