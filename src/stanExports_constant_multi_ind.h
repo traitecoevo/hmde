@@ -75,66 +75,69 @@ using stan::math::pow;
 stan::math::profile_map profiles__;
 static int current_statement__= 0;
 static const std::vector<string> locations_array__ = {" (found before start of program)",
-                                                      " (in 'constant_multi_ind', line 21, column 2 to column 31)",
-                                                      " (in 'constant_multi_ind', line 22, column 2 to column 32)",
-                                                      " (in 'constant_multi_ind', line 23, column 2 to column 23)",
-                                                      " (in 'constant_multi_ind', line 24, column 2 to column 35)",
-                                                      " (in 'constant_multi_ind', line 26, column 2 to column 35)",
-                                                      " (in 'constant_multi_ind', line 62, column 2 to column 20)",
-                                                      " (in 'constant_multi_ind', line 63, column 2 to column 24)",
-                                                      " (in 'constant_multi_ind', line 67, column 6 to column 36)",
-                                                      " (in 'constant_multi_ind', line 66, column 23 to line 68, column 5)",
-                                                      " (in 'constant_multi_ind', line 66, column 4 to line 68, column 5)",
-                                                      " (in 'constant_multi_ind', line 70, column 4 to column 47)",
-                                                      " (in 'constant_multi_ind', line 75, column 8 to column 65)",
-                                                      " (in 'constant_multi_ind', line 73, column 32 to line 76, column 7)",
-                                                      " (in 'constant_multi_ind', line 73, column 6 to line 76, column 7)",
-                                                      " (in 'constant_multi_ind', line 72, column 17 to line 77, column 5)",
-                                                      " (in 'constant_multi_ind', line 72, column 4 to line 77, column 5)",
-                                                      " (in 'constant_multi_ind', line 64, column 19 to line 78, column 3)",
-                                                      " (in 'constant_multi_ind', line 64, column 2 to line 78, column 3)",
-                                                      " (in 'constant_multi_ind', line 30, column 13 to column 18)",
-                                                      " (in 'constant_multi_ind', line 30, column 2 to column 20)",
-                                                      " (in 'constant_multi_ind', line 31, column 17 to column 22)",
-                                                      " (in 'constant_multi_ind', line 31, column 2 to column 24)",
-                                                      " (in 'constant_multi_ind', line 35, column 6 to column 36)",
-                                                      " (in 'constant_multi_ind', line 34, column 23 to line 36, column 5)",
-                                                      " (in 'constant_multi_ind', line 34, column 4 to line 36, column 5)",
-                                                      " (in 'constant_multi_ind', line 38, column 4 to column 47)",
-                                                      " (in 'constant_multi_ind', line 43, column 8 to column 65)",
-                                                      " (in 'constant_multi_ind', line 41, column 32 to line 44, column 7)",
-                                                      " (in 'constant_multi_ind', line 41, column 6 to line 44, column 7)",
-                                                      " (in 'constant_multi_ind', line 40, column 17 to line 45, column 5)",
-                                                      " (in 'constant_multi_ind', line 40, column 4 to line 45, column 5)",
-                                                      " (in 'constant_multi_ind', line 32, column 19 to line 46, column 3)",
-                                                      " (in 'constant_multi_ind', line 32, column 2 to line 46, column 3)",
-                                                      " (in 'constant_multi_ind', line 48, column 2 to column 44)",
-                                                      " (in 'constant_multi_ind', line 51, column 2 to column 48)",
-                                                      " (in 'constant_multi_ind', line 52, column 2 to line 53, column 40)",
-                                                      " (in 'constant_multi_ind', line 55, column 2 to column 35)",
-                                                      " (in 'constant_multi_ind', line 56, column 2 to column 37)",
-                                                      " (in 'constant_multi_ind', line 58, column 2 to column 37)",
-                                                      " (in 'constant_multi_ind', line 10, column 2 to column 12)",
-                                                      " (in 'constant_multi_ind', line 11, column 2 to column 12)",
-                                                      " (in 'constant_multi_ind', line 12, column 13 to column 18)",
-                                                      " (in 'constant_multi_ind', line 12, column 2 to column 20)",
-                                                      " (in 'constant_multi_ind', line 13, column 16 to column 21)",
-                                                      " (in 'constant_multi_ind', line 13, column 2 to column 23)",
-                                                      " (in 'constant_multi_ind', line 14, column 12 to column 17)",
-                                                      " (in 'constant_multi_ind', line 14, column 2 to column 19)",
+                                                      " (in 'constant_multi_ind', line 24, column 2 to column 31)",
+                                                      " (in 'constant_multi_ind', line 25, column 2 to column 32)",
+                                                      " (in 'constant_multi_ind', line 26, column 2 to column 23)",
+                                                      " (in 'constant_multi_ind', line 27, column 2 to column 35)",
+                                                      " (in 'constant_multi_ind', line 29, column 2 to column 35)",
+                                                      " (in 'constant_multi_ind', line 61, column 2 to column 20)",
+                                                      " (in 'constant_multi_ind', line 62, column 2 to column 24)",
+                                                      " (in 'constant_multi_ind', line 66, column 6 to column 36)",
+                                                      " (in 'constant_multi_ind', line 65, column 23 to line 67, column 5)",
+                                                      " (in 'constant_multi_ind', line 65, column 4 to line 67, column 5)",
+                                                      " (in 'constant_multi_ind', line 77, column 6 to column 67)",
+                                                      " (in 'constant_multi_ind', line 76, column 11 to line 78, column 5)",
+                                                      " (in 'constant_multi_ind', line 74, column 8 to column 69)",
+                                                      " (in 'constant_multi_ind', line 73, column 13 to line 75, column 7)",
+                                                      " (in 'constant_multi_ind', line 71, column 8 to column 83)",
+                                                      " (in 'constant_multi_ind', line 72, column 8 to column 45)",
+                                                      " (in 'constant_multi_ind', line 70, column 32 to line 73, column 7)",
+                                                      " (in 'constant_multi_ind', line 70, column 6 to line 75, column 7)",
+                                                      " (in 'constant_multi_ind', line 69, column 17 to line 76, column 5)",
+                                                      " (in 'constant_multi_ind', line 69, column 4 to line 78, column 5)",
+                                                      " (in 'constant_multi_ind', line 63, column 19 to line 79, column 3)",
+                                                      " (in 'constant_multi_ind', line 63, column 2 to line 79, column 3)",
+                                                      " (in 'constant_multi_ind', line 33, column 13 to column 18)",
+                                                      " (in 'constant_multi_ind', line 33, column 2 to column 20)",
+                                                      " (in 'constant_multi_ind', line 37, column 6 to column 36)",
+                                                      " (in 'constant_multi_ind', line 36, column 23 to line 38, column 5)",
+                                                      " (in 'constant_multi_ind', line 36, column 4 to line 38, column 5)",
+                                                      " (in 'constant_multi_ind', line 42, column 8 to column 83)",
+                                                      " (in 'constant_multi_ind', line 41, column 32 to line 43, column 7)",
+                                                      " (in 'constant_multi_ind', line 41, column 6 to line 43, column 7)",
+                                                      " (in 'constant_multi_ind', line 40, column 17 to line 44, column 5)",
+                                                      " (in 'constant_multi_ind', line 40, column 4 to line 44, column 5)",
+                                                      " (in 'constant_multi_ind', line 34, column 19 to line 45, column 3)",
+                                                      " (in 'constant_multi_ind', line 34, column 2 to line 45, column 3)",
+                                                      " (in 'constant_multi_ind', line 47, column 2 to column 44)",
+                                                      " (in 'constant_multi_ind', line 50, column 2 to column 48)",
+                                                      " (in 'constant_multi_ind', line 51, column 2 to line 52, column 40)",
+                                                      " (in 'constant_multi_ind', line 54, column 2 to column 35)",
+                                                      " (in 'constant_multi_ind', line 55, column 2 to column 37)",
+                                                      " (in 'constant_multi_ind', line 57, column 2 to column 37)",
+                                                      " (in 'constant_multi_ind', line 13, column 2 to column 12)",
+                                                      " (in 'constant_multi_ind', line 14, column 2 to column 12)",
                                                       " (in 'constant_multi_ind', line 15, column 13 to column 18)",
                                                       " (in 'constant_multi_ind', line 15, column 2 to column 20)",
-                                                      " (in 'constant_multi_ind', line 16, column 15 to column 20)",
-                                                      " (in 'constant_multi_ind', line 16, column 2 to column 22)",
-                                                      " (in 'constant_multi_ind', line 21, column 24 to column 29)",
-                                                      " (in 'constant_multi_ind', line 22, column 25 to column 30)",
-                                                      " (in 'constant_multi_ind', line 62, column 13 to column 18)",
-                                                      " (in 'constant_multi_ind', line 63, column 17 to column 22)",
+                                                      " (in 'constant_multi_ind', line 16, column 16 to column 21)",
+                                                      " (in 'constant_multi_ind', line 16, column 2 to column 23)",
+                                                      " (in 'constant_multi_ind', line 17, column 12 to column 17)",
+                                                      " (in 'constant_multi_ind', line 17, column 2 to column 19)",
+                                                      " (in 'constant_multi_ind', line 18, column 13 to column 18)",
+                                                      " (in 'constant_multi_ind', line 18, column 2 to column 20)",
+                                                      " (in 'constant_multi_ind', line 19, column 15 to column 20)",
+                                                      " (in 'constant_multi_ind', line 19, column 2 to column 22)",
+                                                      " (in 'constant_multi_ind', line 24, column 24 to column 29)",
+                                                      " (in 'constant_multi_ind', line 25, column 25 to column 30)",
+                                                      " (in 'constant_multi_ind', line 61, column 13 to column 18)",
+                                                      " (in 'constant_multi_ind', line 62, column 17 to column 22)",
                                                       " (in 'constant_multi_ind', line 5, column 4 to column 16)",
-                                                      " (in 'constant_multi_ind', line 4, column 24 to line 6, column 3)"};
+                                                      " (in 'constant_multi_ind', line 4, column 20 to line 6, column 3)",
+                                                      " (in 'constant_multi_ind', line 8, column 4 to column 31)",
+                                                      " (in 'constant_multi_ind', line 7, column 46 to line 9, column 3)"};
 template <typename T0__>
 stan::promote_args_t<T0__>
-growth(const T0__& beta, std::ostream* pstream__) {
+DE(const T0__& beta, std::ostream* pstream__) {
   using local_scalar_t__ = stan::promote_args_t<T0__>;
   const static bool propto__ = true;
   (void) propto__;
@@ -142,7 +145,7 @@ growth(const T0__& beta, std::ostream* pstream__) {
   (void) DUMMY_VAR__;  // suppress unused var warning
   
   try {
-    current_statement__ = 56;
+    current_statement__ = 57;
     return beta;
   } catch (const std::exception& e) {
     stan::lang::rethrow_located(e, locations_array__[current_statement__]);
@@ -151,12 +154,43 @@ growth(const T0__& beta, std::ostream* pstream__) {
   }
   
 }
-struct growth_functor__ {
+struct DE_functor__ {
 template <typename T0__>
 stan::promote_args_t<T0__>
 operator()(const T0__& beta, std::ostream* pstream__)  const 
 {
-return growth(beta, pstream__);
+return DE(beta, pstream__);
+}
+};
+template <typename T0__, typename T1__, typename T2__>
+stan::promote_args_t<T0__, T1__,
+T2__>
+size_step(const T0__& y, const T1__& beta, const T2__& time,
+          std::ostream* pstream__) {
+  using local_scalar_t__ = stan::promote_args_t<T0__, T1__, T2__>;
+  const static bool propto__ = true;
+  (void) propto__;
+  local_scalar_t__ DUMMY_VAR__(std::numeric_limits<double>::quiet_NaN());
+  (void) DUMMY_VAR__;  // suppress unused var warning
+  
+  try {
+    current_statement__ = 59;
+    return (y + (DE(beta, pstream__) * time));
+  } catch (const std::exception& e) {
+    stan::lang::rethrow_located(e, locations_array__[current_statement__]);
+      // Next line prevents compiler griping about no return
+      throw std::runtime_error("*** IF YOU SEE THIS, PLEASE REPORT A BUG ***"); 
+  }
+  
+}
+struct size_step_functor__ {
+template <typename T0__, typename T1__, typename T2__>
+stan::promote_args_t<T0__, T1__,
+T2__>
+operator()(const T0__& y, const T1__& beta, const T2__& time,
+           std::ostream* pstream__)  const 
+{
+return size_step(y, beta, time, pstream__);
 }
 };
 #include <stan_meta_header.hpp>
@@ -196,77 +230,77 @@ public:
       pos__ = std::numeric_limits<int>::min();
       
       pos__ = 1;
-      current_statement__ = 40;
+      current_statement__ = 41;
       context__.validate_dims("data initialization","n_obs","int",
           context__.to_vec());
       n_obs = std::numeric_limits<int>::min();
       
-      current_statement__ = 40;
-      n_obs = context__.vals_i("n_obs")[(1 - 1)];
       current_statement__ = 41;
+      n_obs = context__.vals_i("n_obs")[(1 - 1)];
+      current_statement__ = 42;
       context__.validate_dims("data initialization","n_ind","int",
           context__.to_vec());
       n_ind = std::numeric_limits<int>::min();
       
-      current_statement__ = 41;
-      n_ind = context__.vals_i("n_ind")[(1 - 1)];
       current_statement__ = 42;
-      validate_non_negative_index("y_obs", "n_obs", n_obs);
+      n_ind = context__.vals_i("n_ind")[(1 - 1)];
       current_statement__ = 43;
+      validate_non_negative_index("y_obs", "n_obs", n_obs);
+      current_statement__ = 44;
       context__.validate_dims("data initialization","y_obs","double",
           context__.to_vec(n_obs));
       y_obs = std::vector<double>(n_obs, std::numeric_limits<double>::quiet_NaN());
       
-      current_statement__ = 43;
+      current_statement__ = 44;
       assign(y_obs, nil_index_list(), context__.vals_r("y_obs"),
         "assigning variable y_obs");
-      current_statement__ = 44;
-      validate_non_negative_index("obs_index", "n_obs", n_obs);
       current_statement__ = 45;
+      validate_non_negative_index("obs_index", "n_obs", n_obs);
+      current_statement__ = 46;
       context__.validate_dims("data initialization","obs_index","int",
           context__.to_vec(n_obs));
       obs_index = std::vector<int>(n_obs, std::numeric_limits<int>::min());
       
-      current_statement__ = 45;
+      current_statement__ = 46;
       assign(obs_index, nil_index_list(), context__.vals_i("obs_index"),
         "assigning variable obs_index");
-      current_statement__ = 46;
-      validate_non_negative_index("time", "n_obs", n_obs);
       current_statement__ = 47;
+      validate_non_negative_index("time", "n_obs", n_obs);
+      current_statement__ = 48;
       context__.validate_dims("data initialization","time","double",
           context__.to_vec(n_obs));
       time = std::vector<double>(n_obs, std::numeric_limits<double>::quiet_NaN());
       
-      current_statement__ = 47;
+      current_statement__ = 48;
       assign(time, nil_index_list(), context__.vals_r("time"),
         "assigning variable time");
-      current_statement__ = 48;
-      validate_non_negative_index("ind_id", "n_obs", n_obs);
       current_statement__ = 49;
+      validate_non_negative_index("ind_id", "n_obs", n_obs);
+      current_statement__ = 50;
       context__.validate_dims("data initialization","ind_id","int",
           context__.to_vec(n_obs));
       ind_id = std::vector<int>(n_obs, std::numeric_limits<int>::min());
       
-      current_statement__ = 49;
+      current_statement__ = 50;
       assign(ind_id, nil_index_list(), context__.vals_i("ind_id"),
         "assigning variable ind_id");
-      current_statement__ = 50;
-      validate_non_negative_index("y_0_obs", "n_ind", n_ind);
       current_statement__ = 51;
+      validate_non_negative_index("y_0_obs", "n_ind", n_ind);
+      current_statement__ = 52;
       context__.validate_dims("data initialization","y_0_obs","double",
           context__.to_vec(n_ind));
       y_0_obs = std::vector<double>(n_ind, std::numeric_limits<double>::quiet_NaN());
       
-      current_statement__ = 51;
+      current_statement__ = 52;
       assign(y_0_obs, nil_index_list(), context__.vals_r("y_0_obs"),
         "assigning variable y_0_obs");
-      current_statement__ = 52;
-      validate_non_negative_index("ind_y_0", "n_ind", n_ind);
       current_statement__ = 53;
-      validate_non_negative_index("ind_beta", "n_ind", n_ind);
+      validate_non_negative_index("ind_y_0", "n_ind", n_ind);
       current_statement__ = 54;
-      validate_non_negative_index("y_hat", "n_obs", n_obs);
+      validate_non_negative_index("ind_beta", "n_ind", n_ind);
       current_statement__ = 55;
+      validate_non_negative_index("y_hat", "n_obs", n_obs);
+      current_statement__ = 56;
       validate_non_negative_index("Delta_hat", "n_obs", n_obs);
     } catch (const std::exception& e) {
       stan::lang::rethrow_located(e, locations_array__[current_statement__]);
@@ -380,55 +414,45 @@ public:
         global_error_sigma = stan::math::lb_constrain(global_error_sigma, 0);
       }
       {
-        current_statement__ = 19;
+        current_statement__ = 23;
         validate_non_negative_index("y_hat", "n_obs", n_obs);
         std::vector<local_scalar_t__> y_hat;
         y_hat = std::vector<local_scalar_t__>(n_obs, DUMMY_VAR__);
         
-        current_statement__ = 21;
-        validate_non_negative_index("Delta_hat", "n_obs", n_obs);
-        std::vector<local_scalar_t__> Delta_hat;
-        Delta_hat = std::vector<local_scalar_t__>(n_obs, DUMMY_VAR__);
-        
-        current_statement__ = 33;
+        current_statement__ = 34;
         for (int i = 1; i <= n_obs; ++i) {
-          current_statement__ = 25;
+          current_statement__ = 27;
           if (logical_eq(obs_index[(i - 1)], 1)) {
-            current_statement__ = 23;
+            current_statement__ = 25;
             assign(y_hat, cons_list(index_uni(i), nil_index_list()),
               ind_y_0[(ind_id[(i - 1)] - 1)], "assigning variable y_hat");
           } 
-          current_statement__ = 26;
-          assign(Delta_hat, cons_list(index_uni(i), nil_index_list()),
-            growth(ind_beta[(ind_id[(i - 1)] - 1)], pstream__),
-            "assigning variable Delta_hat");
-          current_statement__ = 31;
+          current_statement__ = 32;
           if (logical_lt(i, n_obs)) {
-            current_statement__ = 29;
+            current_statement__ = 30;
             if (logical_eq(ind_id[((i + 1) - 1)], ind_id[(i - 1)])) {
-              current_statement__ = 27;
+              current_statement__ = 28;
               assign(y_hat, cons_list(index_uni((i + 1)), nil_index_list()),
-                (y_hat[(i - 1)] +
-                  (Delta_hat[(i - 1)] *
-                    (time[((i + 1) - 1)] - time[(i - 1)]))),
+                size_step(y_hat[(i - 1)], ind_beta[(ind_id[(i - 1)] - 1)],
+                  (time[((i + 1) - 1)] - time[(i - 1)]), pstream__),
                 "assigning variable y_hat");
             } 
           } }
-        current_statement__ = 34;
-        lp_accum__.add(
-          normal_lpdf<propto__>(y_obs, y_hat, global_error_sigma));
         current_statement__ = 35;
         lp_accum__.add(
-          normal_lpdf<propto__>(ind_y_0, y_0_obs, global_error_sigma));
+          normal_lpdf<propto__>(y_obs, y_hat, global_error_sigma));
         current_statement__ = 36;
+        lp_accum__.add(
+          normal_lpdf<propto__>(ind_y_0, y_0_obs, global_error_sigma));
+        current_statement__ = 37;
         lp_accum__.add(
           lognormal_lpdf<propto__>(ind_beta, species_beta_mu,
             species_beta_sigma));
-        current_statement__ = 37;
-        lp_accum__.add(normal_lpdf<propto__>(species_beta_mu, 0.1, 1));
         current_statement__ = 38;
-        lp_accum__.add(cauchy_lpdf<propto__>(species_beta_sigma, 0.1, 1));
+        lp_accum__.add(normal_lpdf<propto__>(species_beta_mu, 0.1, 1));
         current_statement__ = 39;
+        lp_accum__.add(cauchy_lpdf<propto__>(species_beta_sigma, 0.1, 1));
+        current_statement__ = 40;
         lp_accum__.add(cauchy_lpdf<propto__>(global_error_sigma, 0.1, 1));
       }
     } catch (const std::exception& e) {
@@ -526,7 +550,7 @@ public:
       std::vector<double> Delta_hat;
       Delta_hat = std::vector<double>(n_obs, std::numeric_limits<double>::quiet_NaN());
       
-      current_statement__ = 18;
+      current_statement__ = 22;
       for (int i = 1; i <= n_obs; ++i) {
         current_statement__ = 10;
         if (logical_eq(obs_index[(i - 1)], 1)) {
@@ -534,21 +558,33 @@ public:
           assign(y_hat, cons_list(index_uni(i), nil_index_list()),
             ind_y_0[(ind_id[(i - 1)] - 1)], "assigning variable y_hat");
         } 
-        current_statement__ = 11;
-        assign(Delta_hat, cons_list(index_uni(i), nil_index_list()),
-          growth(ind_beta[(ind_id[(i - 1)] - 1)], pstream__),
-          "assigning variable Delta_hat");
-        current_statement__ = 16;
+        current_statement__ = 20;
         if (logical_lt(i, n_obs)) {
-          current_statement__ = 14;
+          current_statement__ = 18;
           if (logical_eq(ind_id[((i + 1) - 1)], ind_id[(i - 1)])) {
-            current_statement__ = 12;
+            current_statement__ = 15;
             assign(y_hat, cons_list(index_uni((i + 1)), nil_index_list()),
-              (y_hat[(i - 1)] +
-                (Delta_hat[(i - 1)] * (time[((i + 1) - 1)] - time[(i - 1)]))),
+              size_step(y_hat[(i - 1)], ind_beta[(ind_id[(i - 1)] - 1)],
+                (time[((i + 1) - 1)] - time[(i - 1)]), pstream__),
               "assigning variable y_hat");
-          } 
-        } }
+            current_statement__ = 16;
+            assign(Delta_hat, cons_list(index_uni(i), nil_index_list()),
+              (y_hat[((i + 1) - 1)] - y_hat[(i - 1)]),
+              "assigning variable Delta_hat");
+          } else {
+            current_statement__ = 13;
+            assign(Delta_hat, cons_list(index_uni(i), nil_index_list()),
+              (DE(ind_beta[(ind_id[(i - 1)] - 1)], pstream__) *
+                (time[(i - 1)] - time[((i - 1) - 1)])),
+              "assigning variable Delta_hat");
+          }
+        } else {
+          current_statement__ = 11;
+          assign(Delta_hat, cons_list(index_uni(i), nil_index_list()),
+            (DE(ind_beta[(ind_id[(i - 1)] - 1)], pstream__) *
+              (time[(i - 1)] - time[((i - 1) - 1)])),
+            "assigning variable Delta_hat");
+        }}
       for (int sym1__ = 1; sym1__ <= n_obs; ++sym1__) {
         vars__.emplace_back(y_hat[(sym1__ - 1)]);}
       for (int sym1__ = 1; sym1__ <= n_obs; ++sym1__) {

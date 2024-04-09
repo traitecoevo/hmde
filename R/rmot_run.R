@@ -18,7 +18,9 @@ rmot_run <- function(model_template, ...) {
   out <- switch(model_template$model,
          linear = rstan::sampling(stanmodels$linear, data = model_template, ...),
          constant_single_ind = rstan::sampling(stanmodels$constant_single_ind, data = model_template, ...),
-         constant_multi_ind = rstan::sampling(stanmodels$constant_multi_ind, data = model_template, ...))
+         constant_multi_ind = rstan::sampling(stanmodels$constant_multi_ind, data = model_template, ...),
+         canham_single_ind = rstan::sampling(stanmodels$canham_single_ind, data = model_template, ...),
+         canham_multi_ind = rstan::sampling(stanmodels$canham_multi_ind, data = model_template, ...))
 
   return(out)
 }

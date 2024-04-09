@@ -75,61 +75,61 @@ using stan::math::pow;
 stan::math::profile_map profiles__;
 static int current_statement__= 0;
 static const std::vector<string> locations_array__ = {" (found before start of program)",
-                                                      " (in 'constant_single_ind', line 19, column 2 to column 24)",
-                                                      " (in 'constant_single_ind', line 20, column 2 to column 25)",
-                                                      " (in 'constant_single_ind', line 22, column 2 to column 35)",
-                                                      " (in 'constant_single_ind', line 48, column 2 to column 20)",
-                                                      " (in 'constant_single_ind', line 49, column 2 to column 24)",
-                                                      " (in 'constant_single_ind', line 52, column 6 to column 25)",
-                                                      " (in 'constant_single_ind', line 51, column 23 to line 53, column 5)",
-                                                      " (in 'constant_single_ind', line 51, column 4 to line 53, column 5)",
-                                                      " (in 'constant_single_ind', line 54, column 4 to column 46)",
-                                                      " (in 'constant_single_ind', line 56, column 6 to column 63)",
-                                                      " (in 'constant_single_ind', line 55, column 17 to line 57, column 5)",
+                                                      " (in 'constant_single_ind', line 22, column 2 to column 24)",
+                                                      " (in 'constant_single_ind', line 23, column 2 to column 25)",
+                                                      " (in 'constant_single_ind', line 25, column 2 to column 35)",
+                                                      " (in 'constant_single_ind', line 51, column 2 to column 20)",
+                                                      " (in 'constant_single_ind', line 52, column 2 to column 24)",
+                                                      " (in 'constant_single_ind', line 56, column 6 to column 25)",
+                                                      " (in 'constant_single_ind', line 55, column 23 to line 57, column 5)",
                                                       " (in 'constant_single_ind', line 55, column 4 to line 57, column 5)",
-                                                      " (in 'constant_single_ind', line 50, column 19 to line 58, column 3)",
-                                                      " (in 'constant_single_ind', line 50, column 2 to line 58, column 3)",
-                                                      " (in 'constant_single_ind', line 26, column 13 to column 18)",
-                                                      " (in 'constant_single_ind', line 26, column 2 to column 20)",
-                                                      " (in 'constant_single_ind', line 27, column 17 to column 22)",
-                                                      " (in 'constant_single_ind', line 27, column 2 to column 24)",
-                                                      " (in 'constant_single_ind', line 30, column 6 to column 25)",
-                                                      " (in 'constant_single_ind', line 29, column 23 to line 31, column 5)",
-                                                      " (in 'constant_single_ind', line 29, column 4 to line 31, column 5)",
-                                                      " (in 'constant_single_ind', line 32, column 4 to column 46)",
-                                                      " (in 'constant_single_ind', line 34, column 6 to column 63)",
-                                                      " (in 'constant_single_ind', line 33, column 17 to line 35, column 5)",
-                                                      " (in 'constant_single_ind', line 33, column 4 to line 35, column 5)",
-                                                      " (in 'constant_single_ind', line 28, column 19 to line 36, column 3)",
-                                                      " (in 'constant_single_ind', line 28, column 2 to line 36, column 3)",
-                                                      " (in 'constant_single_ind', line 38, column 2 to column 44)",
-                                                      " (in 'constant_single_ind', line 41, column 2 to column 48)",
-                                                      " (in 'constant_single_ind', line 42, column 2 to column 31)",
-                                                      " (in 'constant_single_ind', line 44, column 2 to column 37)",
-                                                      " (in 'constant_single_ind', line 10, column 2 to column 12)",
-                                                      " (in 'constant_single_ind', line 11, column 13 to column 18)",
-                                                      " (in 'constant_single_ind', line 11, column 2 to column 20)",
-                                                      " (in 'constant_single_ind', line 12, column 16 to column 21)",
-                                                      " (in 'constant_single_ind', line 12, column 2 to column 23)",
-                                                      " (in 'constant_single_ind', line 13, column 12 to column 17)",
-                                                      " (in 'constant_single_ind', line 13, column 2 to column 19)",
-                                                      " (in 'constant_single_ind', line 14, column 2 to column 15)",
-                                                      " (in 'constant_single_ind', line 48, column 13 to column 18)",
-                                                      " (in 'constant_single_ind', line 49, column 17 to column 22)",
+                                                      " (in 'constant_single_ind', line 63, column 6 to column 56)",
+                                                      " (in 'constant_single_ind', line 62, column 11 to line 64, column 5)",
+                                                      " (in 'constant_single_ind', line 60, column 6 to column 70)",
+                                                      " (in 'constant_single_ind', line 61, column 6 to column 43)",
+                                                      " (in 'constant_single_ind', line 59, column 17 to line 62, column 5)",
+                                                      " (in 'constant_single_ind', line 59, column 4 to line 64, column 5)",
+                                                      " (in 'constant_single_ind', line 53, column 19 to line 65, column 3)",
+                                                      " (in 'constant_single_ind', line 53, column 2 to line 65, column 3)",
+                                                      " (in 'constant_single_ind', line 29, column 13 to column 18)",
+                                                      " (in 'constant_single_ind', line 29, column 2 to column 20)",
+                                                      " (in 'constant_single_ind', line 33, column 6 to column 25)",
+                                                      " (in 'constant_single_ind', line 32, column 23 to line 34, column 5)",
+                                                      " (in 'constant_single_ind', line 32, column 4 to line 34, column 5)",
+                                                      " (in 'constant_single_ind', line 37, column 6 to column 70)",
+                                                      " (in 'constant_single_ind', line 36, column 17 to line 38, column 5)",
+                                                      " (in 'constant_single_ind', line 36, column 4 to line 38, column 5)",
+                                                      " (in 'constant_single_ind', line 30, column 19 to line 39, column 3)",
+                                                      " (in 'constant_single_ind', line 30, column 2 to line 39, column 3)",
+                                                      " (in 'constant_single_ind', line 41, column 2 to column 44)",
+                                                      " (in 'constant_single_ind', line 44, column 2 to column 48)",
+                                                      " (in 'constant_single_ind', line 45, column 2 to column 31)",
+                                                      " (in 'constant_single_ind', line 47, column 2 to column 37)",
+                                                      " (in 'constant_single_ind', line 13, column 2 to column 12)",
+                                                      " (in 'constant_single_ind', line 14, column 13 to column 18)",
+                                                      " (in 'constant_single_ind', line 14, column 2 to column 20)",
+                                                      " (in 'constant_single_ind', line 15, column 16 to column 21)",
+                                                      " (in 'constant_single_ind', line 15, column 2 to column 23)",
+                                                      " (in 'constant_single_ind', line 16, column 12 to column 17)",
+                                                      " (in 'constant_single_ind', line 16, column 2 to column 19)",
+                                                      " (in 'constant_single_ind', line 17, column 2 to column 15)",
+                                                      " (in 'constant_single_ind', line 51, column 13 to column 18)",
+                                                      " (in 'constant_single_ind', line 52, column 17 to column 22)",
                                                       " (in 'constant_single_ind', line 5, column 4 to column 16)",
-                                                      " (in 'constant_single_ind', line 4, column 32 to line 6, column 3)"};
-template <typename T0__, typename T1__>
-stan::promote_args_t<T0__,
-T1__>
-growth(const T0__& y, const T1__& beta, std::ostream* pstream__) {
-  using local_scalar_t__ = stan::promote_args_t<T0__, T1__>;
+                                                      " (in 'constant_single_ind', line 4, column 20 to line 6, column 3)",
+                                                      " (in 'constant_single_ind', line 8, column 4 to column 31)",
+                                                      " (in 'constant_single_ind', line 7, column 46 to line 9, column 3)"};
+template <typename T0__>
+stan::promote_args_t<T0__>
+DE(const T0__& beta, std::ostream* pstream__) {
+  using local_scalar_t__ = stan::promote_args_t<T0__>;
   const static bool propto__ = true;
   (void) propto__;
   local_scalar_t__ DUMMY_VAR__(std::numeric_limits<double>::quiet_NaN());
   (void) DUMMY_VAR__;  // suppress unused var warning
   
   try {
-    current_statement__ = 42;
+    current_statement__ = 41;
     return beta;
   } catch (const std::exception& e) {
     stan::lang::rethrow_located(e, locations_array__[current_statement__]);
@@ -138,13 +138,43 @@ growth(const T0__& y, const T1__& beta, std::ostream* pstream__) {
   }
   
 }
-struct growth_functor__ {
-template <typename T0__, typename T1__>
-stan::promote_args_t<T0__,
-T1__>
-operator()(const T0__& y, const T1__& beta, std::ostream* pstream__)  const 
+struct DE_functor__ {
+template <typename T0__>
+stan::promote_args_t<T0__>
+operator()(const T0__& beta, std::ostream* pstream__)  const 
 {
-return growth(y, beta, pstream__);
+return DE(beta, pstream__);
+}
+};
+template <typename T0__, typename T1__, typename T2__>
+stan::promote_args_t<T0__, T1__,
+T2__>
+size_step(const T0__& y, const T1__& beta, const T2__& time,
+          std::ostream* pstream__) {
+  using local_scalar_t__ = stan::promote_args_t<T0__, T1__, T2__>;
+  const static bool propto__ = true;
+  (void) propto__;
+  local_scalar_t__ DUMMY_VAR__(std::numeric_limits<double>::quiet_NaN());
+  (void) DUMMY_VAR__;  // suppress unused var warning
+  
+  try {
+    current_statement__ = 43;
+    return (y + (DE(beta, pstream__) * time));
+  } catch (const std::exception& e) {
+    stan::lang::rethrow_located(e, locations_array__[current_statement__]);
+      // Next line prevents compiler griping about no return
+      throw std::runtime_error("*** IF YOU SEE THIS, PLEASE REPORT A BUG ***"); 
+  }
+  
+}
+struct size_step_functor__ {
+template <typename T0__, typename T1__, typename T2__>
+stan::promote_args_t<T0__, T1__,
+T2__>
+operator()(const T0__& y, const T1__& beta, const T2__& time,
+           std::ostream* pstream__)  const 
+{
+return size_step(y, beta, time, pstream__);
 }
 };
 #include <stan_meta_header.hpp>
@@ -182,53 +212,53 @@ public:
       pos__ = std::numeric_limits<int>::min();
       
       pos__ = 1;
-      current_statement__ = 32;
+      current_statement__ = 31;
       context__.validate_dims("data initialization","n_obs","int",
           context__.to_vec());
       n_obs = std::numeric_limits<int>::min();
       
-      current_statement__ = 32;
+      current_statement__ = 31;
       n_obs = context__.vals_i("n_obs")[(1 - 1)];
-      current_statement__ = 33;
+      current_statement__ = 32;
       validate_non_negative_index("y_obs", "n_obs", n_obs);
-      current_statement__ = 34;
+      current_statement__ = 33;
       context__.validate_dims("data initialization","y_obs","double",
           context__.to_vec(n_obs));
       y_obs = std::vector<double>(n_obs, std::numeric_limits<double>::quiet_NaN());
       
-      current_statement__ = 34;
+      current_statement__ = 33;
       assign(y_obs, nil_index_list(), context__.vals_r("y_obs"),
         "assigning variable y_obs");
-      current_statement__ = 35;
+      current_statement__ = 34;
       validate_non_negative_index("obs_index", "n_obs", n_obs);
-      current_statement__ = 36;
+      current_statement__ = 35;
       context__.validate_dims("data initialization","obs_index","int",
           context__.to_vec(n_obs));
       obs_index = std::vector<int>(n_obs, std::numeric_limits<int>::min());
       
-      current_statement__ = 36;
+      current_statement__ = 35;
       assign(obs_index, nil_index_list(), context__.vals_i("obs_index"),
         "assigning variable obs_index");
-      current_statement__ = 37;
+      current_statement__ = 36;
       validate_non_negative_index("time", "n_obs", n_obs);
-      current_statement__ = 38;
+      current_statement__ = 37;
       context__.validate_dims("data initialization","time","double",
           context__.to_vec(n_obs));
       time = std::vector<double>(n_obs, std::numeric_limits<double>::quiet_NaN());
       
-      current_statement__ = 38;
+      current_statement__ = 37;
       assign(time, nil_index_list(), context__.vals_r("time"),
         "assigning variable time");
-      current_statement__ = 39;
+      current_statement__ = 38;
       context__.validate_dims("data initialization","y_0_obs","double",
           context__.to_vec());
       y_0_obs = std::numeric_limits<double>::quiet_NaN();
       
-      current_statement__ = 39;
+      current_statement__ = 38;
       y_0_obs = context__.vals_r("y_0_obs")[(1 - 1)];
-      current_statement__ = 40;
+      current_statement__ = 39;
       validate_non_negative_index("y_hat", "n_obs", n_obs);
-      current_statement__ = 41;
+      current_statement__ = 40;
       validate_non_negative_index("Delta_hat", "n_obs", n_obs);
     } catch (const std::exception& e) {
       stan::lang::rethrow_located(e, locations_array__[current_statement__]);
@@ -303,17 +333,12 @@ public:
         global_error_sigma = stan::math::lb_constrain(global_error_sigma, 0);
       }
       {
-        current_statement__ = 15;
+        current_statement__ = 17;
         validate_non_negative_index("y_hat", "n_obs", n_obs);
         std::vector<local_scalar_t__> y_hat;
         y_hat = std::vector<local_scalar_t__>(n_obs, DUMMY_VAR__);
         
-        current_statement__ = 17;
-        validate_non_negative_index("Delta_hat", "n_obs", n_obs);
-        std::vector<local_scalar_t__> Delta_hat;
-        Delta_hat = std::vector<local_scalar_t__>(n_obs, DUMMY_VAR__);
-        
-        current_statement__ = 27;
+        current_statement__ = 26;
         for (int i = 1; i <= n_obs; ++i) {
           current_statement__ = 21;
           if (logical_eq(obs_index[(i - 1)], 1)) {
@@ -321,27 +346,23 @@ public:
             assign(y_hat, cons_list(index_uni(i), nil_index_list()), ind_y_0,
               "assigning variable y_hat");
           } 
-          current_statement__ = 22;
-          assign(Delta_hat, cons_list(index_uni(i), nil_index_list()),
-            growth(y_hat[(i - 1)], ind_beta, pstream__),
-            "assigning variable Delta_hat");
-          current_statement__ = 25;
+          current_statement__ = 24;
           if (logical_lt(i, n_obs)) {
-            current_statement__ = 23;
+            current_statement__ = 22;
             assign(y_hat, cons_list(index_uni((i + 1)), nil_index_list()),
-              (y_hat[(i - 1)] +
-                (Delta_hat[(i - 1)] * (time[((i + 1) - 1)] - time[(i - 1)]))),
+              size_step(y_hat[(i - 1)], ind_beta,
+                (time[((i + 1) - 1)] - time[(i - 1)]), pstream__),
               "assigning variable y_hat");
           } }
-        current_statement__ = 28;
+        current_statement__ = 27;
         lp_accum__.add(
           normal_lpdf<propto__>(y_obs, y_hat, global_error_sigma));
-        current_statement__ = 29;
+        current_statement__ = 28;
         lp_accum__.add(
           normal_lpdf<propto__>(ind_y_0, y_0_obs, global_error_sigma));
-        current_statement__ = 30;
+        current_statement__ = 29;
         lp_accum__.add(lognormal_lpdf<propto__>(ind_beta, 0.1, 1));
-        current_statement__ = 31;
+        current_statement__ = 30;
         lp_accum__.add(cauchy_lpdf<propto__>(global_error_sigma, 0.1, 1));
       }
     } catch (const std::exception& e) {
@@ -409,7 +430,7 @@ public:
       std::vector<double> Delta_hat;
       Delta_hat = std::vector<double>(n_obs, std::numeric_limits<double>::quiet_NaN());
       
-      current_statement__ = 14;
+      current_statement__ = 16;
       for (int i = 1; i <= n_obs; ++i) {
         current_statement__ = 8;
         if (logical_eq(obs_index[(i - 1)], 1)) {
@@ -417,18 +438,23 @@ public:
           assign(y_hat, cons_list(index_uni(i), nil_index_list()), ind_y_0,
             "assigning variable y_hat");
         } 
-        current_statement__ = 9;
-        assign(Delta_hat, cons_list(index_uni(i), nil_index_list()),
-          growth(y_hat[(i - 1)], ind_beta, pstream__),
-          "assigning variable Delta_hat");
-        current_statement__ = 12;
+        current_statement__ = 14;
         if (logical_lt(i, n_obs)) {
-          current_statement__ = 10;
+          current_statement__ = 11;
           assign(y_hat, cons_list(index_uni((i + 1)), nil_index_list()),
-            (y_hat[(i - 1)] +
-              (Delta_hat[(i - 1)] * (time[((i + 1) - 1)] - time[(i - 1)]))),
+            size_step(y_hat[(i - 1)], ind_beta,
+              (time[((i + 1) - 1)] - time[(i - 1)]), pstream__),
             "assigning variable y_hat");
-        } }
+          current_statement__ = 12;
+          assign(Delta_hat, cons_list(index_uni(i), nil_index_list()),
+            (y_hat[((i + 1) - 1)] - y_hat[(i - 1)]),
+            "assigning variable Delta_hat");
+        } else {
+          current_statement__ = 9;
+          assign(Delta_hat, cons_list(index_uni(i), nil_index_list()),
+            (DE(ind_beta, pstream__) * (time[(i - 1)] - time[((i - 1) - 1)])),
+            "assigning variable Delta_hat");
+        }}
       for (int sym1__ = 1; sym1__ <= n_obs; ++sym1__) {
         vars__.emplace_back(y_hat[(sym1__ - 1)]);}
       for (int sym1__ = 1; sym1__ <= n_obs; ++sym1__) {

@@ -32,7 +32,7 @@ rmot_build_true_test_data <- function(n_ind, n_obs, interval,
                                               by = (length(runge_kutta_int)/n_obs))]
 
     data_temp <- data.frame( #Build data frame
-      y_true = runge_kutta_survey,
+      y_true = as.numeric(runge_kutta_survey),
       time = time,
       ind_id = rep(i, times=n_obs)
     )
