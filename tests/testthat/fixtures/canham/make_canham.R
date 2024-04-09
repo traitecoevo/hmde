@@ -1,7 +1,4 @@
 #Define specific functions for chosen DE, distribution of parameters, error process
-#Required library for multivariate normal
-require(mnormt)
-
 #Differential equation governing dynamics.
 DE <- function(y, pars){ #Canham function
   return(pars[1] * exp( -0.5 * (log(y / pars[2]) / pars[3])^2 ))
@@ -20,7 +17,7 @@ DE_par_generation <- function(n_ind,
                                   )
                                 )
                               ){
-  par_sample <- exp(data.frame(rmnorm(n_ind,
+  par_sample <- exp(data.frame(mnormt::rmnorm(n_ind,
                                       mean = pars$par_mean_vec,
                                       varcov = pars$par_cov_matrix))
                     )
