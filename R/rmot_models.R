@@ -105,6 +105,7 @@ rmot_power_single_ind <- function(){
        y_obs = NULL,
        obs_index = NULL,
        time = NULL,
+       y_bar = NULL,
        y_0_obs = NULL,
        model = "power_single_ind")
 }
@@ -121,6 +122,7 @@ rmot_power_multi_ind <- function(){
        obs_index = NULL,
        time = NULL,
        ind_id = NULL,
+       y_bar = NULL,
        y_0_obs = NULL,
        model = "power_multi_ind")
 }

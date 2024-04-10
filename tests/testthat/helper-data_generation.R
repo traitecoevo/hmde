@@ -20,7 +20,7 @@ rmot_build_true_test_data <- function(n_ind, n_obs, interval,
   true_data <- data.frame()
   for(i in 1:n_ind){
     #Use RK4 with small step size to project forward from initial size
-    runge_kutta_int <- rmot_rk4_est(y_0 = initial_conditions[i,],
+    runge_kutta_int <- rmot_rk4_est(y_0 = initial_conditions$y_0[i],
                                     DE = DE,
                                     pars = DE_pars[i,],
                                     step_size = 0.1,
