@@ -14,6 +14,9 @@ rmot_test_model_functions <- function(model_name){
 
 rmot_test_single_individual <- function(model_name,
                                         par_names){
+  data <- readRDS(test_path("fixtures", model_name,
+                            paste0(model_name, "_data_single_ind.rds")))
+
   if(! is.null(data$step_size)){
     # Test single individual
     suppressWarnings( #Suppresses stan warnings
@@ -54,7 +57,7 @@ rmot_test_single_individual <- function(model_name,
                as.numeric(data$single_true_data$DE_pars),
                tolerance = 1e-1)
   expect_equal(initial_condition,
-               as.numeric(data$single_true_data$initial_conditions$y_0),
+               as.numeric(data$single_true_data$initial_conditions),
                tolerance = 1e-1)
 
   # hecks for output existence and type
