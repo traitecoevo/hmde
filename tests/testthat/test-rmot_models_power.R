@@ -82,7 +82,7 @@ test_that("Execution: power multiple individuals", {
                        obs_index = data$obs_index, #vector length N_obs
                        time = data$time, #Vector length N_obs
                        ind_id = data$ind_id, #Vector length N_obs
-                       y_bar = data$multi_true_data$initial_conditions$y_bar, #vector length N_ind
+                       y_bar = data$multi_true_data$initial_conditions$y_bar, #Real
                        y_0_obs = data$y_0_obs #vector length N_ind
       ) |>
       rmot_run(chains = 2, iter = 100, verbose = FALSE, show_messages = FALSE)

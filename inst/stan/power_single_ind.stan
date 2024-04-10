@@ -3,28 +3,28 @@
 functions{
   //DE function for use with Runge-Kutta method
   //pars = [ind_coeff, ind_power]
-  real DE(real y, real y_bar, vector pars){
-    return pars[1] * pow((y/y_bar), -pars[2]);
+  real DE(real y, vector pars){
+    return pars[1] * pow((y/pars[3]), -pars[2]);
   }
 
-  real rk4_step(real y, real y_bar, vector pars, real interval){
+  real rk4_step(real y, vector pars, real interval){
     real k1;
     real k2;
     real k3;
     real k4;
     real y_hat;
 
-    k1 = DE(y, y_bar, pars);
-    k2 = DE(y+interval*k1/2.0, y_bar, pars);
-    k3 = DE(y+interval*k2/2.0, y_bar, pars);
-    k4 = DE(y+interval*k3, y_bar, pars);
+    k1 = DE(y, pars);
+    k2 = DE(y+interval*k1/2.0, pars);
+    k3 = DE(y+interval*k2/2.0, pars);
+    k4 = DE(y+interval*k3, pars);
 
     y_hat = y + (1.0/6.0) * (k1 + 2.0*k2 + 2.0*k3 + k4) * interval;
 
     return y_hat;
   }
 
-  real rk4(real y, real y_bar, vector pars, real interval, real step_size){
+  real rk4(real y, vector pars, real interval, real step_size){
     int steps;
     real duration;
     real y_hat;
@@ -38,7 +38,7 @@ functions{
       step_size_temp = min([step_size, interval-duration]);
 
       //Get next size estimate
-      y_hat = rk4_step(y_hat, y_bar, pars, step_size_temp);
+      y_hat = rk4_step(y_hat, pars, step_size_temp);
 
       //Increment observed duration
       duration = duration + step_size_temp;
@@ -73,10 +73,11 @@ parameters {
 // The model to be estimated.
 model {
   real y_hat[n_obs];
-  vector[2] pars;
+  vector[3] pars;
 
   pars[1] = ind_coeff;
   pars[2] = ind_power;
+  pars[3] = y_bar;
 
   for(i in 1:n_obs){
 
@@ -86,7 +87,7 @@ model {
 
     if(i < n_obs){
       //Estimate next size
-      y_hat[i+1] = rk4(y_hat[i], y_bar, pars, (time[i+1] - time[i]), step_size);
+      y_hat[i+1] = rk4(y_hat[i], pars, (time[i+1] - time[i]), step_size);
     }
   }
 
@@ -106,10 +107,11 @@ model {
 generated quantities{
   real y_hat[n_obs];
   real Delta_hat[n_obs];
-  vector[2] pars;
+  vector[3] pars;
 
   pars[1] = ind_coeff;
   pars[2] = ind_power;
+  pars[3] = y_bar;
 
   for(i in 1:n_obs){
 
@@ -119,11 +121,11 @@ generated quantities{
 
     if(i < n_obs){
       //Estimate next size
-      y_hat[i+1] = rk4(y_hat[i], y_bar, pars, (time[i+1] - time[i]), step_size);
+      y_hat[i+1] = rk4(y_hat[i], pars, (time[i+1] - time[i]), step_size);
       Delta_hat[i] = y_hat[i+1] - y_hat[i];
 
     } else {
-      Delta_hat[i] = DE(y_hat[i], y_bar, pars)*(time[i] - time[i-1]);
+      Delta_hat[i] = DE(y_hat[i], pars)*(time[i] - time[i-1]);
     }
   }
 }

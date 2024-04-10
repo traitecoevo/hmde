@@ -5,8 +5,8 @@ DE <- function(y, pars){ #Power law function
 }
 
 #Function to generate distribution of DE parameters
-DE_par_generation <- function(n_ind, pars=list(coeff_mean=0, coeff_sd=1,
-                                               power_mean=-3, power_sd=1)){
+DE_par_generation <- function(n_ind, pars=list(coeff_mean=0.5, coeff_sd=1,
+                                               power_mean=-1, power_sd=0.5)){
   par_sample <- data.frame(coeff = exp(rnorm(n_ind, mean = pars[[1]], sd=pars[[2]])),
                            power = exp(rnorm(n_ind, mean = pars[[3]], sd=pars[[4]])))
   return(par_sample)
@@ -23,10 +23,9 @@ time = seq(from = 0, by = interval, length.out = n_obs_per_ind)
 #Produce parameters
 DE_pars <- DE_par_generation(n_ind)
 initial_conditions <- data.frame(y_0=exp(rnorm(n_ind, mean = 2, sd=1)))
-initial_conditions$y_bar <- initial_conditions$y_0 +
-  DE_pars$coeff * (initial_conditions$y_0 ^ DE_pars$power) * 10
 
-DE_pars$y_bar <- initial_conditions$y_bar
+DE_pars$y_bar <- mean(initial_conditions$y_0) +
+  mean(DE_pars$coeff) * (mean(initial_conditions$y_0) ^ mean(DE_pars$power)) * 5
 
 #Generate true values
 true_data <- rmot_build_true_test_data(n_ind, n_obs_per_ind, interval,
