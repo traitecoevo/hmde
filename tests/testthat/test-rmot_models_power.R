@@ -38,17 +38,15 @@ test_that("Execution: power single individual", {
   # Extract samples and check if parameter estimates are reasonable.
   ind_samples <- rstan::extract(single_ind_test, permuted = TRUE,
                                 inc_warmup = FALSE)
-  par_ests <- c()
-  for(i in seq_along(par_names)){
-    par_ests[i] <- mean(ind_samples[[par_names[i]]])
-  }
+
+  par_ests <- map_dbl(par_names, ~mean(ind_samples[[.x]]))
 
   initial_condition <- mean(ind_samples$ind_y_0)
   expect_equal(par_ests,
                as.numeric(data$single_true_data$DE_pars[c(1,2)]),
                tolerance = 1e-1)
   expect_equal(initial_condition,
-               as.numeric(data$single_true_data$initial_conditions$y_0),
+               as.numeric(data$single_true_data$initial_conditions),
                tolerance = 1e-1)
 
   # hecks for output existence and type
