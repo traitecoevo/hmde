@@ -79,40 +79,42 @@ static const std::vector<string> locations_array__ = {" (found before start of p
                                                       " (in 'power_single_ind', line 53, column 2 to column 26)",
                                                       " (in 'power_single_ind', line 54, column 2 to column 26)",
                                                       " (in 'power_single_ind', line 56, column 2 to column 35)",
-                                                      " (in 'power_single_ind', line 84, column 2 to column 20)",
-                                                      " (in 'power_single_ind', line 85, column 2 to column 24)",
-                                                      " (in 'power_single_ind', line 86, column 2 to column 17)",
-                                                      " (in 'power_single_ind', line 87, column 2 to column 22)",
+                                                      " (in 'power_single_ind', line 85, column 2 to column 20)",
+                                                      " (in 'power_single_ind', line 86, column 2 to column 24)",
+                                                      " (in 'power_single_ind', line 87, column 2 to column 17)",
                                                       " (in 'power_single_ind', line 88, column 2 to column 22)",
-                                                      " (in 'power_single_ind', line 91, column 6 to column 25)",
-                                                      " (in 'power_single_ind', line 90, column 23 to line 92, column 5)",
-                                                      " (in 'power_single_ind', line 90, column 4 to line 92, column 5)",
-                                                      " (in 'power_single_ind', line 98, column 6 to column 69)",
-                                                      " (in 'power_single_ind', line 97, column 11 to line 99, column 5)",
-                                                      " (in 'power_single_ind', line 95, column 6 to column 80)",
-                                                      " (in 'power_single_ind', line 96, column 6 to column 43)",
-                                                      " (in 'power_single_ind', line 93, column 17 to line 97, column 5)",
-                                                      " (in 'power_single_ind', line 93, column 4 to line 99, column 5)",
-                                                      " (in 'power_single_ind', line 89, column 19 to line 100, column 3)",
-                                                      " (in 'power_single_ind', line 89, column 2 to line 100, column 3)",
+                                                      " (in 'power_single_ind', line 89, column 2 to column 22)",
+                                                      " (in 'power_single_ind', line 90, column 2 to column 18)",
+                                                      " (in 'power_single_ind', line 93, column 6 to column 25)",
+                                                      " (in 'power_single_ind', line 92, column 23 to line 94, column 5)",
+                                                      " (in 'power_single_ind', line 92, column 4 to line 94, column 5)",
+                                                      " (in 'power_single_ind', line 100, column 6 to column 62)",
+                                                      " (in 'power_single_ind', line 99, column 11 to line 101, column 5)",
+                                                      " (in 'power_single_ind', line 97, column 6 to column 73)",
+                                                      " (in 'power_single_ind', line 98, column 6 to column 43)",
+                                                      " (in 'power_single_ind', line 95, column 17 to line 99, column 5)",
+                                                      " (in 'power_single_ind', line 95, column 4 to line 101, column 5)",
+                                                      " (in 'power_single_ind', line 91, column 19 to line 102, column 3)",
+                                                      " (in 'power_single_ind', line 91, column 2 to line 102, column 3)",
                                                       " (in 'power_single_ind', line 60, column 13 to column 18)",
                                                       " (in 'power_single_ind', line 60, column 2 to column 20)",
                                                       " (in 'power_single_ind', line 61, column 2 to column 17)",
                                                       " (in 'power_single_ind', line 62, column 2 to column 22)",
                                                       " (in 'power_single_ind', line 63, column 2 to column 22)",
-                                                      " (in 'power_single_ind', line 66, column 6 to column 25)",
-                                                      " (in 'power_single_ind', line 65, column 23 to line 67, column 5)",
-                                                      " (in 'power_single_ind', line 65, column 4 to line 67, column 5)",
-                                                      " (in 'power_single_ind', line 70, column 6 to column 80)",
-                                                      " (in 'power_single_ind', line 68, column 17 to line 71, column 5)",
-                                                      " (in 'power_single_ind', line 68, column 4 to line 71, column 5)",
-                                                      " (in 'power_single_ind', line 64, column 19 to line 72, column 3)",
-                                                      " (in 'power_single_ind', line 64, column 2 to line 72, column 3)",
-                                                      " (in 'power_single_ind', line 74, column 2 to column 44)",
-                                                      " (in 'power_single_ind', line 77, column 2 to column 48)",
-                                                      " (in 'power_single_ind', line 78, column 2 to column 29)",
+                                                      " (in 'power_single_ind', line 64, column 2 to column 18)",
+                                                      " (in 'power_single_ind', line 67, column 6 to column 25)",
+                                                      " (in 'power_single_ind', line 66, column 23 to line 68, column 5)",
+                                                      " (in 'power_single_ind', line 66, column 4 to line 68, column 5)",
+                                                      " (in 'power_single_ind', line 71, column 6 to column 73)",
+                                                      " (in 'power_single_ind', line 69, column 17 to line 72, column 5)",
+                                                      " (in 'power_single_ind', line 69, column 4 to line 72, column 5)",
+                                                      " (in 'power_single_ind', line 65, column 19 to line 73, column 3)",
+                                                      " (in 'power_single_ind', line 65, column 2 to line 73, column 3)",
+                                                      " (in 'power_single_ind', line 75, column 2 to column 44)",
+                                                      " (in 'power_single_ind', line 78, column 2 to column 48)",
                                                       " (in 'power_single_ind', line 79, column 2 to column 29)",
-                                                      " (in 'power_single_ind', line 81, column 2 to column 34)",
+                                                      " (in 'power_single_ind', line 80, column 2 to column 29)",
+                                                      " (in 'power_single_ind', line 82, column 2 to column 34)",
                                                       " (in 'power_single_ind', line 41, column 2 to column 17)",
                                                       " (in 'power_single_ind', line 42, column 2 to column 12)",
                                                       " (in 'power_single_ind', line 43, column 13 to column 18)",
@@ -123,22 +125,22 @@ static const std::vector<string> locations_array__ = {" (found before start of p
                                                       " (in 'power_single_ind', line 45, column 2 to column 19)",
                                                       " (in 'power_single_ind', line 46, column 2 to column 13)",
                                                       " (in 'power_single_ind', line 47, column 2 to column 15)",
-                                                      " (in 'power_single_ind', line 84, column 13 to column 18)",
-                                                      " (in 'power_single_ind', line 85, column 17 to column 22)",
-                                                      " (in 'power_single_ind', line 6, column 4 to column 46)",
-                                                      " (in 'power_single_ind', line 5, column 42 to line 7, column 3)",
+                                                      " (in 'power_single_ind', line 85, column 13 to column 18)",
+                                                      " (in 'power_single_ind', line 86, column 17 to column 22)",
+                                                      " (in 'power_single_ind', line 6, column 4 to column 48)",
+                                                      " (in 'power_single_ind', line 5, column 30 to line 7, column 3)",
                                                       " (in 'power_single_ind', line 9, column 4 to column 12)",
                                                       " (in 'power_single_ind', line 10, column 4 to column 12)",
                                                       " (in 'power_single_ind', line 11, column 4 to column 12)",
                                                       " (in 'power_single_ind', line 12, column 4 to column 12)",
                                                       " (in 'power_single_ind', line 13, column 4 to column 15)",
-                                                      " (in 'power_single_ind', line 14, column 4 to column 28)",
-                                                      " (in 'power_single_ind', line 15, column 4 to column 44)",
-                                                      " (in 'power_single_ind', line 16, column 4 to column 44)",
-                                                      " (in 'power_single_ind', line 17, column 4 to column 40)",
+                                                      " (in 'power_single_ind', line 14, column 4 to column 21)",
+                                                      " (in 'power_single_ind', line 15, column 4 to column 37)",
+                                                      " (in 'power_single_ind', line 16, column 4 to column 37)",
+                                                      " (in 'power_single_ind', line 17, column 4 to column 33)",
                                                       " (in 'power_single_ind', line 18, column 4 to column 67)",
                                                       " (in 'power_single_ind', line 19, column 4 to column 17)",
-                                                      " (in 'power_single_ind', line 8, column 63 to line 20, column 3)",
+                                                      " (in 'power_single_ind', line 8, column 51 to line 20, column 3)",
                                                       " (in 'power_single_ind', line 22, column 4 to column 14)",
                                                       " (in 'power_single_ind', line 23, column 4 to column 18)",
                                                       " (in 'power_single_ind', line 24, column 4 to column 15)",
@@ -146,20 +148,18 @@ static const std::vector<string> locations_array__ = {" (found before start of p
                                                       " (in 'power_single_ind', line 26, column 4 to column 17)",
                                                       " (in 'power_single_ind', line 27, column 4 to column 14)",
                                                       " (in 'power_single_ind', line 30, column 6 to column 59)",
-                                                      " (in 'power_single_ind', line 32, column 6 to column 59)",
+                                                      " (in 'power_single_ind', line 32, column 6 to column 52)",
                                                       " (in 'power_single_ind', line 34, column 6 to column 43)",
                                                       " (in 'power_single_ind', line 28, column 30 to line 35, column 5)",
                                                       " (in 'power_single_ind', line 28, column 4 to line 35, column 5)",
                                                       " (in 'power_single_ind', line 36, column 4 to column 17)",
-                                                      " (in 'power_single_ind', line 21, column 74 to line 37, column 3)"};
-template <typename T0__, typename T1__, typename T2__>
-stan::promote_args_t<T0__, T1__,
-stan::value_type_t<T2__>>
-DE(const T0__& y, const T1__& y_bar, const T2__& pars_arg__,
-   std::ostream* pstream__) {
+                                                      " (in 'power_single_ind', line 21, column 62 to line 37, column 3)"};
+template <typename T0__, typename T1__>
+stan::promote_args_t<T0__,
+stan::value_type_t<T1__>>
+DE(const T0__& y, const T1__& pars_arg__, std::ostream* pstream__) {
   using local_scalar_t__ = stan::promote_args_t<T0__,
-          T1__,
-          stan::value_type_t<T2__>>;
+          stan::value_type_t<T1__>>;
   const auto& pars = to_ref(pars_arg__);
   const static bool propto__ = true;
   (void) propto__;
@@ -167,8 +167,8 @@ DE(const T0__& y, const T1__& y_bar, const T2__& pars_arg__,
   (void) DUMMY_VAR__;  // suppress unused var warning
   
   try {
-    current_statement__ = 51;
-    return (pars[(1 - 1)] * pow((y / y_bar), -pars[(2 - 1)]));
+    current_statement__ = 53;
+    return (pars[(1 - 1)] * pow((y / pars[(3 - 1)]), -pars[(2 - 1)]));
   } catch (const std::exception& e) {
     stan::lang::rethrow_located(e, locations_array__[current_statement__]);
       // Next line prevents compiler griping about no return
@@ -177,24 +177,22 @@ DE(const T0__& y, const T1__& y_bar, const T2__& pars_arg__,
   
 }
 struct DE_functor__ {
-template <typename T0__, typename T1__, typename T2__>
-stan::promote_args_t<T0__, T1__,
-stan::value_type_t<T2__>>
-operator()(const T0__& y, const T1__& y_bar, const T2__& pars,
-           std::ostream* pstream__)  const 
+template <typename T0__, typename T1__>
+stan::promote_args_t<T0__,
+stan::value_type_t<T1__>>
+operator()(const T0__& y, const T1__& pars, std::ostream* pstream__)  const 
 {
-return DE(y, y_bar, pars, pstream__);
+return DE(y, pars, pstream__);
 }
 };
-template <typename T0__, typename T1__, typename T2__, typename T3__>
-stan::promote_args_t<T0__, T1__, stan::value_type_t<T2__>,
-T3__>
-rk4_step(const T0__& y, const T1__& y_bar, const T2__& pars_arg__,
-         const T3__& interval, std::ostream* pstream__) {
+template <typename T0__, typename T1__, typename T2__>
+stan::promote_args_t<T0__, stan::value_type_t<T1__>,
+T2__>
+rk4_step(const T0__& y, const T1__& pars_arg__, const T2__& interval,
+         std::ostream* pstream__) {
   using local_scalar_t__ = stan::promote_args_t<T0__,
-          T1__,
-          stan::value_type_t<T2__>,
-          T3__>;
+          stan::value_type_t<T1__>,
+          T2__>;
   const auto& pars = to_ref(pars_arg__);
   const static bool propto__ = true;
   (void) propto__;
@@ -217,19 +215,19 @@ rk4_step(const T0__& y, const T1__& y_bar, const T2__& pars_arg__,
     local_scalar_t__ y_hat;
     y_hat = DUMMY_VAR__;
     
-    current_statement__ = 58;
-    k1 = DE(y, y_bar, pars, pstream__);
-    current_statement__ = 59;
-    k2 = DE((y + ((interval * k1) / 2.0)), y_bar, pars, pstream__);
     current_statement__ = 60;
-    k3 = DE((y + ((interval * k2) / 2.0)), y_bar, pars, pstream__);
+    k1 = DE(y, pars, pstream__);
     current_statement__ = 61;
-    k4 = DE((y + (interval * k3)), y_bar, pars, pstream__);
+    k2 = DE((y + ((interval * k1) / 2.0)), pars, pstream__);
     current_statement__ = 62;
+    k3 = DE((y + ((interval * k2) / 2.0)), pars, pstream__);
+    current_statement__ = 63;
+    k4 = DE((y + (interval * k3)), pars, pstream__);
+    current_statement__ = 64;
     y_hat = (y +
               (((1.0 / 6.0) * (((k1 + (2.0 * k2)) + (2.0 * k3)) + k4)) *
                 interval));
-    current_statement__ = 63;
+    current_statement__ = 65;
     return y_hat;
   } catch (const std::exception& e) {
     stan::lang::rethrow_located(e, locations_array__[current_statement__]);
@@ -239,26 +237,24 @@ rk4_step(const T0__& y, const T1__& y_bar, const T2__& pars_arg__,
   
 }
 struct rk4_step_functor__ {
-template <typename T0__, typename T1__, typename T2__, typename T3__>
-stan::promote_args_t<T0__, T1__, stan::value_type_t<T2__>,
-T3__>
-operator()(const T0__& y, const T1__& y_bar, const T2__& pars,
-           const T3__& interval, std::ostream* pstream__)  const 
+template <typename T0__, typename T1__, typename T2__>
+stan::promote_args_t<T0__, stan::value_type_t<T1__>,
+T2__>
+operator()(const T0__& y, const T1__& pars, const T2__& interval,
+           std::ostream* pstream__)  const 
 {
-return rk4_step(y, y_bar, pars, interval, pstream__);
+return rk4_step(y, pars, interval, pstream__);
 }
 };
-template <typename T0__, typename T1__, typename T2__, typename T3__,
-typename T4__>
-stan::promote_args_t<T0__, T1__, stan::value_type_t<T2__>, T3__,
-T4__>
-rk4(const T0__& y, const T1__& y_bar, const T2__& pars_arg__,
-    const T3__& interval, const T4__& step_size, std::ostream* pstream__) {
+template <typename T0__, typename T1__, typename T2__, typename T3__>
+stan::promote_args_t<T0__, stan::value_type_t<T1__>, T2__,
+T3__>
+rk4(const T0__& y, const T1__& pars_arg__, const T2__& interval,
+    const T3__& step_size, std::ostream* pstream__) {
   using local_scalar_t__ = stan::promote_args_t<T0__,
-          T1__,
-          stan::value_type_t<T2__>,
-          T3__,
-          T4__>;
+          stan::value_type_t<T1__>,
+          T2__,
+          T3__>;
   const auto& pars = to_ref(pars_arg__);
   const static bool propto__ = true;
   (void) propto__;
@@ -278,21 +274,21 @@ rk4(const T0__& y, const T1__& y_bar, const T2__& pars_arg__,
     local_scalar_t__ step_size_temp;
     step_size_temp = DUMMY_VAR__;
     
-    current_statement__ = 69;
+    current_statement__ = 71;
     duration = 0;
-    current_statement__ = 70;
+    current_statement__ = 72;
     y_hat = y;
-    current_statement__ = 75;
+    current_statement__ = 77;
     while (logical_lt(duration, interval)) {
-      current_statement__ = 71;
+      current_statement__ = 73;
       step_size_temp = min((Eigen::Matrix<local_scalar_t__,1,-1>(2) <<
                          step_size, (interval - duration)).finished());
-      current_statement__ = 72;
-      y_hat = rk4_step(y_hat, y_bar, pars, step_size_temp, pstream__);
-      current_statement__ = 73;
+      current_statement__ = 74;
+      y_hat = rk4_step(y_hat, pars, step_size_temp, pstream__);
+      current_statement__ = 75;
       duration = (duration + step_size_temp);
     }
-    current_statement__ = 76;
+    current_statement__ = 78;
     return y_hat;
   } catch (const std::exception& e) {
     stan::lang::rethrow_located(e, locations_array__[current_statement__]);
@@ -302,15 +298,13 @@ rk4(const T0__& y, const T1__& y_bar, const T2__& pars_arg__,
   
 }
 struct rk4_functor__ {
-template <typename T0__, typename T1__, typename T2__, typename T3__,
-typename T4__>
-stan::promote_args_t<T0__, T1__, stan::value_type_t<T2__>, T3__,
-T4__>
-operator()(const T0__& y, const T1__& y_bar, const T2__& pars,
-           const T3__& interval, const T4__& step_size,
-           std::ostream* pstream__)  const 
+template <typename T0__, typename T1__, typename T2__, typename T3__>
+stan::promote_args_t<T0__, stan::value_type_t<T1__>, T2__,
+T3__>
+operator()(const T0__& y, const T1__& pars, const T2__& interval,
+           const T3__& step_size, std::ostream* pstream__)  const 
 {
-return rk4(y, y_bar, pars, interval, step_size, pstream__);
+return rk4(y, pars, interval, step_size, pstream__);
 }
 };
 #include <stan_meta_header.hpp>
@@ -350,67 +344,67 @@ public:
       pos__ = std::numeric_limits<int>::min();
       
       pos__ = 1;
-      current_statement__ = 39;
+      current_statement__ = 41;
       context__.validate_dims("data initialization","step_size","double",
           context__.to_vec());
       step_size = std::numeric_limits<double>::quiet_NaN();
       
-      current_statement__ = 39;
+      current_statement__ = 41;
       step_size = context__.vals_r("step_size")[(1 - 1)];
-      current_statement__ = 40;
+      current_statement__ = 42;
       context__.validate_dims("data initialization","n_obs","int",
           context__.to_vec());
       n_obs = std::numeric_limits<int>::min();
       
-      current_statement__ = 40;
-      n_obs = context__.vals_i("n_obs")[(1 - 1)];
-      current_statement__ = 41;
-      validate_non_negative_index("y_obs", "n_obs", n_obs);
       current_statement__ = 42;
+      n_obs = context__.vals_i("n_obs")[(1 - 1)];
+      current_statement__ = 43;
+      validate_non_negative_index("y_obs", "n_obs", n_obs);
+      current_statement__ = 44;
       context__.validate_dims("data initialization","y_obs","double",
           context__.to_vec(n_obs));
       y_obs = std::vector<double>(n_obs, std::numeric_limits<double>::quiet_NaN());
       
-      current_statement__ = 42;
+      current_statement__ = 44;
       assign(y_obs, nil_index_list(), context__.vals_r("y_obs"),
         "assigning variable y_obs");
-      current_statement__ = 43;
+      current_statement__ = 45;
       validate_non_negative_index("obs_index", "n_obs", n_obs);
-      current_statement__ = 44;
+      current_statement__ = 46;
       context__.validate_dims("data initialization","obs_index","int",
           context__.to_vec(n_obs));
       obs_index = std::vector<int>(n_obs, std::numeric_limits<int>::min());
       
-      current_statement__ = 44;
+      current_statement__ = 46;
       assign(obs_index, nil_index_list(), context__.vals_i("obs_index"),
         "assigning variable obs_index");
-      current_statement__ = 45;
+      current_statement__ = 47;
       validate_non_negative_index("time", "n_obs", n_obs);
-      current_statement__ = 46;
+      current_statement__ = 48;
       context__.validate_dims("data initialization","time","double",
           context__.to_vec(n_obs));
       time = std::vector<double>(n_obs, std::numeric_limits<double>::quiet_NaN());
       
-      current_statement__ = 46;
+      current_statement__ = 48;
       assign(time, nil_index_list(), context__.vals_r("time"),
         "assigning variable time");
-      current_statement__ = 47;
+      current_statement__ = 49;
       context__.validate_dims("data initialization","y_bar","double",
           context__.to_vec());
       y_bar = std::numeric_limits<double>::quiet_NaN();
       
-      current_statement__ = 47;
+      current_statement__ = 49;
       y_bar = context__.vals_r("y_bar")[(1 - 1)];
-      current_statement__ = 48;
+      current_statement__ = 50;
       context__.validate_dims("data initialization","y_0_obs","double",
           context__.to_vec());
       y_0_obs = std::numeric_limits<double>::quiet_NaN();
       
-      current_statement__ = 48;
-      y_0_obs = context__.vals_r("y_0_obs")[(1 - 1)];
-      current_statement__ = 49;
-      validate_non_negative_index("y_hat", "n_obs", n_obs);
       current_statement__ = 50;
+      y_0_obs = context__.vals_r("y_0_obs")[(1 - 1)];
+      current_statement__ = 51;
+      validate_non_negative_index("y_hat", "n_obs", n_obs);
+      current_statement__ = 52;
       validate_non_negative_index("Delta_hat", "n_obs", n_obs);
     } catch (const std::exception& e) {
       stan::lang::rethrow_located(e, locations_array__[current_statement__]);
@@ -499,48 +493,51 @@ public:
         global_error_sigma = stan::math::lb_constrain(global_error_sigma, 0);
       }
       {
-        current_statement__ = 21;
+        current_statement__ = 22;
         validate_non_negative_index("y_hat", "n_obs", n_obs);
         std::vector<local_scalar_t__> y_hat;
         y_hat = std::vector<local_scalar_t__>(n_obs, DUMMY_VAR__);
         
         Eigen::Matrix<local_scalar_t__, -1, 1> pars;
-        pars = Eigen::Matrix<local_scalar_t__, -1, 1>(2);
+        pars = Eigen::Matrix<local_scalar_t__, -1, 1>(3);
         stan::math::fill(pars, DUMMY_VAR__);
         
-        current_statement__ = 24;
+        current_statement__ = 25;
         assign(pars, cons_list(index_uni(1), nil_index_list()), ind_coeff,
           "assigning variable pars");
-        current_statement__ = 25;
+        current_statement__ = 26;
         assign(pars, cons_list(index_uni(2), nil_index_list()), ind_power,
           "assigning variable pars");
-        current_statement__ = 33;
+        current_statement__ = 27;
+        assign(pars, cons_list(index_uni(3), nil_index_list()), y_bar,
+          "assigning variable pars");
+        current_statement__ = 35;
         for (int i = 1; i <= n_obs; ++i) {
-          current_statement__ = 28;
+          current_statement__ = 30;
           if (logical_eq(obs_index[(i - 1)], 1)) {
-            current_statement__ = 26;
+            current_statement__ = 28;
             assign(y_hat, cons_list(index_uni(i), nil_index_list()), ind_y_0,
               "assigning variable y_hat");
           } 
-          current_statement__ = 31;
+          current_statement__ = 33;
           if (logical_lt(i, n_obs)) {
-            current_statement__ = 29;
+            current_statement__ = 31;
             assign(y_hat, cons_list(index_uni((i + 1)), nil_index_list()),
-              rk4(y_hat[(i - 1)], y_bar, pars,
+              rk4(y_hat[(i - 1)], pars,
                 (time[((i + 1) - 1)] - time[(i - 1)]), step_size, pstream__),
               "assigning variable y_hat");
           } }
-        current_statement__ = 34;
+        current_statement__ = 36;
         lp_accum__.add(
           normal_lpdf<propto__>(y_obs, y_hat, global_error_sigma));
-        current_statement__ = 35;
+        current_statement__ = 37;
         lp_accum__.add(
           normal_lpdf<propto__>(ind_y_0, y_0_obs, global_error_sigma));
-        current_statement__ = 36;
-        lp_accum__.add(lognormal_lpdf<propto__>(ind_coeff, 0, 1));
-        current_statement__ = 37;
-        lp_accum__.add(lognormal_lpdf<propto__>(ind_power, 0, 1));
         current_statement__ = 38;
+        lp_accum__.add(lognormal_lpdf<propto__>(ind_coeff, 0, 1));
+        current_statement__ = 39;
+        lp_accum__.add(lognormal_lpdf<propto__>(ind_power, 0, 1));
+        current_statement__ = 40;
         lp_accum__.add(cauchy_lpdf<propto__>(global_error_sigma, 0, 5));
       }
     } catch (const std::exception& e) {
@@ -617,7 +614,7 @@ public:
       Delta_hat = std::vector<double>(n_obs, std::numeric_limits<double>::quiet_NaN());
       
       Eigen::Matrix<double, -1, 1> pars;
-      pars = Eigen::Matrix<double, -1, 1>(2);
+      pars = Eigen::Matrix<double, -1, 1>(3);
       stan::math::fill(pars, std::numeric_limits<double>::quiet_NaN());
       
       current_statement__ = 8;
@@ -626,29 +623,31 @@ public:
       current_statement__ = 9;
       assign(pars, cons_list(index_uni(2), nil_index_list()), ind_power,
         "assigning variable pars");
-      current_statement__ = 20;
+      current_statement__ = 10;
+      assign(pars, cons_list(index_uni(3), nil_index_list()), y_bar,
+        "assigning variable pars");
+      current_statement__ = 21;
       for (int i = 1; i <= n_obs; ++i) {
-        current_statement__ = 12;
+        current_statement__ = 13;
         if (logical_eq(obs_index[(i - 1)], 1)) {
-          current_statement__ = 10;
+          current_statement__ = 11;
           assign(y_hat, cons_list(index_uni(i), nil_index_list()), ind_y_0,
             "assigning variable y_hat");
         } 
-        current_statement__ = 18;
+        current_statement__ = 19;
         if (logical_lt(i, n_obs)) {
-          current_statement__ = 15;
-          assign(y_hat, cons_list(index_uni((i + 1)), nil_index_list()),
-            rk4(y_hat[(i - 1)], y_bar, pars,
-              (time[((i + 1) - 1)] - time[(i - 1)]), step_size, pstream__),
-            "assigning variable y_hat");
           current_statement__ = 16;
+          assign(y_hat, cons_list(index_uni((i + 1)), nil_index_list()),
+            rk4(y_hat[(i - 1)], pars, (time[((i + 1) - 1)] - time[(i - 1)]),
+              step_size, pstream__), "assigning variable y_hat");
+          current_statement__ = 17;
           assign(Delta_hat, cons_list(index_uni(i), nil_index_list()),
             (y_hat[((i + 1) - 1)] - y_hat[(i - 1)]),
             "assigning variable Delta_hat");
         } else {
-          current_statement__ = 13;
+          current_statement__ = 14;
           assign(Delta_hat, cons_list(index_uni(i), nil_index_list()),
-            (DE(y_hat[(i - 1)], y_bar, pars, pstream__) *
+            (DE(y_hat[(i - 1)], pars, pstream__) *
               (time[(i - 1)] - time[((i - 1) - 1)])),
             "assigning variable Delta_hat");
         }}
@@ -656,7 +655,7 @@ public:
         vars__.emplace_back(y_hat[(sym1__ - 1)]);}
       for (int sym1__ = 1; sym1__ <= n_obs; ++sym1__) {
         vars__.emplace_back(Delta_hat[(sym1__ - 1)]);}
-      for (int sym1__ = 1; sym1__ <= 2; ++sym1__) {
+      for (int sym1__ = 1; sym1__ <= 3; ++sym1__) {
         vars__.emplace_back(pars[(sym1__ - 1)]);}
     } catch (const std::exception& e) {
       stan::lang::rethrow_located(e, locations_array__[current_statement__]);
@@ -755,7 +754,7 @@ public:
     
     dimss__.emplace_back(std::vector<size_t>{static_cast<size_t>(n_obs)});
     
-    dimss__.emplace_back(std::vector<size_t>{static_cast<size_t>(2)});
+    dimss__.emplace_back(std::vector<size_t>{static_cast<size_t>(3)});
     
     } // get_dims() 
     
@@ -782,7 +781,7 @@ public:
         {
           param_names__.emplace_back(std::string() + "Delta_hat" + '.' + std::to_string(sym1__));
         }}
-      for (int sym1__ = 1; sym1__ <= 2; ++sym1__) {
+      for (int sym1__ = 1; sym1__ <= 3; ++sym1__) {
         {
           param_names__.emplace_back(std::string() + "pars" + '.' + std::to_string(sym1__));
         }}
@@ -813,7 +812,7 @@ public:
         {
           param_names__.emplace_back(std::string() + "Delta_hat" + '.' + std::to_string(sym1__));
         }}
-      for (int sym1__ = 1; sym1__ <= 2; ++sym1__) {
+      for (int sym1__ = 1; sym1__ <= 3; ++sym1__) {
         {
           param_names__.emplace_back(std::string() + "pars" + '.' + std::to_string(sym1__));
         }}
@@ -823,13 +822,13 @@ public:
     
   inline std::string get_constrained_sizedtypes() const {
     stringstream s__;
-    s__ << "[{\"name\":\"ind_y_0\",\"type\":{\"name\":\"real\"},\"block\":\"parameters\"},{\"name\":\"ind_coeff\",\"type\":{\"name\":\"real\"},\"block\":\"parameters\"},{\"name\":\"ind_power\",\"type\":{\"name\":\"real\"},\"block\":\"parameters\"},{\"name\":\"global_error_sigma\",\"type\":{\"name\":\"real\"},\"block\":\"parameters\"},{\"name\":\"y_hat\",\"type\":{\"name\":\"array\",\"length\":" << n_obs << ",\"element_type\":{\"name\":\"real\"}},\"block\":\"generated_quantities\"},{\"name\":\"Delta_hat\",\"type\":{\"name\":\"array\",\"length\":" << n_obs << ",\"element_type\":{\"name\":\"real\"}},\"block\":\"generated_quantities\"},{\"name\":\"pars\",\"type\":{\"name\":\"vector\",\"length\":" << 2 << "},\"block\":\"generated_quantities\"}]";
+    s__ << "[{\"name\":\"ind_y_0\",\"type\":{\"name\":\"real\"},\"block\":\"parameters\"},{\"name\":\"ind_coeff\",\"type\":{\"name\":\"real\"},\"block\":\"parameters\"},{\"name\":\"ind_power\",\"type\":{\"name\":\"real\"},\"block\":\"parameters\"},{\"name\":\"global_error_sigma\",\"type\":{\"name\":\"real\"},\"block\":\"parameters\"},{\"name\":\"y_hat\",\"type\":{\"name\":\"array\",\"length\":" << n_obs << ",\"element_type\":{\"name\":\"real\"}},\"block\":\"generated_quantities\"},{\"name\":\"Delta_hat\",\"type\":{\"name\":\"array\",\"length\":" << n_obs << ",\"element_type\":{\"name\":\"real\"}},\"block\":\"generated_quantities\"},{\"name\":\"pars\",\"type\":{\"name\":\"vector\",\"length\":" << 3 << "},\"block\":\"generated_quantities\"}]";
     return s__.str();
     } // get_constrained_sizedtypes() 
     
   inline std::string get_unconstrained_sizedtypes() const {
     stringstream s__;
-    s__ << "[{\"name\":\"ind_y_0\",\"type\":{\"name\":\"real\"},\"block\":\"parameters\"},{\"name\":\"ind_coeff\",\"type\":{\"name\":\"real\"},\"block\":\"parameters\"},{\"name\":\"ind_power\",\"type\":{\"name\":\"real\"},\"block\":\"parameters\"},{\"name\":\"global_error_sigma\",\"type\":{\"name\":\"real\"},\"block\":\"parameters\"},{\"name\":\"y_hat\",\"type\":{\"name\":\"array\",\"length\":" << n_obs << ",\"element_type\":{\"name\":\"real\"}},\"block\":\"generated_quantities\"},{\"name\":\"Delta_hat\",\"type\":{\"name\":\"array\",\"length\":" << n_obs << ",\"element_type\":{\"name\":\"real\"}},\"block\":\"generated_quantities\"},{\"name\":\"pars\",\"type\":{\"name\":\"vector\",\"length\":" << 2 << "},\"block\":\"generated_quantities\"}]";
+    s__ << "[{\"name\":\"ind_y_0\",\"type\":{\"name\":\"real\"},\"block\":\"parameters\"},{\"name\":\"ind_coeff\",\"type\":{\"name\":\"real\"},\"block\":\"parameters\"},{\"name\":\"ind_power\",\"type\":{\"name\":\"real\"},\"block\":\"parameters\"},{\"name\":\"global_error_sigma\",\"type\":{\"name\":\"real\"},\"block\":\"parameters\"},{\"name\":\"y_hat\",\"type\":{\"name\":\"array\",\"length\":" << n_obs << ",\"element_type\":{\"name\":\"real\"}},\"block\":\"generated_quantities\"},{\"name\":\"Delta_hat\",\"type\":{\"name\":\"array\",\"length\":" << n_obs << ",\"element_type\":{\"name\":\"real\"}},\"block\":\"generated_quantities\"},{\"name\":\"pars\",\"type\":{\"name\":\"vector\",\"length\":" << 3 << "},\"block\":\"generated_quantities\"}]";
     return s__.str();
     } // get_unconstrained_sizedtypes() 
     

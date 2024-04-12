@@ -47,10 +47,7 @@ rmot_test_single_individual <- function(model_name,
   # Extract samples and check if parameter estimates are reasonable.
   ind_samples <- rstan::extract(single_ind_test, permuted = TRUE,
                                          inc_warmup = FALSE)
-  par_ests <- c()
-  for(i in seq_along(par_names)){
-    par_ests[i] <- mean(ind_samples[[par_names[i]]])
-  }
+  par_ests <- purrr::map_dbl(par_names, ~mean(ind_samples[[.x]]))
 
   initial_condition <- mean(ind_samples$ind_y_0)
   expect_equal(par_ests,

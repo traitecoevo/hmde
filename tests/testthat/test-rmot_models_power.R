@@ -39,7 +39,7 @@ test_that("Execution: power single individual", {
   ind_samples <- rstan::extract(single_ind_test, permuted = TRUE,
                                 inc_warmup = FALSE)
 
-  par_ests <- map_dbl(par_names, ~mean(ind_samples[[.x]]))
+  par_ests <- purrr::map_dbl(par_names, ~mean(ind_samples[[.x]]))
 
   initial_condition <- mean(ind_samples$ind_y_0)
   expect_equal(par_ests,
@@ -67,7 +67,7 @@ test_that("Execution: power multiple individuals", {
     1 +                             #Global error
     data$n_obs +                    #y_ij
     data$n_obs +                    #Delta y_ij
-    (data$n_pars-1) +               #Pars temp vector
+    (data$n_pars) +               #Pars temp vector
     1                               #lp__
 
   # Test multi-individual
@@ -80,7 +80,7 @@ test_that("Execution: power multiple individuals", {
                        obs_index = data$obs_index, #vector length N_obs
                        time = data$time, #Vector length N_obs
                        ind_id = data$ind_id, #Vector length N_obs
-                       y_bar = data$multi_true_data$initial_conditions$y_bar, #Real
+                       y_bar = data$multi_true_data$DE_pars$y_bar[1], #Real
                        y_0_obs = data$y_0_obs #vector length N_ind
       ) |>
       rmot_run(chains = 2, iter = 100, verbose = FALSE, show_messages = FALSE)
