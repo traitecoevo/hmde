@@ -21,26 +21,27 @@ based on a case study in tropical tree growth behaviour.
 
 ## The Maths
 
-The general use case is to estimate $\boldsymbol{\theta}$ for a chosen
-differential equation $$ f(Y(t), \boldsymbol{\theta}) = \frac{dY}{dt}$$
-based on the longitudinal structure
+The general use case is to estimate a vector of parameters
+$\boldsymbol{\theta}$ for a chosen differential equation
+$$ f(Y(t), \boldsymbol{\theta}) = \frac{dY}{dt}$$ based on the
+longitudinal structure
 $$ Y(t_{j+1}) = Y(t_j) + \int_{t_j}^{t_{j+1}}f(Y(t), \boldsymbol{\theta})\,dt.
 $$
 
-The input data is observations of the form $y_{ij}$ for individual $i$
+The input data are observations of the form $y_{ij}$ for individual $i$
 at time $t_j$, with repeated observations coming from the same
 individual. We parameterise $f$ at the individual level by estimating
 $\boldsymbol{\theta}_i$ as the vector of parameters. We have
 hyper-parameters that determine the distribution of
-$\boldsymbol{\theta}_i$ with prior distribution
+$\boldsymbol{\theta}_i$ with typical prior distribution
 $$\boldsymbol{\theta}_i \sim \log \mathcal{N}(\boldsymbol{\mu}_{\log(\boldsymbol{\theta})}, \boldsymbol{\sigma}_{\log(\boldsymbol{\theta})}),
 $$ where $\boldsymbol{\mu}_{\log(\boldsymbol{\theta})}$ and
 $\boldsymbol{\sigma}_{\log(\boldsymbol{\theta})}$ are vectors of means
-and standard deviations fit. In the case of a single individual, these
-are chosen prior values. In the case of a multi-individual model
+and standard deviations. In the case of a single individual, these are
+chosen prior values. In the case of a multi-individual model
 $\boldsymbol{\mu}_{\log(\boldsymbol{\theta})}$ and
 $\boldsymbol{\sigma}_{\log(\boldsymbol{\theta})}$ have their own prior
-distributions.
+distributions and are fit to data.
 
 ## Implemented Models
 
@@ -76,6 +77,8 @@ $$ where $f_{max}$ is the maximum growth rate, $Y_{max}$ is the
 $Y$-value at which that maximum occurs, and $k$ controls how narrow or
 wide the peak is.
 
+## 
+
 ## Installation
 
 ‘rmot’ is under active development. You can install the current
@@ -88,12 +91,23 @@ remotes::install_github("traitecoevo/rmot")
 
 ## Quick demo
 
+Create constant growth data with measurement error.
+
 ``` r
-rmot_model("linear") |>
-  rmot_assign_data(X = Loblolly$age,
-                   Y = Loblolly$height,
-                   N = nrow(Loblolly)) |>
-  rmot_run()
+y_obs <- seq(from=2, to=15, length.out=10) + rnorm(10, 0, 0.1)
+```
+
+Fit the model.
+
+``` r
+constant_fit <- rmot_model("constant_single_ind") |>
+        rmot_assign_data(n_obs = 10,                                #Integer
+                         y_obs = y_obs, #vector length n_obs
+                         obs_index = 1:10,                          #vector length n_obs
+                         time = 0:9,                                #Vector length n_obs
+                         y_0_obs = 2                                #Real
+        ) |>
+        rmot_run(chains = 1, iter = 1000, verbose = FALSE, show_messages = FALSE)
 ```
 
 ## Found a bug?
