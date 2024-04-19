@@ -15,12 +15,16 @@ experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](h
 The goal of rmot is to implement hierarchical Bayesian longitudinal models to solve the Bayesian inverse problem of estimating differential equation parameters based on repeat measurement surveys. Estimation is done using Markov Chain Monte Carlo, implemented through
 [Stan](https://mc-stan.org/) via [RStan](https://mc-stan.org/users/interfaces/rstan), built under [R](https://cran.r-project.org/) 4.3.3. The inbuilt models are based on case studies in ecology.
 
+## Testing
+**The Cauchy-Schwarz Inequality**
+$$\left( \sum_{k=1}^n a_k b_k \right)^2 \leq \left( \sum_{k=1}^n a_k^2 \right) \left( \sum_{k=1}^n b_k^2 \right)$$
+
 ## The Maths
 
 The general use case is to estimate a vector of parameters $\boldsymbol{\theta}$ for a chosen differential equation
-$$ f(Y(t), \boldsymbol{\theta}) = \frac{dY}{dt}$$ 
+$$f\left(Y\left(t\right), \boldsymbol{\theta}\right) = \frac{dY}{dt}$$ 
 based on the longitudinal structure
-$$ Y(t_{j+1}) = Y(t_j) + \int_{t_j}^{t_{j+1}}f(Y(t), \boldsymbol{\theta})\,dt. $$
+$$Y(t_{j+1}) = Y(t_j) + \int_{t_j}^{t_{j+1}}f(Y(t), \boldsymbol{\theta})\,dt. $$
 
 The input data are observations of the form $y_{ij}$ for individual $i$ at time $t_j$, with repeated observations coming from the same individual. We parameterise $f$ at the individual level by estimating $\boldsymbol{\theta}_i$ as the vector of parameters. We have hyper-parameters that determine the distribution of $\boldsymbol{\theta}_i$ with typical prior distribution
 $$\boldsymbol{\theta}_i \sim \log \mathcal{N}(\boldsymbol{\mu}_{\log(\boldsymbol{\theta})}, \boldsymbol{\sigma}_{\log(\boldsymbol{\theta})}), $$ 
