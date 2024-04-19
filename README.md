@@ -46,7 +46,7 @@ where $\beta_0>0$ is the coefficient, $\beta_1$ is the power, and $\bar{Y}$ is a
 
 The von Bertalanffy mode is given by
 $$f \left( Y \left( t \right), \beta, Y_{max} \right) = \frac{dY}{dt} = \beta \left( Y_{max} - Y \left( t \right) \right),$$ 
-where $\beta$ is the growth rate parameter and $Y_{max} > 0$ is the maximum value that $Y$ takes.
+where $\beta$ is the growth rate parameter and $Y_{max}$ is the maximum value that $Y$ takes.
 
 ### Canham
 
