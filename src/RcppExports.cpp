@@ -19,6 +19,8 @@ RcppExport SEXP _rcpp_module_boot_stan_fit4constant_single_ind_mod();
 RcppExport SEXP _rcpp_module_boot_stan_fit4linear_mod();
 RcppExport SEXP _rcpp_module_boot_stan_fit4power_multi_ind_mod();
 RcppExport SEXP _rcpp_module_boot_stan_fit4power_single_ind_mod();
+RcppExport SEXP _rcpp_module_boot_stan_fit4vb_multi_ind_mod();
+RcppExport SEXP _rcpp_module_boot_stan_fit4vb_single_ind_mod();
 
 static const R_CallMethodDef CallEntries[] = {
     {"_rcpp_module_boot_stan_fit4canham_multi_ind_mod", (DL_FUNC) &_rcpp_module_boot_stan_fit4canham_multi_ind_mod, 0},
@@ -28,6 +30,8 @@ static const R_CallMethodDef CallEntries[] = {
     {"_rcpp_module_boot_stan_fit4linear_mod", (DL_FUNC) &_rcpp_module_boot_stan_fit4linear_mod, 0},
     {"_rcpp_module_boot_stan_fit4power_multi_ind_mod", (DL_FUNC) &_rcpp_module_boot_stan_fit4power_multi_ind_mod, 0},
     {"_rcpp_module_boot_stan_fit4power_single_ind_mod", (DL_FUNC) &_rcpp_module_boot_stan_fit4power_single_ind_mod, 0},
+    {"_rcpp_module_boot_stan_fit4vb_multi_ind_mod", (DL_FUNC) &_rcpp_module_boot_stan_fit4vb_multi_ind_mod, 0},
+    {"_rcpp_module_boot_stan_fit4vb_single_ind_mod", (DL_FUNC) &_rcpp_module_boot_stan_fit4vb_single_ind_mod, 0},
     {NULL, NULL, 0}
 };
 
