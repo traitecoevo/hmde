@@ -23,8 +23,8 @@ based on the longitudinal structure
 $$Y \left( t_{j+1} \right) = Y\left( t_j \right) + \int_{t_j}^{t_{j+1}}f\left( Y \left( t \right), \boldsymbol{\theta} \right)\,dt. $$
 
 The input data are observations of the form $y_{ij}$ for individual $i$ at time $t_j$, with repeated observations coming from the same individual. We parameterise $f$ at the individual level by estimating $\boldsymbol{\theta}\_i$ as the vector of parameters. We have hyper-parameters that determine the distribution of $\boldsymbol{\theta}\_i$ with typical prior distribution
-$$\boldsymbol{\theta}\_i \sim \log \mathcal{N}(\boldsymbol{\mu}_{\log(\boldsymbol{\theta})}, \boldsymbol{\sigma}_{\log(\boldsymbol{\theta})}), $$ 
-where $\boldsymbol{\mu}_{\log(\boldsymbol{\theta})}$ and $\boldsymbol{\sigma}_{\log(\boldsymbol{\theta})}$ are vectors of means and standard deviations. In the case of a single individual, these are chosen prior values. In the case of a multi-individual model $\boldsymbol{\mu}_{\log(\boldsymbol{\theta})}$ and $\boldsymbol{\sigma}_{\log(\boldsymbol{\theta})}$ have their own prior distributions and are fit to data.
+$$\boldsymbol{\theta}\_i \sim \log \mathcal{N}\left(\boldsymbol{\mu}_{\log\left(\boldsymbol{\theta}\right)}, \boldsymbol{\sigma}_{\log \left( \boldsymbol{\theta} \right)}\right), $$ 
+where $\boldsymbol{\mu}_{\log\left(\boldsymbol{\theta}\right)}$ and $\boldsymbol{\sigma}_{\log\left(\boldsymbol{\theta}\right)}$ are vectors of means and standard deviations. In the case of a single individual, these are chosen prior values. In the case of a multi-individual model $\boldsymbol{\mu}_{\log\left(\boldsymbol{\theta}\right)}$ and $\boldsymbol{\sigma}_{\log\left(\boldsymbol{\theta}\right)}$ have their own prior distributions and are fit to data.
 
 ## Implemented Models
 
@@ -33,19 +33,19 @@ Rmot comes with four DEs built and ready to go, each of which has a version for 
 ### Constant Model
 
 The constant model is given by
-$$ f\left(Y\left(t), \beta \right) = \frac{dY}{dt} = \beta,$$ 
+$$ f\left(Y \left( t \right), \beta \right) = \frac{dY}{dt} = \beta,$$ 
 and is best understood as describing the average rate of change over time.
 
 ### Power law
 
 The power law model is given by
-$$ f\left(Y\left(t), \beta_0, \beta_1, \bar{Y}) = \frac{dY}{dt} = \beta_0 \bigg(\frac{Y\left(t)}{\bar{Y}}\bigg)^{\beta_1}, $$ 
+$$ f\left( Y \left(t \right), \beta_0, \beta_1, \bar{Y} \right) = \frac{dY}{dt} = \beta_0 \bigg\left( \frac{Y\left( t \right)}{\bar{Y}}\bigg\left)^{\beta_1}, $$ 
 where $\beta_0>0$ is the coefficient, $\beta_1$ is the power, and $\bar{Y}$ is a user-provided parameter that centres the model in order to avoid correlation between the $\beta$s.
 
 ### von Bertalanffy
 
 The von Bertalanffy mode is given by
-$$ f\left(Y\left(t), \beta, Y_{max}) = \frac{dY}{dt} = \beta \left(Y_{max} - Y\left(t)),$$ 
+$$ f\left( Y \left( t \right), \beta, Y_{max} \right) = \frac{dY}{dt} = \beta \left( Y_{max} - Y \left( t \right) \right),$$ 
 where $\beta$ is the growth rate parameter and $Y_{max} > 0$ is the maximum value that $Y$ takes.
 
 ### Canham
@@ -53,7 +53,7 @@ where $\beta$ is the growth rate parameter and $Y_{max} > 0$ is the maximum valu
 The Canham ([Canham et
 al. 2004](https://doi.org/10.1890/1051-0761(2006)016%5B0540:NAOCTC%5D2.0.CO;2))
 model is a hump-shaped function given by
-$$ f\left(Y\left(t), f_{max}, Y_{max}, k \right) = \frac{dY}{dt} = f_{max} \exp \Bigg(-\frac{1}{2}\bigg(\frac{\ln\left( Y \left( t \right) / Y_{max} \right)}{k} \bigg\right)^2 \Bigg\right), $$ 
+$$ f\left(Y\left(t \right), f_{max}, Y_{max}, k \right) = \frac{dY}{dt} = f_{max} \exp \Bigg\left(-\frac{1}{2}\bigg\left(\frac{\ln\left( Y \left( t \right) / Y_{max} \right)}{k} \bigg\right)^2 \Bigg\right), $$ 
 where $f_{max}$ is the maximum growth rate, $Y_{max}$ is the $Y$-value at which that maximum occurs, and $k$ controls how narrow or wide the peak is.
 
 ## 
