@@ -18,9 +18,9 @@ The goal of rmot is to implement hierarchical Bayesian longitudinal models to so
 ## The Maths
 
 The general use case is to estimate a vector of parameters $\boldsymbol{\theta}$ for a chosen differential equation
-$$f\left(Y\left(t\right), \boldsymbol{\theta}\right) = \frac{dY}{dt}$$ 
+$$f\left( Y \left( t \right), \boldsymbol{\theta} \right) = \frac{dY}{dt}$$ 
 based on the longitudinal structure
-$$Y\left(t_{j+1}) = Y\left(t_jight) + \int_{t_j}^{t_{j+1}}f\left(Y\left(t), \boldsymbol{\theta})\,dt. $$
+$$Y \left( t_{j+1} \right) = Y\left( t_j \right) + \int_{t_j}^{t_{j+1}}f\left( Y \left( t \right), \boldsymbol{\theta} \right)\,dt. $$
 
 The input data are observations of the form $y_{ij}$ for individual $i$ at time $t_j$, with repeated observations coming from the same individual. We parameterise $f$ at the individual level by estimating $\boldsymbol{\theta}_i$ as the vector of parameters. We have hyper-parameters that determine the distribution of $\boldsymbol{\theta}_i$ with typical prior distribution
 $$\boldsymbol{\theta}_i \sim \log \mathcal{N}(\boldsymbol{\mu}_{\log(\boldsymbol{\theta})}, \boldsymbol{\sigma}_{\log(\boldsymbol{\theta})}), $$ 
@@ -33,7 +33,7 @@ Rmot comes with four DEs built and ready to go, each of which has a version for 
 ### Constant Model
 
 The constant model is given by
-$$ f\left(Y\left(t), \betaight) = \frac{dY}{dt} = \beta,$$ 
+$$ f\left(Y\left(t), \beta \right) = \frac{dY}{dt} = \beta,$$ 
 and is best understood as describing the average rate of change over time.
 
 ### Power law
@@ -53,7 +53,7 @@ where $\beta$ is the growth rate parameter and $Y_{max} > 0$ is the maximum valu
 The Canham ([Canham et
 al. 2004](https://doi.org/10.1890/1051-0761(2006)016%5B0540:NAOCTC%5D2.0.CO;2))
 model is a hump-shaped function given by
-$$ f\left(Y\left(t), f_{max}, Y_{max}, kight) = \frac{dY}{dt} = f_{max} \exp \Bigg(-\frac{1}{2}\bigg(\frac{\ln\left(Y\left(t)/Y_{max})}{k} \bigg)^2 \Bigg), $$ 
+$$ f\left(Y\left(t), f_{max}, Y_{max}, k \right) = \frac{dY}{dt} = f_{max} \exp \Bigg(-\frac{1}{2}\bigg(\frac{\ln\left( Y \left( t \right) / Y_{max} \right)}{k} \bigg\right)^2 \Bigg\right), $$ 
 where $f_{max}$ is the maximum growth rate, $Y_{max}$ is the $Y$-value at which that maximum occurs, and $k$ controls how narrow or wide the peak is.
 
 ## 
@@ -77,7 +77,7 @@ y_obs <- seq(from=2, to=15, length.out=10) + rnorm(10, 0, 0.1)
 ```
 
 Measurement error is necessary as otherwise the normal likelihood
-$$s_{ij} \sim \mathcal{N}(0, \sigma_e)$$ 
+$$s_{ij} \sim \mathcal{N}\left( 0, \sigma_e \right)$$ 
 blows up as $\sigma_e$ approaches 0.
 
 Fit the model.
