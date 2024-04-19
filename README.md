@@ -15,16 +15,12 @@ experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](h
 The goal of rmot is to implement hierarchical Bayesian longitudinal models to solve the Bayesian inverse problem of estimating differential equation parameters based on repeat measurement surveys. Estimation is done using Markov Chain Monte Carlo, implemented through
 [Stan](https://mc-stan.org/) via [RStan](https://mc-stan.org/users/interfaces/rstan), built under [R](https://cran.r-project.org/) 4.3.3. The inbuilt models are based on case studies in ecology.
 
-## Testing
-**The Cauchy-Schwarz Inequality**
-$$\left( \sum_{k=1}^n a_k b_k \right)^2 \leq \left( \sum_{k=1}^n a_k^2 \right) \left( \sum_{k=1}^n b_k^2 \right)$$
-
 ## The Maths
 
 The general use case is to estimate a vector of parameters $\boldsymbol{\theta}$ for a chosen differential equation
 $$f\left(Y\left(t\right), \boldsymbol{\theta}\right) = \frac{dY}{dt}$$ 
 based on the longitudinal structure
-$$Y(t_{j+1}) = Y(t_j) + \int_{t_j}^{t_{j+1}}f(Y(t), \boldsymbol{\theta})\,dt. $$
+$$Y\left(t_{j+1}) = Y\left(t_jight) + \int_{t_j}^{t_{j+1}}f\left(Y\left(t), \boldsymbol{\theta})\,dt. $$
 
 The input data are observations of the form $y_{ij}$ for individual $i$ at time $t_j$, with repeated observations coming from the same individual. We parameterise $f$ at the individual level by estimating $\boldsymbol{\theta}_i$ as the vector of parameters. We have hyper-parameters that determine the distribution of $\boldsymbol{\theta}_i$ with typical prior distribution
 $$\boldsymbol{\theta}_i \sim \log \mathcal{N}(\boldsymbol{\mu}_{\log(\boldsymbol{\theta})}, \boldsymbol{\sigma}_{\log(\boldsymbol{\theta})}), $$ 
@@ -37,19 +33,19 @@ Rmot comes with four DEs built and ready to go, each of which has a version for 
 ### Constant Model
 
 The constant model is given by
-$$ f(Y(t), \beta) = \frac{dY}{dt} = \beta,$$ 
+$$ f\left(Y\left(t), \betaight) = \frac{dY}{dt} = \beta,$$ 
 and is best understood as describing the average rate of change over time.
 
 ### Power law
 
 The power law model is given by
-$$ f(Y(t), \beta_0, \beta_1, \bar{Y}) = \frac{dY}{dt} = \beta_0 \bigg(\frac{Y(t)}{\bar{Y}}\bigg)^{\beta_1}, $$ 
+$$ f\left(Y\left(t), \beta_0, \beta_1, \bar{Y}) = \frac{dY}{dt} = \beta_0 \bigg(\frac{Y\left(t)}{\bar{Y}}\bigg)^{\beta_1}, $$ 
 where $\beta_0>0$ is the coefficient, $\beta_1$ is the power, and $\bar{Y}$ is a user-provided parameter that centres the model in order to avoid correlation between the $\beta$s.
 
 ### von Bertalanffy
 
 The von Bertalanffy mode is given by
-$$ f(Y(t), \beta, Y_{max}) = \frac{dY}{dt} = \beta (Y_{max} - Y(t)),$$ 
+$$ f\left(Y\left(t), \beta, Y_{max}) = \frac{dY}{dt} = \beta \left(Y_{max} - Y\left(t)),$$ 
 where $\beta$ is the growth rate parameter and $Y_{max} > 0$ is the maximum value that $Y$ takes.
 
 ### Canham
@@ -57,7 +53,7 @@ where $\beta$ is the growth rate parameter and $Y_{max} > 0$ is the maximum valu
 The Canham ([Canham et
 al. 2004](https://doi.org/10.1890/1051-0761(2006)016%5B0540:NAOCTC%5D2.0.CO;2))
 model is a hump-shaped function given by
-$$ f(Y(t), f_{max}, Y_{max}, k) = \frac{dY}{dt} = f_{max} \exp \Bigg(-\frac{1}{2}\bigg(\frac{\ln(Y(t)/Y_{max})}{k} \bigg)^2 \Bigg), $$ 
+$$ f\left(Y\left(t), f_{max}, Y_{max}, kight) = \frac{dY}{dt} = f_{max} \exp \Bigg(-\frac{1}{2}\bigg(\frac{\ln\left(Y\left(t)/Y_{max})}{k} \bigg)^2 \Bigg), $$ 
 where $f_{max}$ is the maximum growth rate, $Y_{max}$ is the $Y$-value at which that maximum occurs, and $k$ controls how narrow or wide the peak is.
 
 ## 
