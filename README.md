@@ -39,13 +39,13 @@ and is best understood as describing the average rate of change over time.
 ### Power law
 
 The power law model is given by
-$$ f\left( Y \left(t \right), \beta_0, \beta_1, \bar{Y} \right) = \frac{dY}{dt} = \beta_0 \bigg\left( \frac{Y\left( t \right)}{\bar{Y}}\bigg\left)^{\beta_1}, $$ 
+$$f \left( Y \left( t \right), \beta_0, \beta_1, \bar{Y} \right) = \frac{dY}{dt} = \beta_0 \bigg\left( \frac{Y \left( t \right)}{\bar{Y}} \bigg\left)^{\beta_1},$$ 
 where $\beta_0>0$ is the coefficient, $\beta_1$ is the power, and $\bar{Y}$ is a user-provided parameter that centres the model in order to avoid correlation between the $\beta$s.
 
 ### von Bertalanffy
 
 The von Bertalanffy mode is given by
-$$ f\left( Y \left( t \right), \beta, Y_{max} \right) = \frac{dY}{dt} = \beta \left( Y_{max} - Y \left( t \right) \right),$$ 
+$$f \left( Y \left( t \right), \beta, Y_{max} \right) = \frac{dY}{dt} = \beta \left( Y_{max} - Y \left( t \right) \right),$$ 
 where $\beta$ is the growth rate parameter and $Y_{max} > 0$ is the maximum value that $Y$ takes.
 
 ### Canham
@@ -53,7 +53,7 @@ where $\beta$ is the growth rate parameter and $Y_{max} > 0$ is the maximum valu
 The Canham ([Canham et
 al. 2004](https://doi.org/10.1890/1051-0761(2006)016%5B0540:NAOCTC%5D2.0.CO;2))
 model is a hump-shaped function given by
-$$ f\left(Y\left(t \right), f_{max}, Y_{max}, k \right) = \frac{dY}{dt} = f_{max} \exp \Bigg\left(-\frac{1}{2}\bigg\left(\frac{\ln\left( Y \left( t \right) / Y_{max} \right)}{k} \bigg\right)^2 \Bigg\right), $$ 
+$$f \left( Y \left( t \right), f_{max}, Y_{max}, k \right) = \frac{dY}{dt} = f_{max} \exp \Bigg\left( -\frac{1}{2} \bigg\left( \frac{ \ln \left( Y \left( t \right) / Y_{max} \right) }{k} \bigg\right)^2 \Bigg\right), $$ 
 where $f_{max}$ is the maximum growth rate, $Y_{max}$ is the $Y$-value at which that maximum occurs, and $k$ controls how narrow or wide the peak is.
 
 ## 
