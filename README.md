@@ -15,9 +15,11 @@ experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](h
 The goal of rmot is to implement hierarchical Bayesian longitudinal
 models to solve the Bayesian inverse problem of estimating differential
 equation parameters based on repeat measurement surveys. Estimation is
-done through Markov Chain Monte Carlo, implemented through Stan (CITE)
-via RStan (CITE), build under R 4.3.3 (CITE). The inbuilt models are
-based on a case study in tropical tree growth behaviour.
+done through Markov Chain Monte Carlo, implemented through
+[Stan](https://mc-stan.org/) via
+[RStan](https://mc-stan.org/users/interfaces/rstan), built under
+[R](https://cran.r-project.org/) 4.3.3. The inbuilt models are based on
+a case study in tropical tree growth behaviour.
 
 ## The Maths
 
@@ -71,7 +73,9 @@ maximum value that $Y$ takes.
 
 ### Canham
 
-The Canham model is a hump-shaped function given by
+The Canham ([Canham et
+al. 2004](https://doi.org/10.1890/1051-0761(2006)016%5B0540:NAOCTC%5D2.0.CO;2))
+model is a hump-shaped function given by
 $$ f(Y(t), f_{max}, Y_{max}, k) = \frac{dY}{dt} = f_{max} \exp \Bigg(-\frac{1}{2}\bigg(\frac{\ln(Y(t)/Y_{max})}{k} \bigg)^2 \Bigg), 
 $$ where $f_{max}$ is the maximum growth rate, $Y_{max}$ is the
 $Y$-value at which that maximum occurs, and $k$ controls how narrow or
@@ -91,11 +95,14 @@ remotes::install_github("traitecoevo/rmot")
 
 ## Quick demo
 
-Create constant growth data with measurement error.
+Create constant growth data with measurement error:
 
 ``` r
 y_obs <- seq(from=2, to=15, length.out=10) + rnorm(10, 0, 0.1)
 ```
+
+Measurement error is necessary as otherwise the normal likelihood
+$$s_{ij} \sim \mathcal{N}(0, \sigma_e)$$ blows up as $\sigma_e \to 0$.
 
 Fit the model.
 

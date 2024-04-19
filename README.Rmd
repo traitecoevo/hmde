@@ -24,7 +24,7 @@ knitr::opts_chunk$set(
 [![Lifecycle: experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://lifecycle.r-lib.org/articles/stages.html#experimental)
 <!-- badges: end -->
 
-The goal of rmot is to implement hierarchical Bayesian longitudinal models to solve the Bayesian inverse problem of estimating differential equation parameters based on repeat measurement surveys. Estimation is done through Markov Chain Monte Carlo, implemented through Stan (CITE) via RStan (CITE), build under R 4.3.3 (CITE). The inbuilt models are based on a case study in tropical tree growth behaviour.
+The goal of rmot is to implement hierarchical Bayesian longitudinal models to solve the Bayesian inverse problem of estimating differential equation parameters based on repeat measurement surveys. Estimation is done through Markov Chain Monte Carlo, implemented through [Stan](https://mc-stan.org/) via [RStan](https://mc-stan.org/users/interfaces/rstan), built under [R](https://cran.r-project.org/) 4.3.3. The inbuilt models are based on a case study in tropical tree growth behaviour.
 
 ## The Maths 
 The general use case is to estimate a vector of parameters $\boldsymbol{\theta}$ for a chosen differential equation
@@ -50,7 +50,7 @@ and is best understood as describing the average rate of change over time.
 The power law model is given by 
 $$ f(Y(t), \beta_0, \beta_1, \bar{Y}) = \frac{dY}{dt} = \beta_0 \bigg(\frac{Y(t)}{\bar{Y}}\bigg)^{\beta_1},
 $$
-where $\beta_0>0$ is the coefficient, $\beta_1$ is the power, and $\bar{Y}$ is a user-provided parameter that centres the model in order to avoid correlation between the $\beta$s.
+where $\beta_0$ is the coefficient, $\beta_1$ is the power, and $\bar{Y}$ is a user-provided parameter that centres the model in order to avoid correlation between the $\beta$s.
 
 ### von Bertalanffy
 The von Bertalanffy mode is given by
@@ -59,7 +59,7 @@ $$
 where $\beta$ is the growth rate parameter and $Y_{max} > 0$ is the maximum value that $Y$ takes.
 
 ### Canham
-The Canham model is a hump-shaped function given by
+The Canham ([Canham et al. 2004](https://doi.org/10.1890/1051-0761\(2006\)016[0540:NAOCTC]2.0.CO;2\)) model is a hump-shaped function given by
 $$ f(Y(t), f_{max}, Y_{max}, k) = \frac{dY}{dt} = f_{max} \exp \Bigg(-\frac{1}{2}\bigg(\frac{\ln(Y(t)/Y_{max})}{k} \bigg)^2 \Bigg),	
 $$
 where $f_{max}$ is the maximum growth rate, $Y_{max}$ is the $Y$-value at which that maximum occurs, and $k$ controls how narrow or wide the peak is.
@@ -76,11 +76,15 @@ remotes::install_github("traitecoevo/rmot")
 ```
 
 ## Quick demo
-Create constant growth data with measurement error.
+Create constant growth data with measurement error:
 ```{r example1_0}
 y_obs <- seq(from=2, to=15, length.out=10) + rnorm(10, 0, 0.1)
 ```
-Fit the model.
+Measurement error is necessary as otherwise the normal likelihood 
+$$s_{ij} \sim \mathcal{N}(0, \sigma_e)$$
+blows up as $\sigma_e \to 0$.
+
+Fit the model and extract the parameter estimate for growth rate.
 ```{r example1_1}
 constant_fit <- rmot_model("constant_single_ind") |>
         rmot_assign_data(n_obs = 10,                                #Integer
@@ -90,6 +94,9 @@ constant_fit <- rmot_model("constant_single_ind") |>
                          y_0_obs = 2                                #Real
         ) |>
         rmot_run(chains = 1, iter = 1000, verbose = FALSE, show_messages = FALSE)
+
+ind_samples <- rstan::extract(constant_fit, permuted = TRUE, inc_warmup = FALSE)
+mean(ind_samples$ind_beta)
 ```
 
 ## Found a bug? 
