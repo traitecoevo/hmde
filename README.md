@@ -23,8 +23,8 @@ based on the longitudinal structure
 $$Y \left( t_{j+1} \right) = Y\left( t_j \right) + \int_{t_j}^{t_{j+1}}f\left( Y \left( t \right), \boldsymbol{\theta} \right)\,dt. $$
 
 The input data are observations of the form $y_{ij}$ for individual $i$ at time $t_j$, with repeated observations coming from the same individual. We parameterise $f$ at the individual level by estimating $\boldsymbol{\theta}\_i$ as the vector of parameters. We have hyper-parameters that determine the distribution of $\boldsymbol{\theta}\_i$ with typical prior distribution
-$$\boldsymbol{\theta}\_i \sim \log \mathcal{N}\left(\boldsymbol{\mu}_{\log\left(\boldsymbol{\theta}\right)}, \boldsymbol{\sigma}_{\log \left( \boldsymbol{\theta} \right)}\right), $$ 
-where $\boldsymbol{\mu}_{\log\left(\boldsymbol{\theta}\right)}$ and $\boldsymbol{\sigma}_{\log\left(\boldsymbol{\theta}\right)}$ are vectors of means and standard deviations. In the case of a single individual, these are chosen prior values. In the case of a multi-individual model $\boldsymbol{\mu}_{\log\left(\boldsymbol{\theta}\right)}$ and $\boldsymbol{\sigma}_{\log\left(\boldsymbol{\theta}\right)}$ have their own prior distributions and are fit to data.
+$$\boldsymbol{\theta}\_i \sim \log \mathcal{N}\left(\boldsymbol{\mu}\_{\log\left(\boldsymbol{\theta}\right)}, \boldsymbol{\sigma}\_{\log \left( \boldsymbol{\theta} \right)}\right), $$ 
+where $\boldsymbol{\mu}\_{\log\left(\boldsymbol{\theta}\right)}$ and $\boldsymbol{\sigma}\_{\log\left(\boldsymbol{\theta}\right)}$ are vectors of means and standard deviations. In the case of a single individual, these are chosen prior values. In the case of a multi-individual model $\boldsymbol{\mu}\_{\log\left(\boldsymbol{\theta}\right)}$ and $\boldsymbol{\sigma}\_{\log\left(\boldsymbol{\theta}\right)}$ have their own prior distributions and are fit to data.
 
 ## Implemented Models
 
