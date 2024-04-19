@@ -33,7 +33,7 @@ Rmot comes with four DEs built and ready to go, each of which has a version for 
 ### Constant Model
 
 The constant model is given by
-$$ f\left(Y \left( t \right), \beta \right) = \frac{dY}{dt} = \beta,$$ 
+$$f \left( Y \left( t \right), \beta \right) = \frac{dY}{dt} = \beta,$$ 
 and is best understood as describing the average rate of change over time.
 
 ### Power law
