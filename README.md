@@ -39,7 +39,7 @@ and is best understood as describing the average rate of change over time.
 ### Power law
 
 The power law model is given by
-$$f \left( Y \left( t \right), \beta_0, \beta_1, \bar{Y} \right) = \frac{dY}{dt} = \beta_0 \bigg\left( \frac{Y \left( t \right)}{\bar{Y}} \bigg\left)^{\beta_1},$$ 
+$$f \left( Y \left( t \right), \beta_0, \beta_1, \bar{Y} \right) = \frac{dY}{dt} = \beta_0 \bigg( \frac{Y \left( t \right)}{\bar{Y}} \bigg)^{\beta_1},$$ 
 where $\beta_0>0$ is the coefficient, $\beta_1$ is the power, and $\bar{Y}$ is a user-provided parameter that centres the model in order to avoid correlation between the $\beta$s.
 
 ### von Bertalanffy
