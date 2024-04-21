@@ -88,7 +88,7 @@ constant_fit <- rmot_model("constant_single\_ind") |>
                          y_obs = y_obs,               #vector length n_obs
                          obs_index = 1:10,            #vector length n_obs
                          time = 0:9,                  #Vector length n_obs
-                         y_0_obs = 2                  #Real
+                         y_0_obs = y_obs[1]           #Real
         ) |>
         rmot_run(chains = 1, iter = 1000, verbose = FALSE, show_messages = FALSE)
 ```
