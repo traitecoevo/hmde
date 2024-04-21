@@ -80,15 +80,15 @@ Measurement error is necessary as otherwise the normal likelihood
 $$s_{ij} \sim \mathcal{N}\left( 0, \sigma_e \right)$$ 
 blows up as $\sigma_e$ approaches 0.
 
-Fit the model.
+Fit the model:
 
 ``` r
 constant_fit <- rmot_model("constant_single\_ind") |>
-        rmot_assign_data(n_obs = 10,                                #Integer
-                         y_obs = y_obs, #vector length n_obs
-                         obs_index = 1:10,                          #vector length n_obs
-                         time = 0:9,                                #Vector length n_obs
-                         y_0_obs = 2                                #Real
+        rmot_assign_data(n_obs = 10,                  #Integer
+                         y_obs = y_obs,               #vector length n_obs
+                         obs_index = 1:10,            #vector length n_obs
+                         time = 0:9,                  #Vector length n_obs
+                         y_0_obs = 2                  #Real
         ) |>
         rmot_run(chains = 1, iter = 1000, verbose = FALSE, show_messages = FALSE)
 ```
