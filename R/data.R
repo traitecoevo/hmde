@@ -20,19 +20,19 @@
 #' @source <https://doi.org/10.3897/BDJ.8.e52157>
 "Trout_Size_Data"
 
-#' Garcinia recondita - Barro Colorado Island data
+#' Hirtella triandra - Barro Colorado Island data
 #'
 #' A subset of data from the Barro Colorado Island long term forest plot
 #' managed by the Smithsonian Tropical Research Institute (Condit et al. 2019).
 #' Data was prepared by taking a simple random sample without replacement of
-#' 50 individual IDs from Garcinia recondita. The sampling frame was restricted
+#' 50 individual IDs from Hirtella triandra. The sampling frame was restricted
 #' to individuals with 6 observations since 1990, and a difference between
-#' observed max and min sizes of more than 1.5cm in order to avoid identifiability
-#' issues. Data was then transformed and renamed to match  the required structure
+#' observed max and min sizes of more than 7cm in order to avoid identifiability
+#' issues. Data was then transformed and renamed to match the required structure
 #' to act as demonstration for the package.
 #'
 #' @format ## `Tree_Size_Data`
-#' A data frame with 300 rows and 4 columns:
+#' A data frame with 180 rows and 4 columns:
 #' \describe{
 #'   \item{ind_id}{ID number for individual}
 #'   \item{time}{Years since first observation.}
