@@ -37,7 +37,8 @@
 #'   \item{y_obs}{Individual diameter at breast height (DBH) in centimetres.}
 #'   \item{obs_index}{Index of observations for individual}
 #' }
-#' @source <https://doi.org/10.15146/5xcp-0d46>
+#' @references \url{https://doi.org/10.1002/ecy.4140}
+#' @source \url{https://doi.org/10.15146/5xcp-0d46}
 "Tree_Size_Data"
 
 #' Skink size data - Lampropholis delicata
@@ -56,26 +57,6 @@
 #'   \item{y_obs}{Individual mass in kilograms.}
 #'   \item{obs_index}{Index of observations for individual}
 #' }
-#' @source <https://www.nature.com/articles/s41437-023-00660-3>
+#'
+#' @source \url{https://osf.io/hjkxd/}
 "Lizard_Mass_Data"
-
-#' Skink metabolic rate data - Lampropholis delicata
-#'
-#' A subset of data from Kar et al. (2021), used to model metabolic rate
-#' variation over time across individuals.
-#' Data was prepared by taking a simple random sample with replacement of 30
-#' individual IDs. As two measurements were taken per observation the y_obs
-#' used is the arithmetic mean. Every second observation was chosen in order to
-#' moderate the data size. Data was then transformed to conform to
-#' the needs of a model data set in the package.
-#'
-#' @format ## `Lizard_Metabolic_Data`
-#' A data frame with 443 rows and 4 columns:
-#' \describe{
-#'   \item{ind_id}{ID number for individual}
-#'   \item{time}{Days since first observation.}
-#'   \item{y_obs}{CO2 metabolic rate.}
-#'   \item{obs_index}{Index of observations for individual}
-#' }
-#' @source <https://doi.org/10.1111/oik.08122>
-"Lizard_Metabolic_Data"
