@@ -30,4 +30,7 @@ Data was prepared by taking a simple random sample without replacement of
 Data was then transformed and renamed to match  the required structure
 to act as demonstration for the package.
 }
+\references{
+\url{https://doi.org/10.1002/ecy.4140}
+}
 \keyword{datasets}

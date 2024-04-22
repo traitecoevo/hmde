@@ -54,6 +54,7 @@ data {
   real y_obs[n_obs];
   int obs_index[n_obs];
   real time[n_obs];
+  real y_max;
   real y_0_obs;
 }
 
@@ -95,7 +96,7 @@ model {
   //Individual level
   ind_y_0 ~ normal(y_0_obs, global_error_sigma);
   ind_growth_par ~lognormal(0, 1);
-  ind_max_size ~lognormal(max(log(y_obs)), 1); //Take max obs. size as average value
+  ind_max_size ~lognormal(log(y_max), 1); //Take max obs. size as average value
 
   //Global level
   global_error_sigma ~cauchy(1,5);

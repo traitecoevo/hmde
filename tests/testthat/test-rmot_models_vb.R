@@ -3,7 +3,7 @@ test_that("Model structures: vb", {
   # Single individual
   single_model <- rmot_model("vb_single_ind")
   expect_named(single_model, c("step_size", "n_obs", "y_obs",
-                               "obs_index", "time", "y_0_obs",
+                               "obs_index", "time", "y_max", "y_0_obs",
                                "model"))
   expect_type(single_model, "list")
   expect_visible(single_model)
@@ -11,7 +11,7 @@ test_that("Model structures: vb", {
   #Multiple individuals
   multi_model <- rmot_model("vb_multi_ind")
   expect_named(multi_model, c("step_size", "n_obs", "n_ind", "y_obs",
-                              "obs_index", "time", "ind_id", "y_0_obs",
+                              "obs_index", "time", "ind_id", "y_max", "y_0_obs",
                               "model"))
   expect_type(multi_model, "list")
   expect_visible(multi_model)
@@ -21,7 +21,39 @@ test_that("Execution: vb single individual", {
   model_name <- "vb"
   par_names <- c("ind_growth_par", "ind_max_size")
 
-  rmot_test_single_individual(model_name, par_names)
+  data <- readRDS(test_path("fixtures", "vb",
+                            "vb_data_single_ind.rds"))
+
+  suppressWarnings( #Suppresses stan warnings
+    single_ind_test <- rmot_model(paste0(model_name, "_single_ind")) |>
+      rmot_assign_data(step_size = data$step_size,
+                       n_obs = data$n_obs, #integer
+                       y_obs = data$y_obs,
+                       obs_index = data$obs_index, #vector length N_obs
+                       time = data$time, #Vector length N_obs
+                       y_max = max(data$y_obs), #Real
+                       y_0_obs = data$y_0_obs #vector length N_ind
+      ) |>
+      rmot_run(chains = 1, iter = 1000, verbose = FALSE, show_messages = FALSE)
+  )
+
+  # Extract samples and check if parameter estimates are reasonable.
+  ind_samples <- rstan::extract(single_ind_test, permuted = TRUE,
+                                inc_warmup = FALSE)
+
+  par_ests <- purrr::map_dbl(par_names, ~mean(ind_samples[[.x]]))
+
+  initial_condition <- mean(ind_samples$ind_y_0)
+  expect_equal(par_ests,
+               as.numeric(data$single_true_data$DE_pars[c(1,2)]),
+               tolerance = 1e-1)
+  expect_equal(initial_condition,
+               as.numeric(data$single_true_data$initial_conditions),
+               tolerance = 1e-1)
+
+  # Checks for output existence and type
+  expect_visible(single_ind_test)
+  expect_s4_class(single_ind_test, "stanfit")
 })
 
 test_that("Execution: vb multiple individuals", {
@@ -40,5 +72,26 @@ test_that("Execution: vb multiple individuals", {
     data$n_pars +              #pars vector
     1                          #lp__
 
-  rmot_test_multi_individual(model_name, data, est_dim)
+  # Test multi-individual
+  suppressWarnings( #Suppresses stan warnings
+    multi_ind_test <- rmot_model(paste0(model_name, "_multi_ind")) |>
+      rmot_assign_data(step_size = data$step_size, #real
+                       n_obs = data$n_obs, #integer
+                       n_ind = data$n_ind, #integer
+                       y_obs = data$y_obs, #vector length N_obs
+                       obs_index = data$obs_index, #vector length N_obs
+                       time = data$time, #Vector length N_obs
+                       ind_id = data$ind_id, #Vector length N_obs
+                       y_max = max(data$y_obs), #Real
+                       y_0_obs = data$y_0_obs #vector length N_ind
+      ) |>
+      rmot_run(chains = 2, iter = 100, verbose = FALSE, show_messages = FALSE)
+  )
+
+  # Extract samples
+  multi_samples <- rstan::extract(multi_ind_test, permuted = FALSE, inc_warmup = TRUE)
+  expect_equal(dim(multi_samples), c(100, 2, est_dim))
+
+  expect_visible(multi_ind_test)
+  expect_s4_class(multi_ind_test, "stanfit")
 })

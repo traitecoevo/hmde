@@ -17,7 +17,7 @@ A data frame with 336 rows and 4 columns:
 }
 }
 \source{
-\url{https://www.nature.com/articles/s41437-023-00660-3}
+\url{https://osf.io/hjkxd/}
 }
 \usage{
 Lizard_Mass_Data

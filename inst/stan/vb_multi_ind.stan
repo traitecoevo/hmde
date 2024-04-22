@@ -56,6 +56,7 @@ data {
   int obs_index[n_obs];
   real time[n_obs];
   int ind_id[n_obs];
+  real y_max;
   real y_0_obs[n_ind];
 }
 
@@ -110,7 +111,7 @@ model {
   //Species level
   species_growth_par_mean ~normal(0, 2);
   species_growth_par_sd ~cauchy(0, 2);
-  species_max_size_mean ~normal(max(log(y_obs)), 2);
+  species_max_size_mean ~normal(log(y_max), 2);
   species_max_size_sd ~cauchy(0, 2);
 
   //Global level
