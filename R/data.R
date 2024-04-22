@@ -69,7 +69,7 @@
 #' moderate the data size. Data was then transformed to conform to
 #' the needs of a model data set in the package.
 #'
-#' @format ## `Lizard_Mass_Data`
+#' @format ## `Lizard_Metabolic_Data`
 #' A data frame with 443 rows and 4 columns:
 #' \describe{
 #'   \item{ind_id}{ID number for individual}
