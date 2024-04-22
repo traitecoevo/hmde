@@ -65,7 +65,8 @@
 #' variation over time across individuals.
 #' Data was prepared by taking a simple random sample with replacement of 30
 #' individual IDs. As two measurements were taken per observation the y_obs
-#' used is the arithmetic mean. Data was then transformed to conform to
+#' used is the arithmetic mean. Every second observation was chosen in order to
+#' moderate the data size. Data was then transformed to conform to
 #' the needs of a model data set in the package.
 #'
 #' @format ## `Lizard_Mass_Data`
@@ -73,7 +74,7 @@
 #' \describe{
 #'   \item{ind_id}{ID number for individual}
 #'   \item{time}{Days since first observation.}
-#'   \item{y_obs}{Individual mass in kilograms.}
+#'   \item{y_obs}{CO2 metabolic rate.}
 #'   \item{obs_index}{Index of observations for individual}
 #' }
 #' @source <https://doi.org/10.1111/oik.08122>
