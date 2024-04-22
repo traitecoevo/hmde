@@ -39,3 +39,42 @@
 #' }
 #' @source <https://doi.org/10.15146/5xcp-0d46>
 "Tree_Size_Data"
+
+#' Skink size data - Lampropholis delicata
+#'
+#' A subset of data from Kar, Nakagawa, and Noble (2024), used to model growth
+#' behaviour in a skink species.
+#' Data was prepared by taking a simple random sample with replacement of 50
+#' individual IDs among individuals with at least 5 observations each. Data was
+#' then transformed to conform to the needs of a model data set in the package.
+#'
+#' @format ## `Lizard_Mass_Data`
+#' A data frame with 336 rows and 4 columns:
+#' \describe{
+#'   \item{ind_id}{ID number for individual}
+#'   \item{time}{Days since first observation.}
+#'   \item{y_obs}{Individual mass in kilograms.}
+#'   \item{obs_index}{Index of observations for individual}
+#' }
+#' @source <https://www.nature.com/articles/s41437-023-00660-3>
+"Lizard_Mass_Data"
+
+#' Skink metabolic rate data - Lampropholis delicata
+#'
+#' A subset of data from Kar et al. (2021), used to model metabolic rate
+#' variation over time across individuals.
+#' Data was prepared by taking a simple random sample with replacement of 30
+#' individual IDs. As two measurements were taken per observation the y_obs
+#' used is the arithmetic mean. Data was then transformed to conform to
+#' the needs of a model data set in the package.
+#'
+#' @format ## `Lizard_Mass_Data`
+#' A data frame with 443 rows and 4 columns:
+#' \describe{
+#'   \item{ind_id}{ID number for individual}
+#'   \item{time}{Days since first observation.}
+#'   \item{y_obs}{Individual mass in kilograms.}
+#'   \item{obs_index}{Index of observations for individual}
+#' }
+#' @source <https://doi.org/10.1111/oik.08122>
+"Lizard_Metabolic_Data"
