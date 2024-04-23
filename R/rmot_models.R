@@ -128,35 +128,3 @@ rmot_power_multi_ind <- function(){
        y_0_obs = NULL,
        model = "power_multi_ind")
 }
-
-#' Data configuration template for von Bertalanffy growth single individual model
-#' @keywords internal
-#' @noRd
-
-rmot_vb_single_ind <- function(){
-  list(step_size = NULL,
-       n_obs = NULL,
-       y_obs = NULL,
-       obs_index = NULL,
-       time = NULL,
-       y_max = NULL,
-       y_0_obs = NULL,
-       model = "vb_single_ind")
-}
-
-#' Data configuration template for von Bertalanffy growth single species model
-#' @keywords internal
-#' @noRd
-
-rmot_vb_multi_ind <- function(){
-  list(step_size = NULL,
-       n_obs = NULL,
-       n_ind = NULL,
-       y_obs = NULL,
-       obs_index = NULL,
-       time = NULL,
-       ind_id = NULL,
-       y_max = NULL,
-       y_0_obs = NULL,
-       model = "vb_multi_ind")
-}
