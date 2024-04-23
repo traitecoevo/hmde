@@ -19,9 +19,7 @@ rmot_model <- function(model=NULL){
                    canham_single_ind = rmot_canham_single_ind(),
                    canham_multi_ind = rmot_canham_multi_ind(),
                    power_single_ind = rmot_power_single_ind(),
-                   power_multi_ind = rmot_power_multi_ind(),
-                   vb_single_ind = rmot_vb_single_ind(),
-                   vb_multi_ind = rmot_vb_multi_ind())
+                   power_multi_ind = rmot_power_multi_ind())
 
   class(output) <- "rmot_object"
 
