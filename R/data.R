@@ -25,7 +25,7 @@
 #' A subset of data from the Barro Colorado Island long term forest plot
 #' managed by the Smithsonian Tropical Research Institute (Condit et al. 2019).
 #' Data was prepared by taking a simple random sample without replacement of
-#' 50 individual IDs from Hirtella triandra. The sampling frame was restricted
+#' 30 individual IDs from Hirtella triandra. The sampling frame was restricted
 #' to individuals with 6 observations since 1990, and a difference between
 #' observed max and min sizes of more than 7cm in order to avoid identifiability
 #' issues. Data was then transformed and renamed to match the required structure
@@ -48,7 +48,7 @@
 #' A subset of data from the Barro Colorado Island long term forest plot
 #' managed by the Smithsonian Tropical Research Institute (Condit et al. 2019).
 #' Data was prepared by taking a simple random sample without replacement of
-#' 50 individual IDs from Protium tenufolium.
+#' 30 individual IDs from Protium tenufolium.
 #' The sampling frame was restricted to individuals with individuals under 10cm
 #' for the max observed DBH, 6 observations since 1990. Data was then
 #' transformed and renamed to match the required structure
