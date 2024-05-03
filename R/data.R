@@ -20,28 +20,25 @@
 #' @source <https://doi.org/10.3897/BDJ.8.e52157>
 "Trout_Size_Data"
 
-#' Hirtella triandra - Barro Colorado Island data
+#' Skink size data - Lampropholis delicata
 #'
-#' A subset of data from the Barro Colorado Island long term forest plot
-#' managed by the Smithsonian Tropical Research Institute (Condit et al. 2019).
-#' Data was prepared by taking a simple random sample without replacement of
-#' 30 individual IDs from Hirtella triandra. The sampling frame was restricted
-#' to individuals with 6 observations since 1990, and a difference between
-#' observed max and min sizes of more than 7cm in order to avoid identifiability
-#' issues. Data was then transformed and renamed to match the required structure
-#' to act as demonstration for the package.
+#' A subset of data from Kar, Nakagawa, and Noble (2024), used to model growth
+#' behaviour in a skink species.
+#' Data was prepared by taking a simple random sample with replacement of 50
+#' individual IDs among individuals with at least 5 observations each. Data was
+#' then transformed to conform to the needs of a model data set in the package.
 #'
-#' @format ## `Tree_Size_Data`
-#' A data frame with 180 rows and 4 columns:
+#' @format ## `Lizard_Mass_Data`
+#' A data frame with 336 rows and 4 columns:
 #' \describe{
 #'   \item{ind_id}{ID number for individual}
-#'   \item{time}{Years since first observation.}
-#'   \item{y_obs}{Individual diameter at breast height (DBH) in centimetres.}
+#'   \item{time}{Days since first observation.}
+#'   \item{y_obs}{Individual mass in kilograms.}
 #'   \item{obs_index}{Index of observations for individual}
 #' }
-#' @references \url{https://doi.org/10.1002/ecy.4140}
-#' @source \url{https://doi.org/10.15146/5xcp-0d46}
-"Tree_Size_Data"
+#'
+#' @source \url{https://osf.io/hjkxd/}
+"Lizard_Mass_Data"
 
 #' Protium tenufolium - Barro Colorado Island data
 #'
@@ -66,22 +63,25 @@
 #' @source \url{https://doi.org/10.15146/5xcp-0d46}
 "Small_Tree_Size_Data"
 
-#' Skink size data - Lampropholis delicata
+#' Hirtella triandra - Barro Colorado Island data
 #'
-#' A subset of data from Kar, Nakagawa, and Noble (2024), used to model growth
-#' behaviour in a skink species.
-#' Data was prepared by taking a simple random sample with replacement of 50
-#' individual IDs among individuals with at least 5 observations each. Data was
-#' then transformed to conform to the needs of a model data set in the package.
+#' A subset of data from the Barro Colorado Island long term forest plot
+#' managed by the Smithsonian Tropical Research Institute (Condit et al. 2019).
+#' Data was prepared by taking a simple random sample without replacement of
+#' 30 individual IDs from Hirtella triandra. The sampling frame was restricted
+#' to individuals with 6 observations since 1990, and a difference between
+#' observed max and min sizes of more than 7cm in order to avoid identifiability
+#' issues. Data was then transformed and renamed to match the required structure
+#' to act as demonstration for the package.
 #'
-#' @format ## `Lizard_Mass_Data`
-#' A data frame with 336 rows and 4 columns:
+#' @format ## `Tree_Size_Data`
+#' A data frame with 180 rows and 4 columns:
 #' \describe{
 #'   \item{ind_id}{ID number for individual}
-#'   \item{time}{Days since first observation.}
-#'   \item{y_obs}{Individual mass in kilograms.}
+#'   \item{time}{Years since first observation.}
+#'   \item{y_obs}{Individual diameter at breast height (DBH) in centimetres.}
 #'   \item{obs_index}{Index of observations for individual}
 #' }
-#'
-#' @source \url{https://osf.io/hjkxd/}
-"Lizard_Mass_Data"
+#' @references \url{https://doi.org/10.1002/ecy.4140}
+#' @source \url{https://doi.org/10.15146/5xcp-0d46}
+"Tree_Size_Data"
