@@ -61,3 +61,6 @@ src/rmot.dll
 
 # Bugged directory from snapshot package
 tests/testthat/_snaps
+
+# Data prep files
+data-raw/
