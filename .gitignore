@@ -63,9 +63,3 @@ src/*.tmp
 
 # Bugged directory from snapshot package
 tests/testthat/_snaps
-<<<<<<< HEAD
-=======
-
-# Data prep files
-data-raw/
->>>>>>> c04b68b (Ignore generate c/cpp files)
