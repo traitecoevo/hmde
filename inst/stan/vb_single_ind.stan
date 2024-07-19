@@ -3,7 +3,7 @@ functions{
   //Growth function for use with Runge-Kutta method
   //pars = (growth_par, max_size)
   real DE(real y, vector pars){ //change number of pars
-    return pars[1] * (pars[2] - y); //growth function
+    return max([pars[1] - pars[2] * y, 0.0]); //growth function
   }
 
   real rk4_step(real y, vector pars, real interval){
@@ -61,8 +61,8 @@ data {
 parameters {
   //Individual level
   real<lower=0> ind_y_0;
-  real<lower=0> ind_growth_par;
-  real<lower=0> ind_max_size;
+  real<lower=0> ind_beta_0;
+  real<lower=0> ind_beta_1;
 
   //Global level
   real<lower=0> global_error_sigma;
@@ -73,8 +73,8 @@ model {
   real y_hat[n_obs];
   vector[2] pars;
 
-  pars[1] = ind_growth_par;
-  pars[2] = ind_max_size;
+  pars[1] = ind_beta_0;
+  pars[2] = ind_beta_1;
 
   for(i in 1:n_obs){
 
@@ -94,20 +94,25 @@ model {
   //Priors
   //Individual level
   ind_y_0 ~ normal(y_0_obs, global_error_sigma);
-  ind_growth_par ~lognormal(0, 1);
-  ind_max_size ~lognormal(max(log(y_obs)), 1); //Take max obs. size as average value
+  ind_beta_0 ~lognormal(0, 1);
+  ind_beta_1 ~lognormal(0, 1); //Take max obs. size as average value
 
   //Global level
-  global_error_sigma ~cauchy(1,5);
+  global_error_sigma ~cauchy(0,1);
 }
 
 generated quantities{
   real y_hat[n_obs];
   real Delta_hat[n_obs];
+  real ind_growth_rate;
+  real ind_max_size;
   vector[2] pars;
 
-  pars[1] = ind_growth_par;
-  pars[2] = ind_max_size;
+  ind_growth_rate = ind_beta_1;
+  ind_max_size = ind_beta_0/ind_beta_1;
+
+  pars[1] = ind_beta_0;
+  pars[2] = ind_beta_1;
 
   for(i in 1:n_obs){
 

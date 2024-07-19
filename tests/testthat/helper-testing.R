@@ -57,7 +57,7 @@ rmot_test_single_individual <- function(model_name,
                as.numeric(data$single_true_data$initial_conditions),
                tolerance = 1e-1)
 
-  # hecks for output existence and type
+  # Checks for output existence and type
   expect_visible(single_ind_test)
   expect_s4_class(single_ind_test, "stanfit")
 }

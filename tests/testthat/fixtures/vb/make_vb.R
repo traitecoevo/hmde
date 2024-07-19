@@ -8,7 +8,7 @@ DE <- function(y, pars){ #Canham function
 #Default parameters are based on G. recondita
 DE_par_generation <- function(n_ind,
                               pars = list(
-                                par_mean_vec = c(-3, 2),
+                                par_mean_vec = c(-1, 3.5),
                                 par_sd_vec = c(0.1, 0.1)
                               )
                              ){
@@ -27,8 +27,8 @@ DE_par_generation <- function(n_ind,
 model_name <- "vb"
 set.seed(2024) #Guarantees same data each time.
 n_ind <- 3 #Number of individuals for multi-individual data. Single individual takes the first.
-n_obs_per_ind <- 10 #How many observations per individual.
-interval <- 5 #Time interval between observations
+n_obs_per_ind <- 20 #How many observations per individual.
+interval <- 1 #Time interval between observations
 time = seq(from = 0, by = interval, length.out = n_obs_per_ind)
 
 #Produce parameters
@@ -57,3 +57,4 @@ rmot_export_test_data(n_obs_per_ind,
                       initial_conditions,
                       true_data,
                       model_name)
+
