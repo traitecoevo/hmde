@@ -60,6 +60,12 @@ inst/doc
 *.so
 src/rmot.dll
 src/*.tmp
+inst/stan/*.exe
 
 # Bugged directory from snapshot package
 tests/testthat/_snaps
+
+#Testing material
+testing.r
+testingOutput/
+vBtesting.r

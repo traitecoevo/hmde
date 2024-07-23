@@ -139,6 +139,7 @@ rmot_vb_single_ind <- function(){
        y_obs = NULL,
        obs_index = NULL,
        time = NULL,
+       y_bar = NULL,
        y_0_obs = NULL,
        model = "vb_single_ind")
 }
