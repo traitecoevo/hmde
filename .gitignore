@@ -69,3 +69,6 @@ tests/testthat/_snaps
 testing.r
 testingOutput/
 vBtesting.r
+=======
+# Data prep files
+data-raw/
