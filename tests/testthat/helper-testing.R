@@ -17,19 +17,36 @@ rmot_test_single_individual <- function(model_name,
   data <- readRDS(test_path("fixtures", model_name,
                             paste0(model_name, "_data_single_ind.rds")))
 
-  if(! is.null(data$step_size)){
-    # Test single individual
-    suppressWarnings( #Suppresses stan warnings
-      single_ind_test <- rmot_model(paste0(model_name, "_single_ind")) |>
-        rmot_assign_data(step_size = data$step_size,
-                         n_obs = data$n_obs, #integer
-                         y_obs = data$y_obs,
-                         obs_index = data$obs_index, #vector length N_obs
-                         time = data$time, #Vector length N_obs
-                         y_0_obs = data$y_0_obs #vector length N_ind
-        ) |>
-        rmot_run(chains = 1, iter = 1000, verbose = FALSE, show_messages = FALSE)
-    )
+  if(! is.null(data$step_size)){ # Models that use RK4
+    if(is.null(data$y_bar)){ #Models that do not require centering
+      # Test single individual
+      suppressWarnings( #Suppresses stan warnings
+        single_ind_test <- rmot_model(paste0(model_name, "_single_ind")) |>
+          rmot_assign_data(step_size = data$step_size,
+                           n_obs = data$n_obs, #integer
+                           y_obs = data$y_obs,
+                           obs_index = data$obs_index, #vector length N_obs
+                           time = data$time, #Vector length N_obs
+                           y_0_obs = data$y_0_obs #vector length N_ind
+          ) |>
+          rmot_run(chains = 1, iter = 1000, verbose = FALSE, show_messages = FALSE)
+      )
+    } else { #Models that do require centering with y_bar
+      # Test single individual
+      suppressWarnings( #Suppresses stan warnings
+        single_ind_test <- rmot_model(paste0(model_name, "_single_ind")) |>
+          rmot_assign_data(step_size = data$step_size,
+                           n_obs = data$n_obs, #integer
+                           y_obs = data$y_obs,
+                           obs_index = data$obs_index, #vector length N_obs
+                           time = data$time, #Vector length N_obs
+                           y_bar = data$y_bar, #Real
+                           y_0_obs = data$y_0_obs #vector length N_ind
+          ) |>
+          rmot_run(chains = 1, iter = 1000, verbose = FALSE, show_messages = FALSE)
+      )
+    }
+
   } else {
     # Test single individual
     suppressWarnings( #Suppresses stan warnings
@@ -64,20 +81,39 @@ rmot_test_single_individual <- function(model_name,
 
 rmot_test_multi_individual <- function(model_name, data, est_dim){
   if(! is.null(data$step_size)){
-    # Test multi-individual
-    suppressWarnings( #Suppresses stan warnings
-      multi_ind_test <- rmot_model(paste0(model_name, "_multi_ind")) |>
-        rmot_assign_data(step_size = data$step_size, #real
-                         n_obs = data$n_obs, #integer
-                         n_ind = data$n_ind, #integer
-                         y_obs = data$y_obs, #vector length N_obs
-                         obs_index = data$obs_index, #vector length N_obs
-                         time = data$time, #Vector length N_obs
-                         ind_id = data$ind_id, #Vector length N_obs
-                         y_0_obs = data$y_0_obs #vector length N_ind
-        ) |>
-        rmot_run(chains = 2, iter = 100, verbose = FALSE, show_messages = FALSE)
-    )
+    if(is.null(data$y_bar)){ #Models that do not require centering
+      # Test multi-individual
+      suppressWarnings( #Suppresses stan warnings
+        multi_ind_test <- rmot_model(paste0(model_name, "_multi_ind")) |>
+          rmot_assign_data(step_size = data$step_size, #real
+                           n_obs = data$n_obs, #integer
+                           n_ind = data$n_ind, #integer
+                           y_obs = data$y_obs, #vector length N_obs
+                           obs_index = data$obs_index, #vector length N_obs
+                           time = data$time, #Vector length N_obs
+                           ind_id = data$ind_id, #Vector length N_obs
+                           y_0_obs = data$y_0_obs #vector length N_ind
+          ) |>
+          rmot_run(chains = 2, iter = 100, verbose = FALSE, show_messages = FALSE)
+      )
+    } else { #Models that do require centering with y_bar
+      # Test multi-individual
+      suppressWarnings( #Suppresses stan warnings
+        multi_ind_test <- rmot_model(paste0(model_name, "_multi_ind")) |>
+          rmot_assign_data(step_size = data$step_size, #real
+                           n_obs = data$n_obs, #integer
+                           n_ind = data$n_ind, #integer
+                           y_obs = data$y_obs, #vector length N_obs
+                           obs_index = data$obs_index, #vector length N_obs
+                           time = data$time, #Vector length N_obs
+                           y_bar = data$y_bar, #Real
+                           ind_id = data$ind_id, #Vector length N_obs
+                           y_0_obs = data$y_0_obs #vector length N_ind
+          ) |>
+          rmot_run(chains = 2, iter = 100, verbose = FALSE, show_messages = FALSE)
+      )
+    }
+
   } else {
     # Test multi-individual without step_size
     suppressWarnings( #Suppresses stan warnings

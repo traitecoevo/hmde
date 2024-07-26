@@ -1,7 +1,7 @@
 #Define specific functions for chosen DE, distribution of parameters, error process
 #Differential equation governing dynamics.
 DE <- function(y, pars){ #Power law function
-  return(pars[1] * (y/pars[3])^(-pars[2]))
+  return(pars[1] * (y)^(-pars[2]))
 }
 
 #Function to generate distribution of DE parameters
@@ -24,22 +24,21 @@ time = seq(from = 0, by = interval, length.out = n_obs_per_ind)
 DE_pars <- DE_par_generation(n_ind)
 initial_conditions <- data.frame(y_0=exp(rnorm(n_ind, mean = 2, sd=1)))
 
-DE_pars$y_bar <- mean(initial_conditions$y_0) +
-  mean(DE_pars$coeff) * (mean(initial_conditions$y_0) ^ mean(DE_pars$power)) * 5
-
 #Generate true values
 true_data <- rmot_build_true_test_data(n_ind, n_obs_per_ind, interval,
                                        DE_pars, initial_conditions, DE)
 
 #Generate observations
 y_obs <- rmot_add_normal_error(true_data$y_true)
+y_bar <- mean(y_obs)
 
 #Export datasets
-rmot_export_test_data(n_obs_per_ind,
-                      n_ind,
-                      y_obs,
-                      time,
-                      DE_pars,
-                      initial_conditions,
-                      true_data,
-                      model_name)
+rmot_export_test_data(n_obs_per_ind = n_obs_per_ind,
+                      n_ind = n_ind,
+                      y_obs = y_obs,
+                      time = time,
+                      y_bar = y_bar,
+                      DE_pars = DE_pars,
+                      initial_conditions = initial_conditions,
+                      true_data = true_data,
+                      model_name = model_name)

@@ -2,11 +2,11 @@
 functions{
   //Growth function for use with Runge-Kutta method
   //pars = (growth_par, max_size)
-  real DE(real y, vector pars){ //change number of pars
-    return pars[1] * (pars[2] - y); //growth function
+  real DE(real y, array[] real pars){ //change number of pars
+    return pars[1] - (pars[2] * (y-pars[3])); //growth function
   }
 
-  real rk4_step(real y, vector pars, real interval){
+  real rk4_step(real y, array[] real pars, real interval){
     real k1;
     real k2;
     real k3;
@@ -23,7 +23,7 @@ functions{
     return y_hat;
   }
 
-  real rk4(real y, vector pars, real interval, real step_size){
+  real rk4(real y, array[] real pars, real interval, real step_size){
     int steps;
     real duration;
     real y_hat;
@@ -57,6 +57,7 @@ data {
   real time[n_obs];
   int ind_id[n_obs];
   real y_0_obs[n_ind];
+  real y_bar;
 }
 
 // The parameters accepted by the model.
@@ -79,12 +80,13 @@ parameters {
 // The model to be estimated.
 model {
   real y_hat[n_obs];
-  vector[2] pars;
+  array[3] real pars;
 
   for(i in 1:n_obs){
     // Initialise the parameters for the observation
     pars[1] = ind_growth_par[ind_id[i]];
     pars[2] = ind_max_size[ind_id[i]];
+    pars[3] = y_bar;
 
     if(obs_index[i]==1){//Fits the first size
       y_hat[i] = ind_y_0[ind_id[i]];
@@ -120,12 +122,13 @@ model {
 generated quantities{
   real y_hat[n_obs];
   real Delta_hat[n_obs];
-  vector[2] pars;
+  array[3] real pars;
 
   for(i in 1:n_obs){
     // Initialise the parameters for the observation
     pars[1] = ind_growth_par[ind_id[i]];
     pars[2] = ind_max_size[ind_id[i]];
+    pars[3] = y_bar;
 
     if(obs_index[i]==1){//Fits the first size
       y_hat[i] = ind_y_0[ind_id[i]];

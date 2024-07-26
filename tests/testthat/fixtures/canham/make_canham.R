@@ -52,11 +52,11 @@ true_data <- rmot_build_true_test_data(n_ind, n_obs_per_ind, interval,
 y_obs <- rmot_add_normal_error(true_data$y_true)
 
 #Export datasets
-rmot_export_test_data(n_obs_per_ind,
-                      n_ind,
-                      y_obs,
-                      time,
-                      DE_pars,
-                      initial_conditions,
-                      true_data,
-                      model_name)
+rmot_export_test_data(n_obs_per_ind = n_obs_per_ind,
+                      n_ind = n_ind,
+                      y_obs = y_obs,
+                      time = time,
+                      DE_pars = DE_pars,
+                      initial_conditions = initial_conditions,
+                      true_data = true_data,
+                      model_name = model_name)

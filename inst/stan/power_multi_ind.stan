@@ -3,11 +3,11 @@
 functions{
   //DE function for use with Runge-Kutta method
   //pars = [ind_coeff, ind_power]
-  real DE(real y, vector pars){
+  real DE(real y, array[] real pars){
     return pars[1] * pow((y/pars[3]), -pars[2]);
   }
 
-  real rk4_step(real y, vector pars, real interval){
+  real rk4_step(real y, array[] real pars, real interval){
     real k1;
     real k2;
     real k3;
@@ -24,7 +24,7 @@ functions{
     return y_hat;
   }
 
-  real rk4(real y, vector pars, real interval, real step_size){
+  real rk4(real y, array[] real pars, real interval, real step_size){
     int steps;
     real duration;
     real y_hat;
@@ -57,8 +57,8 @@ data {
   int obs_index[n_obs];
   real time[n_obs];
   int ind_id[n_obs];
-  real y_bar;
   real y_0_obs[n_ind];
+  real y_bar;
 }
 
 // The parameters accepted by the model.
@@ -81,7 +81,7 @@ parameters {
 // The model to be estimated.
 model {
   real y_hat[n_obs];
-  vector[3] pars;
+  array[3] real pars;
 
   for(i in 1:n_obs){
     // Initialise the parameters for the observation
@@ -123,7 +123,7 @@ model {
 generated quantities{
   real y_hat[n_obs];
   real Delta_hat[n_obs];
-  vector[3] pars;
+  array[3] real pars;
 
   for(i in 1:n_obs){
     // Initialise the parameters for the observation
