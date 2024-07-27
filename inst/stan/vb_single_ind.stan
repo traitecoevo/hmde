@@ -1,10 +1,9 @@
-// Power law model with multiple individuals
-
+//Growth function
 functions{
-  //DE function for use with Runge-Kutta method
-  //pars = [ind_coeff, ind_power]
-  real DE(real y, array[] real pars){
-    return pars[1] * pow((y/pars[3]), -pars[2]);
+  //Growth function for use with Runge-Kutta method
+  //pars = (growth_par, max_size)
+  real DE(real y, array[] real pars){ //change number of pars
+    return pars[1] - (pars[2] * (y-pars[3])); //growth function
   }
 
   real rk4_step(real y, array[] real pars, real interval){
@@ -52,27 +51,19 @@ functions{
 data {
   real step_size;
   int n_obs;
-  int n_ind;
   real y_obs[n_obs];
   int obs_index[n_obs];
   real time[n_obs];
-  int ind_id[n_obs];
-  real y_0_obs[n_ind];
   real y_bar;
+  real y_0_obs;
 }
 
 // The parameters accepted by the model.
 parameters {
   //Individual level
-  real<lower=0> ind_y_0[n_ind];
-  real<lower=0> ind_coeff[n_ind];
-  real<lower=0> ind_power[n_ind];
-
-  //Species level
-  real species_coeff_mean;
-  real<lower=0> species_coeff_sd;
-  real species_power_mean;
-  real<lower=0> species_power_sd;
+  real<lower=0> ind_y_0;
+  real<lower=0> ind_beta_0;
+  real<lower=0> ind_beta_1;
 
   //Global level
   real<lower=0> global_error_sigma;
@@ -83,21 +74,19 @@ model {
   real y_hat[n_obs];
   array[3] real pars;
 
+  pars[1] = ind_beta_0;
+  pars[2] = ind_beta_1;
+  pars[3] = y_bar;
+
   for(i in 1:n_obs){
-    // Initialise the parameters for the observation
-    pars[1] = ind_coeff[ind_id[i]];
-    pars[2] = ind_power[ind_id[i]];
-    pars[3] = y_bar;
 
     if(obs_index[i]==1){//Fits the first size
-      y_hat[i] = ind_y_0[ind_id[i]];
+      y_hat[i] = ind_y_0;
     }
 
     if(i < n_obs){
-      if(ind_id[i+1]==ind_id[i]){
-        //Estimate next size
-        y_hat[i+1] = rk4(y_hat[i], pars, (time[i+1] - time[i]), step_size);
-      }
+      //Estimate growth rate
+      y_hat[i+1] = rk4(y_hat[i], pars, (time[i+1] - time[i]), step_size);
     }
   }
 
@@ -107,43 +96,38 @@ model {
   //Priors
   //Individual level
   ind_y_0 ~ normal(y_0_obs, global_error_sigma);
-  ind_coeff ~lognormal(species_coeff_mean, species_coeff_sd);
-  ind_power ~lognormal(species_power_mean, species_power_sd);
-
-  //Species level
-  species_coeff_mean ~normal(0, 2);
-  species_coeff_sd ~cauchy(0, 2);
-  species_power_mean ~normal(0, 2);
-  species_power_sd ~cauchy(0, 2);
+  ind_beta_0 ~lognormal(0, 1);
+  ind_beta_1 ~lognormal(0, 1); //Take max obs. size as average value
 
   //Global level
-  global_error_sigma ~cauchy(0, 5);
+  global_error_sigma ~cauchy(0,1);
 }
 
 generated quantities{
   real y_hat[n_obs];
   real Delta_hat[n_obs];
   array[3] real pars;
+  real ind_growth_rate;
+  real ind_max_size;
+
+  ind_growth_rate = ind_beta_1;
+  ind_max_size = (ind_beta_0 + (y_bar*ind_beta_1))/ind_beta_1;
+
+  pars[1] = ind_beta_0;
+  pars[2] = ind_beta_1;
+  pars[3] = y_bar;
 
   for(i in 1:n_obs){
-    // Initialise the parameters for the observation
-    pars[1] = ind_coeff[ind_id[i]];
-    pars[2] = ind_power[ind_id[i]];
-    pars[3] = y_bar;
 
     if(obs_index[i]==1){//Fits the first size
-      y_hat[i] = ind_y_0[ind_id[i]];
+      y_hat[i] = ind_y_0;
     }
 
     if(i < n_obs){
-      if(ind_id[i+1]==ind_id[i]){
-        //Estimate next size
-        y_hat[i+1] = rk4(y_hat[i], pars, (time[i+1] - time[i]), step_size);
-        Delta_hat[i] = y_hat[i+1] - y_hat[i];
+      //Estimate next size
+      y_hat[i+1] = rk4(y_hat[i], pars, (time[i+1] - time[i]), step_size);
+      Delta_hat[i] = y_hat[i+1] - y_hat[i];
 
-      } else {
-        Delta_hat[i] = DE(y_hat[i], pars)*(time[i] - time[i-1]);
-      }
     } else {
       Delta_hat[i] = DE(y_hat[i], pars)*(time[i] - time[i-1]);
     }

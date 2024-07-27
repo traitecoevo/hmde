@@ -3,11 +3,11 @@
 functions{
   //DE function for use with Runge-Kutta method
   //pars = [ind_coeff, ind_power]
-  real DE(real y, vector pars){
+  real DE(real y, array[] real pars){
     return pars[1] * pow((y/pars[3]), -pars[2]);
   }
 
-  real rk4_step(real y, vector pars, real interval){
+  real rk4_step(real y, array[] real pars, real interval){
     real k1;
     real k2;
     real k3;
@@ -24,7 +24,7 @@ functions{
     return y_hat;
   }
 
-  real rk4(real y, vector pars, real interval, real step_size){
+  real rk4(real y, array[] real pars, real interval, real step_size){
     int steps;
     real duration;
     real y_hat;
@@ -55,16 +55,16 @@ data {
   real y_obs[n_obs];
   int obs_index[n_obs];
   real time[n_obs];
-  real y_bar;
   real y_0_obs;
+  real y_bar;
 }
 
 // The parameters accepted by the model.
 parameters {
   //Individual level
   real<lower=0> ind_y_0;
-  real<lower=0> ind_coeff;
-  real<lower=0> ind_power;
+  real<lower=0> ind_beta_0;
+  real<lower=0> ind_beta_1;
 
   //Global level
   real<lower=0> global_error_sigma;
@@ -73,10 +73,10 @@ parameters {
 // The model to be estimated.
 model {
   real y_hat[n_obs];
-  vector[3] pars;
+  array[3] real pars;
 
-  pars[1] = ind_coeff;
-  pars[2] = ind_power;
+  pars[1] = ind_beta_0;
+  pars[2] = ind_beta_1;
   pars[3] = y_bar;
 
   for(i in 1:n_obs){
@@ -97,8 +97,8 @@ model {
   //Priors
   //Individual level
   ind_y_0 ~ normal(y_0_obs, global_error_sigma);
-  ind_coeff ~lognormal(0, 1);
-  ind_power ~lognormal(0, 1);
+  ind_beta_0 ~lognormal(0, 1);
+  ind_beta_1 ~lognormal(0, 1);
 
   //Global level
   global_error_sigma ~cauchy(0,5);
@@ -107,10 +107,15 @@ model {
 generated quantities{
   real y_hat[n_obs];
   real Delta_hat[n_obs];
-  vector[3] pars;
+  array[3] real pars;
+  real ind_coeff;
+  real ind_power;
 
-  pars[1] = ind_coeff;
-  pars[2] = ind_power;
+  ind_coeff = ind_beta_0 / pow(y_bar, -ind_beta_1);
+  ind_power = ind_beta_1;
+
+  pars[1] = ind_beta_0;
+  pars[2] = ind_beta_1;
   pars[3] = y_bar;
 
   for(i in 1:n_obs){

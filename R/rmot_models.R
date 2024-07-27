@@ -19,7 +19,9 @@ rmot_model <- function(model=NULL){
                    canham_single_ind = rmot_canham_single_ind(),
                    canham_multi_ind = rmot_canham_multi_ind(),
                    power_single_ind = rmot_power_single_ind(),
-                   power_multi_ind = rmot_power_multi_ind())
+                   power_multi_ind = rmot_power_multi_ind(),
+                   vb_single_ind = rmot_vb_single_ind(),
+                   vb_multi_ind = rmot_vb_multi_ind())
 
   class(output) <- "rmot_object"
 
@@ -105,8 +107,8 @@ rmot_power_single_ind <- function(){
        y_obs = NULL,
        obs_index = NULL,
        time = NULL,
-       y_bar = NULL,
        y_0_obs = NULL,
+       y_bar = NULL,
        model = "power_single_ind")
 }
 
@@ -122,7 +124,39 @@ rmot_power_multi_ind <- function(){
        obs_index = NULL,
        time = NULL,
        ind_id = NULL,
-       y_bar = NULL,
        y_0_obs = NULL,
+       y_bar = NULL,
        model = "power_multi_ind")
+}
+
+#' Data configuration template for von Bertalanffy growth single individual model
+#' @keywords internal
+#' @noRd
+
+rmot_vb_single_ind <- function(){
+  list(step_size = NULL,
+       n_obs = NULL,
+       y_obs = NULL,
+       obs_index = NULL,
+       time = NULL,
+       y_0_obs = NULL,
+       y_bar = NULL,
+       model = "vb_single_ind")
+}
+
+#' Data configuration template for von Bertalanffy growth single species model
+#' @keywords internal
+#' @noRd
+
+rmot_vb_multi_ind <- function(){
+  list(step_size = NULL,
+       n_obs = NULL,
+       n_ind = NULL,
+       y_obs = NULL,
+       obs_index = NULL,
+       time = NULL,
+       ind_id = NULL,
+       y_0_obs = NULL,
+       y_bar = NULL,
+       model = "vb_multi_ind")
 }

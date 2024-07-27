@@ -1,10 +1,9 @@
-// Power law model with multiple individuals
-
+//Growth function
 functions{
-  //DE function for use with Runge-Kutta method
-  //pars = [ind_coeff, ind_power]
-  real DE(real y, array[] real pars){
-    return pars[1] * pow((y/pars[3]), -pars[2]);
+  //Growth function for use with Runge-Kutta method
+  //pars = (growth_par, max_size)
+  real DE(real y, array[] real pars){ //change number of pars
+    return pars[1] - (pars[2] * (y-pars[3])); //growth function
   }
 
   real rk4_step(real y, array[] real pars, real interval){
@@ -65,14 +64,14 @@ data {
 parameters {
   //Individual level
   real<lower=0> ind_y_0[n_ind];
-  real<lower=0> ind_coeff[n_ind];
-  real<lower=0> ind_power[n_ind];
+  real<lower=0> ind_growth_par[n_ind];
+  real<lower=0> ind_max_size[n_ind];
 
   //Species level
-  real species_coeff_mean;
-  real<lower=0> species_coeff_sd;
-  real species_power_mean;
-  real<lower=0> species_power_sd;
+  real species_growth_par_mean;
+  real<lower=0> species_growth_par_sd;
+  real species_max_size_mean;
+  real<lower=0> species_max_size_sd;
 
   //Global level
   real<lower=0> global_error_sigma;
@@ -85,8 +84,8 @@ model {
 
   for(i in 1:n_obs){
     // Initialise the parameters for the observation
-    pars[1] = ind_coeff[ind_id[i]];
-    pars[2] = ind_power[ind_id[i]];
+    pars[1] = ind_growth_par[ind_id[i]];
+    pars[2] = ind_max_size[ind_id[i]];
     pars[3] = y_bar;
 
     if(obs_index[i]==1){//Fits the first size
@@ -102,19 +101,19 @@ model {
   }
 
   //Likelihood
-  y_obs ~ normal(y_hat, global_error_sigma);
+  y_obs ~normal(y_hat, global_error_sigma);
 
   //Priors
   //Individual level
-  ind_y_0 ~ normal(y_0_obs, global_error_sigma);
-  ind_coeff ~lognormal(species_coeff_mean, species_coeff_sd);
-  ind_power ~lognormal(species_power_mean, species_power_sd);
+  ind_y_0 ~normal(y_0_obs, global_error_sigma);
+  ind_growth_par ~lognormal(species_growth_par_mean, species_growth_par_sd);
+  ind_max_size ~lognormal(species_max_size_mean, species_max_size_sd);
 
   //Species level
-  species_coeff_mean ~normal(0, 2);
-  species_coeff_sd ~cauchy(0, 2);
-  species_power_mean ~normal(0, 2);
-  species_power_sd ~cauchy(0, 2);
+  species_growth_par_mean ~normal(0, 2);
+  species_growth_par_sd ~cauchy(0, 2);
+  species_max_size_mean ~normal(max(log(y_obs)), 2);
+  species_max_size_sd ~cauchy(0, 2);
 
   //Global level
   global_error_sigma ~cauchy(0, 5);
@@ -127,8 +126,8 @@ generated quantities{
 
   for(i in 1:n_obs){
     // Initialise the parameters for the observation
-    pars[1] = ind_coeff[ind_id[i]];
-    pars[2] = ind_power[ind_id[i]];
+    pars[1] = ind_growth_par[ind_id[i]];
+    pars[2] = ind_max_size[ind_id[i]];
     pars[3] = y_bar;
 
     if(obs_index[i]==1){//Fits the first size
