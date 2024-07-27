@@ -13,7 +13,6 @@ rmot_model <- function(model=NULL){
   #TODO: Need a mechanism to check model requested in one that is supported by rmot
 
   output <- switch(model,
-                   linear = rmot_lm(),
                    constant_single_ind = rmot_const_single_ind(),
                    constant_multi_ind = rmot_const_multi_ind(),
                    canham_single_ind = rmot_canham_single_ind(),
@@ -21,7 +20,8 @@ rmot_model <- function(model=NULL){
                    power_single_ind = rmot_power_single_ind(),
                    power_multi_ind = rmot_power_multi_ind(),
                    vb_single_ind = rmot_vb_single_ind(),
-                   vb_multi_ind = rmot_vb_multi_ind())
+                   vb_multi_ind = rmot_vb_multi_ind(),
+                   linear_single_ind = rmot_linear_single_ind())
 
   class(output) <- "rmot_object"
 
@@ -159,4 +159,19 @@ rmot_vb_multi_ind <- function(){
        y_0_obs = NULL,
        y_bar = NULL,
        model = "vb_multi_ind")
+}
+
+#' Data configuration template for linear growth single individual model
+#' @keywords internal
+#' @noRd
+#'
+rmot_linear_single_ind <- function(){
+  list(step_size = NULL,
+       n_obs = NULL,
+       y_obs = NULL,
+       obs_index = NULL,
+       time = NULL,
+       y_0_obs = NULL,
+       y_bar = NULL,
+       model = "linear_single_ind")
 }
