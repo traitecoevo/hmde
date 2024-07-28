@@ -6,7 +6,7 @@
 \alias{rmot}
 \title{The 'rmot' package.}
 \description{
-A DESCRIPTION OF THE PACKAGE
+A package to implement a selection of hierarchical Bayesian longitudinal models for inverse Bayesian problems.
 }
 \references{
 Stan Development Team (NA). RStan: the R interface to Stan. R package version 2.26.23. https://mc-stan.org

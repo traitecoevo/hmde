@@ -1,6 +1,6 @@
 #' The 'rmot' package.
 #'
-#' @description A DESCRIPTION OF THE PACKAGE
+#' @description A package to implement a selection of hierarchical Bayesian longitudinal models for inverse Bayesian problems.
 #'
 #' @docType package
 #' @name rmot-package
