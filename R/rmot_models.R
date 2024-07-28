@@ -1,13 +1,3 @@
-#' Select data configuration template for rmot supported model
-#'
-#' @param model model name character string
-#'
-#' @return named list that matches Stan model parameters
-#' @export
-#'
-#' @examples
-#' rmot_model("linear")
-
 rmot_model <- function(model=NULL){
 
   #TODO: Need a mechanism to check model requested in one that is supported by rmot
