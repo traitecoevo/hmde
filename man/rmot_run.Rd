@@ -2,7 +2,7 @@
 % Please edit documentation in R/rmot_run.R
 \name{rmot_run}
 \alias{rmot_run}
-\title{Run a model in Stan}
+\title{Run chosen pre-built model in Stan}
 \usage{
 rmot_run(model_template, ...)
 }
@@ -15,5 +15,5 @@ rmot_run(model_template, ...)
 Stanfit model output
 }
 \description{
-Run a model in Stan
+Run chosen pre-built model in Stan
 }
