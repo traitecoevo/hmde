@@ -1,6 +1,6 @@
-Package: rmot
-Title: What the Package Does (One Line, Title Case)
-Version: 0.0.0.9000
+Package: hmDE
+Title: Hierarchical Methods for Differential Equations
+Version: 0.1.0
 Authors@R: 
     c(
   person(given = "Daniel", family = "Falster", role = c("aut", "ctb"), email = "daniel.falster@unsw.edu.au", comment = c(ORCID = "0000-0002-9814-092X")),
@@ -35,7 +35,6 @@ LinkingTo:
 SystemRequirements: GNU make
 Suggests: 
     knitr,
-    purrr,
     dplyr,
     rmarkdown,
     testthat (>= 3.0.0),
