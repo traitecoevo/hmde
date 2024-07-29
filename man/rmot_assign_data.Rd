@@ -17,6 +17,3 @@ updated named list with your data assigned to Stan model parameters
 \description{
 Assign data to template
 }
-\examples{
-rmot_model("linear") |> rmot_assign_data(X = Loblolly$age, Y = Loblolly$height)
-}

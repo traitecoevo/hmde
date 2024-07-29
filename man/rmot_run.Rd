@@ -2,7 +2,7 @@
 % Please edit documentation in R/rmot_run.R
 \name{rmot_run}
 \alias{rmot_run}
-\title{Run a linear model in Stan}
+\title{Run chosen pre-built model in Stan}
 \usage{
 rmot_run(model_template, ...)
 }
@@ -15,12 +15,5 @@ rmot_run(model_template, ...)
 Stanfit model output
 }
 \description{
-Run a linear model in Stan
-}
-\examples{
-rmot_model("linear") |>
-  rmot_assign_data(X = Loblolly$age,
-                   Y = Loblolly$height,
-                   N = nrow(Loblolly)) |>
-  rmot_run()
+Run chosen pre-built model in Stan
 }

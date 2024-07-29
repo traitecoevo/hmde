@@ -15,6 +15,3 @@ named list that matches Stan model parameters
 \description{
 Select data configuration template for rmot supported model
 }
-\examples{
-rmot_model("linear")
-}

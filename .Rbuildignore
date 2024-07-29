@@ -1,11 +1,2 @@
-^rmot\.Rproj$
+^.*\.Rproj$
 ^\.Rproj\.user$
-^README\.Rmd$
-^doc$
-^Meta$
-^LICENSE\.md$
-^\.github$
-^codecov\.yml$
-^data-raw$
-^tests/testthat/_snaps/$
-

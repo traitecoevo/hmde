@@ -1,17 +1,20 @@
 test_that("Execution and output", {
-
-  lm_loblloy <- rmot_model("linear") |>
-    rmot_assign_data(X = Loblolly$age)
-
-  expect_named(lm_loblloy)
-
-  expect_visible(lm_loblloy)
-
-  expect_type(lm_loblloy, "list")
-
-  lm_empty <- rmot_model("linear")
-
-  expect_null(lm_empty$X)
-
-  expect_true(length(lm_loblloy$X) > 0)
+  constant_single <- rmot_model("constant_single_ind") |>
+    rmot_assign_data(n_obs = 2,
+                     y_obs = c(1,2),
+                     obs_index = c(1,2),
+                     time = c(0,1),
+                     y_0_obs = 1)
+  
+  expect_named(constant_single)
+  
+  expect_visible(constant_single)
+  
+  expect_type(constant_single, "list")
+  
+  constant_empty <- rmot_model("constant_single_ind")
+  
+  expect_null(constant_empty$y_obs)
+  
+  expect_true(length(constant_single$y_obs) > 0)
 })

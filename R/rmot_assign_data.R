@@ -5,9 +5,7 @@
 #'
 #' @return updated named list with your data assigned to Stan model parameters
 #' @export
-#'
-#' @examples
-#' rmot_model("linear") |> rmot_assign_data(X = Loblolly$age, Y = Loblolly$height)
+
 rmot_assign_data <- function(model_template, ...){
   # Grab user expressions
   user_code <- rlang::enquos(..., .check_assign = TRUE)
