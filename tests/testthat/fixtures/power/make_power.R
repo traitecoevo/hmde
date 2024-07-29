@@ -25,15 +25,15 @@ DE_pars <- DE_par_generation(n_ind)
 initial_conditions <- data.frame(y_0=exp(rnorm(n_ind, mean = 2, sd=1)))
 
 #Generate true values
-true_data <- rmot_build_true_test_data(n_ind, n_obs_per_ind, interval,
+true_data <- hmDE_build_true_test_data(n_ind, n_obs_per_ind, interval,
                                        DE_pars, initial_conditions, DE)
 
 #Generate observations
-y_obs <- rmot_add_normal_error(true_data$y_true)
+y_obs <- hmDE_add_normal_error(true_data$y_true)
 y_bar <- mean(y_obs)
 
 #Export datasets
-rmot_export_test_data(n_obs_per_ind = n_obs_per_ind,
+hmDE_export_test_data(n_obs_per_ind = n_obs_per_ind,
                       n_ind = n_ind,
                       y_obs = y_obs,
                       time = time,

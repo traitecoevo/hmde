@@ -1,7 +1,7 @@
 #Testing for canham model
 test_that("Model structures: canham", {
   # Single individual
-  single_model <- rmot_model("canham_single_ind")
+  single_model <- hmDE_model("canham_single_ind")
   expect_named(single_model, c("step_size", "n_obs", "y_obs",
                                "obs_index", "time", "y_0_obs",
                                "model"))
@@ -9,7 +9,7 @@ test_that("Model structures: canham", {
   expect_visible(single_model)
 
   #Multiple individuals
-  multi_model <- rmot_model("canham_multi_ind")
+  multi_model <- hmDE_model("canham_multi_ind")
   expect_named(multi_model, c("step_size", "n_obs", "n_ind", "y_obs",
                               "obs_index", "time", "ind_id", "y_0_obs",
                               "model"))
@@ -21,7 +21,7 @@ test_that("Execution: canham single individual", {
   model_name <- "canham"
   par_names <- c("ind_max_growth", "ind_diameter_at_max_growth", "ind_k")
 
-  rmot_test_single_individual(model_name, par_names)
+  hmDE_test_single_individual(model_name, par_names)
 })
 
 test_that("Execution: canham multiple individuals", {
@@ -40,5 +40,5 @@ test_that("Execution: canham multiple individuals", {
     data$n_pars +              #pars vector
     1                          #lp__
 
-  rmot_test_multi_individual(model_name, data, est_dim)
+  hmDE_test_multi_individual(model_name, data, est_dim)
 })

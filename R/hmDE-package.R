@@ -1,11 +1,11 @@
-#' The 'rmot' package.
+#' The 'hmDE' package.
 #'
 #' @description A package to implement a selection of hierarchical Bayesian longitudinal models for inverse Bayesian problems.
 #'
 #' @docType package
-#' @name rmot-package
-#' @aliases rmot
-#' @useDynLib rmot, .registration = TRUE
+#' @name hmDE-package
+#' @aliases hmDE
+#' @useDynLib hmDE, .registration = TRUE
 #' @import methods
 #' @import Rcpp
 #' @importFrom rstan sampling

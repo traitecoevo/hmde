@@ -1,18 +1,18 @@
-rmot_test_model_functions <- function(model_name){
+hmDE_test_model_functions <- function(model_name){
   single_ind_name <- paste0(model_name, "_single_ind")
   multi_ind_name <- paste0(model_name, "_multi_ind")
 
   # Single individual
-  expect_named(rmot_model(single_ind_name))
-  expect_type(rmot_model(single_ind_name), "list")
-  expect_visible(rmot_model(single_ind_name))
+  expect_named(hmDE_model(single_ind_name))
+  expect_type(hmDE_model(single_ind_name), "list")
+  expect_visible(hmDE_model(single_ind_name))
   #Multiple individuals
-  expect_named(rmot_model(multi_ind_name))
-  expect_type(rmot_model(multi_ind_name), "list")
-  expect_visible(rmot_model(multi_ind_name))
+  expect_named(hmDE_model(multi_ind_name))
+  expect_type(hmDE_model(multi_ind_name), "list")
+  expect_visible(hmDE_model(multi_ind_name))
 }
 
-rmot_test_single_individual <- function(model_name,
+hmDE_test_single_individual <- function(model_name,
                                         par_names){
   data <- readRDS(test_path("fixtures", model_name,
                             paste0(model_name, "_data_single_ind.rds")))
@@ -21,21 +21,21 @@ rmot_test_single_individual <- function(model_name,
     if(is.null(data$y_bar)){ #Models that do not require centering
       # Test single individual
       suppressWarnings( #Suppresses stan warnings
-        single_ind_test <- rmot_model(paste0(model_name, "_single_ind")) |>
-          rmot_assign_data(step_size = data$step_size,
+        single_ind_test <- hmDE_model(paste0(model_name, "_single_ind")) |>
+          hmDE_assign_data(step_size = data$step_size,
                            n_obs = data$n_obs, #integer
                            y_obs = data$y_obs,
                            obs_index = data$obs_index, #vector length N_obs
                            time = data$time, #Vector length N_obs
                            y_0_obs = data$y_0_obs #vector length N_ind
           ) |>
-          rmot_run(chains = 1, iter = 1000, verbose = FALSE, show_messages = FALSE)
+          hmDE_run(chains = 1, iter = 1000, verbose = FALSE, show_messages = FALSE)
       )
     } else { #Models that do require centering with y_bar
       # Test single individual
       suppressWarnings( #Suppresses stan warnings
-        single_ind_test <- rmot_model(paste0(model_name, "_single_ind")) |>
-          rmot_assign_data(step_size = data$step_size,
+        single_ind_test <- hmDE_model(paste0(model_name, "_single_ind")) |>
+          hmDE_assign_data(step_size = data$step_size,
                            n_obs = data$n_obs, #integer
                            y_obs = data$y_obs,
                            obs_index = data$obs_index, #vector length N_obs
@@ -43,21 +43,21 @@ rmot_test_single_individual <- function(model_name,
                            y_bar = data$y_bar, #Real
                            y_0_obs = data$y_0_obs #vector length N_ind
           ) |>
-          rmot_run(chains = 1, iter = 1000, verbose = FALSE, show_messages = FALSE)
+          hmDE_run(chains = 1, iter = 1000, verbose = FALSE, show_messages = FALSE)
       )
     }
 
   } else {
     # Test single individual
     suppressWarnings( #Suppresses stan warnings
-      single_ind_test <- rmot_model(paste0(model_name, "_single_ind")) |>
-        rmot_assign_data(n_obs = data$n_obs, #integer
+      single_ind_test <- hmDE_model(paste0(model_name, "_single_ind")) |>
+        hmDE_assign_data(n_obs = data$n_obs, #integer
                          y_obs = data$y_obs,
                          obs_index = data$obs_index, #vector length N_obs
                          time = data$time, #Vector length N_obs
                          y_0_obs = data$y_0_obs #vector length N_ind
         ) |>
-        rmot_run(chains = 1, iter = 1000, verbose = FALSE, show_messages = FALSE)
+        hmDE_run(chains = 1, iter = 1000, verbose = FALSE, show_messages = FALSE)
     )
   }
 
@@ -79,13 +79,13 @@ rmot_test_single_individual <- function(model_name,
   expect_s4_class(single_ind_test, "stanfit")
 }
 
-rmot_test_multi_individual <- function(model_name, data, est_dim){
+hmDE_test_multi_individual <- function(model_name, data, est_dim){
   if(! is.null(data$step_size)){
     if(is.null(data$y_bar)){ #Models that do not require centering
       # Test multi-individual
       suppressWarnings( #Suppresses stan warnings
-        multi_ind_test <- rmot_model(paste0(model_name, "_multi_ind")) |>
-          rmot_assign_data(step_size = data$step_size, #real
+        multi_ind_test <- hmDE_model(paste0(model_name, "_multi_ind")) |>
+          hmDE_assign_data(step_size = data$step_size, #real
                            n_obs = data$n_obs, #integer
                            n_ind = data$n_ind, #integer
                            y_obs = data$y_obs, #vector length N_obs
@@ -94,13 +94,13 @@ rmot_test_multi_individual <- function(model_name, data, est_dim){
                            ind_id = data$ind_id, #Vector length N_obs
                            y_0_obs = data$y_0_obs #vector length N_ind
           ) |>
-          rmot_run(chains = 2, iter = 100, verbose = FALSE, show_messages = FALSE)
+          hmDE_run(chains = 2, iter = 100, verbose = FALSE, show_messages = FALSE)
       )
     } else { #Models that do require centering with y_bar
       # Test multi-individual
       suppressWarnings( #Suppresses stan warnings
-        multi_ind_test <- rmot_model(paste0(model_name, "_multi_ind")) |>
-          rmot_assign_data(step_size = data$step_size, #real
+        multi_ind_test <- hmDE_model(paste0(model_name, "_multi_ind")) |>
+          hmDE_assign_data(step_size = data$step_size, #real
                            n_obs = data$n_obs, #integer
                            n_ind = data$n_ind, #integer
                            y_obs = data$y_obs, #vector length N_obs
@@ -110,15 +110,15 @@ rmot_test_multi_individual <- function(model_name, data, est_dim){
                            ind_id = data$ind_id, #Vector length N_obs
                            y_0_obs = data$y_0_obs #vector length N_ind
           ) |>
-          rmot_run(chains = 2, iter = 100, verbose = FALSE, show_messages = FALSE)
+          hmDE_run(chains = 2, iter = 100, verbose = FALSE, show_messages = FALSE)
       )
     }
 
   } else {
     # Test multi-individual without step_size
     suppressWarnings( #Suppresses stan warnings
-      multi_ind_test <- rmot_model(paste0(model_name, "_multi_ind")) |>
-        rmot_assign_data(n_obs = data$n_obs, #integer
+      multi_ind_test <- hmDE_model(paste0(model_name, "_multi_ind")) |>
+        hmDE_assign_data(n_obs = data$n_obs, #integer
                          n_ind = data$n_ind, #integer
                          y_obs = data$y_obs, #vector length N_obs
                          obs_index = data$obs_index, #vector length N_obs
@@ -126,7 +126,7 @@ rmot_test_multi_individual <- function(model_name, data, est_dim){
                          ind_id = data$ind_id, #Vector length N_obs
                          y_0_obs = data$y_0_obs #vector length N_ind
         ) |>
-        rmot_run(chains = 2, iter = 100, verbose = FALSE, show_messages = FALSE)
+        hmDE_run(chains = 2, iter = 100, verbose = FALSE, show_messages = FALSE)
     )
   }
 

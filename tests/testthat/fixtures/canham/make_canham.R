@@ -45,14 +45,14 @@ for(i in 1:n_ind){ #Ensure reasonable starting condition based on G. recondita
 }
 
 #Generate true values
-true_data <- rmot_build_true_test_data(n_ind, n_obs_per_ind, interval,
+true_data <- hmDE_build_true_test_data(n_ind, n_obs_per_ind, interval,
                                        DE_pars, initial_conditions, DE)
 
 #Generate observations
-y_obs <- rmot_add_normal_error(true_data$y_true)
+y_obs <- hmDE_add_normal_error(true_data$y_true)
 
 #Export datasets
-rmot_export_test_data(n_obs_per_ind = n_obs_per_ind,
+hmDE_export_test_data(n_obs_per_ind = n_obs_per_ind,
                       n_ind = n_ind,
                       y_obs = y_obs,
                       time = time,

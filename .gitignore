@@ -58,7 +58,7 @@ inst/doc
 *.cpp
 *.o
 *.so
-src/rmot.dll
+src/hmDE.dll
 src/*.tmp
 inst/stan/*.exe
 

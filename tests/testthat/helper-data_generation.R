@@ -1,6 +1,6 @@
 #General functions for data generation
 #Runge-Kutta 4th order
-rmot_rk4_est <- function(y_0, DE, pars, step_size, n_step){
+hmDE_rk4_est <- function(y_0, DE, pars, step_size, n_step){
   runge_kutta_int <- c(y_0)
   for(i in 2:n_step){
     k1 <- DE(runge_kutta_int[i-1], pars)
@@ -13,14 +13,14 @@ rmot_rk4_est <- function(y_0, DE, pars, step_size, n_step){
   return(runge_kutta_int)
 }
 
-rmot_build_true_test_data <- function(n_ind, n_obs, interval,
+hmDE_build_true_test_data <- function(n_ind, n_obs, interval,
                                       DE_pars, initial_conditions, DE){
   time <- seq(from = 0, by = interval, length.out = n_obs)
 
   true_data <- data.frame()
   for(i in 1:n_ind){
     #Use RK4 with small step size to project forward from initial size
-    runge_kutta_int <- rmot_rk4_est(y_0 = initial_conditions$y_0[i],
+    runge_kutta_int <- hmDE_rk4_est(y_0 = initial_conditions$y_0[i],
                                     DE = DE,
                                     pars = DE_pars[i,],
                                     step_size = 0.1,
@@ -44,12 +44,12 @@ rmot_build_true_test_data <- function(n_ind, n_obs, interval,
   return(true_data)
 }
 
-rmot_add_normal_error <- function(y, sigma_e=0.001){
+hmDE_add_normal_error <- function(y, sigma_e=0.001){
   return(y + rnorm(length(y), mean=0, sd=sigma_e))
 }
 
 #Save data to files
-rmot_export_test_data <- function(n_obs_per_ind,
+hmDE_export_test_data <- function(n_obs_per_ind,
                                   n_ind,
                                   y_obs,
                                   time,

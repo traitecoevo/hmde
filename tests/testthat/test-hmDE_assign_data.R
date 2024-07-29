@@ -1,6 +1,6 @@
 test_that("Execution and output", {
-  constant_single <- rmot_model("constant_single_ind") |>
-    rmot_assign_data(n_obs = 2,
+  constant_single <- hmDE_model("constant_single_ind") |>
+    hmDE_assign_data(n_obs = 2,
                      y_obs = c(1,2),
                      obs_index = c(1,2),
                      time = c(0,1),
@@ -12,7 +12,7 @@ test_that("Execution and output", {
   
   expect_type(constant_single, "list")
   
-  constant_empty <- rmot_model("constant_single_ind")
+  constant_empty <- hmDE_model("constant_single_ind")
   
   expect_null(constant_empty$y_obs)
   
