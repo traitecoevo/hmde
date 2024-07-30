@@ -1,12 +1,12 @@
 #' Assign data to template
 #'
-#' @param model_template output from rmot_model
+#' @param model_template output from hmde_model
 #' @param ... data-masking name-value pairs
 #'
 #' @return updated named list with your data assigned to Stan model parameters
 #' @export
 
-rmot_assign_data <- function(model_template, ...){
+hmde_assign_data <- function(model_template, ...){
   # Grab user expressions
   user_code <- rlang::enquos(..., .check_assign = TRUE)
 

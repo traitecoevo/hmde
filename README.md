@@ -1,18 +1,18 @@
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
-# rmot
+# hmde
 
 <!-- badges: start -->
 
-[![R-CMD-check](https://github.com/traitecoevo/rmot/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/traitecoevo/rmot/actions/workflows/R-CMD-check.yaml)
+[![R-CMD-check](https://github.com/traitecoevo/hmde/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/traitecoevo/hmde/actions/workflows/R-CMD-check.yaml)
 [![Codecov test
-coverage](https://codecov.io/gh/traitecoevo/rmot/branch/master/graph/badge.svg)](https://app.codecov.io/gh/traitecoevo/rmot?branch=master)
+coverage](https://codecov.io/gh/traitecoevo/hmde/branch/master/graph/badge.svg)](https://app.codecov.io/gh/traitecoevo/hmde?branch=master)
 [![Lifecycle:
 experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://lifecycle.r-lib.org/articles/stages.html#experimental)
 <!-- badges: end -->
 
-The goal of rmot is to implement hierarchical Bayesian longitudinal models to solve the Bayesian inverse problem of estimating differential equation parameters based on repeat measurement surveys. Estimation is done using Markov Chain Monte Carlo, implemented through
+The goal of hmde is to implement hierarchical Bayesian longitudinal models to solve the Bayesian inverse problem of estimating differential equation parameters based on repeat measurement surveys. Estimation is done using Markov Chain Monte Carlo, implemented through
 [Stan](https://mc-stan.org/) via [RStan](https://mc-stan.org/users/interfaces/rstan), built under [R](https://cran.r-project.org/) 4.3.3. The inbuilt models are based on case studies in ecology.
 
 ## The Maths
@@ -60,12 +60,12 @@ where $f_{max}$ is the maximum growth rate, $Y_{max}$ is the $Y$-value at which 
 
 ## Installation
 
-‘rmot’ is under active development. You can install the current
-developmental version of ‘rmot’ from [GitHub](https://github.com/) with:
+‘hmde’ is under active development. You can install the current
+developmental version of ‘hmde’ from [GitHub](https://github.com/) with:
 
 ``` r
 # install.packages("remotes")
-remotes::install_github("traitecoevo/rmot")
+remotes::install_github("traitecoevo/hmde")
 ```
 
 ## Quick demo
@@ -83,16 +83,16 @@ blows up as $\sigma_e$ approaches 0.
 Fit the model:
 
 ``` r
-constant_fit <- rmot_model("constant_single_ind") |>
-        rmot_assign_data(n_obs = 10,                  #Integer
+constant_fit <- hmde_model("constant_single_ind") |>
+        hmde_assign_data(n_obs = 10,                  #Integer
                          y_obs = y_obs,               #vector length n_obs
                          obs_index = 1:10,            #vector length n_obs
                          time = 0:9,                  #Vector length n_obs
                          y_0_obs = y_obs[1]           #Real
         ) |>
-        rmot_run(chains = 1, iter = 1000, verbose = FALSE, show_messages = FALSE)
+        hmde_run(chains = 1, iter = 1000, verbose = FALSE, show_messages = FALSE)
 ```
 
 ## Found a bug?
 
-Please submit a [GitHub issue](https://github.com/traitecoevo/rmot/issues) with details of the bug. A [reprex](https://reprex.tidyverse.org/) would be particularly helpful with the bug-proofing process!
+Please submit a [GitHub issue](https://github.com/traitecoevo/hmde/issues) with details of the bug. A [reprex](https://reprex.tidyverse.org/) would be particularly helpful with the bug-proofing process!
