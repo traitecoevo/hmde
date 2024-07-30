@@ -1,7 +1,7 @@
 #Testing for vb model
 test_that("Model structures: vb", {
   # Single individual
-  single_model <- hmDE_model("vb_single_ind")
+  single_model <- hmde_model("vb_single_ind")
   expect_named(single_model, c("step_size", "n_obs", "y_obs",
                                "obs_index", "time", "y_0_obs",
                                "y_bar", "model"))
@@ -9,7 +9,7 @@ test_that("Model structures: vb", {
   expect_visible(single_model)
 
   #Multiple individuals
-  multi_model <- hmDE_model("vb_multi_ind")
+  multi_model <- hmde_model("vb_multi_ind")
   expect_named(multi_model, c("step_size", "n_obs", "n_ind", "y_obs",
                               "obs_index", "time", "ind_id",
                               "y_0_obs", "y_bar", "model"))
@@ -21,7 +21,7 @@ test_that("Execution: vb single individual", {
   model_name <- "vb"
   par_names <- c("ind_growth_rate", "ind_max_size")
 
-  hmDE_test_single_individual(model_name, par_names)
+  hmde_test_single_individual(model_name, par_names)
 })
 
 test_that("Execution: vb multiple individuals", {
@@ -41,5 +41,5 @@ test_that("Execution: vb multiple individuals", {
     1 +                             #lp__
     6                               #Generated quantities
 
-  hmDE_test_multi_individual(model_name, data, est_dim)
+  hmde_test_multi_individual(model_name, data, est_dim)
 })

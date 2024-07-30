@@ -1,26 +1,26 @@
-#' Select data configuration template for hmDE supported model
+#' Select data configuration template for hmde supported model
 #'
 #' @param model model name character string
 #'
 #' @return named list that matches Stan model parameters
 #' @export
 
-hmDE_model <- function(model=NULL){
+hmde_model <- function(model=NULL){
 
-  #TODO: Need a mechanism to check model requested in one that is supported by hmDE
+  #TODO: Need a mechanism to check model requested in one that is supported by hmde
 
   output <- switch(model,
-                   constant_single_ind = hmDE_const_single_ind(),
-                   constant_multi_ind = hmDE_const_multi_ind(),
-                   canham_single_ind = hmDE_canham_single_ind(),
-                   canham_multi_ind = hmDE_canham_multi_ind(),
-                   power_single_ind = hmDE_power_single_ind(),
-                   power_multi_ind = hmDE_power_multi_ind(),
-                   vb_single_ind = hmDE_vb_single_ind(),
-                   vb_multi_ind = hmDE_vb_multi_ind(),
-                   linear_single_ind = hmDE_linear_single_ind())
+                   constant_single_ind = hmde_const_single_ind(),
+                   constant_multi_ind = hmde_const_multi_ind(),
+                   canham_single_ind = hmde_canham_single_ind(),
+                   canham_multi_ind = hmde_canham_multi_ind(),
+                   power_single_ind = hmde_power_single_ind(),
+                   power_multi_ind = hmde_power_multi_ind(),
+                   vb_single_ind = hmde_vb_single_ind(),
+                   vb_multi_ind = hmde_vb_multi_ind(),
+                   linear_single_ind = hmde_linear_single_ind())
 
-  class(output) <- "hmDE_object"
+  class(output) <- "hmde_object"
 
   return(output)
 }
@@ -29,7 +29,7 @@ hmDE_model <- function(model=NULL){
 #' @keywords internal
 #' @noRd
 
-hmDE_lm <- function(){
+hmde_lm <- function(){
   list(X = NULL,
        Y = NULL,
        N = NULL,
@@ -40,7 +40,7 @@ hmDE_lm <- function(){
 #' @keywords internal
 #' @noRd
 
-hmDE_const_single_ind <- function(){
+hmde_const_single_ind <- function(){
   list(n_obs = NULL,
        y_obs = NULL,
        obs_index = NULL,
@@ -53,7 +53,7 @@ hmDE_const_single_ind <- function(){
 #' @keywords internal
 #' @noRd
 
-hmDE_const_multi_ind <- function(){
+hmde_const_multi_ind <- function(){
   list(n_obs = NULL,
        n_ind = NULL,
        y_obs = NULL,
@@ -68,7 +68,7 @@ hmDE_const_multi_ind <- function(){
 #' @keywords internal
 #' @noRd
 
-hmDE_canham_single_ind <- function(){
+hmde_canham_single_ind <- function(){
   list(step_size = NULL,
        n_obs = NULL,
        y_obs = NULL,
@@ -82,7 +82,7 @@ hmDE_canham_single_ind <- function(){
 #' @keywords internal
 #' @noRd
 
-hmDE_canham_multi_ind <- function(){
+hmde_canham_multi_ind <- function(){
   list(step_size = NULL,
        n_obs = NULL,
        n_ind = NULL,
@@ -98,7 +98,7 @@ hmDE_canham_multi_ind <- function(){
 #' @keywords internal
 #' @noRd
 
-hmDE_power_single_ind <- function(){
+hmde_power_single_ind <- function(){
   list(step_size = NULL,
        n_obs = NULL,
        y_obs = NULL,
@@ -113,7 +113,7 @@ hmDE_power_single_ind <- function(){
 #' @keywords internal
 #' @noRd
 
-hmDE_power_multi_ind <- function(){
+hmde_power_multi_ind <- function(){
   list(step_size = NULL,
        n_obs = NULL,
        n_ind = NULL,
@@ -130,7 +130,7 @@ hmDE_power_multi_ind <- function(){
 #' @keywords internal
 #' @noRd
 
-hmDE_vb_single_ind <- function(){
+hmde_vb_single_ind <- function(){
   list(step_size = NULL,
        n_obs = NULL,
        y_obs = NULL,
@@ -145,7 +145,7 @@ hmDE_vb_single_ind <- function(){
 #' @keywords internal
 #' @noRd
 
-hmDE_vb_multi_ind <- function(){
+hmde_vb_multi_ind <- function(){
   list(step_size = NULL,
        n_obs = NULL,
        n_ind = NULL,
@@ -162,7 +162,7 @@ hmDE_vb_multi_ind <- function(){
 #' @keywords internal
 #' @noRd
 #'
-hmDE_linear_single_ind <- function(){
+hmde_linear_single_ind <- function(){
   list(step_size = NULL,
        n_obs = NULL,
        y_obs = NULL,

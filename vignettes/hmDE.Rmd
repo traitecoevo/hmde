@@ -1,8 +1,8 @@
 ---
-title: "hmDE"
+title: "hmde"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{hmDE}
+  %\VignetteIndexEntry{hmde}
   %\VignetteEncoding{UTF-8}
   %\VignetteEngine{knitr::rmarkdown}
 editor_options: 
@@ -15,23 +15,23 @@ knitr::opts_chunk$set(
   comment = "#>"
 )
 
-library(hmDE)
+library(hmde)
 ```
 
 ## Goal of package
 
 ## Installation
 
-'hmDE' is under active development, you can install the development version of 'hmDE' from [GitHub](https://github.com/) with:
+'hmde' is under active development, you can install the development version of 'hmde' from [GitHub](https://github.com/) with:
 
 ```{r, eval=FALSE}
 # install.packages("remotes")
-remotes::install_github("traitecoevo/hmDE")
+remotes::install_github("traitecoevo/hmde")
 
-library(hmDE)
+library(hmde)
 ```
 
-## {hmDE} supported models
+## {hmde} supported models
 
 ### Constant Growth - Single Individual
 
@@ -41,14 +41,14 @@ true <- c(seq(from=1, by=2.5, length.out=7))
 y <- true + true*rnorm(n=7, 0, 0.02) + rnorm(n=7, 0, 0.2)
 
 # Configure model template
-const_single_ind_output <- hmDE_model("constant_single_ind") |>
-  hmDE_assign_data(n_obs = length(y), #integer
+const_single_ind_output <- hmde_model("constant_single_ind") |>
+  hmde_assign_data(n_obs = length(y), #integer
                    y_obs = y, #vector length N_obs
                    obs_index = 1:7, #vector length N_obs
                    time = rep(5, times=length(y)), #Vector length N_obs
                    y_0_obs = y[1] #vector length N_ind
                    )  |>
-  hmDE_run()
+  hmde_run()
 
 # Look at output
 const_single_ind_output
@@ -63,8 +63,8 @@ true <- c(seq(from=1, by=2.5, length.out=7),
 y <- true + true*rnorm(n=14, 0, 0.02) + rnorm(n=14, 0, 0.2)
 
 # Configure model template
-const_multi_ind_output <- hmDE_model("constant_multi_ind") |>
-  hmDE_assign_data(n_obs = length(y), #integer
+const_multi_ind_output <- hmde_model("constant_multi_ind") |>
+  hmde_assign_data(n_obs = length(y), #integer
                    n_ind = 2, #integer
                    y_obs = y, #vector length N_obs
                    obs_index = rep(seq(from=1, to=7, by=1), times=2), #vector length N_obs
@@ -72,7 +72,7 @@ const_multi_ind_output <- hmDE_model("constant_multi_ind") |>
                    ind_id = c(rep(1, times=7), rep(2, times=7)), #Vector length N_obs
                    y_0_obs = y[c(1, 8)] #vector length N_ind
                    )  |>
-  hmDE_run()
+  hmde_run()
 
 # Look at output
 const_multi_ind_output

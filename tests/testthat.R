@@ -7,6 +7,6 @@
 # * https://testthat.r-lib.org/articles/special-files.html
 
 library(testthat)
-library(hmDE)
+library(hmde)
 
-test_check("hmDE")
+test_check("hmde")

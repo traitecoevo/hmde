@@ -1,7 +1,7 @@
 #Testing for constant model
 test_that("Model structures: Constant", {
   # Single individual
-  single_model <- hmDE_model("constant_single_ind")
+  single_model <- hmde_model("constant_single_ind")
   expect_named(single_model, c("n_obs", "y_obs",
                                "obs_index", "time", "y_0_obs",
                                "model"))
@@ -9,7 +9,7 @@ test_that("Model structures: Constant", {
   expect_visible(single_model)
 
   #Multiple individuals
-  multi_model <- hmDE_model("constant_multi_ind")
+  multi_model <- hmde_model("constant_multi_ind")
   expect_named(multi_model, c("n_obs", "n_ind", "y_obs",
                               "obs_index", "time", "ind_id", "y_0_obs",
                               "model"))
@@ -21,7 +21,7 @@ test_that("Execution: Constant single individual", {
   model_name <- "constant"
   par_names <- "ind_beta"
 
-  hmDE_test_single_individual(model_name, par_names)
+  hmde_test_single_individual(model_name, par_names)
 })
 
 test_that("Execution: Constant multiple individuals", {
@@ -39,5 +39,5 @@ test_that("Execution: Constant multiple individuals", {
     data$n_obs +               #Delta y_ij
     1                          #lp__
 
-  hmDE_test_multi_individual(model_name, data, est_dim)
+  hmde_test_multi_individual(model_name, data, est_dim)
 })
