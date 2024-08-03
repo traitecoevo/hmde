@@ -26,7 +26,7 @@ hmde_model_pars <- function(model=NULL){
   return(output)
 }
 
-#' Data configuration template for constant growth single individual model
+#' Parameter names for constant growth single individual model
 #' @keywords internal
 #' @noRd
 
@@ -37,7 +37,7 @@ hmde_const_single_ind_pars <- function(){
        model = "constant_single_ind")
 }
 
-#' Data configuration template for constant growth single pop model
+#' Parameter names for constant growth single pop model
 #' @keywords internal
 #' @noRd
 
@@ -46,10 +46,10 @@ hmde_const_multi_ind_pars <- function(){
        individual_pars_names = c("ind_beta"),
        population_pars_names = c("pop_beta_mu", "pop_beta_sigma"),
        error_pars_names = c("global_error_sigma"),
-       model = "constant_single_ind")
+       model = "constant_multi_ind")
 }
 
-#' Data configuration template for Canham growth single individual model
+#' Parameter names for Canham growth single individual model
 #' @keywords internal
 #' @noRd
 
@@ -60,7 +60,7 @@ hmde_canham_single_ind_pars <- function(){
        model = "canham_single_ind")
 }
 
-#' Data configuration template for Canham growth single pop model
+#' Parameter names for Canham growth single pop model
 #' @keywords internal
 #' @noRd
 
@@ -74,7 +74,7 @@ hmde_canham_multi_ind_pars <- function(){
        model = "canham_multi_ind")
 }
 
-#' Data configuration template for power law growth single individual model
+#' Parameter names for power law growth single individual model
 #' @keywords internal
 #' @noRd
 
@@ -85,7 +85,7 @@ hmde_power_single_ind_pars <- function(){
        model = "power_single_ind")
 }
 
-#' Data configuration template for power law growth single pop model
+#' Parameter names for power law growth single pop model
 #' @keywords internal
 #' @noRd
 
@@ -98,7 +98,7 @@ hmde_power_multi_ind_pars <- function(){
        model = "power_multi_ind")
 }
 
-#' Data configuration template for von Bertalanffy growth single individual model
+#' Parameter names for von Bertalanffy growth single individual model
 #' @keywords internal
 #' @noRd
 
@@ -109,7 +109,7 @@ hmde_vb_single_ind_pars <- function(){
        model = "vb_single_ind")
 }
 
-#' Data configuration template for von Bertalanffy growth single pop model
+#' Parameter names for von Bertalanffy growth single pop model
 #' @keywords internal
 #' @noRd
 
@@ -122,7 +122,7 @@ hmde_vb_multi_ind_pars <- function(){
        model = "vb_multi_ind")
 }
 
-#' Data configuration template for linear growth single individual model
+#' Parameter names for linear growth single individual model
 #' @keywords internal
 #' @noRd
 #'
