@@ -7,7 +7,10 @@
 
 hmde_model <- function(model=NULL){
 
-  #TODO: Need a mechanism to check model requested in one that is supported by hmde
+  if(!model %in% hmde_model_name()){
+    print("Model not available.")
+    return(-1)
+  }
 
   output <- switch(model,
                    constant_single_ind = hmde_const_single_ind(),
@@ -23,17 +26,6 @@ hmde_model <- function(model=NULL){
   class(output) <- "hmde_object"
 
   return(output)
-}
-
-#' Data configuration template for linear model
-#' @keywords internal
-#' @noRd
-
-hmde_lm <- function(){
-  list(X = NULL,
-       Y = NULL,
-       N = NULL,
-       model = "linear")
 }
 
 #' Data configuration template for constant growth single individual model

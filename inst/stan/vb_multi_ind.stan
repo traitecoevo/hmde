@@ -67,11 +67,11 @@ parameters {
   real<lower=0> ind_growth_par[n_ind];
   real<lower=0> ind_max_size[n_ind];
 
-  //Species level
-  real species_growth_par_mean;
-  real<lower=0> species_growth_par_sd;
-  real species_max_size_mean;
-  real<lower=0> species_max_size_sd;
+  //pop level
+  real pop_growth_par_mean;
+  real<lower=0> pop_growth_par_sd;
+  real pop_max_size_mean;
+  real<lower=0> pop_max_size_sd;
 
   //Global level
   real<lower=0> global_error_sigma;
@@ -106,14 +106,14 @@ model {
   //Priors
   //Individual level
   ind_y_0 ~normal(y_0_obs, global_error_sigma);
-  ind_growth_par ~lognormal(species_growth_par_mean, species_growth_par_sd);
-  ind_max_size ~lognormal(species_max_size_mean, species_max_size_sd);
+  ind_growth_par ~lognormal(pop_growth_par_mean, pop_growth_par_sd);
+  ind_max_size ~lognormal(pop_max_size_mean, pop_max_size_sd);
 
-  //Species level
-  species_growth_par_mean ~normal(0, 2);
-  species_growth_par_sd ~cauchy(0, 2);
-  species_max_size_mean ~normal(max(log(y_obs)), 2);
-  species_max_size_sd ~cauchy(0, 2);
+  //pop level
+  pop_growth_par_mean ~normal(0, 2);
+  pop_growth_par_sd ~cauchy(0, 2);
+  pop_max_size_mean ~normal(max(log(y_obs)), 2);
+  pop_max_size_sd ~cauchy(0, 2);
 
   //Global level
   global_error_sigma ~cauchy(0, 5);

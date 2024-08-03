@@ -68,11 +68,11 @@ parameters {
   real<lower=0> ind_coeff[n_ind];
   real<lower=0> ind_power[n_ind];
 
-  //Species level
-  real species_coeff_mean;
-  real<lower=0> species_coeff_sd;
-  real species_power_mean;
-  real<lower=0> species_power_sd;
+  //pop level
+  real pop_coeff_mean;
+  real<lower=0> pop_coeff_sd;
+  real pop_power_mean;
+  real<lower=0> pop_power_sd;
 
   //Global level
   real<lower=0> global_error_sigma;
@@ -107,14 +107,14 @@ model {
   //Priors
   //Individual level
   ind_y_0 ~ normal(y_0_obs, global_error_sigma);
-  ind_coeff ~lognormal(species_coeff_mean, species_coeff_sd);
-  ind_power ~lognormal(species_power_mean, species_power_sd);
+  ind_coeff ~lognormal(pop_coeff_mean, pop_coeff_sd);
+  ind_power ~lognormal(pop_power_mean, pop_power_sd);
 
-  //Species level
-  species_coeff_mean ~normal(0, 2);
-  species_coeff_sd ~cauchy(0, 2);
-  species_power_mean ~normal(0, 2);
-  species_power_sd ~cauchy(0, 2);
+  //pop level
+  pop_coeff_mean ~normal(0, 2);
+  pop_coeff_sd ~cauchy(0, 2);
+  pop_power_mean ~normal(0, 2);
+  pop_power_sd ~cauchy(0, 2);
 
   //Global level
   global_error_sigma ~cauchy(0, 5);
