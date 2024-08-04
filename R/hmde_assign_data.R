@@ -1,4 +1,4 @@
-#' Assign data to template
+#' Assign data to template for chosen model
 #'
 #' @param model_template output from hmde_model
 #' @param step_size Step size for numerical integration.
@@ -12,7 +12,7 @@ hmde_assign_data <- function(model_template, step_size = NULL, data = NULL, ...)
   if(!is.null(data)){ # Use provided tibble
     user_fields <- names(data)
 
-  } else { # Grab user expressions from individual list items
+  } else { # Grab user expressions from individual list items and extract data
     user_code <- rlang::enquos(..., .check_assign = TRUE)
     user_fields <- names(user_code)
     # Evaluate the RHS of expressions (the values)
@@ -27,11 +27,11 @@ hmde_assign_data <- function(model_template, step_size = NULL, data = NULL, ...)
   # Check user data has required names
   if(grepl("multi", model_template$model)){ # Multi-individual with ind_id vec
     if(!all(c("ind_id", "time", "y_obs", "obs_index") %in% user_fields)){
-      print("Improper data structure. Please check data names.")
+      print("Improper data structure: Please check data names.")
     }
   } else { # Single individual models
     if(!all(c("time", "y_obs", "obs_index") %in% user_fields)){
-      print("Improper data structure. Please check data names.")
+      print("Improper data structure: Please check data names.")
     }
   }
 
@@ -51,8 +51,22 @@ hmde_assign_data <- function(model_template, step_size = NULL, data = NULL, ...)
     }
 
     if(is.null(model_template[[i]])){ #Report missing data
-      print(paste("Data missing:", i))
+      print(paste("Improper data structure: Data missing:", i))
     }
+  }
+
+  #Check lengths for y_obs, obs_index, time, ind_id
+  vec_lengths <- c(
+    length(model_template[[y_obs]]),
+    length(model_template[[obs_index]]),
+    length(model_template[[time]])
+  )
+  if(grepl("multi", model_template$model)){ # Multi-individual with ind_id vector
+    vec_lengths[4] <- length(model_template[[ind_id]])
+  }
+
+  if(length(unique(vec_lengths))!=1){
+    print("Improper data structure: Different lengths of data vectors.")
   }
 
   return(model_template)

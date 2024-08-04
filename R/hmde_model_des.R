@@ -1,5 +1,5 @@
 #' Differential equation for constant growth single and multi- individual models
-#' @param y
+#' @param y input real
 #' @param pars list of parameter beta
 #'
 #' @return value of differential equation at y
@@ -13,7 +13,7 @@ hmde_const_de <- function(y = NULL, pars = NULL){
 
 
 #' Differential equation for Canham growth single and multi- individual models
-#' @param y
+#' @param y input real
 #' @param pars list of parametera g_max, S_max, k
 #'
 #' @return value of differential equation at y
@@ -28,7 +28,7 @@ hmde_canham_de <- function(y = NULL, pars = NULL){
 }
 
 #' Differential equation for power law growth single and multi- individual models
-#' @param y
+#' @param y input real
 #' @param pars list of parameters coefficient, power
 #'
 #' @return value of differential equation at y
@@ -42,7 +42,7 @@ hmde_power_de <- function(y = NULL, pars = NULL){
 
 
 #' Differential equation for von Bertalanffy growth single and multi- individual models
-#' @param y
+#' @param y input real
 #' @param pars list of parameters beta, Y_max
 #'
 #' @return value of differential equation at y
@@ -55,7 +55,7 @@ hmde_vb_de <- function(y = NULL, pars = NULL){
 }
 
 #' Differential equation for linear growth single individual model
-#' @param y
+#' @param y input real
 #' @param pars list of parameters beta_0, beta_1
 #'
 #' @return value of differential equation at y
