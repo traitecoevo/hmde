@@ -1,30 +1,59 @@
 #' Assign data to template
 #'
 #' @param model_template output from hmde_model
-#' @param ... data-masking name-value pairs
+#' @param step_size Step size for numerical integration.
+#' @param data Input data tibble with columns including time, y_obs, obs_index, and additionally ind_id for multi-individual models
+#' @param ... data-masking name-value pairs allowing specific input of elements
 #'
 #' @return updated named list with your data assigned to Stan model parameters
 #' @export
 
-hmde_assign_data <- function(model_template, ...){
-  # Grab user expressions
-  user_code <- rlang::enquos(..., .check_assign = TRUE)
+hmde_assign_data <- function(model_template, step_size = NULL, data = NULL, ...){
+  if(!is.null(data)){ # Use provided tibble
+    user_fields <- names(data)
 
-  # Grab the names
-  fields <- names(user_code)
-
-  #TODO: Check names are in model_template
-
-  # Evaluate the RHS of expressions (the values)
-  data <- purrr::map(user_code,
-                     ~rlang::eval_tidy(.x, env = rlang::caller_env())
-                     )
-
-  for(i in fields){
-    model_template <- purrr::list_modify(model_template, !!!data[i])
+  } else { # Grab user expressions from individual list items
+    user_code <- rlang::enquos(..., .check_assign = TRUE)
+    user_fields <- names(user_code)
+    # Evaluate the RHS of expressions (the values)
+    data <- purrr::map(user_code,
+                       ~rlang::eval_tidy(.x, env = rlang::caller_env())
+    )
   }
 
-  #TODO: Check if N is supplied, if not, give error
+  # Grab the names
+  model_fields <- names(model_template)
+
+  # Check user data has required names
+  if(grepl("multi", model_template$model)){ # Multi-individual with ind_id vec
+    if(!all(c("ind_id", "time", "y_obs", "obs_index") %in% user_fields)){
+      print("Improper data structure. Please check data names.")
+    }
+  } else { # Single individual models
+    if(!all(c("time", "y_obs", "obs_index") %in% user_fields)){
+      print("Improper data structure. Please check data names.")
+    }
+  }
+
+  for(i in model_fields){ # Iterate through required fields and fill them
+    if(i %in% user_fields){
+      model_template <- purrr::list_modify(model_template, !!!data[i])
+    } else {
+      model_template[[i]] <- switch(
+        i,
+        step_size = step_size,
+        n_obs = length(data$y_obs),
+        n_ind = length(unique(data$ind_id)),
+        y_0_obs = data$y_obs[which(data$obs_index == 1)],
+        y_bar = mean(data$y_obs),
+        model = model_template$model
+      )
+    }
+
+    if(is.null(model_template[[i]])){ #Report missing data
+      print(paste("Data missing:", i))
+    }
+  }
 
   return(model_template)
 }
