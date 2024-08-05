@@ -57,17 +57,26 @@ hmde_assign_data <- function(model_template, step_size = NULL, data = NULL, ...)
 
   #Check lengths for y_obs, obs_index, time, ind_id
   vec_lengths <- c(
+    model_template[[n_obs]],
     length(model_template[[y_obs]]),
     length(model_template[[obs_index]]),
     length(model_template[[time]])
   )
   if(grepl("multi", model_template$model)){ # Multi-individual with ind_id vector
-    vec_lengths[4] <- length(model_template[[ind_id]])
+    vec_lengths[5] <- length(model_template[[ind_id]])
+
+    #Check number ind ID values
+    ind_id_lengths <- c(model_template[[n_ind]],length(unique(data$ind_id)))
+    if(length(unique(ind_id_lengths))!=1){
+      print("Different values for n_ind and unique entries in ind_id.")
+    }
   }
 
   if(length(unique(vec_lengths))!=1){
     print("Improper data structure: Different lengths of data vectors.")
   }
+
+
 
   return(model_template)
 }

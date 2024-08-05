@@ -9,7 +9,7 @@ hmde_model <- function(model=NULL){
 
   if(!model %in% hmde_model_name()){
     print("Model name not recognised. Run hmde_model_name() to see available models.")
-    return(-1)
+    return()
   }
 
   output <- switch(model,
