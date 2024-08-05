@@ -15,7 +15,7 @@
 #' @export
 
 hmde_plot_de_pieces <- function(model = NULL,
-                                individual_datal = NULL,
+                                individual_data = NULL,
                                 measurement_data = NULL,
                                 xlab = "Y(t)",
                                 ylab = "f",

@@ -8,7 +8,8 @@ Accepted ggplot arguments will change the axis labels, title, line colour, alpha
 \usage{
 hmde_plot_de_pieces(
   model = NULL,
-  individual_datal = NULL,
+  individual_data = NULL,
+  measurement_data = NULL,
   xlab = "Y(t)",
   ylab = "f",
   title = NULL,
@@ -19,6 +20,10 @@ hmde_plot_de_pieces(
 \arguments{
 \item{model}{model name character string}
 
+\item{individual_data}{tibble with estimated DE parameters}
+
+\item{measurement_data}{tibble with estimated measurements}
+
 \item{xlab}{character string for replacement x axis label}
 
 \item{ylab}{character string for replacement y axis label}
@@ -28,10 +33,6 @@ hmde_plot_de_pieces(
 \item{colour}{character string for replacement line colour}
 
 \item{alpha}{real number for replacement alpha value}
-
-\item{individual_data}{tibble with estimated DE parameters}
-
-\item{measurement_data}{tibble with estimated measurements}
 }
 \value{
 ggplot object
