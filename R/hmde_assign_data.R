@@ -1,14 +1,14 @@
 #' Assign data to template for chosen model
 #'
 #' @param model_template output from hmde_model
-#' @param step_size Step size for numerical integration.
 #' @param data Input data tibble with columns including time, y_obs, obs_index, and additionally ind_id for multi-individual models
+#' @param step_size Step size for numerical integration.
 #' @param ... data-masking name-value pairs allowing specific input of elements
 #'
 #' @return updated named list with your data assigned to Stan model parameters
 #' @export
 
-hmde_assign_data <- function(model_template, step_size = NULL, data = NULL, ...){
+hmde_assign_data <- function(model_template, data = NULL, step_size = NULL, ...){
   if(!is.null(data)){ # Use provided tibble
     user_fields <- names(data)
 
@@ -57,16 +57,16 @@ hmde_assign_data <- function(model_template, step_size = NULL, data = NULL, ...)
 
   #Check lengths for y_obs, obs_index, time, ind_id
   vec_lengths <- c(
-    model_template[[n_obs]],
-    length(model_template[[y_obs]]),
-    length(model_template[[obs_index]]),
-    length(model_template[[time]])
+    model_template$n_obs,
+    length(model_template$y_obs),
+    length(model_template$obs_index),
+    length(model_template$time)
   )
   if(grepl("multi", model_template$model)){ # Multi-individual with ind_id vector
-    vec_lengths[5] <- length(model_template[[ind_id]])
+    vec_lengths[5] <- length(model_template$ind_id)
 
     #Check number ind ID values
-    ind_id_lengths <- c(model_template[[n_ind]],length(unique(data$ind_id)))
+    ind_id_lengths <- c(model_template$n_ind,length(unique(data$ind_id)))
     if(length(unique(ind_id_lengths))!=1){
       print("Different values for n_ind and unique entries in ind_id.")
     }

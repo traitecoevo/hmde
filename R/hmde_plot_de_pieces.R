@@ -16,6 +16,7 @@
 
 hmde_plot_de_pieces <- function(model = NULL,
                                 individual_datal = NULL,
+                                measurement_data = NULL,
                                 xlab = "Y(t)",
                                 ylab = "f",
                                 title = NULL,
