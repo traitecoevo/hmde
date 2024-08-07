@@ -1,4 +1,4 @@
-//Constant DE - Single species
+//Constant DE - Single pop
 functions{
   //DE function
   real DE(real beta){
@@ -27,8 +27,8 @@ parameters {
   real<lower=0> ind_y_0[n_ind];
   real<lower=0> ind_beta[n_ind];
 
-  real species_beta_mu;
-  real<lower=0> species_beta_sigma;
+  real pop_beta_mu;
+  real<lower=0> pop_beta_sigma;
 
   //Global level
   real<lower=0> global_error_sigma;
@@ -58,12 +58,12 @@ model {
   //Priors
   //Individual level
   ind_y_0 ~ normal(y_0_obs, global_error_sigma);
-  ind_beta ~ lognormal(species_beta_mu,
-                    species_beta_sigma);
+  ind_beta ~ lognormal(pop_beta_mu,
+                    pop_beta_sigma);
 
   //Species level
-  species_beta_mu ~ normal(0.1, 1);
-  species_beta_sigma ~cauchy(0.1, 1);
+  pop_beta_mu ~ normal(0.1, 1);
+  pop_beta_sigma ~cauchy(0.1, 1);
 
   //Global level
   global_error_sigma ~cauchy(0.1, 1);

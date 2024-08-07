@@ -19,7 +19,7 @@ test_that("Model structures: canham", {
 
 test_that("Execution: canham single individual", {
   model_name <- "canham"
-  par_names <- c("ind_max_growth", "ind_diameter_at_max_growth", "ind_k")
+  par_names <- c("ind_max_growth", "ind_size_at_max_growth", "ind_k")
 
   hmde_test_single_individual(model_name, par_names)
 })

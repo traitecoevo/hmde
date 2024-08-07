@@ -65,16 +65,16 @@ parameters {
   //Individual level
   real<lower=0> ind_y_0[n_ind];
   real<lower=0> ind_max_growth[n_ind];
-  real<lower=0> ind_diameter_at_max_growth[n_ind];
+  real<lower=0> ind_size_at_max_growth[n_ind];
   real<lower=0> ind_k[n_ind];
 
   //Species level
-  real species_max_growth_mean;
-  real<lower=0> species_max_growth_sd;
-  real species_diameter_at_max_growth_mean;
-  real<lower=0> species_diameter_at_max_growth_sd;
-  real species_k_mean;
-  real<lower=0> species_k_sd;
+  real pop_max_growth_mean;
+  real<lower=0> pop_max_growth_sd;
+  real pop_size_at_max_growth_mean;
+  real<lower=0> pop_size_at_max_growth_sd;
+  real pop_k_mean;
+  real<lower=0> pop_k_sd;
 
   //Global level
   real<lower=0> global_error_sigma;
@@ -88,7 +88,7 @@ model {
   for(i in 1:n_obs){
     // Initialise the parameters for the observation
     pars[1] = ind_max_growth[ind_id[i]];
-    pars[2] = ind_diameter_at_max_growth[ind_id[i]];
+    pars[2] = ind_size_at_max_growth[ind_id[i]];
     pars[3] = ind_k[ind_id[i]];
 
     if(obs_index[i]==1){//Fits the first size
@@ -109,20 +109,20 @@ model {
   //Priors
   //Individual level
   ind_y_0 ~ normal(y_0_obs, global_error_sigma);
-  ind_max_growth ~lognormal(species_max_growth_mean,
-                            species_max_growth_sd);
-  ind_diameter_at_max_growth ~lognormal(species_diameter_at_max_growth_mean,
-                                        species_diameter_at_max_growth_sd);
-  ind_k ~lognormal(species_k_mean,
-                   species_k_sd);
+  ind_max_growth ~lognormal(pop_max_growth_mean,
+                            pop_max_growth_sd);
+  ind_size_at_max_growth ~lognormal(pop_size_at_max_growth_mean,
+                                        pop_size_at_max_growth_sd);
+  ind_k ~lognormal(pop_k_mean,
+                   pop_k_sd);
 
   //Species level
-  species_max_growth_mean ~normal(0, 1);
-  species_max_growth_sd ~cauchy(0, 1);
-  species_diameter_at_max_growth_mean ~normal(0, 1);
-  species_diameter_at_max_growth_sd ~cauchy(0, 1);
-  species_k_mean ~normal(0, 1);
-  species_k_sd ~cauchy(0, 1);
+  pop_max_growth_mean ~normal(0, 1);
+  pop_max_growth_sd ~cauchy(0, 1);
+  pop_size_at_max_growth_mean ~normal(0, 1);
+  pop_size_at_max_growth_sd ~cauchy(0, 1);
+  pop_k_mean ~normal(0, 1);
+  pop_k_sd ~cauchy(0, 1);
 
   //Global level
   global_error_sigma ~cauchy(0, 2);
@@ -136,7 +136,7 @@ generated quantities{
   for(i in 1:n_obs){
     // Initialise the parameters for the observation
     pars[1] = ind_max_growth[ind_id[i]];
-    pars[2] = ind_diameter_at_max_growth[ind_id[i]];
+    pars[2] = ind_size_at_max_growth[ind_id[i]];
     pars[3] = ind_k[ind_id[i]];
 
     if(obs_index[i]==1){//Fits the first size
