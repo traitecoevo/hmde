@@ -10,7 +10,6 @@
 hmde_extract_samples <- function(model = NULL,
                                  fit = NULL,
                                  input_measurement_data = NULL){
-  browser()
   estimate_list <- list()
   par_names <- hmde_model_pars(model)
 
@@ -25,8 +24,8 @@ hmde_extract_samples <- function(model = NULL,
 
   #Extract measurement, individual-level, and error parameter estimates and add to list
   estimate_list$measurement_data <- hmde_extract_measurement_ests(samples,
-                                                                    par_names$measurement_pars_names,
-                                                                    input_measurement_data)
+                                                                  par_names$measurement_pars_names,
+                                                                  input_measurement_data)
 
   estimate_list$individual_data <- hmde_extract_individual_par_ests(samples,
                                                                     par_names$individual_pars_names,
@@ -85,24 +84,22 @@ hmde_extract_individual_par_ests <- function(samples = NULL,
 #' @noRd
 hmde_extract_pop_par_ests <- function(samples = NULL,
                                       population_pars_names = NULL){
-  browser()
   population_data <- tibble()
 
   #Extract mean of parameter posterior distributions
   for(i in population_pars_names){
     pop_data_temp <- tibble(par_name = i)
-    pop_data_temp[["mean"]] <-  mean(samples[[i]])
-    pop_data_temp[["median"]] <- median(samples[[i]])
-    pop_data_temp[["CI_lower"]] <- as.numeric(quantile(samples[[i]],
+    pop_data_temp$mean <-  mean(samples[[i]])
+    pop_data_temp$median <- median(samples[[i]])
+    pop_data_temp$CI_lower <- as.numeric(quantile(samples[[i]],
                                                        probs=c(0.025)))
-    pop_data_temp[["CI_upper"]] <- as.numeric(quantile(samples[[i]],
+    pop_data_temp$CI_upper <- as.numeric(quantile(samples[[i]],
                                                        probs=c(0.975)))
 
-    rbind(population_data, pop_data_temp)
+    population_data <- rbind(population_data, pop_data_temp)
   }
 
   return(population_data)
-
 }
 
 #' #' Sample extraction for error parameters
