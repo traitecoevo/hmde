@@ -103,4 +103,10 @@ test_that("Execution and output: bad input", {
     hmde_model("constant_multi_ind") |>
                   hmde_assign_data(data = c(0,1))
   )
+
+  #Wrong data set
+  expect_error(
+    hmde_model("constant_multi_ind") |>
+      hmde_assign_data(data = mtcars)
+  )
 })
