@@ -68,7 +68,7 @@ parameters {
   real<lower=0> ind_diameter_at_max_growth[n_ind];
   real<lower=0> ind_k[n_ind];
 
-  //pop level
+  //Population level
   real pop_max_growth_mean;
   real<lower=0> pop_max_growth_sd;
   real pop_diameter_at_max_growth_mean;
@@ -116,7 +116,7 @@ model {
   ind_k ~lognormal(pop_k_mean,
                    pop_k_sd);
 
-  //pop level
+  //Population level
   pop_max_growth_mean ~normal(0, 1);
   pop_max_growth_sd ~cauchy(0, 1);
   pop_diameter_at_max_growth_mean ~normal(0, 1);

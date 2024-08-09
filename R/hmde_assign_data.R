@@ -26,12 +26,17 @@ hmde_assign_data <- function(model_template, data = NULL, step_size = NULL, ...)
 
   # Check user data has required names
   if(grepl("multi", model_template$model)){ # Multi-individual with ind_id vec
-    if(!all(c("ind_id", "time", "y_obs", "obs_index") %in% user_fields)){
-      print("Improper data structure: Please check data names.")
+    for(i in c("ind_id", "time", "y_obs", "obs_index")){
+      if(!i %in% user_fields){
+        stop(paste0("Improper data structure: ", i, " missing"))
+      }
     }
+
   } else { # Single individual models
-    if(!all(c("time", "y_obs", "obs_index") %in% user_fields)){
-      print("Improper data structure: Please check data names.")
+    for(i in c("time", "y_obs", "obs_index")){
+      if(!i %in% user_fields){
+        stop(paste0("Improper data structure: ", i, " missing"))
+      }
     }
   }
 
@@ -51,7 +56,7 @@ hmde_assign_data <- function(model_template, data = NULL, step_size = NULL, ...)
     }
 
     if(is.null(model_template[[i]])){ #Report missing data
-      print(paste("Improper data structure: Data missing:", i))
+      stop(paste("Improper data structure: Data missing:", i))
     }
   }
 
@@ -68,15 +73,13 @@ hmde_assign_data <- function(model_template, data = NULL, step_size = NULL, ...)
     #Check number ind ID values
     ind_id_lengths <- c(model_template$n_ind,length(unique(data$ind_id)))
     if(length(unique(ind_id_lengths))!=1){
-      print("Different values for n_ind and unique entries in ind_id.")
+      stop("Different values for n_ind and number of unique entries in ind_id.")
     }
   }
 
   if(length(unique(vec_lengths))!=1){
-    print("Improper data structure: Different lengths of data vectors.")
+    stop("Improper data structure: Different lengths of data vectors.")
   }
-
-
 
   return(model_template)
 }

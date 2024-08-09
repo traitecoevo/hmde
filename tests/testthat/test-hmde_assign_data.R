@@ -50,7 +50,7 @@ test_that("Execution and output: Constant multi ind minimum manual input", {
     hmde_assign_data(y_obs = Trout_Size_Data$y_obs,         #vector length N_obs
                      obs_index = Trout_Size_Data$obs_index, #vector length N_obs
                      time = Trout_Size_Data$time,           #Vector length N_obs
-                     ind_id = Trout_Size_Data$ind_id,       #Vector length N_obs
+                     ind_id = Trout_Size_Data$ind_id       #Vector length N_obs
                      )
 
   expect_named(constant_multi)
@@ -77,8 +77,30 @@ test_that("Execution and output: Constant multi ind tibble input", {
 })
 
 test_that("Execution and output: bad input", {
-  #Full manual input
-  expect_error( hmde_model("constant_multi_ind") |>
-    hmde_assign_data(data = c(0,1))
+  #Wrong number of individuals
+  expect_error(
+    hmde_model("constant_multi_ind") |>
+    hmde_assign_data(y_obs = Trout_Size_Data$y_obs,         #vector length N_obs
+                     obs_index = Trout_Size_Data$obs_index, #vector length N_obs
+                     time = Trout_Size_Data$time,           #Vector length N_obs
+                     ind_id = Trout_Size_Data$ind_id,       #Vector length N_obs
+                     n_ind = 1
+    )
+  )
+
+  #Mismatched vector lengths
+  expect_error(
+    hmde_model("constant_multi_ind") |>
+      hmde_assign_data(y_obs = Trout_Size_Data$y_obs,         #vector length N_obs
+                       obs_index = Trout_Size_Data$obs_index[1:5], #vector length N_obs
+                       time = Trout_Size_Data$time,           #Vector length N_obs
+                       ind_id = Trout_Size_Data$ind_id
+      )
+  )
+
+  #Missing data
+  expect_error(
+    hmde_model("constant_multi_ind") |>
+                  hmde_assign_data(data = c(0,1))
   )
 })
