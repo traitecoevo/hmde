@@ -7,9 +7,28 @@
 #' @return named list with data frames for measurement, individual, population-level, and error parameter estimates
 #' @export
 
-hmde_extract_samples <- function(model = NULL,
-                                 fit = NULL,
-                                 input_measurement_data = NULL){
+hmde_extract_estimates <- function(model = NULL,
+                                   fit = NULL,
+                                   input_measurement_data = NULL){
+  #Check for fit
+  if(is.null(fit)){
+    stop("Fit not provided.")
+  }
+
+  if(typeof(fit) != "S4"){
+    stop("Fit not S4 stanfit type.")
+  }
+
+  #Check for model
+  if(!model %in% hmde_model_name()){
+    stop("Model name not recognised. Run hmde_model_name() to see available models.")
+  }
+
+  #Check for input measurement data
+  if(!c("y_obs", "time", "obs_index") %in% names(input_measurement_data)){
+    stop("Input measurements of improper form: needs y_obs, time, obs_index columns.")
+  }
+
   estimate_list <- list()
   par_names <- hmde_model_pars(model)
 
@@ -21,6 +40,18 @@ hmde_extract_samples <- function(model = NULL,
 
   #Extract samples
   samples <- rstan::extract(fit, permuted = TRUE, inc_warmup = FALSE)
+  sample_par_names <- names(samples)
+
+  #Check parameter names
+  for(i in par_names[1:(length(par_names)-1)]){
+    for(j in i){
+      if(!j %in% sample_par_names){
+        stop(paste(
+          "Parameter missing from model:", j
+        ))
+      }
+    }
+  }
 
   #Extract measurement, individual-level, and error parameter estimates and add to list
   estimate_list$measurement_data <- hmde_extract_measurement_ests(samples,
@@ -67,14 +98,27 @@ hmde_extract_individual_par_ests <- function(samples = NULL,
   individual_data <- tibble(ind_id = 1:n_ind)
 
   #Extract mean of parameter posterior distributions
-  for(i in individual_pars_names){
-    individual_data[[paste0(i, "_mean")]] <- apply(samples[[i]], 2, mean)
-    individual_data[[paste0(i, "_median")]] <- apply(samples[[i]], 2, median)
-    individual_data[[paste0(i, "_CI_lower")]] <- apply(samples[[i]], 2,
-                                                       quantile, probs=c(0.025))
-    individual_data[[paste0(i, "_CI_upper")]] <- apply(samples[[i]], 2,
-                                                       quantile, probs=c(0.975))
+
+  if(n_ind > 1){
+    for(i in individual_pars_names){
+      individual_data[[paste0(i, "_mean")]] <- apply(samples[[i]], 2, mean)
+      individual_data[[paste0(i, "_median")]] <- apply(samples[[i]], 2, median)
+      individual_data[[paste0(i, "_CI_lower")]] <- apply(samples[[i]], 2,
+                                                         quantile, probs=c(0.025))
+      individual_data[[paste0(i, "_CI_upper")]] <- apply(samples[[i]], 2,
+                                                         quantile, probs=c(0.975))
+    }
+  } else {
+    for(i in individual_pars_names){
+      individual_data[[paste0(i, "_mean")]] <- mean(samples[[i]])
+      individual_data[[paste0(i, "_median")]] <- median(samples[[i]], 2, )
+      individual_data[[paste0(i, "_CI_lower")]] <- quantile(samples[[i]],
+                                                            probs=c(0.025))
+      individual_data[[paste0(i, "_CI_upper")]] <- quantile(samples[[i]],
+                                                            probs=c(0.975))
+    }
   }
+
 
   return(individual_data)
 }

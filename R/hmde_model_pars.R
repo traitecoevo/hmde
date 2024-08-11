@@ -8,8 +8,7 @@
 hmde_model_pars <- function(model=NULL){
 
   if(!model %in% hmde_model_name()){
-    print("Model name not recognised. Run hmde_model_name() to see available models.")
-    return(-1)
+    stop("Model name not recognised. Run hmde_model_name() to see available models.")
   }
 
   output <- switch(model,
