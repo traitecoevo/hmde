@@ -25,9 +25,12 @@ hmde_extract_estimates <- function(model = NULL,
   }
 
   #Check for input measurement data
-  if(!c("y_obs", "time", "obs_index") %in% names(input_measurement_data)){
-    stop("Input measurements of improper form: needs y_obs, time, obs_index columns.")
+  for(i in c("y_obs", "time", "obs_index")){
+    if(!i %in% names(input_measurement_data)){
+      stop(paste("Input measurements information missing:", i))
+    }
   }
+
 
   estimate_list <- list()
   par_names <- hmde_model_pars(model)
