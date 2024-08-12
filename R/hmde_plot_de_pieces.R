@@ -20,7 +20,7 @@ hmde_plot_de_pieces <- function(model = NULL,
                                 xlab = "Y(t)",
                                 ylab = "f",
                                 title = NULL,
-                                colour = "#003300",
+                                colour = "#006600",
                                 alpha = 0.2){
   #Extract initial and final sizes for each individual
   initial_and_final_vals <- measurement_data %>%
@@ -35,7 +35,7 @@ hmde_plot_de_pieces <- function(model = NULL,
   individual_data <- left_join(individual_data, initial_and_final_vals, by="ind_id")
 
   #Generate plot
-  plot <- hmde_ggplot_DE_pieces(pars_data = individual_data,
+  plot <- hmde_ggplot_de_pieces(pars_data = individual_data,
                                 DE_function = hmde_model_des(model),
                                 xlab = xlab,
                                 ylab = ylab,
@@ -57,7 +57,7 @@ hmde_ggplot_de_pieces <- function(pars_data,
                                   colour,
                                   alpha){
   plot <- ggplot() +
-    xlim(min(pars_data$y_hat), max(pars_data$y_hat)) +
+    xlim(min(pars_data$y_0), max(pars_data$y_final)) +
     labs(x = xlab, y = ylab, title = title) +
     theme_classic() +
     theme(axis.text=element_text(size=16),
@@ -67,7 +67,7 @@ hmde_ggplot_de_pieces <- function(pars_data,
     args_list <- list(pars=pars_data[i,])
     plot <- plot +
       geom_function(fun=DE_function, args=args_list,
-                    color=colour, linewidth=1,
+                    colour=colour, linewidth=1,
                     xlim=c(pars_data$y_0[i], pars_data$y_final[i]))
   }
 
