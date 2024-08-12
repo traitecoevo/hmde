@@ -13,7 +13,7 @@ hmde_plot_de_pieces(
   xlab = "Y(t)",
   ylab = "f",
   title = NULL,
-  colour = "#003300",
+  colour = "#006600",
   alpha = 0.2
 )
 }

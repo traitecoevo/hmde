@@ -13,6 +13,8 @@
 #'
 #' @return ggplot object
 #' @export
+#' @import ggplot2
+#' @import dplyr
 
 hmde_plot_de_pieces <- function(model = NULL,
                                 individual_data = NULL,

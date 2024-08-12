@@ -6,6 +6,7 @@
 #'
 #' @return named list with data frames for measurement, individual, population-level, and error parameter estimates
 #' @export
+#' @import dplyr
 
 hmde_extract_estimates <- function(model = NULL,
                                    fit = NULL,
