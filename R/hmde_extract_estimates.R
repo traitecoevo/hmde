@@ -7,6 +7,7 @@
 #' @return named list with data frames for measurement, individual, population-level, and error parameter estimates
 #' @export
 #' @import dplyr
+#' @importFrom stats quantile
 
 hmde_extract_estimates <- function(model = NULL,
                                    fit = NULL,
@@ -108,18 +109,18 @@ hmde_extract_individual_par_ests <- function(samples = NULL,
       individual_data[[paste0(i, "_mean")]] <- apply(samples[[i]], 2, mean)
       individual_data[[paste0(i, "_median")]] <- apply(samples[[i]], 2, median)
       individual_data[[paste0(i, "_CI_lower")]] <- apply(samples[[i]], 2,
-                                                         quantile, probs=c(0.025))
+                                                         stats::quantile, probs=c(0.025))
       individual_data[[paste0(i, "_CI_upper")]] <- apply(samples[[i]], 2,
-                                                         quantile, probs=c(0.975))
+                                                         stats::quantile, probs=c(0.975))
     }
   } else {
     for(i in individual_pars_names){
       individual_data[[paste0(i, "_mean")]] <- mean(samples[[i]])
       individual_data[[paste0(i, "_median")]] <- median(samples[[i]], 2, )
-      individual_data[[paste0(i, "_CI_lower")]] <- quantile(samples[[i]],
-                                                            probs=c(0.025))
-      individual_data[[paste0(i, "_CI_upper")]] <- quantile(samples[[i]],
-                                                            probs=c(0.975))
+      individual_data[[paste0(i, "_CI_lower")]] <- as.numeric(stats::quantile(samples[[i]],
+                                                            probs=c(0.025)))
+      individual_data[[paste0(i, "_CI_upper")]] <- as.numeric(stats::quantile(samples[[i]],
+                                                            probs=c(0.975)))
     }
   }
 
@@ -139,9 +140,9 @@ hmde_extract_pop_par_ests <- function(samples = NULL,
     pop_data_temp <- tibble(par_name = i)
     pop_data_temp$mean <-  mean(samples[[i]])
     pop_data_temp$median <- median(samples[[i]])
-    pop_data_temp$CI_lower <- as.numeric(quantile(samples[[i]],
+    pop_data_temp$CI_lower <- as.numeric(stats::quantile(samples[[i]],
                                                        probs=c(0.025)))
-    pop_data_temp$CI_upper <- as.numeric(quantile(samples[[i]],
+    pop_data_temp$CI_upper <- as.numeric(stats::quantile(samples[[i]],
                                                        probs=c(0.975)))
 
     population_data <- rbind(population_data, pop_data_temp)
@@ -162,9 +163,9 @@ hmde_extract_error_par_ests <- function(samples = NULL,
     error_data_temp <- tibble(par_name = i)
     error_data_temp[["mean"]] <- mean(samples[[i]])
     error_data_temp[["median"]] <- median(samples[[i]])
-    error_data_temp[["CI_lower"]] <- as.numeric(quantile(samples[[i]],
+    error_data_temp[["CI_lower"]] <- as.numeric(stats::quantile(samples[[i]],
                                                          probs=c(0.025)))
-    error_data_temp[["CI_upper"]] <- as.numeric(quantile(samples[[i]],
+    error_data_temp[["CI_upper"]] <- as.numeric(stats::quantile(samples[[i]],
                                                          probs=c(0.975)))
 
     error_data <- rbind(error_data, error_data_temp)
