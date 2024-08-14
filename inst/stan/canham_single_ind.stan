@@ -63,7 +63,7 @@ parameters {
   //Individual level
   real<lower=0> ind_y_0;
   real<lower=0> ind_max_growth;
-  real<lower=0> ind_diameter_at_max_growth;
+  real<lower=0> ind_size_at_max_growth;
   real<lower=0> ind_k;
 
   //Global level
@@ -76,7 +76,7 @@ model {
   vector[3] pars;
 
   pars[1] = ind_max_growth;
-  pars[2] = ind_diameter_at_max_growth;
+  pars[2] = ind_size_at_max_growth;
   pars[3] = ind_k;
 
   for(i in 1:n_obs){
@@ -98,7 +98,7 @@ model {
   //Individual level
   ind_y_0 ~ normal(y_0_obs, global_error_sigma);
   ind_max_growth ~lognormal(0, 1);
-  ind_diameter_at_max_growth ~lognormal(3, 1);
+  ind_size_at_max_growth ~lognormal(3, 1);
   ind_k ~lognormal(0, 1);
 
   //Global level
@@ -111,7 +111,7 @@ generated quantities{
   vector[3] pars;
 
   pars[1] = ind_max_growth;
-  pars[2] = ind_diameter_at_max_growth;
+  pars[2] = ind_size_at_max_growth;
   pars[3] = ind_k;
 
   for(i in 1:n_obs){

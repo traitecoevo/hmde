@@ -61,7 +61,7 @@ model {
   ind_beta ~ lognormal(pop_beta_mu,
                     pop_beta_sigma);
 
-  //pop level
+  //Population level
   pop_beta_mu ~ normal(0.1, 1);
   pop_beta_sigma ~cauchy(0.1, 1);
 
