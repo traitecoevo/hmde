@@ -5,6 +5,7 @@ functions{
   real solution(real time, array[] real pars){
     return pars[1] + (pars[3] - pars[1]) * exp(-(pars[2] * time));
   }
+}
 
 // Data structure
 data {
@@ -65,15 +66,10 @@ generated quantities{
   real y_hat[n_obs];
   real Delta_hat[n_obs];
   array[3] real pars;
-  real ind_growth_rate;
-  real ind_max_size;
 
-  ind_growth_rate = ind_beta_1;
-  ind_max_size = (ind_beta_0 + (y_bar*ind_beta_1))/ind_beta_1;
-
-  pars[1] = ind_beta_0;
-  pars[2] = ind_beta_1;
-  pars[3] = y_bar;
+  pars[1] = ind_y_max;
+  pars[2] = ind_beta;
+  pars[3] = ind_y_0;
 
   real temp_y_final;
 
