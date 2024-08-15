@@ -24,6 +24,23 @@ hmde_plot_de_pieces <- function(model = NULL,
                                 title = NULL,
                                 colour = "#006600",
                                 alpha = 0.2){
+  #Check for model
+  if(!model %in% hmde_model_name()){
+    stop("Model name not recognised. Run hmde_model_name() to see available models.")
+  }
+
+  if(is.null(model)){
+    stop("Model not provided.")
+  }
+
+  if(is.null(individual_data)){
+    stop("Individual parameter data not provided.")
+  }
+
+  if(is.null(measurement_data)){
+    stop("Measurement data not provided.")
+  }
+
   #Extract initial and final sizes for each individual
   initial_and_final_vals <- measurement_data %>%
     group_by(ind_id) %>%

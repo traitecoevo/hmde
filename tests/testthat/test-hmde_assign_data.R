@@ -77,6 +77,17 @@ test_that("Execution and output: Constant multi ind tibble input", {
 })
 
 test_that("Execution and output: bad input", {
+  #model does not exist
+  expect_error(
+    hmde_model("this_is_not_a_model") |>
+      hmde_assign_data(y_obs = Trout_Size_Data$y_obs,         #vector length N_obs
+                       obs_index = Trout_Size_Data$obs_index, #vector length N_obs
+                       time = Trout_Size_Data$time,           #Vector length N_obs
+                       ind_id = Trout_Size_Data$ind_id,       #Vector length N_obs
+                       n_ind = 1
+      )
+  )
+
   #Wrong number of individuals
   expect_error(
     hmde_model("constant_multi_ind") |>
