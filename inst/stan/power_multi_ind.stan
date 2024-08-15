@@ -68,7 +68,7 @@ parameters {
   real<lower=0> ind_coeff[n_ind];
   real<lower=0> ind_power[n_ind];
 
-  //Species level
+  // Population level
   real pop_coeff_mean;
   real<lower=0> pop_coeff_sd;
   real pop_power_mean;
@@ -110,7 +110,7 @@ model {
   ind_coeff ~lognormal(pop_coeff_mean, pop_coeff_sd);
   ind_power ~lognormal(pop_power_mean, pop_power_sd);
 
-  //Species level
+  // Population level
   pop_coeff_mean ~normal(0, 2);
   pop_coeff_sd ~cauchy(0, 2);
   pop_power_mean ~normal(0, 2);

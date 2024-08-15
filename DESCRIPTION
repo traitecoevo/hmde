@@ -8,7 +8,7 @@ Authors@R:
   person(given = "Fonti", family = "Kar", role = c("ctb"), email = "f.kar@unsw.edu.au", comment = c(ORCID = "0000-0002-2760-3974")),
   person(given = "David", family=  "Warton", role = c("aut", "ctb"), email = "david.warton@unsw.edu.au", comment = c(ORCID = "0000-0002-1642-628X"))
     )
-Description: What the package does (one paragraph).
+Description: Wrapper for Stan that offers a number of in-built models to implement a hierarchical Bayesian longitudinal model for repeat observation data. Model choice selects the differential equation that is fit to the observations. Single and multi-individual models are available.
 License: MIT + file LICENSE
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)
@@ -18,13 +18,14 @@ Depends:
     R (>= 3.5.0)
 Imports: 
     methods,
+    dplyr,
+    ggplot2,
     purrr,
     Rcpp (>= 0.12.0),
     RcppParallel (>= 5.0.1),
     rlang,
     rstan (>= 2.18.1),
-    rstantools (>= 2.3.1.1),
-    stats
+    rstantools (>= 2.3.1.1)
 LinkingTo: 
     BH (>= 1.66.0),
     Rcpp (>= 0.12.0),
@@ -35,7 +36,6 @@ LinkingTo:
 SystemRequirements: GNU make
 Suggests: 
     knitr,
-    dplyr,
     rmarkdown,
     testthat (>= 3.0.0),
     withr,

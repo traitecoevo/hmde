@@ -68,7 +68,7 @@ parameters {
   real<lower=0> ind_size_at_max_growth[n_ind];
   real<lower=0> ind_k[n_ind];
 
-  //Species level
+  //Population level
   real pop_max_growth_mean;
   real<lower=0> pop_max_growth_sd;
   real pop_size_at_max_growth_mean;

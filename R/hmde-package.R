@@ -8,6 +8,7 @@
 #' @useDynLib hmde, .registration = TRUE
 #' @import methods
 #' @import Rcpp
+#' @import dplyr
 #' @importFrom rstan sampling
 #' @importFrom rstantools rstan_config
 #' @importFrom RcppParallel RcppParallelLibs

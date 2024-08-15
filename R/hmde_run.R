@@ -7,6 +7,10 @@
 #' @export
 
 hmde_run <- function(model_template, ...) {
+  #Check for model
+  if(!model_template$model %in% hmde_model_name()){
+    stop("Model name not recognised. Run hmde_model_name() to see available models.")
+  }
 
   # Detect model
   out <- switch(model_template$model,
