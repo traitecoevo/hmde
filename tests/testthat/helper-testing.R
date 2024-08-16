@@ -17,7 +17,7 @@ hmde_test_single_individual <- function(model_name,
   data <- readRDS(test_path("fixtures", model_name,
                             paste0(model_name, "_data_single_ind.rds")))
 
-  if(! is.null(data$step_size)){ # Models that use RK4
+  if(! is.null(data$step_size)){ # Models that use numerical methods
     if(is.null(data$y_bar)){ #Models that do not require centering
       # Test single individual
       suppressWarnings( #Suppresses stan warnings

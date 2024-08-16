@@ -11,7 +11,6 @@ functions{
 
 // Data structure
 data {
-  real step_size;
   int n_obs;
   real y_obs[n_obs];
   int obs_index[n_obs];

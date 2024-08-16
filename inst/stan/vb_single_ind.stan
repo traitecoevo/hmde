@@ -9,20 +9,20 @@ functions{
 
 // Data structure
 data {
-  real step_size;
   int n_obs;
   real y_obs[n_obs];
   int obs_index[n_obs];
   real time[n_obs];
   real y_0_obs;
+  real y_bar;
 }
 
 // The parameters accepted by the model.
 parameters {
   //Individual level
   real<lower=0> ind_y_0;
-  real<lower=0> ind_y_max;
-  real<lower=0> ind_beta;
+  real<lower=0> ind_max_size;
+  real<lower=0> ind_growth_rate;
 
   //Global level
   real<lower=0> global_error_sigma;
@@ -33,9 +33,9 @@ model {
   real y_hat[n_obs];
   array[3] real pars;
 
-  pars[1] = ind_y_max;
-  pars[2] = ind_beta;
-  pars[3] = ind_y_0;
+  pars[1] = ind_max_size - y_bar;
+  pars[2] = ind_growth_rate;
+  pars[3] = ind_y_0 - y_bar;
 
   for(i in 1:n_obs){
 
@@ -44,8 +44,8 @@ model {
     }
 
     if(i < n_obs){
-      //Estimate growth rate
-      y_hat[i+1] = solution(time[i+1], pars);
+      //Estimate next size
+      y_hat[i+1] = solution(time[i+1], pars) + y_bar;
     }
   }
 
@@ -55,8 +55,8 @@ model {
   //Priors
   //Individual level
   ind_y_0 ~ normal(y_0_obs, global_error_sigma);
-  ind_y_max ~lognormal(0, 1);
-  ind_beta ~lognormal(0, 1); //Take max obs. size as average value
+  ind_max_size ~lognormal(0, 1);
+  ind_growth_rate ~lognormal(0, 1); //Take max obs. size as average value
 
   //Global level
   global_error_sigma ~cauchy(0,1);
@@ -67,9 +67,9 @@ generated quantities{
   real Delta_hat[n_obs];
   array[3] real pars;
 
-  pars[1] = ind_y_max;
-  pars[2] = ind_beta;
-  pars[3] = ind_y_0;
+  pars[1] = ind_max_size - y_bar;
+  pars[2] = ind_growth_rate;
+  pars[3] = ind_y_0 - y_bar;
 
   real temp_y_final;
 
@@ -81,11 +81,11 @@ generated quantities{
 
     if(i < n_obs){
       //Estimate next size
-      y_hat[i+1] = solution(time[i+1], pars);
+      y_hat[i+1] = solution(time[i+1], pars) + y_bar;
       Delta_hat[i] = y_hat[i+1] - y_hat[i];
 
     } else { #Estimate next growth based on same time to last.
-      temp_y_final = solution(2*time[i] - time[i-1], pars);
+      temp_y_final = solution(2*time[i] - time[i-1], pars) + y_bar;
       Delta_hat[i] = temp_y_final - y_hat[i];
     }
   }

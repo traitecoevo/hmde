@@ -58,6 +58,5 @@ hmde_export_test_data(n_obs_per_ind = n_obs_per_ind,
                       DE_pars = DE_pars,
                       initial_conditions = initial_conditions,
                       true_data = true_data,
-                      model_name = model_name,
-                      step_size = 0.1)
+                      model_name = model_name)
 
