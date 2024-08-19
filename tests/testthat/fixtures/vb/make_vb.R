@@ -1,24 +1,24 @@
 #Define specific functions for chosen DE, distribution of parameters, error process
 #Differential equation governing dynamics.
 DE <- function(y, pars){ #Canham function
-  return(pars[1] * (pars[2] - y))
+  return(pars[2] * (pars[1] - y))
 }
 
 #Function to generate distribution of DE parameters
 #Default parameters are based on G. recondita
 DE_par_generation <- function(n_ind,
                               pars = list(
-                                par_mean_vec = c(-1, 3.5),
+                                par_mean_vec = c(3.5, -1),
                                 par_sd_vec = c(0.1, 0.1)
                               )
                              ){
   par_sample <- exp(
     data.frame(
-      growth_par = rnorm(n_ind, mean=pars$par_mean_vec[1], sd = pars$par_sd_vec[1]),
-      max_size = rnorm(n_ind, mean=pars$par_mean_vec[2], sd = pars$par_sd_vec[2])
+      max_size = rnorm(n_ind, mean=pars$par_mean_vec[1], sd = pars$par_sd_vec[1]),
+      growth_par = rnorm(n_ind, mean=pars$par_mean_vec[2], sd = pars$par_sd_vec[2])
     )
   )
-  names(par_sample) <- c("growth_par", "max_size")
+  names(par_sample) <- c("max_size", "growth_par")
 
   return(par_sample)
 }

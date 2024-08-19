@@ -27,8 +27,8 @@ parameters {
   real<lower=0> ind_max_size[n_ind];
 
   //Population level
-  real pop_growth_par_mean;
-  real<lower=0> pop_growth_par_sd;
+  real pop_growth_rate_mean;
+  real<lower=0> pop_growth_rate_sd;
   real pop_max_size_mean;
   real<lower=0> pop_max_size_sd;
 
@@ -65,12 +65,12 @@ model {
   //Priors
   //Individual level
   ind_y_0 ~normal(y_0_obs, global_error_sigma);
-  ind_growth_rate ~lognormal(pop_growth_par_mean, pop_growth_par_sd);
+  ind_growth_rate ~lognormal(pop_growth_rate_mean, pop_growth_rate_sd);
   ind_max_size ~lognormal(pop_max_size_mean, pop_max_size_sd);
 
   //Population level
-  pop_growth_par_mean ~normal(0, 2);
-  pop_growth_par_sd ~cauchy(0, 2);
+  pop_growth_rate_mean ~normal(0, 2);
+  pop_growth_rate_sd ~cauchy(0, 2);
   pop_max_size_mean ~normal(max(log(y_obs)), 2);
   pop_max_size_sd ~cauchy(0, 2);
 
