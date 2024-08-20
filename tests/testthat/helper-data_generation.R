@@ -14,7 +14,8 @@ hmde_rk4_est <- function(y_0, DE, pars, step_size, n_step){
 }
 
 hmde_build_true_test_data <- function(n_ind, n_obs, interval,
-                                      DE_pars, initial_conditions, DE){
+                                      DE_pars, initial_conditions, DE,
+                                      step_size = 0.1){
   time <- seq(from = 0, by = interval, length.out = n_obs)
 
   true_data <- data.frame()
@@ -23,8 +24,8 @@ hmde_build_true_test_data <- function(n_ind, n_obs, interval,
     runge_kutta_int <- hmde_rk4_est(y_0 = initial_conditions$y_0[i],
                                     DE = DE,
                                     pars = DE_pars[i,],
-                                    step_size = 0.1,
-                                    n_step = (1 + n_obs*interval/0.1))
+                                    step_size = step_size,
+                                    n_step = (1 + n_obs*interval/step_size))
 
     #Take a subset of the estimates which are in line with survey structure
     runge_kutta_survey <- runge_kutta_int[seq(from=1,

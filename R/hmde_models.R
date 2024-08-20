@@ -95,6 +95,7 @@ hmde_power_single_ind <- function(){
        obs_index = NULL,
        time = NULL,
        y_0_obs = NULL,
+       y_bar = NULL,
        model = "power_single_ind")
 }
 
@@ -103,8 +104,7 @@ hmde_power_single_ind <- function(){
 #' @noRd
 
 hmde_power_multi_ind <- function(){
-  list(step_size = NULL,
-       n_obs = NULL,
+  list(n_obs = NULL,
        n_ind = NULL,
        y_obs = NULL,
        obs_index = NULL,

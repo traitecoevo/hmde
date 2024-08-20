@@ -37,7 +37,7 @@ model {
 
   pars[1] = ind_coeff;
   pars[2] = ind_power;
-  pars[3] = ind_y_0 - y_bar;
+  pars[3] = ind_y_0 / y_bar;
 
   for(i in 1:n_obs){
 
@@ -47,7 +47,7 @@ model {
 
     if(i < n_obs){
       //Estimate next size
-      y_hat[i+1] = exp(solution(time[i], pars)) + y_bar;
+      y_hat[i+1] = exp(solution(time[i+1], pars)) * y_bar;
     }
   }
 
@@ -71,9 +71,11 @@ generated quantities{
 
   pars[1] = ind_coeff;
   pars[2] = ind_power;
-  pars[3] = ind_y_0 - y_bar;
+  pars[3] = ind_y_0 / y_bar;
 
   real temp_y_final;
+  real test_val;
+  test_val = 2;
 
   for(i in 1:n_obs){
 
@@ -83,11 +85,11 @@ generated quantities{
 
     if(i < n_obs){
       //Estimate next size
-      y_hat[i+1] = exp(solution(time[i], pars)) + y_bar;
+      y_hat[i+1] = exp(solution(time[i+1], pars)) * y_bar;
       Delta_hat[i] = y_hat[i+1] - y_hat[i];
 
     } else {
-      temp_y_final = exp(solution(2*time[i] - time[i-1], pars)) + y_bar;
+      temp_y_final = exp(solution(2*time[i] - time[i-1], pars)) * y_bar;
       Delta_hat[i] = temp_y_final - y_hat[i];
     }
   }
