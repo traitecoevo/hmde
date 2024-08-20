@@ -1,0 +1,153 @@
+---
+  title: "hmde for Mathematicians"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{hmde}
+%\VignetteEncoding{UTF-8}
+%\VignetteEngine{knitr::rmarkdown}
+editor_options:
+  chunk_output_type: console
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+
+library(hmde)
+```
+
+## Goal of package
+'hmde' -- hierarchical methods for differential equations -- is a package that implements a handful of pre-built models using a novel method for parameter estimation. 
+
+This vignette is intended for a statistical/mathematical audience who are interested in Bayesian inverse problems.
+
+# The Theory
+The underlying method that 'hmde' implements leverages the longitudinal structure of repeat measurement data to estimate parameters for an underlying differential equation.
+
+## The Maths
+In a general setting, we are interested in some quantity $Y(t)$ that changes over time (approximately) according to a chosen DE $f$. We have some finite finite number measurements at times $t_j$, and believe that the underlying true behaviour is given by 
+$$
+Y(t_{j+1}) = Y(t_j) + \int_{t_j}^{t_{j+1}} f(Y(t), \boldsymbol{\theta})\,dt\qquad (1)
+$$
+for parameter vector $\boldsymbol{\theta}$ that we wish to estimate. We also have an initial condition $Y_0 = Y(t_0)$.
+
+The choices for $f$ built in to 'hmde' are:
+- Constant $f = \beta$ chosen as when you only have two observations the average growth rate is the best you can do. Furthermore, the results from the constant model align with a linear mixed effects model for size.
+- von Bertalanffy $f = \beta (Y_{max} - Y(t))$ which has a history of use in biology for species that grow to some maximum size.
+- Power law $f = \beta_0 Y(t)^{-\beta_1}$ which has been used in biology for some physiological processes.
+- Canham 
+$$
+f = f_{max} \exp\Bigg(-\frac{1}{2}\bigg(\frac{\log(Y(t)/Y_{max})}{k} \bigg)^2 \Bigg),
+$$
+which is considered a reasonable approximation of long term growth behaviour for some tree species.
+- Linear $f = \beta_0 - \beta_1 Y(t)$ which is for demonstration purposes as we will see.
+
+Choice of appropriate function is an exercise for the user and depends on the available data. Aside from the linear model all have versions that work with both a single individual, and multiple individuals.
+
+## The Stats
+We assume that we do not have access to $\boldsymbol{\theta}$ or the true values of $Y$ over time. Instead we have observations with measurement error,
+$$
+y_j = Y(t_j) + \text{error},
+$$
+and estimate $\boldsymbol{\theta}$ with $\hat{\boldsymbol{\theta}}$.
+
+We use a hierarchical structure to encode different levels of relationships within the data. At the bottom of the hierarchy is the likelihood
+$$
+y_j \sim \mathcal{N}(\hat{Y}(t_j), \sigma_e),
+$$
+where we assume normally distributed error. This may not always be true, but [CITE] indicated that symmetric error centred at 0 may be enough for reasonable results. The longitudinal structure in Equation (1) serves as the next level, connecting estimated sizes over time based on the chosen function $f$ and estimated parameters $\hat{\boldsymbol{\theta}}$, which operates at the level of the individual.
+
+If the data has multiple individuals we add additional layers that act as hyper-parameters on the distributions of elements of $\hat{\boldsymbol{\theta}}$. We build these to be independent $\theta_k$s, with log-mean and log-standard deviation parameters
+$$
+\theta_k \sim \log\mathcal{N}(\mu_k, \sigma_k),
+$$
+and typically use the following priors:
+$$
+\mu_k \sim\mathcal{N}(0,1), \quad 0 < \sigma_k\sim Cauchy(0, 1).
+$$
+
+The error parameter $\sigma_e >0$ is assumed to operate at a global level independent of individual and typically has a Cauchy prior with location 0, spread parameter 1.
+
+Estimation is done using MCMC through Stan. 
+
+## Integration of time series
+Numerical methods are required for the Canham model as it has no analytic solution. We have also implemented a Runge-Kutta 4th order method for the linear model in order to demonstrate problems that can arise from the interaction between numerical methods within the model and the MCMC parameter search itself. These will be discussed later in the vignette. 
+
+For the von Bertalanffy and power law models an analytic solution is used (to the log-transformed power law) in order to avoid numerical problems. For the constant model all numerical methods are the same and give the same result as the analytic solution so Euler is used.
+
+# Getting started with {hmde} 
+## Installation
+'hmde' is under active development, you can install the development version of 'hmde' from [GitHub](https://github.com/) with:
+
+```{r, eval=FALSE}
+# install.packages("remotes")
+remotes::install_github("traitecoevo/hmde")
+
+library(hmde)
+```
+
+## Workflow
+The basic workflow in hmde chooses a model suitable to the available data, assigns the available data to a specified structure, and feeds the resulting list into a Stan model to get out a Stan fit object.
+
+Available models can be seen by running the 'hmde_model_names()' function. 
+
+To demonstrate the workflow, the following code shows two different ways of passing data to the 'hmde_assign_data()' function: by passing a suitably structured data frame, or by passing individual vectors to the relevant arguments.
+```{r, eval=FALSE}
+# Create data
+true <- c(seq(from=1, by=2.5, length.out=7)) #Growth rate 2.5
+y <- true + true*rnorm(n=7, 0, 0.02) + rnorm(n=7, 0, 0.2)
+
+input_data <- tibble(
+  y_obs = y,
+  obs_index = 1:7,
+  time = 0:6,
+  ind_id = 1
+)
+
+# Configure model template
+const_single_ind_output <- hmde_model("constant_single_ind") |>
+  hmde_assign_data(data = input_data)  |>
+  hmde_run()
+
+#Named vectors take in arguments
+const_single_ind_output <- hmde_model("constant_single_ind") |>
+  hmde_assign_data(y_obs = y, #vector length N_obs
+                   obs_index = 1:7, #vector length N_obs
+                   time = 0:6
+  )  |>
+  hmde_run()
+```
+
+We provide the 'hmde_extract_estimates()' function to streamline the post-processing of the Stan fit. It provides posterior size, growth increment, and parameter estimates based on the chosen model.
+
+```{r}
+output <- hmde_extract_estimates(model = "constant_single_ind",
+                                 fit = const_single_ind_output,
+                                 input_measurement_data = input_data)
+```
+
+### Constant Growth - Multiple Individuals
+
+```{r, eval=FALSE}
+# Create data
+true <- c(seq(from=1, by=2.5, length.out=7),
+          seq(from=2, by=2, length.out=7))
+y <- true + true*rnorm(n=14, 0, 0.02) + rnorm(n=14, 0, 0.2)
+
+# Configure model template
+const_multi_ind_output <- hmde_model("constant_multi_ind") |>
+  hmde_assign_data(n_obs = length(y), #integer
+                   n_ind = 2, #integer
+                   y_obs = y, #vector length N_obs
+                   obs_index = rep(seq(from=1, to=7, by=1), times=2), #vector length N_obs
+                   time = rep(5, times=length(y)), #Vector length N_obs
+                   ind_id = c(rep(1, times=7), rep(2, times=7)), #Vector length N_obs
+                   y_0_obs = y[c(1, 8)] #vector length N_ind
+  )  |>
+  hmde_run()
+
+# Look at output
+const_multi_ind_output
+```
