@@ -90,7 +90,8 @@ hmde_canham_multi_ind <- function(){
 #' @noRd
 
 hmde_power_single_ind <- function(){
-  list(n_obs = NULL,
+  list(step_size = NULL,
+       n_obs = NULL,
        y_obs = NULL,
        obs_index = NULL,
        time = NULL,
