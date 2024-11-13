@@ -25,6 +25,7 @@ Trout_Size_Data
 \description{
 A subset of data from the SUSTAIN trout capture-recapture data set
 from Moe et al. (2020).
+Observations are of total body length in centimetres.
 Data prepared by taking a stratified sample of individual IDs based on the
 number of observations per individual: 25 individuals with 2 observations,
 15 with 3, 10 with 4. Within the groups a simple random sample
