@@ -60,8 +60,7 @@ hmde_const_multi_ind <- function(){
 #' @noRd
 
 hmde_canham_single_ind <- function(){
-  list(step_size = NULL,
-       n_obs = NULL,
+  list(n_obs = NULL,
        y_obs = NULL,
        obs_index = NULL,
        time = NULL,
@@ -74,8 +73,7 @@ hmde_canham_single_ind <- function(){
 #' @noRd
 
 hmde_canham_multi_ind <- function(){
-  list(step_size = NULL,
-       n_obs = NULL,
+  list(n_obs = NULL,
        n_ind = NULL,
        y_obs = NULL,
        obs_index = NULL,
@@ -90,8 +88,7 @@ hmde_canham_multi_ind <- function(){
 #' @noRd
 
 hmde_power_single_ind <- function(){
-  list(step_size = NULL,
-       n_obs = NULL,
+  list(n_obs = NULL,
        y_obs = NULL,
        obs_index = NULL,
        time = NULL,
@@ -105,8 +102,7 @@ hmde_power_single_ind <- function(){
 #' @noRd
 
 hmde_power_multi_ind <- function(){
-  list(step_size = NULL,
-       n_obs = NULL,
+  list(n_obs = NULL,
        n_ind = NULL,
        y_obs = NULL,
        obs_index = NULL,

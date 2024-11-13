@@ -36,8 +36,7 @@ test_that("Execution: canham multiple individuals", {
     data$n_pars * 2  +         #Population parameters
     1 +                        #Global error
     data$n_obs +               #y_ij
-    data$n_obs +               #Delta y_ij
-    data$n_pars +              #pars vector
+    1 +                        #y_temp
     1                          #lp__
 
   hmde_test_multi_individual(model_name, data, est_dim)

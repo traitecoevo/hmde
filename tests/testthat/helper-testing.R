@@ -17,13 +17,11 @@ hmde_test_single_individual <- function(model_name,
   data <- readRDS(test_path("fixtures", model_name,
                             paste0(model_name, "_data_single_ind.rds")))
 
-  if(! is.null(data$step_size)){ # Models that use numerical methods
     if(is.null(data$y_bar)){ #Models that do not require centering
       # Test single individual
       suppressWarnings( #Suppresses stan warnings
         single_ind_test <- hmde_model(paste0(model_name, "_single_ind")) |>
-          hmde_assign_data(step_size = data$step_size,
-                           n_obs = data$n_obs, #integer
+          hmde_assign_data(n_obs = data$n_obs, #integer
                            y_obs = data$y_obs,
                            obs_index = data$obs_index, #vector length N_obs
                            time = data$time, #Vector length N_obs
@@ -35,8 +33,7 @@ hmde_test_single_individual <- function(model_name,
       # Test single individual
       suppressWarnings( #Suppresses stan warnings
         single_ind_test <- hmde_model(paste0(model_name, "_single_ind")) |>
-          hmde_assign_data(step_size = data$step_size,
-                           n_obs = data$n_obs, #integer
+          hmde_assign_data(n_obs = data$n_obs, #integer
                            y_obs = data$y_obs,
                            obs_index = data$obs_index, #vector length N_obs
                            time = data$time, #Vector length N_obs
@@ -46,20 +43,6 @@ hmde_test_single_individual <- function(model_name,
           hmde_run(chains = 1, iter = 1000, verbose = FALSE, show_messages = FALSE)
       )
     }
-
-  } else {
-    # Test single individual
-    suppressWarnings( #Suppresses stan warnings
-      single_ind_test <- hmde_model(paste0(model_name, "_single_ind")) |>
-        hmde_assign_data(n_obs = data$n_obs, #integer
-                         y_obs = data$y_obs,
-                         obs_index = data$obs_index, #vector length N_obs
-                         time = data$time, #Vector length N_obs
-                         y_0_obs = data$y_0_obs #vector length N_ind
-        ) |>
-        hmde_run(chains = 1, iter = 1000, verbose = FALSE, show_messages = FALSE)
-    )
-  }
 
   # Extract samples and check if parameter estimates are reasonable.
   ind_samples <- rstan::extract(single_ind_test, permuted = TRUE,
