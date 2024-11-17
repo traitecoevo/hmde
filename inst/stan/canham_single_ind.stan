@@ -43,7 +43,7 @@ model {
     if(i < n_obs){
       y_temp[1] = y_hat[i];
       //Estimate next size
-      y_hat[i+1] = ode_bdf(DE, y_temp,
+      y_hat[i+1] = ode_rk45(DE, y_temp,
         time[i], {time[i+1]},
         ind_max_growth, ind_size_at_max_growth, ind_k)[1][1];
     }
@@ -77,7 +77,7 @@ generated quantities{
       y_temp[1] = y_hat[i];
 
       //Estimate next size
-      y_hat[i+1] = ode_bdf(DE, y_temp,
+      y_hat[i+1] = ode_rk45(DE, y_temp,
         time[i], {time[i+1]},
         ind_max_growth, ind_size_at_max_growth, ind_k)[1][1];
 

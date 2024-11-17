@@ -54,7 +54,7 @@ model {
       if(ind_id[i+1]==ind_id[i]){
         y_temp[1] = y_hat[i];
         //Estimate next size
-        y_hat[i+1] = ode_bdf(DE, y_temp,
+        y_hat[i+1] = ode_rk45(DE, y_temp,
           time[i], {time[i+1]},
           ind_max_growth[ind_id[i]],
           ind_size_at_max_growth[ind_id[i]],
@@ -102,7 +102,7 @@ generated quantities{
       if(ind_id[i+1]==ind_id[i]){
         y_temp[1] = y_hat[i];
         //Estimate next size
-        y_hat[i+1] = ode_bdf(DE, y_temp,
+        y_hat[i+1] = ode_rk45(DE, y_temp,
           time[i], {time[i+1]},
           ind_max_growth[ind_id[i]],
           ind_size_at_max_growth[ind_id[i]],
