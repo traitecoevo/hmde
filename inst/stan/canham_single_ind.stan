@@ -66,6 +66,7 @@ model {
 generated quantities{
   real y_hat[n_obs];
   vector[1] y_temp;
+  real version = 1;
 
   for(i in 1:n_obs){
 
