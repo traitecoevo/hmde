@@ -7,7 +7,7 @@
 \format{
 \subsection{\code{Tree_Size_Data}}{
 
-A data frame with 180 rows and 4 columns:
+A data frame with 300 rows and 4 columns:
 \describe{
 \item{ind_id}{ID number for individual}
 \item{time}{Years since first observation.}
