@@ -1,4 +1,6 @@
 #' Plot pieces of chosen differential equation model for each individual.
+#' Structured to take the individual data tibble that is built by the
+#' hmde_extract_estimates function using the ind_par_name_mean estimates.
 #' Function piece will go from the first fitted size to the last.
 #' Accepted ggplot arguments will change the axis labels, title, line colour, alpha
 #'
@@ -23,7 +25,7 @@ hmde_plot_de_pieces <- function(model = NULL,
                                 ylab = "f",
                                 title = NULL,
                                 colour = "#006600",
-                                alpha = 0.2){
+                                alpha = 0.4){
   #Check for model
   if(!model %in% hmde_model_name()){
     stop("Model name not recognised. Run hmde_model_name() to see available models.")
@@ -95,7 +97,7 @@ hmde_ggplot_de_pieces <- function(pars_data,
     args_list <- list(pars=pars_data[i,-1]) #Remove ind_id
     plot <- plot +
       geom_function(fun=DE_function, args=args_list,
-                    colour=colour, linewidth=1,
+                    colour=colour, linewidth=1, alpha = alpha,
                     xlim=c(y_0[i], y_final[i]))
   }
 
