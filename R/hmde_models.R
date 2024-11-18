@@ -16,8 +16,6 @@ hmde_model <- function(model=NULL){
                    constant_multi_ind = hmde_const_multi_ind(),
                    canham_single_ind = hmde_canham_single_ind(),
                    canham_multi_ind = hmde_canham_multi_ind(),
-                   power_single_ind = hmde_power_single_ind(),
-                   power_multi_ind = hmde_power_multi_ind(),
                    vb_single_ind = hmde_vb_single_ind(),
                    vb_multi_ind = hmde_vb_multi_ind(),
                    linear_single_ind = hmde_linear_single_ind())
@@ -83,35 +81,6 @@ hmde_canham_multi_ind <- function(){
        model = "canham_multi_ind")
 }
 
-#' Data configuration template for power law growth single individual model
-#' @keywords internal
-#' @noRd
-
-hmde_power_single_ind <- function(){
-  list(n_obs = NULL,
-       y_obs = NULL,
-       obs_index = NULL,
-       time = NULL,
-       y_0_obs = NULL,
-       y_bar = NULL,
-       model = "power_single_ind")
-}
-
-#' Data configuration template for power law growth single species model
-#' @keywords internal
-#' @noRd
-
-hmde_power_multi_ind <- function(){
-  list(n_obs = NULL,
-       n_ind = NULL,
-       y_obs = NULL,
-       obs_index = NULL,
-       time = NULL,
-       ind_id = NULL,
-       y_0_obs = NULL,
-       y_bar = NULL,
-       model = "power_multi_ind")
-}
 
 #' Data configuration template for von Bertalanffy growth single individual model
 #' @keywords internal
