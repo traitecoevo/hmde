@@ -26,7 +26,8 @@ initial_conditions <- data.frame(y_0=exp(rnorm(n_ind, mean = 2, sd=1)))
 
 #Generate true values
 true_data <- hmde_build_true_test_data(n_ind, n_obs_per_ind, interval,
-                                       DE_pars, initial_conditions, DE)
+                                       DE_pars, initial_conditions, DE,
+                                       step_size = 0.01)
 
 #Generate observations
 y_obs <- hmde_add_normal_error(true_data$y_true)

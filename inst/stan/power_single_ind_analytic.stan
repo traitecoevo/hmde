@@ -1,9 +1,11 @@
-//Growth function
+// Power law model with single individual
+
 functions{
-  //Analytic solution to von Bertalanffy growth function
-  //Pars Y_max, beta, y_0
+  //Analytic solution to log-transformed power law
+  //pars = [ind_coeff, ind_power, ind_y_0]
   real solution(real time, array[] real pars){
-    return pars[1] + (pars[3] - pars[1]) * exp(-(pars[2] * time));
+    return pars[1]/pars[2] +
+    (log(pars[3]) - pars[1]/pars[2]) * exp((-pars[2] * time));
   }
 }
 
@@ -21,8 +23,8 @@ data {
 parameters {
   //Individual level
   real<lower=0> ind_y_0;
-  real<lower=0> ind_max_size;
-  real<lower=0> ind_growth_rate;
+  real<lower=0> ind_coeff;
+  real<lower=0> ind_power;
 
   //Global level
   real<lower=0> global_error_sigma;
@@ -33,9 +35,9 @@ model {
   real y_hat[n_obs];
   array[3] real pars;
 
-  pars[1] = ind_max_size - y_bar;
-  pars[2] = ind_growth_rate;
-  pars[3] = ind_y_0 - y_bar;
+  pars[1] = log(ind_coeff);
+  pars[2] = ind_power;
+  pars[3] = ind_y_0; // / y_bar;
 
   for(i in 1:n_obs){
 
@@ -45,7 +47,7 @@ model {
 
     if(i < n_obs){
       //Estimate next size
-      y_hat[i+1] = solution(time[i+1], pars) + y_bar;
+      y_hat[i+1] = exp(solution(time[i+1], pars)); // * y_bar;
     }
   }
 
@@ -55,11 +57,11 @@ model {
   //Priors
   //Individual level
   ind_y_0 ~ normal(y_0_obs, global_error_sigma);
-  ind_max_size ~lognormal(0, 1);
-  ind_growth_rate ~lognormal(0, 1); //Take max obs. size as average value
+  ind_coeff ~lognormal(0, 1);
+  ind_power ~lognormal(0, 1);
 
   //Global level
-  global_error_sigma ~cauchy(0,1);
+  global_error_sigma ~cauchy(0,5);
 }
 
 generated quantities{
@@ -67,11 +69,13 @@ generated quantities{
   real Delta_hat[n_obs];
   array[3] real pars;
 
-  pars[1] = ind_max_size - y_bar;
-  pars[2] = ind_growth_rate;
-  pars[3] = ind_y_0 - y_bar;
+  pars[1] = log(ind_coeff);
+  pars[2] = ind_power;
+  pars[3] = ind_y_0; // / y_bar;
 
   real temp_y_final;
+  real test_val;
+  test_val = 5;
 
   for(i in 1:n_obs){
 
@@ -81,11 +85,11 @@ generated quantities{
 
     if(i < n_obs){
       //Estimate next size
-      y_hat[i+1] = solution(time[i+1], pars) + y_bar;
+      y_hat[i+1] = exp(solution(time[i+1], pars)); // * y_bar;
       Delta_hat[i] = y_hat[i+1] - y_hat[i];
 
-    } else { #Estimate next growth based on same time to last.
-      temp_y_final = solution(2*time[i] - time[i-1], pars) + y_bar;
+    } else {
+      temp_y_final = exp(solution(2*time[i] - time[i-1], pars)); // * y_bar;
       Delta_hat[i] = temp_y_final - y_hat[i];
     }
   }

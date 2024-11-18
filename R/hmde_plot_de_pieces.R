@@ -83,7 +83,7 @@ hmde_ggplot_de_pieces <- function(pars_data,
           axis.title=element_text(size=18,face="bold"))
 
   for(i in 1:nrow(pars_data)){
-    args_list <- list(pars=pars_data[i,])
+    args_list <- list(pars=pars_data[i,-1]) #Remove ind_id
     plot <- plot +
       geom_function(fun=DE_function, args=args_list,
                     colour=colour, linewidth=1,

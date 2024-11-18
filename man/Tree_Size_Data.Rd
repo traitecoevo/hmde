@@ -3,7 +3,7 @@
 \docType{data}
 \name{Tree_Size_Data}
 \alias{Tree_Size_Data}
-\title{Hirtella triandra - Barro Colorado Island data}
+\title{Garcinia recondita - Barro Colorado Island data}
 \format{
 \subsection{\code{Tree_Size_Data}}{
 
@@ -26,9 +26,9 @@ Tree_Size_Data
 A subset of data from the Barro Colorado Island long term forest plot
 managed by the Smithsonian Tropical Research Institute (Condit et al. 2019).
 Data was prepared by taking a simple random sample without replacement of
-30 individual IDs from Hirtella triandra. The sampling frame was restricted
+30 individual IDs from Garcinia recondita. The sampling frame was restricted
 to individuals with 6 observations since 1990, and a difference between
-observed max and min sizes of more than 7cm in order to avoid identifiability
+observed first and last sizes of more than 3cm in order to avoid identifiability
 issues. Data was then transformed and renamed to match the required structure
 to act as demonstration for the package.
 }

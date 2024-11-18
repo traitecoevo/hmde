@@ -70,7 +70,7 @@ hmde_power_de <- function(y = NULL, pars = NULL){
 
 #' Differential equation for von Bertalanffy growth single and multi- individual models
 #' @param y input real
-#' @param pars list of parameters beta, Y_max
+#' @param pars list of parameteters Y_max, growth_rate
 #'
 #' @return value of differential equation at y
 #' @export

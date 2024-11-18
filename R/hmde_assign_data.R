@@ -50,7 +50,6 @@ hmde_assign_data <- function(model_template, data = NULL, step_size = NULL, ...)
     } else {
       model_template[[i]] <- switch(
         i,
-        step_size = step_size,
         n_obs = length(data$y_obs),
         n_ind = length(unique(data$ind_id)),
         y_0_obs = data$y_obs[which(data$obs_index == 1)],
