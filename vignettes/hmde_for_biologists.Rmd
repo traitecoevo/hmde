@@ -17,10 +17,6 @@ knitr::opts_chunk$set(
   collapse = TRUE,
   comment = "#>"
 )
-
-library(hmde)
-library(dplyr)
-library(ggplot2)
 ```
 
 ## Goals of the package
@@ -58,6 +54,8 @@ for example, and we can examine the behaviour of the mean and standard deviation
 remotes::install_github("traitecoevo/hmde")
 
 library(hmde)
+library(dplyr)
+library(ggplot2)
 ```
 
 We will demonstrate the workflow through the following case studies but broadly the process is to get the data into the required format for the chosen model, then pass the data and the model to a function that runs the sampling with Stan's MCMC algorithms. The returned Stan fit object can then be analysed.
@@ -204,7 +202,7 @@ hmde_plot_de_pieces(model = "constant_multi_ind",
 
 We also get estimates of the population-level hyper-parameters that govern the distribution of $\beta$ -- $\mu$ and $\sigma$ for the log-normal distribution. These are calculated in the context of the log-transformed parameters so the easiest way to interpret $\mu$ is to back-transform it through exponentiation, but this does not so easily transfer to $\sigma$. The CIs in this output are posterior credible intervals taken as the central 95% quantiles of the posterior samples. 
 ```{r}
-#Mu
+#Mean of normal distribution
 trout_constant_estimates$population_data$mean[1] #Raw value
 print(paste0("95% CI for mean log growth: (", 
              trout_constant_estimates$population_data$CI_lower[1], " , ",
@@ -289,10 +287,9 @@ We took a simple random sample without replacement of 50 individuals with at lea
 ## Implementation
 The workflow for the second example is the same as the first, with the change in model name and data object.
 ```{r}
-Lizard_Size_Data <- load("Lizard_Size_Data.rda")
 lizard_vb_fit <- hmde_model("vb_multi_ind") |>
   hmde_assign_data(data = Lizard_Size_Data)  |>
-  hmde_run(chains = 4, cores = 1, iter = 2000)
+  hmde_run(chains = 4, cores = 4, iter = 2000)
 
 lizard_vb_estimates <- hmde_extract_estimates(model = "vb_multi_ind",
                                  fit = lizard_vb_fit,
@@ -347,21 +344,25 @@ ggplot(data=plot_data, aes(group = ind_id)) +
 We have two parameters at the individual level and are interested in both their separate distributions, and if we see evidence of a relationship between them. We can also use the individual parameter estimates and estimated sizes to plot the growth function pieces.
 ```{r}
 #1-dimensional parameter distributions
-hist(lizard_vb_estimates$individual_data$ind_max_size,
+hist(lizard_vb_estimates$individual_data$ind_max_size_mean,
      main = "Individual max size parameters", 
      xlab = "Smax estimate")
 
-hist(lizard_vb_estimates$individual_data$ind_growth_rate,
-     main = "Individual beta parameters", 
+hist(lizard_vb_estimates$individual_data$ind_growth_rate_mean,
+     main = "Individual growth rate parameters", 
      xlab = "beta estimate")
 
 #2-dimensional parameter distribution
 ggplot(data = lizard_vb_estimates$individual_data, 
-       aes(x = ind_max_size, y = ind_growth_rate)) +
+       aes(x = ind_max_size_mean, y = ind_growth_rate_mean)) +
   geom_point(shape = 16, size = 1, colour = "green4") +
   xlab("Individual max sizes (mm)") +
-  ylab("Individual betas") +
+  ylab("Individual growth rate parameters") +
   theme_classic()
+
+#Correlation of parameters
+cor(lizard_vb_estimates$individual_data$ind_max_size_mean,
+    lizard_vb_estimates$individual_data$ind_growth_rate_mean)
 
 #Plot function pieces over estimated sizes.
 hmde_plot_de_pieces(model = "vb_multi_ind",
@@ -377,8 +378,8 @@ print(paste0("95% CI for mean log max size: (",
              lizard_vb_estimates$population_data$CI_lower[1], " , ",
              lizard_vb_estimates$population_data$CI_upper[1], ")")) #Raw CI
 
-exp(lizard_vb_estimates$population_data$mean[1]) #In cm/yr units
-print(paste0("95% CI for mean max size in cm: (", 
+exp(lizard_vb_estimates$population_data$mean[1]) #In mm units
+print(paste0("95% CI for mean max size in mm: (", 
              exp(lizard_vb_estimates$population_data$CI_lower[1]), " , ",
              exp(lizard_vb_estimates$population_data$CI_upper[1]), ")"))
 
@@ -395,7 +396,7 @@ print(paste0("95% CI for mean log growth par: (",
              lizard_vb_estimates$population_data$CI_upper[3], ")")) #Raw CI
 
 exp(lizard_vb_estimates$population_data$mean[3]) #In cm/yr units
-print(paste0("95% CI for mean growth par: (", 
+print(paste0("95% CI for mean growth par mm/yr: (", 
              exp(lizard_vb_estimates$population_data$CI_lower[3]), " , ",
              exp(lizard_vb_estimates$population_data$CI_upper[3]), ")"))
 
@@ -460,7 +461,7 @@ hist(Tree_Size_Data_Transformed$Delta_y_obs,
      xlab = "Growth increment (cm)", main="")
 ```
 
-Due to the complexity of the Canham model the sampling can take a while. We anticipate about an hour for the following to run.
+Due to the complexity of the Canham model the sampling can take a while. We typically see a few hours for the following to run.
 ```{r}
 tree_canham_fit <- hmde_model("canham_multi_ind") |>
   hmde_assign_data(data = Tree_Size_Data)  |> 
