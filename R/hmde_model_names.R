@@ -8,8 +8,6 @@ hmde_model_name <- function(){
               "constant_multi_ind",
               "canham_single_ind",
               "canham_multi_ind",
-              "power_single_ind",
-              "power_multi_ind",
               "vb_single_ind",
               "vb_multi_ind",
               "linear_single_ind")

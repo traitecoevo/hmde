@@ -16,8 +16,6 @@ hmde_model_pars <- function(model=NULL){
                    constant_multi_ind = hmde_const_multi_ind_pars(),
                    canham_single_ind = hmde_canham_single_ind_pars(),
                    canham_multi_ind = hmde_canham_multi_ind_pars(),
-                   power_single_ind = hmde_power_single_ind_pars(),
-                   power_multi_ind = hmde_power_multi_ind_pars(),
                    vb_single_ind = hmde_vb_single_ind_pars(),
                    vb_multi_ind = hmde_vb_multi_ind_pars(),
                    linear_single_ind = hmde_linear_single_ind_pars())
@@ -71,30 +69,6 @@ hmde_canham_multi_ind_pars <- function(){
                       "pop_k_mean", "pop_k_sd"),
        error_pars_names = c("global_error_sigma"),
        model = "canham_multi_ind")
-}
-
-#' Parameter names for power law growth single individual model
-#' @keywords internal
-#' @noRd
-
-hmde_power_single_ind_pars <- function(){
-  list(measurement_pars_names = c("y_hat", "Delta_hat"),
-       individual_pars_names = c("ind_coeff", "ind_power"),
-       error_pars_names = c("global_error_sigma"),
-       model = "power_single_ind")
-}
-
-#' Parameter names for power law growth single pop model
-#' @keywords internal
-#' @noRd
-
-hmde_power_multi_ind_pars <- function(){
-  list(measurement_pars_names = c("y_hat", "Delta_hat"),
-       individual_pars_names = c("ind_coeff", "ind_power"),
-       population_pars_names = c("pop_coeff_mean", "pop_coeff_sd",
-                      "pop_power_mean", "pop_power_sd"),
-       error_pars_names = c("global_error_sigma"),
-       model = "power_multi_ind")
 }
 
 #' Parameter names for von Bertalanffy growth single individual model

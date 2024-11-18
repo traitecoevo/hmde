@@ -15,8 +15,6 @@ hmde_model_des <- function(model = NULL){
     constant_multi_ind = hmde_const_de,
     canham_single_ind = hmde_canham_de,
     canham_multi_ind = hmde_canham_de,
-    power_single_ind = hmde_power_de,
-    power_multi_ind = hmde_power_de,
     vb_single_ind = hmde_vb_de,
     vb_multi_ind = hmde_vb_de,
     linear_single_ind = hmde_linear_de
@@ -53,20 +51,6 @@ hmde_canham_de <- function(y = NULL, pars = NULL){
                     )
     )
 }
-
-#' Differential equation for power law growth single and multi- individual models
-#' @param y input real
-#' @param pars list of parameters coefficient, power
-#'
-#' @return value of differential equation at y
-#' @export
-
-hmde_power_de <- function(y = NULL, pars = NULL){
-  return(
-    pars[[1]] * (y ^ -pars[[2]])
-    )
-}
-
 
 #' Differential equation for von Bertalanffy growth single and multi- individual models
 #' @param y input real
