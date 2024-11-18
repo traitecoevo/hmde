@@ -41,6 +41,13 @@ hmde_plot_de_pieces <- function(model = NULL,
     stop("Measurement data not provided.")
   }
 
+  #Get individual parameter estimates
+  model_par_names <- hmde_model_pars(model)
+  pars_data <- tibble(ind_id = individual_data$ind_id)
+  for(i in model_par_names$individual_pars_names){
+    pars_data[[i]] <- individual_data[[paste0(i, "_mean")]]
+  }
+
   #Extract initial and final sizes for each individual
   initial_and_final_vals <- measurement_data %>%
     group_by(ind_id) %>%
@@ -51,10 +58,10 @@ hmde_plot_de_pieces <- function(model = NULL,
     select(ind_id, y_0, y_final) %>%
     distinct()
 
-  individual_data <- left_join(individual_data, initial_and_final_vals, by="ind_id")
-
   #Generate plot
-  plot <- hmde_ggplot_de_pieces(pars_data = individual_data,
+  plot <- hmde_ggplot_de_pieces(pars_data = pars_data,
+                                y_0 = initial_and_final_vals$y_0,
+                                y_final = initial_and_final_vals$y_final,
                                 DE_function = hmde_model_des(model),
                                 xlab = xlab,
                                 ylab = ylab,
@@ -69,6 +76,8 @@ hmde_plot_de_pieces <- function(model = NULL,
 #' @keywords internal
 #' @noRd
 hmde_ggplot_de_pieces <- function(pars_data,
+                                  y_0,
+                                  y_final,
                                   DE_function,
                                   xlab,
                                   ylab,
@@ -76,7 +85,7 @@ hmde_ggplot_de_pieces <- function(pars_data,
                                   colour,
                                   alpha){
   plot <- ggplot() +
-    xlim(min(pars_data$y_0), max(pars_data$y_final)) +
+    xlim(min(y_0), max(y_final)) +
     labs(x = xlab, y = ylab, title = title) +
     theme_classic() +
     theme(axis.text=element_text(size=16),
@@ -87,7 +96,7 @@ hmde_ggplot_de_pieces <- function(pars_data,
     plot <- plot +
       geom_function(fun=DE_function, args=args_list,
                     colour=colour, linewidth=1,
-                    xlim=c(pars_data$y_0[i], pars_data$y_final[i]))
+                    xlim=c(y_0[i], y_final[i]))
   }
 
   return(plot)
