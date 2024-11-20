@@ -84,7 +84,7 @@ generated quantities{
       y_hat[i+1] = solution(time[i+1], pars) + y_bar;
       Delta_hat[i] = y_hat[i+1] - y_hat[i];
 
-    } else { #Estimate next growth based on same time to last.
+    } else { // Estimate next growth based on same time to last.
       temp_y_final = solution(2*time[i] - time[i-1], pars) + y_bar;
       Delta_hat[i] = temp_y_final - y_hat[i];
     }
