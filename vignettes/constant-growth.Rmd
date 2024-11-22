@@ -20,7 +20,6 @@ library(dplyr)
 library(ggplot2)
 ```
 
-# Case study 1: Constant growth with SUSTAIN Trout data
 In circumstances where the number of observations available per individual is very limited, average growth rates over time may be the only plausible model to fit. In particular, if there are individuals with only two size observations, than the best that can be done is a single estimate of growth rate based on that interval. Such a model behaves as constant growth, which we can think of as the average rate of change across the observation period and is given by
 \begin{equation}\tag{3}\label{eqn_3_const}
 f(Y(t), \beta) = \beta

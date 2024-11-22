@@ -20,7 +20,6 @@ library(dplyr)
 library(ggplot2)
 ```
 
-# Case study 2: von Bertalanffy growth with lizard size data
 Our second demo introduces size-dependent growth based on the von Bertalanffy function
 $$f(Y(t); S_{max}, \beta) = \beta(S_{max} - Y(t)),$$
 where $S_{max}$ is the asymptotic maximum size and $\beta$ controls the growth rate. We have implemented the analytic solution
