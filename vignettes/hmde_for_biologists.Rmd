@@ -17,6 +17,10 @@ knitr::opts_chunk$set(
   collapse = TRUE,
   comment = "#>"
 )
+
+library(hmde)
+library(dplyr)
+library(ggplot2)
 ```
 
 ## Goals of the package
@@ -53,9 +57,6 @@ for example, and we can examine the behaviour of the mean and standard deviation
 # install.packages("remotes")
 remotes::install_github("traitecoevo/hmde")
 
-library(hmde)
-library(dplyr)
-library(ggplot2)
 ```
 
 We will demonstrate the workflow through the following case studies but broadly the process is to get the data into the required format for the chosen model, then pass the data and the model to a function that runs the sampling with Stan's MCMC algorithms. The returned Stan fit object can then be analysed.
@@ -136,7 +137,7 @@ Now we will actually fit the model and extract the estimates. As the provided tr
 ```{r}
 trout_constant_fit <- hmde_model("constant_multi_ind") |>
   hmde_assign_data(data = Trout_Size_Data)  |>
-  hmde_run(chains = 4, cores = 1, iter = 2000)
+  hmde_run(chains = 4, cores = 4, iter = 2000)
 
 trout_constant_estimates <- hmde_extract_estimates(model = "constant_multi_ind",
                                  fit = trout_constant_fit,
@@ -415,7 +416,7 @@ The function we use here is based on \cite{canham2004neighborhood}, and is a thr
 $$g(S(t);\, g_{max}, S_{max}, k) = g_{max} \exp \Bigg(-\frac{1}{2}\bigg(\frac{\ln(S(t)/S_{max})}{k} \bigg)^2 \Bigg).$$
 The Canham function, as we refer to it, describes hum-shaped growth that accelerates to a peak at $(S_{max}, g_{max})$ then declines to 0 at a rate controlled by $k$. The Canham function does not have an analytic solution the way that the previous function did, so we are unable to directly encode the sizes over time and must instead use a numerical method.
 
-The Canham function has been used for a lot of growth analysis such as \cite{herault2011functional} and \cite{canham2006neighborhood} as well as our own previous work in [Paper 1] and [Paper 2]. The desirable features of the Canham growth model are that it has a period of increasing growth at small sizes, with a finite growth peak at $(S_{max}, g_{max})$, and then decay to near-zero growth. With different parameter combinations Canham can fit a range of growth behaviours to an observed intervaL: increasing growth, decreasing growth, a growth spike, or steady growth. The downside is that the Canham function is unimodal -- it can only fit a single peak and as such is not suitable to describe the full life history of species that are strongly responsive to their environment as seen in [Paper 2].
+The Canham function has been used for a lot of growth analysis such as \cite{herault2011functional} and \cite{canham2006neighborhood} as well as our own previous work in \cite{OBrien2024_Methods} and [Paper 2]. The desirable features of the Canham growth model are that it has a period of increasing growth at small sizes, with a finite growth peak at $(S_{max}, g_{max})$, and then decay to near-zero growth. With different parameter combinations Canham can fit a range of growth behaviours to an observed intervaL: increasing growth, decreasing growth, a growth spike, or steady growth. The downside is that the Canham function is unimodal -- it can only fit a single peak and as such is not suitable to describe the full life history of species that are strongly responsive to their environment as seen in [Paper 2].
 
 The next bit of code plots the Canham function for chosen parameter values. We have provided some, but encourage playing around with the parameters and seeing what happens to the function.
 ```{r}
@@ -470,8 +471,154 @@ tree_canham_fit <- hmde_model("canham_multi_ind") |>
 tree_canham_estimates <- hmde_extract_estimates(model = "canham_multi_ind",
                                  fit = tree_canham_fit,
                                  input_measurement_data = Tree_Size_Data)
-#saveRDS(tree_canham_fit, file="data-raw/TreeSizeFit.rds")
-#saveRDS(tree_canham_estimates, file="data-raw/TreeSizeEsts.rds")
 ```
 
+The model analysis follows the same workflow as the previous demonstrations: we look at how individual sizes over time and fitted growth functions behave, then examine evidence of relationships between parameter values at the individual level. We also look at the species-level parameter CIs and estimates.
 
+```{r}
+#tree_canham_fit <-readRDS(file="data-raw/TreeSizeFit.rds")
+#tree_canham_estimates <- readRDS(file="data-raw/TreeSizeEsts.rds")
+
+measurement_data_transformed <- tree_canham_estimates$measurement_data %>%
+  group_by(ind_id) %>%
+  mutate(
+    delta_y_obs = y_obs - lag(y_obs),
+    obs_interval = time - lag(time),
+    obs_growth_rate = delta_y_obs/obs_interval,
+    delta_y_est = y_hat - lag(y_hat),
+    est_growth_rate = delta_y_est/obs_interval
+  ) %>%
+  ungroup()
+
+#Distributions of estimated growth and size
+hist(measurement_data_transformed$y_hat, 
+     main = "Estimated size distribution",
+     xlab = "Size (cm)")
+hist(measurement_data_transformed$delta_y_est, 
+     main = "Estimated growth increments",
+     xlab = "Growth increment (cm)")
+hist(measurement_data_transformed$est_growth_rate, 
+     main = "Estimated annualised growth rate distribution",
+     xlab = "Growth rate (cm/yr)")
+
+#Quantitative R^2
+cor(measurement_data_transformed$y_obs, measurement_data_transformed$y_hat)^2
+
+#Plots of size over time for a sample of 5 individuals
+sample_ids <- sample(1:nrow(tree_canham_estimates$individual_data), size=5)
+plot_data <- measurement_data_transformed %>%
+  filter(ind_id %in% sample_ids)
+
+ggplot(data=plot_data, aes(group = ind_id)) +
+  geom_point(aes(x = time, y=y_obs, colour = as.factor(ind_id)), 
+             shape = 1) +
+  geom_line(aes(x = time, y=y_obs, colour = as.factor(ind_id)), 
+            linetype = "dashed") +
+  geom_point(aes(x = time, y=y_hat, colour = as.factor(ind_id)), 
+             shape = 2) +
+  geom_line(aes(x = time, y=y_hat, colour = as.factor(ind_id)), 
+            linetype = "solid") +
+  labs(x="Time (years)", y="DBH (cm)", colour="Ind. ID") +
+  theme_classic()
+```
+
+Individual parameter analysis, growth function plots follow this.
+```{r}
+#1-dimensional parameter distributions
+hist(tree_canham_estimates$individual_data$ind_max_growth_mean,
+     main = "Individual max growth rate parameters", 
+     xlab = "g_max estimate")
+
+hist(tree_canham_estimates$individual_data$ind_size_at_max_growth_mean,
+     main = "Individual size at max growth parameters", 
+     xlab = "S_max estimate")
+
+hist(tree_canham_estimates$individual_data$ind_max_growth_mean,
+     main = "Individual spread parameters", 
+     xlab = "k estimate")
+
+#2-dimensional parameter distributions
+ggplot(data = tree_canham_estimates$individual_data, 
+       aes(x = ind_max_growth_mean, y = ind_size_at_max_growth_mean)) +
+  geom_point(shape = 16, size = 1, colour = "green4") +
+  xlab("Individual max growth (cm/yr)") +
+  ylab("Individual size at max growth (cm)") +
+  theme_classic()
+
+ggplot(data = tree_canham_estimates$individual_data, 
+       aes(x = ind_max_growth_mean, y = ind_k_mean)) +
+  geom_point(shape = 16, size = 1, colour = "green4") +
+  xlab("Individual max growth (cm/yr)") +
+  ylab("Individual spread parameters") +
+  theme_classic()
+
+ggplot(data = tree_canham_estimates$individual_data, 
+       aes(x = ind_k_mean, y = ind_size_at_max_growth_mean)) +
+  geom_point(shape = 16, size = 1, colour = "green4") +
+  xlab("Individual spread parameters") +
+  ylab("Individual size at max growth (cm)") +
+  theme_classic()
+
+#Linear correlation of parameters
+cor(tree_canham_estimates$individual_data[,c(2,6,10)])
+
+#Plot function pieces over estimated sizes.
+hmde_plot_de_pieces(model = "canham_multi_ind",
+                    individual_data = tree_canham_estimates$individual_data,
+                    measurement_data = tree_canham_estimates$measurement_data)
+```
+
+At the hyper-parameter level for the whole population we have centre and spread parameters for the log-normal distributions of $g_{max}$, $S_{max}$ and $k$. 
+```{r}
+#Max growth
+tree_canham_estimates$population_data$mean[1] #Raw value
+print(paste0("95% CI for mean log max growth rate: (", 
+             tree_canham_estimates$population_data$CI_lower[1], " , ",
+             tree_canham_estimates$population_data$CI_upper[1], ")")) #Raw CI
+
+exp(tree_canham_estimates$population_data$mean[1]) #In cm units
+print(paste0("95% CI for mean max growth rate in cm/yr: (", 
+             exp(tree_canham_estimates$population_data$CI_lower[1]), " , ",
+             exp(tree_canham_estimates$population_data$CI_upper[1]), ")"))
+
+#Standard deviation of underlying normal distribution
+tree_canham_estimates$population_data$mean[2]
+print(paste0("95% CI for log max growth rate standard deviation: (", 
+             tree_canham_estimates$population_data$CI_lower[2], " , ",
+             tree_canham_estimates$population_data$CI_upper[2], ")")) #Raw CI
+
+#size at max growth
+tree_canham_estimates$population_data$mean[3] #Raw value
+print(paste0("95% CI for mean log size at max growth rate: (", 
+             tree_canham_estimates$population_data$CI_lower[3], " , ",
+             tree_canham_estimates$population_data$CI_upper[3], ")")) #Raw CI
+
+exp(tree_canham_estimates$population_data$mean[3]) #In cm units
+print(paste0("95% CI for mean max size at growth rate in cm: (", 
+             exp(tree_canham_estimates$population_data$CI_lower[3]), " , ",
+             exp(tree_canham_estimates$population_data$CI_upper[3]), ")"))
+
+#Standard deviation of underlying normal distribution
+tree_canham_estimates$population_data$mean[4]
+print(paste0("95% CI for log max size at growth rate standard deviation: (", 
+             tree_canham_estimates$population_data$CI_lower[4], " , ",
+             tree_canham_estimates$population_data$CI_upper[4], ")")) #Raw CI
+
+#Spread parameter k
+tree_canham_estimates$population_data$mean[5] #Raw value
+print(paste0("95% CI for mean log spread parameter: (", 
+             tree_canham_estimates$population_data$CI_lower[5], " , ",
+             tree_canham_estimates$population_data$CI_upper[5], ")")) #Raw CI
+
+exp(tree_canham_estimates$population_data$mean[5]) #In cm units
+print(paste0("95% CI for mean spread parameter: (", 
+             exp(tree_canham_estimates$population_data$CI_lower[5]), " , ",
+             exp(tree_canham_estimates$population_data$CI_upper[5]), ")"))
+
+#Standard deviation of underlying normal distribution
+tree_canham_estimates$population_data$mean[6]
+print(paste0("95% CI for log spread parameter standard deviation: (", 
+             tree_canham_estimates$population_data$CI_lower[6], " , ",
+             tree_canham_estimates$population_data$CI_upper[], ")")) #Raw CI
+
+```
