@@ -1,0 +1,207 @@
+---
+title: "Case study 2: von Bertalanffy growth with lizard size data"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{von-bertalanffy}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+```{r setup}
+library(hmde)
+library(dplyr)
+library(ggplot2)
+```
+
+Our second demo introduces size-dependent growth based on the von Bertalanffy function
+$$f(Y(t); S_{max}, \beta) = \beta(S_{max} - Y(t)),$$
+where $S_{max}$ is the asymptotic maximum size and $\beta$ controls the growth rate. We have implemented the analytic solution
+$$Y(t) = S_{max} + (Y(0) - S_{max}) \exp(-t\beta)$$
+which is independent of age at the starting size $Y(0)$ and instead uses the first size as the initial condition. The key behaviour of the von Bertalanffy model is a high growth rate at small sizes that declines linearly as the size approaches $S_{max}$. This manifests as growth slowing as a creature matures with a hard finite limit on the eventual size. We restrict $\beta$ and $S_{max}$ to be positive, and $S_{max}$ to be larger than the observed sizes. As a result the growth rate is non-negative. 
+
+In the following code we plot an example of the growth function and the solution to get a feel for the behaviour.
+```{r}
+#Analytic solution in function form
+solution <- function(t, pars = list(y_0, beta, S_max)){
+  return(
+    pars$S_max + (y_0 - pars$S_max)*exp(-t * pars$beta)
+  )
+}
+
+#Parameters
+beta <- 0.35 #Growth rate
+y_0 <- 1 #Starting size
+S_max <- 20 #Asymptotic max size
+time <- c(0,30) 
+pars_list <- list(y_0 = y_0,
+                  beta = beta,
+                  S_max = S_max)
+y_final <- solution(time[2], pars_list)
+
+#Plot of growth function
+ggplot() +
+  xlim(y_0, y_final) +
+  ylim(0, beta*(S_max-y_0)*1.1) +
+  labs(x = "Y(t)", y = "f", title = "von Berralanffy growth") +
+  theme_classic() +
+  theme(axis.text=element_text(size=16),
+        axis.title=element_text(size=18,face="bold")) +
+  geom_function(fun=hmde_model_des("vb_single_ind"), 
+                args=list(pars = list(S_max, beta)),
+                colour="green4", linewidth=1,
+                xlim=c(y_0, y_final))
+
+#Size over time
+ggplot() +
+  geom_function(fun=solution, 
+                args=list(pars = pars_list),
+                colour="green4", linewidth=1,
+                xlim=c(time)) +
+  xlim(time) +
+  ylim(0, y_final*1.05) +
+  labs(x = "Time", y = "Y(t)", title = "von Bertalanffy growth") +
+  theme_classic() +
+  theme(axis.text=element_text(size=16),
+        axis.title=element_text(size=18,face="bold"))
+
+```
+
+The von Bertalanffy model is commonly used in fishery management \citep{flinn2021trends}, but has also been used in reptile studies such as \cite{edmonds2021growing, zhao2020age}.
+
+## Lizard size data
+-- Replace mass data with size data from Kar 2020, SVL is snout-vent length tip of snout to start of cloacal opening. Less variable than mass and width.
+
+Our data is sourced from \cite{Kar2023_LizardMass} which measured mass and snout-vent-length (SVL) of delicate skinks -- \textit{Lampropholis delicata} -- under experimental conditions to examine the effect of temperature on development. We are going to use the SVL metric for size.
+
+We took a simple random sample without replacement of 50 individuals with at least 5 observations each. The von Bertalanffy model can be fit to shorter observation lengths, but fewer than 3 observations is not advised as there are two growth parameters per individual. 
+
+## Implementation
+The workflow for the second example is the same as the first, with the change in model name and data object.
+```{r}
+lizard_vb_fit <- hmde_model("vb_multi_ind") |>
+  hmde_assign_data(data = Lizard_Size_Data)  |>
+  hmde_run(chains = 4, cores = 4, iter = 2000)
+
+lizard_vb_estimates <- hmde_extract_estimates(model = "vb_multi_ind",
+                                 fit = lizard_vb_fit,
+                                 input_measurement_data = Lizard_Size_Data)
+```
+
+As before, we can compare the observed sizes over time to those predicted by the model.
+```{r}
+measurement_data_transformed <- lizard_vb_estimates$measurement_data %>%
+  group_by(ind_id) %>%
+  mutate(
+    delta_y_obs = y_obs - lag(y_obs),
+    obs_interval = time - lag(time),
+    obs_growth_rate = delta_y_obs/obs_interval,
+    delta_y_est = y_hat - lag(y_hat),
+    est_growth_rate = delta_y_est/obs_interval
+  ) %>%
+  ungroup()
+
+#Distributions of estimated growth and size
+hist(measurement_data_transformed$y_hat, 
+     main = "Estimated size distribution",
+     xlab = "Size (cm)")
+hist(measurement_data_transformed$delta_y_est, 
+     main = "Estimated growth increments",
+     xlab = "Growth increment (cm)")
+hist(measurement_data_transformed$est_growth_rate, 
+     main = "Estimated annualised growth rate distribution",
+     xlab = "Growth rate (cm/yr)")
+
+#Quantitative R^2
+cor(measurement_data_transformed$y_obs, measurement_data_transformed$y_hat)^2
+
+#Plots of size over time for a sample of 5 individuals
+sample_ids <- sample(1:nrow(lizard_vb_estimates$individual_data), size=5)
+plot_data <- measurement_data_transformed %>%
+  filter(ind_id %in% sample_ids)
+
+ggplot(data=plot_data, aes(group = ind_id)) +
+  geom_point(aes(x = time, y=y_obs, colour = as.factor(ind_id)), 
+             shape = 1) +
+  geom_line(aes(x = time, y=y_obs, colour = as.factor(ind_id)), 
+            linetype = "dashed") +
+  geom_point(aes(x = time, y=y_hat, colour = as.factor(ind_id)), 
+             shape = 2) +
+  geom_line(aes(x = time, y=y_hat, colour = as.factor(ind_id)), 
+            linetype = "solid") +
+  labs(x="Time (days)", y="Size (mm)", colour="Ind. ID") +
+  theme_classic()
+```
+
+We have two parameters at the individual level and are interested in both their separate distributions, and if we see evidence of a relationship between them. We can also use the individual parameter estimates and estimated sizes to plot the growth function pieces.
+```{r}
+#1-dimensional parameter distributions
+hist(lizard_vb_estimates$individual_data$ind_max_size_mean,
+     main = "Individual max size parameters", 
+     xlab = "Smax estimate")
+
+hist(lizard_vb_estimates$individual_data$ind_growth_rate_mean,
+     main = "Individual growth rate parameters", 
+     xlab = "beta estimate")
+
+#2-dimensional parameter distribution
+ggplot(data = lizard_vb_estimates$individual_data, 
+       aes(x = ind_max_size_mean, y = ind_growth_rate_mean)) +
+  geom_point(shape = 16, size = 1, colour = "green4") +
+  xlab("Individual max sizes (mm)") +
+  ylab("Individual growth rate parameters") +
+  theme_classic()
+
+#Correlation of parameters
+cor(lizard_vb_estimates$individual_data$ind_max_size_mean,
+    lizard_vb_estimates$individual_data$ind_growth_rate_mean)
+
+#Plot function pieces over estimated sizes.
+hmde_plot_de_pieces(model = "vb_multi_ind",
+                    individual_data = lizard_vb_estimates$individual_data,
+                    measurement_data = lizard_vb_estimates$measurement_data)
+```
+
+At the hyper-parameter level for the whole population we have centre and spread parameters for the log-normal distributions of $S_{max}$ and $\beta$. As before, we can look at these as species-level features.
+```{r}
+#Max size
+lizard_vb_estimates$population_data$mean[1] #Raw value
+print(paste0("95% CI for mean log max size: (", 
+             lizard_vb_estimates$population_data$CI_lower[1], " , ",
+             lizard_vb_estimates$population_data$CI_upper[1], ")")) #Raw CI
+
+exp(lizard_vb_estimates$population_data$mean[1]) #In mm units
+print(paste0("95% CI for mean max size in mm: (", 
+             exp(lizard_vb_estimates$population_data$CI_lower[1]), " , ",
+             exp(lizard_vb_estimates$population_data$CI_upper[1]), ")"))
+
+#Standard deviation of underlying normal distribution
+lizard_vb_estimates$population_data$mean[2]
+print(paste0("95% CI for log max size standard deviation: (", 
+             lizard_vb_estimates$population_data$CI_lower[2], " , ",
+             lizard_vb_estimates$population_data$CI_upper[2], ")")) #Raw CI
+
+#Beta
+lizard_vb_estimates$population_data$mean[3] #Raw value
+print(paste0("95% CI for mean log growth par: (", 
+             lizard_vb_estimates$population_data$CI_lower[3], " , ",
+             lizard_vb_estimates$population_data$CI_upper[3], ")")) #Raw CI
+
+exp(lizard_vb_estimates$population_data$mean[3]) #In cm/yr units
+print(paste0("95% CI for mean growth par mm/yr: (", 
+             exp(lizard_vb_estimates$population_data$CI_lower[3]), " , ",
+             exp(lizard_vb_estimates$population_data$CI_upper[3]), ")"))
+
+#Standard deviation of underlying normal distribution
+lizard_vb_estimates$population_data$mean[4]
+print(paste0("95% CI for log growth par standard deviation: (", 
+             lizard_vb_estimates$population_data$CI_lower[4], " , ",
+             lizard_vb_estimates$population_data$CI_upper[4], ")")) #Raw CI
+
+```
