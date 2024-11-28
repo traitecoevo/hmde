@@ -27,13 +27,13 @@ library(dplyr)
 library(ggplot2)
 ```
 
-Our final case study reproduces analysis from [Paper 1] and [Paper 2] with a small sample size for G. recondita in order to make the model tractable for a demonstration.
+Our final case study reproduces analysis from \cite{obrien2024allindividuals} with a small sample size for G. recondita in order to make the model tractable for a demonstration.
 
 The function we use here is based on \cite{canham2004neighborhood}, and is a three parameter non-linear ODE given by
 $$g(S(t);\, g_{max}, S_{max}, k) = g_{max} \exp \Bigg(-\frac{1}{2}\bigg(\frac{\ln(S(t)/S_{max})}{k} \bigg)^2 \Bigg).$$
 The Canham function, as we refer to it, describes hum-shaped growth that accelerates to a peak at $(S_{max}, g_{max})$ then declines to 0 at a rate controlled by $k$. The Canham function does not have an analytic solution the way that the previous function did, so we are unable to directly encode the sizes over time and must instead use a numerical method.
 
-The Canham function has been used for a lot of growth analysis such as \cite{herault2011functional} and \cite{canham2006neighborhood} as well as our own previous work in \cite{OBrien2024_Methods} and [Paper 2]. The desirable features of the Canham growth model are that it has a period of increasing growth at small sizes, with a finite growth peak at $(S_{max}, g_{max})$, and then decay to near-zero growth. With different parameter combinations Canham can fit a range of growth behaviours to an observed interval: increasing growth, decreasing growth, a growth spike, or steady growth. The downside is that the Canham function is unimodal -- it can only fit a single peak and as such is not suitable to describe the full life history of species that are strongly responsive to their environment as seen in [Paper 2].
+The Canham function has been used for a lot of growth analysis such as \cite{herault2011functional} and \cite{canham2006neighborhood} as well as our own previous work in \cite{obrien2024allindividuals} and [Paper 2]. The desirable features of the Canham growth model are that it has a period of increasing growth at small sizes, with a finite growth peak at $(S_{max}, g_{max})$, and then decay to near-zero growth. With different parameter combinations Canham can fit a range of growth behaviours to an observed interval: increasing growth, decreasing growth, a growth spike, or steady growth. The downside is that the Canham function is unimodal -- it can only fit a single peak and as such is not suitable to describe the full life history of species that are strongly responsive to their environment as seen in [Paper 2].
 
 The next bit of code plots the Canham function for chosen parameter values. We have provided some, but encourage playing around with the parameters and seeing what happens to the function.
 ```{r}
