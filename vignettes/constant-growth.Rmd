@@ -149,7 +149,7 @@ Now we will actually fit the model and extract the estimates. As the provided tr
 ```{r}
 trout_constant_fit <- hmde_model("constant_multi_ind") |>
   hmde_assign_data(data = Trout_Size_Data)  |>
-  hmde_run(chains = 4, cores = 4, iter = 2000)
+  hmde_run(chains = 4, cores = 1, iter = 2000)
 
 trout_constant_estimates <- hmde_extract_estimates(model = "constant_multi_ind",
                                  fit = trout_constant_fit,
