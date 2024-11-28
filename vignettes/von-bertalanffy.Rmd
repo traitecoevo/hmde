@@ -3,8 +3,10 @@ title: "Case study 2: von Bertalanffy growth with lizard size data"
 output: rmarkdown::html_vignette
 vignette: >
   %\VignetteIndexEntry{von-bertalanffy}
-  %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
+  %\VignetteEngine{knitr::rmarkdown}
+editor_options: 
+  chunk_output_type: console
 ---
 
 ```{r, include = FALSE}
@@ -15,6 +17,9 @@ knitr::opts_chunk$set(
 ```
 
 ```{r setup}
+# remotes::install_github("traitecoevo/hmde")
+# install.packages(c("dplyr", "ggplot2"))
+
 library(hmde)
 library(dplyr)
 library(ggplot2)
