@@ -16,6 +16,10 @@ knitr::opts_chunk$set(
 )
 ```
 
+```{r}
+options(rmarkdown.html_vignette.check_title = FALSE)
+```
+
 ```{r setup}
 # remotes::install_github("traitecoevo/hmde")
 # install.packages(c("dplyr", "ggplot2"))
@@ -81,8 +85,6 @@ ggplot() +
 The von Bertalanffy model is commonly used in fishery management \citep{flinn2021trends}, but has also been used in reptile studies such as \cite{edmonds2021growing, zhao2020age}.
 
 ## Lizard size data
--- Replace mass data with size data from Kar 2020, SVL is snout-vent length tip of snout to start of cloacal opening. Less variable than mass and width.
-
 Our data is sourced from \cite{Kar2023_LizardMass} which measured mass and snout-vent-length (SVL) of delicate skinks -- \textit{Lampropholis delicata} -- under experimental conditions to examine the effect of temperature on development. We are going to use the SVL metric for size.
 
 We took a simple random sample without replacement of 50 individuals with at least 5 observations each. The von Bertalanffy model can be fit to shorter observation lengths, but fewer than 3 observations is not advised as there are two growth parameters per individual. 

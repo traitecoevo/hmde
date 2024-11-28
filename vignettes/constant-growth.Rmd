@@ -3,8 +3,10 @@ title: "Case study 1: Constant growth with SUSTAIN Trout data"
 output: rmarkdown::html_vignette
 vignette: >
   %\VignetteIndexEntry{constant-growth}
-  %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
+  %\VignetteEngine{knitr::rmarkdown}
+editor_options: 
+  chunk_output_type: console
 ---
 
 ```{r, include = FALSE}
@@ -13,8 +15,10 @@ knitr::opts_chunk$set(
   comment = "#>",
   fig.align='center'
 )
+```
 
-library(patchwork)
+```{r}
+options(rmarkdown.html_vignette.check_title = FALSE)
 ```
 
 ## Overview
@@ -38,23 +42,17 @@ library(dplyr)
 library(ggplot2)
 ```
 
-### Simulate data
+### Visualise data
 
-```{r}
+Here are some plots to demonstrate how the constant growth function relates to sizes over time for a single individual. Feel free to play around with the parameter settings (`beta`, `y_0`) and see how the plot changes.
+
+```{r, fig.width=3, fig.height=3}
+#Simulate data
 beta <- 2 #Annual growth rate
 y_0 <- 1 #Starting size
 time <- c(0,20) 
 sizes_over_time <- tibble(Y_t = 1 + beta*time, #Linear sizes over time
                           t = time)
-
-sizes_over_time
-```
-
-### Visualise data
-
-Here are some plots to demonstrate how the constant growth function relates to sizes over time for a single individual. Feel free to play around with the parameter settings (`beta`, `y_0`) and see how the plot changes.
-
-```{r, echo=FALSE, fig.width=6, fig.height=3}
 #Plot of growth function
 constant_growth_function <- ggplot() +
   xlim(y_0, max(sizes_over_time$Y_t)) +
@@ -78,35 +76,11 @@ sizes_over_time <- ggplot(data = sizes_over_time, aes(x=t, y = Y_t)) +
   theme(axis.text=element_text(size=16),
         axis.title=element_text(size=18,face="bold"))
 
-constant_growth_function + sizes_over_time
+constant_growth_function
+sizes_over_time
 ```
 
-```{r, eval=FALSE, fold}
-#Plot of growth function
-ggplot() +
-  geom_function(fun = hmde_model_des("constant_single_ind"), # Visualising the growth function
-                args = list(pars = list(beta)),
-                colour = "green4", linewidth=1,
-                xlim = c(y_0, max(sizes_over_time))) + 
-  xlim(y_0, max(sizes_over_time$Y_t)) + # Creating the x axis
-  ylim(0, beta*2) + # Creating the y axis
-  labs(x = "Y(t)", y = "f", title = "Constant growth") + # Axe labels and plot title
-  theme_classic() + # Theme for the plot
-  theme(axis.text=element_text(size=16), # Plot customising
-        axis.title=element_text(size=18,face="bold")) 
-
-#Sizes over time
-ggplot(data = sizes_over_time, aes(x=t, y = Y_t)) + 
-  geom_line(colour="green4", linewidth=1) + # Line graph of sizes_over_time
-  xlim(0, max(sizes_over_time$t)) +
-  ylim(0, max(sizes_over_time$Y_t)*1.05) +
-  labs(x = "Time", y = "Y(t)", title = "Constant growth") +
-  theme_classic() +
-  theme(axis.text=element_text(size=16),
-        axis.title=element_text(size=18,face="bold"))
-```
-
-A key take-away of the function plot (on the left) is the relationship to what we think of as a "reasonable growth model". We don't expect constant growth rates to be realistic, at best they represent the average rate of change over a period. More complex models may be more realistic, but in this case study we are only interested in different mechanisms of size dependence, we do not use environmental covariates for example.
+A key take-away of the function plot is the relationship to what we think of as a "reasonable growth model". We don't expect constant growth rates to be realistic, at best they represent the average rate of change over a period. More complex models may be more realistic, but in this case study we are only interested in different mechanisms of size dependence, we do not use environmental covariates for example.
 
 ## SUSTAIN trout data
 Our example data for the constant model comes from @moe2020_TroutData, a publicly available dataset of mark-recapture data for _Salmo trutta_ in Norway. The time between observations is not controlled, nor is the number of observations per individual. As a result the data consists primarily of individuals with two observations of size, constituting a single observation of growth which limits the growth functions that can be fit to individuals as a single parameter model is the best that can be fit to two sizes. The constant growth function in Equation \eqref{eqn_3_const} is the most appropriate of the functions we have in `hmde`, as we can interpret the single growth interval as an estimate of the average growth rate that gets fit to $\beta$.
@@ -134,16 +108,21 @@ histogram_func <- function(data, var, main, xlab, ...){
   ggplot2::ggplot(data = data, aes(x = {{var}})) + 
   geom_histogram(colour = "black", fill = "grey", ...) + 
   labs(title = main,
-       xlab = xlab)
+       xlab = xlab) +
+  theme_classic()
 }
 
-histogram_func(Trout_Size_Data, y_obs, "Observed size distribution", "Size (cm)", binwidth = 5)
+histogram_func(Trout_Size_Data, y_obs, 
+               "Observed size distribution", "Size (cm)", binwidth = 5)
 
-histogram_func(Trout_Size_Data_transformed, obs_interval, "Observed interval distribution", "Time (yr)", binwidth = 0.55)
+histogram_func(Trout_Size_Data_transformed, obs_interval, 
+               "Observed interval distribution", "Time (yr)", binwidth = 0.55)
 
-histogram_func(Trout_Size_Data_transformed, delta_y_obs, "Observed growth increments", "Growth increment (cm)", binwidth = 5.5)
+histogram_func(Trout_Size_Data_transformed, delta_y_obs, 
+               "Observed growth increments", "Growth increment (cm)", binwidth = 5.5)
 
-histogram_func(Trout_Size_Data_transformed, obs_growth_rate, "Observed annualised growth rate distribution", "Growth rate (cm/yr)", binwidth = 80)
+histogram_func(Trout_Size_Data_transformed, obs_growth_rate, 
+               "Observed annualised growth rate distribution", "Growth rate (cm/yr)", binwidth = 80)
 ```
 
 
