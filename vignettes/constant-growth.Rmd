@@ -222,7 +222,7 @@ trout_constant_estimates <- hmde_extract_estimates(model = "constant_multi_ind",
                                  input_measurement_data = Trout_Size_Data)
 ```
 
-### Examine estimates
+### Inspect estimates
 
 Once the model has finished running, we can have a look at the distribution of estimated sizes, estimated growth increments, and annualised growth rates at the level of sizes over time.
 
@@ -255,7 +255,7 @@ hist(measurement_data_transformed$est_growth_rate,
      xlab = "Growth rate (cm/yr)")
 ```
 
-```{r, fig.width=5, fig.height=4}
+```{r, fig.width=5, fig.height=6}
 est_hist_y_hat <- histogram_func(measurement_data_transformed, y_hat, 
                "Estimated size distribution",
                xlab = "Size (cm)",
@@ -277,16 +277,16 @@ We can see that the negative growth increments are gone!
 
 <!-- A quick explainer on why?  -->
 
-### Other useful metrics
-
-#### R^2
+#### $R^2$
 
 We can also directly compare the observed sizes over time to estimated values. 
 
-We can use statistics such as $R^2$ calculated on $(y_{ij}, \hat{Y}_{ij})$, and inspect we can look at plots of sizes over time.
+We can use $R^2$ calculated on $(y_{ij}, \hat{Y}_{ij})$, and inspect we can look at plots of sizes over time.
+
+<!-- A quick explainer of what R2 is and how to interpret -->
 
 Here, we are looking at 5 random individuals to start with because plotting every individuals' sizes over time can get very messy.
-```{r}
+```{r, fig.width=4, fig.height=4}
 #Quantitative R^2
 cor(measurement_data_transformed$y_obs, measurement_data_transformed$y_hat)^2
 
@@ -309,8 +309,10 @@ measurement_data_transformed %>%
   theme_classic()
 ```
 
-At the level of individuals we are interested in the distribution of $\beta$ estimates, which will align with the estimated annualised growth rates as that's precisely what they represent. We also provide an easy way to produce a plot of the fitted growth functions in order to see how they compare to the observed sizes.
-```{r}
+### Indvidual growth functions ($\beta$)
+
+At the level of individuals we are interested in the distribution of $\beta$ estimates, which will align with the estimated annualised growth rates as that's precisely what they represent. Here is one way to visualise  the fitted growth functions in order to see how they compare to the observed sizes.
+```{r, eval=FALSE}
 hist(trout_constant_estimates$individual_data$ind_beta_mean,
      main = "Individual beta parameters", 
      xlab = "beta estimate")
@@ -319,6 +321,22 @@ hmde_plot_de_pieces(model = "constant_multi_ind",
                     individual_data = trout_constant_estimates$individual_data,
                     measurement_data = trout_constant_estimates$measurement_data)
 ```
+
+```{r, echo=FALSE, fig.width=6.5, fig.height=5}
+ind_hist_beta <- histogram_func(trout_constant_estimates$individual_data,
+               ind_beta_mean,
+               main = "Individual beta parameters", 
+               xlab = "beta estimate")
+
+de_pieces <- hmde_plot_de_pieces(model = "constant_multi_ind",
+                    individual_data = trout_constant_estimates$individual_data,
+                    measurement_data = trout_constant_estimates$measurement_data)
+
+
+ind_hist_beta + de_pieces 
+```
+
+### Population hyper-parameters 
 
 We also get estimates of the population-level hyper-parameters that govern the distribution of $\beta$ -- $\mu$ and $\sigma$ for the log-normal distribution. These are calculated in the context of the log-transformed parameters so the easiest way to interpret $\mu$ is to back-transform it through exponentiation, but this does not so easily transfer to $\sigma$. The CIs in this output are posterior credible intervals taken as the central 95% quantiles of the posterior samples. 
 ```{r}
