@@ -33,7 +33,6 @@ hmde_extract_estimates <- function(model = NULL,
     }
   }
 
-
   estimate_list <- list()
   par_names <- hmde_model_pars(model)
 
@@ -72,7 +71,7 @@ hmde_extract_estimates <- function(model = NULL,
   #If model is multi-individual extract population-level estimates and add to list
   if(!is.null(par_names$population_pars_names)){
     estimate_list$population_data <- hmde_extract_pop_par_ests(samples,
-                                                               par_names$population_pars_names)
+                                                               population_pars_names = par_names$population_pars_names)
   }
 
   return(estimate_list)

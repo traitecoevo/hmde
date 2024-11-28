@@ -28,7 +28,7 @@ hmde_model_pars <- function(model=NULL){
 #' @noRd
 
 hmde_const_single_ind_pars <- function(){
-  list(measurement_pars_names = c("y_hat", "Delta_hat"),
+  list(measurement_pars_names = c("y_hat"),
        individual_pars_names = c("ind_beta"),
        error_pars_names = c("global_error_sigma"),
        model = "constant_single_ind")
@@ -39,7 +39,7 @@ hmde_const_single_ind_pars <- function(){
 #' @noRd
 
 hmde_const_multi_ind_pars <- function(){
-  list(measurement_pars_names = c("y_hat", "Delta_hat"),
+  list(measurement_pars_names = c("y_hat"),
        individual_pars_names = c("ind_beta"),
        population_pars_names = c("pop_beta_mu", "pop_beta_sigma"),
        error_pars_names = c("global_error_sigma"),
@@ -51,8 +51,8 @@ hmde_const_multi_ind_pars <- function(){
 #' @noRd
 
 hmde_canham_single_ind_pars <- function(){
-  list(measurement_pars_names = c("y_hat", "Delta_hat"),
-       individual_pars_names = c("ind_max_growth", "ind_diameter_at_max_growth", "ind_k"),
+  list(measurement_pars_names = c("y_hat"),
+       individual_pars_names = c("ind_max_growth", "ind_size_at_max_growth", "ind_k"),
        error_pars_names = c("global_error_sigma"),
        model = "canham_single_ind")
 }
@@ -62,10 +62,10 @@ hmde_canham_single_ind_pars <- function(){
 #' @noRd
 
 hmde_canham_multi_ind_pars <- function(){
-  list(measurement_pars_names = c("y_hat", "Delta_hat"),
-       individual_pars_names = c("ind_max_growth", "ind_diameter_at_max_growth", "ind_k"),
+  list(measurement_pars_names = c("y_hat"),
+       individual_pars_names = c("ind_max_growth", "ind_size_at_max_growth", "ind_k"),
        population_pars_names = c("pop_max_growth_mean", "pop_max_growth_sd",
-                      "pop_diameter_at_max_growth_mean", "pop_diameter_at_max_growth_sd",
+                      "pop_size_at_max_growth_mean", "pop_size_at_max_growth_sd",
                       "pop_k_mean", "pop_k_sd"),
        error_pars_names = c("global_error_sigma"),
        model = "canham_multi_ind")
@@ -76,7 +76,7 @@ hmde_canham_multi_ind_pars <- function(){
 #' @noRd
 
 hmde_vb_single_ind_pars <- function(){
-  list(measurement_pars_names = c("y_hat", "Delta_hat"),
+  list(measurement_pars_names = c("y_hat"),
        individual_pars_names = c("ind_max_size", "ind_growth_rate"),
        error_pars_names = c("global_error_sigma"),
        model = "vb_single_ind")
@@ -87,7 +87,7 @@ hmde_vb_single_ind_pars <- function(){
 #' @noRd
 
 hmde_vb_multi_ind_pars <- function(){
-  list(measurement_pars_names = c("y_hat", "Delta_hat"),
+  list(measurement_pars_names = c("y_hat"),
        individual_pars_names = c("ind_max_size", "ind_growth_rate"),
        population_pars_names = c("pop_max_size_mean", "pop_max_size_sd",
                       "pop_growth_rate_mean", "pop_growth_rate_sd"),
@@ -100,7 +100,7 @@ hmde_vb_multi_ind_pars <- function(){
 #' @noRd
 #'
 hmde_linear_single_ind_pars <- function(){
-  list(measurement_pars_names = c("y_hat", "Delta_hat"),
+  list(measurement_pars_names = c("y_hat"),
        individual_pars_names = c("ind_beta_0", "ind_beta_1"),
        error_pars_names = c("global_error_sigma"),
        model = "linear_single_ind")
