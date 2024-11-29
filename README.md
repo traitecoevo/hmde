@@ -12,8 +12,10 @@ coverage](https://codecov.io/gh/traitecoevo/hmde/branch/master/graph/badge.svg)]
 experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://lifecycle.r-lib.org/articles/stages.html#experimental)
 <!-- badges: end -->
 
-The goal of hmde is to implement hierarchical Bayesian longitudinal models to solve the Bayesian inverse problem of estimating differential equation parameters based on repeat measurement surveys. Estimation is done using Markov Chain Monte Carlo, implemented through
-[Stan](https://mc-stan.org/) via [RStan](https://mc-stan.org/users/interfaces/rstan), built under [R](https://cran.r-project.org/) 4.3.3. The inbuilt models are based on case studies in ecology.
+The goal of `hmde` is to implement hierarchical Bayesian longitudinal models to solve the Bayesian inverse problem of estimating differential equation parameters based on repeat measurement surveys. Estimation is done using Markov Chain Monte Carlo, implemented through
+[Stan](https://mc-stan.org/) via [RStan](https://mc-stan.org/users/interfaces/rstan), built under [R](https://cran.r-project.org/) 4.3.3. The inbuilt models are based on case studies in ecology. The hierarchical Bayesian longitudinal method was first introduced in O'Brien et al., [2024](https://besjournals.onlinelibrary.wiley.com/doi/10.1111/2041-210X.14463).
+
+As `hmde` is first intended for biologists, the initial set of vignettes (`hmde`, `constant-growth`, `von-bertalanffy`, and `canham`) are written aimed at an audience more interested in applications than the underlying theory. A vignette for the more mathematically interested is under development.
 
 ## The Maths
 
@@ -22,25 +24,19 @@ $$f\left( Y \left( t \right), \boldsymbol{\theta} \right) = \frac{dY}{dt}$$
 based on the longitudinal structure
 $$Y \left( t_{j+1} \right) = Y\left( t_j \right) + \int_{t_j}^{t_{j+1}}f\left( Y \left( t \right), \boldsymbol{\theta} \right)\,dt. $$
 
-The input data are observations of the form $y_{ij}$ for individual $i$ at time $t_j$, with repeated observations coming from the same individual. We parameterise $f$ at the individual level by estimating $\boldsymbol{\theta}\_i$ as the vector of parameters. We have hyper-parameters that determine the distribution of $\boldsymbol{\theta}\_i$ with typical prior distribution
-$$\boldsymbol{\theta}\_i \sim \log \mathcal{N}\left(\boldsymbol{\mu}\_{\log\left(\boldsymbol{\theta}\right)}, \boldsymbol{\sigma}\_{\log \left( \boldsymbol{\theta} \right)}\right), $$ 
-where $\boldsymbol{\mu}\_{\log\left(\boldsymbol{\theta}\right)}$ and $\boldsymbol{\sigma}\_{\log\left(\boldsymbol{\theta}\right)}$ are vectors of means and standard deviations. In the case of a single individual, these are chosen prior values. In the case of a multi-individual model $\boldsymbol{\mu}\_{\log\left(\boldsymbol{\theta}\right)}$ and $\boldsymbol{\sigma}\_{\log\left(\boldsymbol{\theta}\right)}$ have their own prior distributions and are fit to data.
+The input data are observations of the form $y_{ij}$ for individual $i$ at time $t_j$, with repeated observations coming from the same individual. We parameterise $f$ at the individual level by estimating $\boldsymbol{\theta}_i$ as the vector of parameters. We have hyper-parameters that determine the distribution of $\boldsymbol{\theta}_i$ with typical prior distribution
+$$\boldsymbol{\theta}_i \sim \log \mathcal{N}\left(\boldsymbol{\mu}_{\log\left(\boldsymbol{\theta}\right)}, \boldsymbol{\sigma}_{\log \left( \boldsymbol{\theta} \right)}\right), $$ 
+where $\boldsymbol{\mu}_{\log\left(\boldsymbol{\theta}\right)}$ and $\boldsymbol{\sigma}_{\log\left(\boldsymbol{\theta}\right)}$ are vectors of means and standard deviations. In the case of a single individual, these are chosen prior values. In the case of a multi-individual model $\boldsymbol{\mu}_{\log\left(\boldsymbol{\theta}\right)}$ and $\boldsymbol{\sigma}_{\log\left(\boldsymbol{\theta}\right)}$ have their own prior distributions and are fit to data.
 
 ## Implemented Models
 
-Rmot comes with four DEs built and ready to go, each of which has a version for a single individual and multiple individuals.
+`hmde` comes with four DEs built and ready to go, each of which has a version for a single individual and multiple individuals.
 
 ### Constant Model
 
 The constant model is given by
 $$f \left( Y \left( t \right), \beta \right) = \frac{dY}{dt} = \beta,$$ 
 and is best understood as describing the average rate of change over time.
-
-### Power law
-
-The power law model is given by
-$$f \left( Y \left( t \right), \beta_0, \beta_1, \bar{Y} \right) = \frac{dY}{dt} = \beta_0 \bigg( \frac{Y \left( t \right)}{\bar{Y}} \bigg)^{\beta_1},$$ 
-where $\beta_0>0$ is the coefficient, $\beta_1$ is the power, and $\bar{Y}$ is a user-provided parameter that centres the model in order to avoid correlation between the $\beta$ parameters.
 
 ### von Bertalanffy
 
@@ -73,6 +69,7 @@ remotes::install_github("traitecoevo/hmde")
 Create constant growth data with measurement error:
 
 ``` r
+library(hmde)
 y_obs <- seq(from=2, to=15, length.out=10) + rnorm(10, 0, 0.1)
 ```
 

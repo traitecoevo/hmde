@@ -11,6 +11,13 @@ A package to implement a selection of hierarchical Bayesian longitudinal models 
 \references{
 Stan Development Team (NA). RStan: the R interface to Stan. R package version 2.26.23. https://mc-stan.org
 }
+\seealso{
+Useful links:
+\itemize{
+  \item \url{https://traitecoevo.github.io/hmde/}
+}
+
+}
 \author{
 \strong{Maintainer}: Tess O'Brien \email{theresa.obrien@unsw.edu.au} (\href{https://orcid.org/XXXX-XXXX-XXXX-XXXX}{ORCID}) [copyright holder]
 
