@@ -1,0 +1,32 @@
+---
+title: "Here be dragons"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Here be dragons}
+  %\VignetteEncoding{UTF-8}
+  %\VignetteEngine{knitr::rmarkdown}
+editor_options:
+  chunk_output_type: console
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>",
+  eval = TRUE
+)
+
+# job::job({
+# knitr::knit("vignettes/here-be-dragons.Rmd.orig", "vignettes/here-be-dragons.Rmd")
+# })
+```
+
+```{r}
+options(rmarkdown.html_vignette.check_title = FALSE)
+```
+
+```{r}
+library(hmde)
+library(dplyr)
+library(ggplot2)
+```
