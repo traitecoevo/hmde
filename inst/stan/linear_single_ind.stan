@@ -56,7 +56,6 @@ data {
   real time[n_obs];
   real y_0_obs;
   real y_bar;
-  int int_method; //1: RK4, 2: RK45
 }
 
 // The parameters accepted by the model.

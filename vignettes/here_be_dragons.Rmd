@@ -24,7 +24,7 @@ options(rmarkdown.html_vignette.check_title = FALSE)
 ```
 
 ```{r}
-#remotes::install_github("traitecoevo/hmde@52904e5015e449bb211ead653bed1b28b1fddcfd", force = TRUE)
+#remotes::install_github("traitecoevo/hmde", force = TRUE)
 
 library(hmde)
 library(dplyr)
