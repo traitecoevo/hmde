@@ -19,13 +19,13 @@ knitr::opts_chunk$set(
 # job::job({
 # knitr::knit("vignettes/here-be-dragons.Rmd.orig", "vignettes/here-be-dragons.Rmd")
 # })
-```
 
-```{r}
 options(rmarkdown.html_vignette.check_title = FALSE)
 ```
 
 ```{r}
+remotes::install_github("traitecoevo/hmde@c034248a4381c3de92a97dc6a7a1a7215f5cd04b", force = TRUE)
+
 library(hmde)
 library(dplyr)
 library(ggplot2)
