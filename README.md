@@ -20,7 +20,9 @@ As `hmde` is first intended for biologists, the initial set of vignettes (`hmde`
 ## The Maths
 
 The general use case is to estimate a vector of parameters $\boldsymbol{\theta}$ for a chosen differential equation
-$$f\left( Y \left( t \right), \boldsymbol{\theta} \right) = \frac{dY}{dt}$$ 
+\begin{equation}
+f\left( Y \left( t \right), \boldsymbol{\theta} \right) = \frac{dY}{dt}
+\end{equation}
 based on the longitudinal structure
 $$Y \left( t_{j+1} \right) = Y\left( t_j \right) + \int_{t_j}^{t_{j+1}}f\left( Y \left( t \right), \boldsymbol{\theta} \right)\,dt. $$
 
