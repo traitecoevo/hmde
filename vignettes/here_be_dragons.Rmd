@@ -24,7 +24,7 @@ options(rmarkdown.html_vignette.check_title = FALSE)
 ```
 
 ```{r}
-remotes::install_github("traitecoevo/hmde@52904e5015e449bb211ead653bed1b28b1fddcfd", force = TRUE)
+#remotes::install_github("traitecoevo/hmde@52904e5015e449bb211ead653bed1b28b1fddcfd", force = TRUE)
 
 library(hmde)
 library(dplyr)
@@ -97,8 +97,8 @@ A note on precision: the same bad behaviour occurs even if you use unrounded dat
 # Implementing model
 We're going to run 100 fits with a step size of 1 using the custom RK4 solver and a single chain each. We do single chains because each can fall into the numerical error trap, and the easiest way to identify that trap is to extract the estimates afterwards. An `int_method` of 1 corresponds to the custom RK4 implementation, while 2 gives the Stan inbuilt RK45 solver.
 
-Each fit takes a few to run, so allow several minutes for the following block. There are likely to be diagnostic problems but that is part of what we are here to explore so we will be ignoring them.
-```{r}
+Each fit takes a few seconds to run, so allow several minutes for the following block. There are likely to be diagnostic problems but that is part of what we are here to explore so we will be ignoring them. Results are hidden for this block. Occasionally a fit will behave very badly and give a lot of divergent transitions, we exclude these.
+```{r, results='hide'}
 runs <- 100
 step_size = 0.5
 par_est_tibble <- tibble(run = c(),
@@ -115,8 +115,7 @@ for(i in 1:runs){
                    time = obs_data_frame$time,
                    y_0_obs = obs_data_frame$y_obs[1],
                    y_bar = mean(obs_data_frame$y_obs),
-                   step_size = step_size,
-                   int_method = 1)  |>
+                   step_size = step_size)  |>
   hmde_run(chains = 1, cores = 1, iter = 2000)
   
   #Extract parameter estimates
@@ -324,60 +323,5 @@ ggplot(data = par_est_tibble, aes(x = beta_0, y = beta_1)) +
   theme_classic()
 ```
 
-# Adaptive step sizes
-To check if we can compensate for the bad behaviour with a better algorithm, we have also implemented the Stan RK45 solver, and test it here.
-```{r}
-runs <- 100
-step_size = 1 #Step size it isn't used by the RK45 method
-rk45_par_est_tibble <- tibble(run = c(),
-                         step_size = c(),
-                         beta_0 = c(),
-                         beta_1 = c())
-
-for(i in 1:runs){
-  #Run the model
-  fit <- hmde_model("linear_single_ind") |>
-  hmde_assign_data(n_obs = nrow(obs_data_frame),
-                   y_obs = obs_data_frame$y_obs,
-                   obs_index = obs_data_frame$obs_index,
-                   time = obs_data_frame$time,
-                   y_0_obs = obs_data_frame$y_obs[1],
-                   y_bar = mean(obs_data_frame$y_obs),
-                   step_size = step_size,
-                   int_method = 2)  |>
-  hmde_run(chains = 1, cores = 1, iter = 2000)
-  
-  #Extract parameter estimates
-  ests <- hmde_extract_estimates(model = "linear_single_ind",
-                                 fit = fit,
-                                 input_measurement_data = obs_data_frame)
-  
-  temp <- tibble(
-    run = i,
-    step_size = "RK45",
-    beta_0 = ests$individual_data$ind_beta_0_mean,
-    beta_1 = ests$individual_data$ind_beta_1_mean
-  )
-  
-  rk45_par_est_tibble <- rbind(rk45_par_est_tibble, temp)
-} 
-
-hist(rk45_par_est_tibble$beta_0, col = "lightblue", 
-       main = "RK45 solver",
-       xlab = "beta_0 ests")
-  hist(rk45_par_est_tibble$beta_1, col = "lightgreen",
-       main = "RK45 solver",
-       xlab = "beta_1 ests")
-  
-  scatterplot <- ggplot(data = rk45_par_est_tibble, aes(x = beta_0, y = beta_1)) +
-    geom_point(aes(colour = as.factor(step_size), 
-                   shape = as.factor(step_size)), 
-               alpha = 0.1,
-               size = 2) +
-    theme_classic()
-  
-  print(scatterplot)
-```
-
 # Where to from here?
-For the purpose of the hmde package that this vignette is a part of, pathologies such as this numerically introduced non-identifiability 
+For the purpose of the hmde package that this vignette is a part of, we account for the pathologies in this particular model by using the analytic solution for the von Bertalanffy equation. More work needs to be done to understand the interaction between numerical methods and MCMC sampling. What we have demonstrated is that the problem exists, and it is not enough to have numerical stability at the true parameter values because MCMC estimation moves around, you need numerical stability in a potentially quite large part of the parameter space. The good news is that simulated data and posterior plots with more accurate numerical methods can at least identify that something is going wrong.
