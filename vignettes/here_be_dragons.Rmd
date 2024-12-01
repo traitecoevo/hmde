@@ -7,6 +7,7 @@ vignette: >
   %\VignetteEngine{knitr::rmarkdown}
 editor_options:
   chunk_output_type: console
+bibliography: vignette.bib
 ---
 
 ```{r, include = FALSE}
@@ -24,7 +25,7 @@ options(rmarkdown.html_vignette.check_title = FALSE)
 ```
 
 ```{r}
-#remotes::install_github("traitecoevo/hmde", force = TRUE)
+#remotes::install_github("traitecoevo/hmde@a93e02e48657bb648378f584c4a2166d38fea263", force = TRUE)
 
 library(hmde)
 library(dplyr)
@@ -33,16 +34,16 @@ library(ggplot2)
 
 This vignette demonstrates an interaction between errors from numerical integration methods and MCMC sampling. The underlying issue is that if, given errors in the chosen numerical integration method, two sets of parameters for a differential equation $f$ give "the same" (more in a second) output for
 $$Y(t_{j+1}) = Y(t_j) + \int_{t_j}^{t_{j+1}} f(Y(t), \boldsymbol{\theta})\,dt\qquad (1)$$
-the MCMC sampler will be unable to meaningfully distinguish the parameter combinations. Thus, there is a form of non-identifiability that arises from numerical errors in a longitudinal model based on Equation (1) that are separate to other issues of non-identifiability, and currently under-explored in the literature.
+the MCMC sampler will be unable to meaningfully distinguish the parameter combinations. Thus, there is a form of non-identifiability that arises from numerical errors in a longitudinal model based on Equation (1) that are separate to other issues of non-identifiability, and currently under-explored in the literature. In this demonstration we use a Runge-Kutta 4th order numerical method (\cite{butcher2016numerical}) with different step sizes to show that even 'small' step sizes can give problems.
 
 It is important to state that "the same" $Y(t)$ values in this context means within statistical error of each other. We assume that our data consists of observations of the form $y_{j}$ at time $t_j$ that look like
 $$y_j = Y(t_j) + \text{error},$$
-and have some finite level of precision. The numerical method may produce estimated values $\hat{Y}(t_j)$ that differ by some amount that is much smaller than the level of precision or observation error for the different parameter combinations, but due to the imprecision of the measurement process the MCMC sampler cannot meaningfully distinguish the estimates. For this demonstration we will use rounding to produce simulated data with measurement precision of 0.1, and error of $\mathcal{N}(0, 0.1)$, analogous to the 1mm measurement precision and approximate standard deviation of the real-world source data used in \cite{obrien2024allindividuals}.
+and have some finite level of precision. The numerical method may produce estimated values $\hat{Y}(t_j)$ that differ by some amount that is much smaller than the level of precision or observation error for the different parameter combinations, but due to the imprecision of the measurement process the MCMC sampler cannot meaningfully distinguish the estimates. For this demonstration we will use rounding to produce simulated data with measurement precision of 0.1, and error of $\mathcal{N}(0, 0.1)$, analogous to the 1mm measurement precision and approximate standard deviation of the real-world source data used in @obrien2024allindividuals.
 
 ## The model
 We are implementing a longitudinal model of the form in Equation (1) within a hierarchical Bayesian longitudinal model where
 $$f(Y(t), \beta_0, \beta_1) = \beta_0 - \beta_1 Y(t)\qquad (2)$$
-Equation (2) is known to produce pathological behaviour from numerical methods (\cite{butcher2016numerical}), so serves as an ideal simple example of the interaction between those pathologies and the MCMC sampling process. We are attempting to estimate the parameters $\beta_0$ and $\beta_1$ from observations $y_j$, which is based on estimating $\hat{Y}_j$ given the error model
+Equation (2) is known to produce pathological behaviour from numerical methods [@butcher2016numerical], so serves as an ideal simple example of the interaction between those pathologies and the MCMC sampling process. We are attempting to estimate the parameters $\beta_0$ and $\beta_1$ from observations $y_j$, which is based on estimating $\hat{Y}_j$ given the error model
 $$y_j \sim \mathcal{N}(\hat{Y}_j, 0.1).$$
 
 As we are looking at a single individual, we have prior distributions for the parameters which are
@@ -95,9 +96,9 @@ ggplot(plot_data, aes(x = x, y = y, group = source)) +
 A note on precision: the same bad behaviour occurs even if you use unrounded data with all the precision R offers. You can test this by uncommenting the line that just adds measurement error. We decided to round the observations in order to give a more realistic demonstration of the issue.
 
 # Implementing model
-We're going to run 100 fits with a step size of 1 using the custom RK4 solver and a single chain each. We do single chains because each can fall into the numerical error trap, and the easiest way to identify that trap is to extract the estimates afterwards. An `int_method` of 1 corresponds to the custom RK4 implementation, while 2 gives the Stan inbuilt RK45 solver.
+We're going to run 100 fits with a step size of 1 using the custom RK4 solver and a single chain each. We do single chains because each can fall into the numerical error trap, and the easiest way to identify that trap is to extract the estimates afterwards.
 
-Each fit takes a few seconds to run, so allow several minutes for the following block. There are likely to be diagnostic problems but that is part of what we are here to explore so we will be ignoring them. Results are hidden for this block. Occasionally a fit will behave very badly and give a lot of divergent transitions, we exclude these.
+Each fit takes a few seconds to run, so allow several minutes for the following block. There are likely to be diagnostic problems but that is part of what we are here to explore so we will be ignoring them. Divergent transitions in particular are to be expected when we have the very different parameter estimates we see. Results are hidden for this block.
 ```{r, results='hide'}
 runs <- 100
 step_size = 0.5
@@ -108,15 +109,17 @@ par_est_tibble <- tibble(run = c(),
 
 for(i in 1:runs){
   #Run the model
-  fit <- hmde_model("linear_single_ind") |>
-  hmde_assign_data(n_obs = nrow(obs_data_frame),
-                   y_obs = obs_data_frame$y_obs,
-                   obs_index = obs_data_frame$obs_index,
-                   time = obs_data_frame$time,
-                   y_0_obs = obs_data_frame$y_obs[1],
-                   y_bar = mean(obs_data_frame$y_obs),
-                   step_size = step_size)  |>
-  hmde_run(chains = 1, cores = 1, iter = 2000)
+  suppressWarnings(
+    fit <- hmde_model("linear_single_ind") |>
+    hmde_assign_data(n_obs = nrow(obs_data_frame),
+                     y_obs = obs_data_frame$y_obs,
+                     obs_index = obs_data_frame$obs_index,
+                     time = obs_data_frame$time,
+                     y_0_obs = obs_data_frame$y_obs[1],
+                     y_bar = mean(obs_data_frame$y_obs),
+                     step_size = step_size)  |>
+    hmde_run(chains = 1, cores = 1, iter = 2000)
+  )
   
   #Extract parameter estimates
   ests <- hmde_extract_estimates(model = "linear_single_ind",
@@ -149,8 +152,7 @@ for(j in 1:length(step_sizes)){
                      time = obs_data_frame$time,
                      y_0_obs = obs_data_frame$y_obs[1],
                      y_bar = mean(obs_data_frame$y_obs),
-                     step_size = step_sizes[j],
-                     int_method = 1)  |>
+                     step_size = step_sizes[j])  |>
     hmde_run(chains = 1, cores = 1, iter = 2000)
     
     #Extract parameter estimates
@@ -200,7 +202,9 @@ for(i in 1:length(unique(par_est_tibble$step_size))){
                    shape = as.factor(step_size)), 
                alpha = 0.1,
                size = 2) +
-    theme_classic()
+    theme_classic() +
+    theme(legend.position = "inside",
+        legend.position.inside = c(0.7, 0.3))
   
   print(scatterplot)
   
@@ -215,6 +219,7 @@ for(i in 1:length(unique(par_est_tibble$step_size))){
   error_ests <- rbind(error_ests, error_estimates_temp)
 }
 ```
+
 We get clear bimodality in both the histograms and the scatter plot. Bias in the estimates closest to the true values is due to the same measurement error in the 'observed' data for all the fits. The second mode in the estimates arises from the numerical integration error. 
 
 We can double-check the numerical error by using an independent solver with the same step size. We use the `deSolve` package which has an implementation of RK4 and allows us to choose the step sizes using the time parameter.
@@ -254,6 +259,7 @@ for(i in 1:nrow(error_ests)){
     y_over_time <- rbind(y_over_time, y_over_time_temp)
 }
 ```
+
 For plotting purposes, we're going to filter out the numerical estimates that occur at sub-steps of the observation times.
 ```{r}
 y_over_time_filtered <- y_over_time %>%
@@ -267,10 +273,13 @@ compare_sizes_over_time <- ggplot(y_over_time_filtered,
              alpha=0.5, size = 2, stroke = 1.5) +
   geom_line(aes(colour = as.factor(model)), alpha=0.5, linewidth = 1) +
   labs(x = "Time", y = "y(t)", colour = "Step size", shape = "Step size") +
-  theme_classic()
+  theme_classic() +
+  theme(legend.position = "inside",
+        legend.position.inside = c(0.7, 0.3))
 
 compare_sizes_over_time
 ```
+
 What we're interested in here is that despite the wildly different parameter estimates, there's strong alignment between the sizes over time due to the numerical error. Here's a plot that uses a much smaller step size for all of the parameter combos to show the error.
 ```{r}
 #Generate y(t) with RK4 given the parameter estimates
@@ -311,6 +320,7 @@ compare_sizes_over_time_smallstep <- ggplot(y_over_time_smallstep,
 
 compare_sizes_over_time_smallstep
 ```
+
 The limiting behaviour at $\beta_0/\beta_1$ is consistent, what changes is how fast line approaches the asymptote. 
 
 If you have done multiple step sizes, this block will produce a scatter plot of all the parameter estimates together. We can see a very strong linear trend (slope is 1/10, which corresponds to the inverse limiting size), with the gap between the true parameter and the erroneous one getting larger as the step size shrinks. Also important to note that the frequency of bad estimates decreases along with the step size, which we believe comes from the greater distance: the further the bad estimates are from the true ones, the less likely the MCMC algorithm is to fall into them, particularly as the priors are close to the true values.
