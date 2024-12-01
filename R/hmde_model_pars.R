@@ -102,6 +102,6 @@ hmde_vb_multi_ind_pars <- function(){
 hmde_linear_single_ind_pars <- function(){
   list(measurement_pars_names = c("y_hat"),
        individual_pars_names = c("ind_beta_0", "ind_beta_1"),
-       error_pars_names = c("global_error_sigma"),
+       error_pars_names = c(NULL),
        model = "linear_single_ind")
 }

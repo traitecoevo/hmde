@@ -1,8 +1,8 @@
 //Growth function
 functions{
   //Growth function for use with Runge-Kutta method
-  //pars = (growth_par, max_size)
-  real DE(real y, array[] real pars){ //change number of pars
+  //pars = (beta_0, beta_1, y_bar)
+  real DE_rk4(real y, array[] real pars){ //change number of pars
     return pars[1] - (pars[2] * (y-pars[3])); //growth function
   }
 
@@ -13,10 +13,10 @@ functions{
     real k4;
     real y_hat;
 
-    k1 = DE(y, pars);
-    k2 = DE(y+interval*k1/2.0, pars);
-    k3 = DE(y+interval*k2/2.0, pars);
-    k4 = DE(y+interval*k3, pars);
+    k1 = DE_rk4(y, pars);
+    k2 = DE_rk4(y+interval*k1/2.0, pars);
+    k3 = DE_rk4(y+interval*k2/2.0, pars);
+    k4 = DE_rk4(y+interval*k3, pars);
 
     y_hat = y + (1.0/6.0) * (k1 + 2.0*k2 + 2.0*k3 + k4) * interval;
 
@@ -45,6 +45,11 @@ functions{
 
     return y_hat;
   }
+
+  vector DE(real t, vector y, real beta_const, real beta_1, real y_bar){
+    vector[size(y)] dydt = beta_const - (beta_1 * (y-y_bar));
+    return dydt;
+  }
 }
 
 // Data structure
@@ -54,8 +59,9 @@ data {
   real y_obs[n_obs];
   int obs_index[n_obs];
   real time[n_obs];
-  real y_bar;
   real y_0_obs;
+  real y_bar;
+  int int_method; //1: RK4, 2: RK45
 }
 
 // The parameters accepted by the model.
@@ -73,6 +79,7 @@ parameters {
 model {
   real y_hat[n_obs];
   array[3] real pars;
+  vector[1] y_temp;
 
   pars[1] = ind_const;
   pars[2] = ind_beta_1;
@@ -85,29 +92,35 @@ model {
     }
 
     if(i < n_obs){
-      //Estimate growth rate
-      y_hat[i+1] = rk4(y_hat[i], pars, (time[i+1] - time[i]), step_size);
+      //Estimate next size
+      if(int_method == 1){ #RK4 estimation
+        y_hat[i+1] = rk4(y_hat[i], pars, (time[i+1] - time[i]), step_size);
+      }
+
+      if(int_method == 2){
+        y_temp[1] = y_hat[i];
+        y_hat[i+1] = ode_bdf(DE, y_temp,
+                      time[i], {time[i+1]},
+                      ind_const, ind_beta_1, y_bar)[1][1];
+      }
     }
   }
 
   //Likelihood
-  y_obs ~ normal(y_hat, global_error_sigma);
+  y_obs ~ normal(y_hat, 0.1);
 
   //Priors
   //Individual level
-  ind_y_0 ~ normal(y_0_obs, global_error_sigma);
-  ind_const ~lognormal(0, 5);
-  ind_beta_1 ~lognormal(0, 5);
-
-  //Global level
-  global_error_sigma ~cauchy(0,1);
+  ind_const ~lognormal(0, 2);
+  ind_beta_1 ~lognormal(0, 2);
 }
 
 generated quantities{
   real y_hat[n_obs];
-  real Delta_hat[n_obs];
   array[3] real pars;
+  vector[1] y_temp;
   real ind_beta_0;
+  int version = 1;
 
   ind_beta_0 = ind_const + ind_beta_1*y_bar;
 
@@ -123,11 +136,16 @@ generated quantities{
 
     if(i < n_obs){
       //Estimate next size
-      y_hat[i+1] = rk4(y_hat[i], pars, (time[i+1] - time[i]), step_size);
-      Delta_hat[i] = y_hat[i+1] - y_hat[i];
+      if(int_method == 1){ #RK4 estimation
+        y_hat[i+1] = rk4(y_hat[i], pars, (time[i+1] - time[i]), step_size);
+      }
 
-    } else {
-      Delta_hat[i] = DE(y_hat[i], pars)*(time[i] - time[i-1]);
+      if(int_method == 2){
+        y_temp[1] = y_hat[i];
+        y_hat[i+1] = ode_rk45(DE, y_temp,
+                      time[i], {time[i+1]},
+                      ind_const, ind_beta_1, y_bar)[1][1];
+      }
     }
   }
 }
