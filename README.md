@@ -1,4 +1,4 @@
-hmde: Hierarchicam Methods for Differential Equations
+hmde: Hierarchical Methods for Differential Equations
 ================
 
 The goal of `hmde` is to implement hierarchical Bayesian longitudinal
