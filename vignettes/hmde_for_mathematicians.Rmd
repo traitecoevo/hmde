@@ -1,11 +1,11 @@
 ---
-  title: "hmde for Mathematicians"
+title: "hmde for Mathematicians"
 output: rmarkdown::html_vignette
 bibliography: vignette.bib 
 vignette: >
-  %\VignetteIndexEntry{hmde}
-%\VignetteEncoding{UTF-8}
-%\VignetteEngine{knitr::rmarkdown}
+  %\VignetteIndexEntry{hmde-for-maths}
+  %\VignetteEncoding{UTF-8}
+  %\VignetteEngine{knitr::rmarkdown}
 editor_options:
   chunk_output_type: console
 ---
@@ -87,107 +87,87 @@ The error parameter $\sigma_e >0$ is assumed to operate at a global level indepe
 Estimation is done using MCMC through Stan. 
 
 ## Integration of time series
-Numerical methods are required for the Canham model as it has no analytic solution. We have also implemented a Runge-Kutta 4th order method for the linear model in order to demonstrate problems that can arise from the interaction between numerical methods within the model and the MCMC parameter search itself. These will be discussed later in the vignette. 
+Numerical methods are required for the Canham model as it has no analytic solution, and the inbuilt Stan Runge-Kutta 4-5 solver is used. We have also implemented a Runge-Kutta 4th order method for the linear model in order to demonstrate problems that can arise from the interaction between numerical methods within the model and the MCMC parameter search itself. These will be discussed later in the vignette. 
 
-For the von Bertalanffy and power law models an analytic solution is used (to the log-transformed power law) in order to avoid numerical problems. For the constant model all numerical methods are the same and give the same result as the analytic solution so Euler is used.
+For the von Bertalanffy model an analytic solution is used in order to avoid numerical problems. For the constant model all numerical methods are the same and give the same result as the analytic solution so Euler is used.
 
 # Getting started with {hmde} 
-## Installation
 'hmde' is under active development, you can install the development version of 'hmde' from [GitHub](https://github.com/) with:
 
 ```{r, eval=FALSE}
 # install.packages("remotes")
 remotes::install_github("traitecoevo/hmde")
-
 library(hmde)
 ```
 
-## Workflow
-The basic workflow in hmde chooses a model suitable to the available data, assigns the available data to a specified structure, and feeds the resulting list into a Stan model to get out a Stan fit object.
-
-Available models can be seen by running the 'hmde_model_names()' function. 
-
-To demonstrate the workflow, the following code shows two different ways of passing data to the 'hmde_assign_data()' function: by passing a suitably structured data frame, or by passing individual vectors to the relevant arguments.
-```{r, eval=FALSE}
-# Create data
-true <- c(seq(from=1, by=2.5, length.out=7)) #Growth rate 2.5
-y <- true + true*rnorm(n=7, 0, 0.02) + rnorm(n=7, 0, 0.2)
-
-input_data <- tibble(
-  y_obs = y,
-  obs_index = 1:7,
-  time = 0:6,
-  ind_id = 1
-)
-
-# Configure model template
-const_single_ind_output <- hmde_model("constant_single_ind") |>
-  hmde_assign_data(data = input_data)  |>
-  hmde_run(chains = 2, cores = 1, iter = 1000) #We can control MCMC parameters
-
-#Named vectors take in arguments
-const_single_ind_output <- hmde_model("constant_single_ind") |>
-  hmde_assign_data(y_obs = y, #vector length N_obs
-                   obs_index = 1:7, #vector length N_obs
-                   time = 0:6
-  )  |>
-  hmde_run(chains = 2, cores = 1, iter = 1000)
-```
-
-We provide the 'hmde_extract_estimates()' function to streamline the post-processing of the Stan fit. It provides posterior size, growth increment, and parameter estimates based on the chosen model.
-
-```{r}
-output <- hmde_extract_estimates(model = "constant_single_ind",
-                                 fit = const_single_ind_output,
-                                 input_measurement_data = input_data)
-```
-
-# Demonstration: von Bertalanffy Growth - Multiple Individuals
-
-```{r}
-# Use in-built data
-View(Lizard_Mass_Data)
-data <- Lizard_Mass_Data
-data$y_obs[310] = 0.322
-data$y_obs <- data$y_obs*1000
-
-# Build fit
-vb_multi_ind_fit <- hmde_model("vb_multi_ind") |>
-  hmde_assign_data(data = data)  |>
-  hmde_run(chains = 4, cores = 1, iter = 2000)
-
-# Get estimates
-vb_multi_ind_output <- hmde_extract_estimates(model = "vb_multi_ind",
-                                 fit = vb_multi_ind_fit,
-                                 input_measurement_data = data)
-
-# Plot fitted growth function pieces
-plot_par_individual_data <- vb_multi_ind_output$individual_data[,c(1,2,6)] #Pull out estimates only
-hmde_plot_de_pieces(model = "vb_multi_ind",
-                    individual_data = plot_par_individual_data,
-                    measurement_data = vb_multi_ind_output$measurement_data)
-```
-
-
 # Demonstration: Canham Growth - Multiple Individuals
-```{r}
-# Use in-built data
-View(Tree_Size_Data)
-
-# Build fit
+The provided tree data for 50 individuals takes a few hours to run. As such, the following block does not run by default, and instead we leverage the provided estimates data file: `Tree_Size_Ests`. The estimates are posterior mean, median, and 95\% central credible intervals for parameters, and mean posterior estimates of sizes over time based on the longitudinal model.
+```{r, eval=FALSE}
+# Build fit and extract estimates
 canham_multi_ind_fit <- hmde_model("canham_multi_ind") |>
-  hmde_assign_data(step_size = 0.5, #Required for numerical method
-                   data = Tree_Size_Data)  |>
+  hmde_assign_data(data = Tree_Size_Data)  |>
   hmde_run(chains = 1, cores = 1, iter = 1000)
 
-# Get estimates
-canham_multi_ind_output <- hmde_extract_estimates(model = "canham_multi_ind",
+Tree_Size_Ests <- hmde_extract_estimates(model = "canham_multi_ind",
                                  fit = canham_multi_ind_fit,
                                  input_measurement_data = Tree_Size_Data)
+```
+
+The following code produces plots of the Canham function for each individual between the first and last estimated size. The purpose of the plot is to look at how different individual growth functions behave.
+```{r}
+summary(Tree_Size_Ests)
 
 # Plot fitted growth function pieces
-plot_par_individual_data <- canham_multi_ind_output$individual_data[,c(1, 2, 6, 10)] #Pull out estimates only
+plot_par_individual_data <- Tree_Size_Ests$individual_data[,c(1, 2, 6, 10)] #Pull out estimates only
 hmde_plot_de_pieces(model = "canham_multi_ind",
                     individual_data = plot_par_individual_data,
-                    measurement_data = canham_multi_ind_output$measurement_data)
+                    measurement_data = Tree_Size_Ests$measurement_data)
+```
+Each line represents 25 years of growth for the specific individual. Lines that sit lower on the $y$-axis are shorter horizontally because they are traversed more slowly, as $f$ is the rate of change in $Y$. 
+
+To understand the error model, the following code plots a number of individual sizes over time, then super-imposes those growth curves in black on the individual growth function plots. To view a specific individual, use the `ind_id` value to select them.
+```{r}
+#Plots of size over time for a sample of 5 individuals
+sample_ids <- sample(1:nrow(Tree_Size_Ests$individual_data), size=5) %>%
+  sort()
+plot_data <- Tree_Size_Ests$measurement_data %>%
+  filter(ind_id %in% sample_ids)
+
+ind_size_lims <- Tree_Size_Ests$measurement_data %>%
+  filter(ind_id %in% sample_ids)%>%
+  group_by(ind_id) %>%
+  summarise(y_0 = min(y_hat),
+         y_final = max(y_hat))
+
+ggplot(data=plot_data, aes(group = ind_id)) +
+  geom_point(aes(x = time, y=y_obs, colour = as.factor(ind_id)),
+             shape = 1) +
+  geom_line(aes(x = time, y=y_obs, colour = as.factor(ind_id)),
+            linetype = "dashed") +
+  geom_point(aes(x = time, y=y_hat, colour = as.factor(ind_id)),
+             shape = 2) +
+  geom_line(aes(x = time, y=y_hat, colour = as.factor(ind_id)),
+            linetype = "solid") +
+  labs(x="Time (years)", y="DBH (cm)", colour="Ind. ID") +
+  theme_classic()
+
+#Load DE for Canham
+DE_function = hmde_model_des("canham_multi_ind")
+
+#Produce plot with focus inds
+function_plot <- hmde_plot_de_pieces(model = "canham_multi_ind",
+                    individual_data = plot_par_individual_data,
+                    measurement_data = Tree_Size_Ests$measurement_data,
+                    alpha = 0.2) 
+for(i in 1:length(sample_ids)){
+  args_list <- list(pars=Tree_Size_Ests$individual_data[sample_ids[i],c(2, 6, 10)])
+  
+  function_plot <- function_plot +
+      geom_function(fun=DE_function, args=args_list,
+                    colour="black", linewidth=1, alpha = 1,
+                    xlim=c(ind_size_lims$y_0[i], ind_size_lims$y_final[i]))
+    
+}
+
+function_plot
 ```
