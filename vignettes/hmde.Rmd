@@ -44,7 +44,7 @@ Y_i(t_{j+1}) = Y_i(t_j) + \int_{t_j}^{t_{j+1}} f(Y(t), \beta_i)\,dt
 \end{equation}
 where the integral adds up all the growth over the intervening time. Each model we use will comes with its specific growth parameters that we will describe. Some are more biologically interpretable than others. We don't assume that we see the true sizes, and instead have observed size
 $$y_{ij} = Y_i(t_j) + \text{ error}.$$
-We have assumed normally distributed error in `hmde`,this has proven reasonably robust in simulation for a more general size-dependent error model. For details see @OBrien2024_Methods.
+We have assumed normally distributed error in `hmde`,this has proven reasonably robust in simulation for a more general size-dependent error model. For details see @obrien2024allindividuals.
 
 Due to the hierarchical structure of the statistical model, we have distributions that govern the behaviour of growth parameters. If we are modelling only a single individual, we don't worry about the underlying distribution so much. If we have multiple individuals then we have a distribution with hyper-parameters that acts as a population-level feature, so 
 $$\beta_i \sim \log\mathcal{N}(\mu, \sigma)$$
