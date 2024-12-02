@@ -3,10 +3,9 @@ title: "Case study 2: von Bertalanffy growth with lizard size data"
 output: rmarkdown::html_vignette
 vignette: >
   %\VignetteIndexEntry{von-bertalanffy}
-  %\VignetteEncoding{UTF-8}
   %\VignetteEngine{knitr::rmarkdown}
-editor_options: 
-  chunk_output_type: console
+  %\VignetteEncoding{UTF-8}
+bibliography: vignette.bib
 ---
 
 ```{r, include = FALSE}
@@ -14,11 +13,21 @@ knitr::opts_chunk$set(
   collapse = TRUE,
   comment = "#>"
 )
-```
-
-```{r}
 options(rmarkdown.html_vignette.check_title = FALSE)
 ```
+
+## Overview
+Our second demo introduces size-dependent growth based on the von Bertalanffy function
+\begin{equation}\label{eqn_vb_DE}
+f(Y(t); S_{max}, \beta) = \beta(S_{max} - Y(t)),
+\end{equation}
+where $S_{max}$ is the asymptotic maximum size and $\beta$ controls the growth rate. We have implemented the analytic solution
+\begin{equation}\label{eqn_vb_soln}
+Y(t) = S_{max} + (Y(0) - S_{max}) \exp(-t\beta)
+\end{equation}
+which is independent of age at the starting size $Y(0)$ and instead uses the first size as the initial condition. The key behaviour of the von Bertalanffy model is a high growth rate at small sizes that declines linearly as the size approaches $S_{max}$. This manifests as growth slowing as a creature matures with a hard finite limit on the eventual size. We restrict $\beta$ and $S_{max}$ to be positive, and $S_{max}$ to be larger than the observed sizes. As a result the growth rate is non-negative. 
+
+### Load dependencies
 
 ```{r setup}
 # remotes::install_github("traitecoevo/hmde")
@@ -29,12 +38,7 @@ library(dplyr)
 library(ggplot2)
 ```
 
-Our second demo introduces size-dependent growth based on the von Bertalanffy function
-$$f(Y(t); S_{max}, \beta) = \beta(S_{max} - Y(t)),$$
-where $S_{max}$ is the asymptotic maximum size and $\beta$ controls the growth rate. We have implemented the analytic solution
-$$Y(t) = S_{max} + (Y(0) - S_{max}) \exp(-t\beta)$$
-which is independent of age at the starting size $Y(0)$ and instead uses the first size as the initial condition. The key behaviour of the von Bertalanffy model is a high growth rate at small sizes that declines linearly as the size approaches $S_{max}$. This manifests as growth slowing as a creature matures with a hard finite limit on the eventual size. We restrict $\beta$ and $S_{max}$ to be positive, and $S_{max}$ to be larger than the observed sizes. As a result the growth rate is non-negative. 
-
+### Visualise model
 In the following code we plot an example of the growth function and the solution to get a feel for the behaviour.
 ```{r}
 #Analytic solution in function form
@@ -82,10 +86,10 @@ ggplot() +
 
 ```
 
-The von Bertalanffy model is commonly used in fishery management \citep{flinn2021trends}, but has also been used in reptile studies such as \cite{edmonds2021growing, zhao2020age}.
+The von Bertalanffy model is commonly used in fishery management [@flinn2021trends], but has also been used in reptile studies such as @edmonds2021growing and @zhao2020age.
 
 ## Lizard size data
-Our data is sourced from \cite{Kar2023_LizardMass} which measured mass and snout-vent-length (SVL) of delicate skinks -- \textit{Lampropholis delicata} -- under experimental conditions to examine the effect of temperature on development. We are going to use the SVL metric for size.
+Our data is sourced from @Kar2023_LizardMass which measured mass and snout-vent-length (SVL) of delicate skinks -- \textit{Lampropholis delicata} -- under experimental conditions to examine the effect of temperature on development. We are going to use the SVL metric for size.
 
 We took a simple random sample without replacement of 50 individuals with at least 5 observations each. The von Bertalanffy model can be fit to shorter observation lengths, but fewer than 3 observations is not advised as there are two growth parameters per individual. 
 
@@ -212,3 +216,6 @@ print(paste0("95% CI for log growth par standard deviation: (",
              lizard_vb_estimates$population_data$CI_upper[4], ")")) #Raw CI
 
 ```
+
+## References
+
