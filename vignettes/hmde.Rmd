@@ -19,10 +19,10 @@ knitr::opts_chunk$set(
 library(hmde)
 ```
 
-'hmde' which stands for **h**ierarchical **m**ethods for **d**ifferential **e**quations is a package built for biologists with repeat size measurement data who want to fit a specific set of growth functions. 
+`hmde` which stands for **h**ierarchical **m**ethods for **d**ifferential **e**quations is a package built for biologists with repeat size measurement data who want to fit a specific set of growth functions. 
 
 ## Installation
-'hmde' is under active development, you can install the stable, development version of 'hmde' from [GitHub](https://github.com/) with:
+`hmde` is under active development, you can install the stable, development version of `hmde` from [GitHub](https://github.com/) with:
 
 ```{r, eval=FALSE}
 # install.packages("remotes")
@@ -50,7 +50,7 @@ Due to the hierarchical structure of the statistical model, we have distribution
 $$\beta_i \sim \log\mathcal{N}(\mu, \sigma)$$
 for example, and we can examine the behaviour of the mean and standard deviation as population-level features.
 
-## {hmde} supported growth functions
+## `hmde` supported growth functions
 
 - Constant growth
 - Von Bertalanffy
