@@ -64,3 +64,19 @@
 #' @references \url{https://doi.org/10.1002/ecy.4140}
 #' @source \url{https://doi.org/10.15146/5xcp-0d46}
 "Tree_Size_Data"
+
+#' Garcinia recondita model estimates - Barro Colorado Island data
+#'
+#' Estimated sizes, individual growth parameters, and population-level hyper-parameters
+#' for Garcinia recondita fit with a Canham growth function hierarchical model.
+#' The data used to fit the model is the Tree_Size_Data object.
+#'
+#' @format ## `Tree_Size_Ests`
+#' A list with 4 elements:
+#' \describe{
+#'   \item{measurement_data}{A tibble with 5 columns that gives information on size observations and estimates.}
+#'   \item{individual_data}{A tibble with 13 columns that gives posterior estimates for individual growth parameters.}
+#'   \item{error_data}{A tibble with 5 columns that gives posterior estimates of the error parameter.}
+#'   \item{population_data}{A tibble with 5 columns that gives posterior estimates for population-level hyper-parameters.}
+#' }
+"Tree_Size_Ests"

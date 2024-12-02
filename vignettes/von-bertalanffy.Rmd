@@ -13,9 +13,13 @@ knitr::opts_chunk$set(
   collapse = TRUE,
   comment = "#>"
 )
+options(rmarkdown.html_vignette.check_title = FALSE)
 ```
 
 ```{r setup}
+# remotes::install_github("traitecoevo/hmde")
+# install.packages(c("dplyr", "ggplot2"))
+
 library(hmde)
 library(dplyr)
 library(ggplot2)
@@ -77,8 +81,6 @@ ggplot() +
 The von Bertalanffy model is commonly used in fishery management \citep{flinn2021trends}, but has also been used in reptile studies such as \cite{edmonds2021growing, zhao2020age}.
 
 ## Lizard size data
--- Replace mass data with size data from Kar 2020, SVL is snout-vent length tip of snout to start of cloacal opening. Less variable than mass and width.
-
 Our data is sourced from \cite{Kar2023_LizardMass} which measured mass and snout-vent-length (SVL) of delicate skinks -- \textit{Lampropholis delicata} -- under experimental conditions to examine the effect of temperature on development. We are going to use the SVL metric for size.
 
 We took a simple random sample without replacement of 50 individuals with at least 5 observations each. The von Bertalanffy model can be fit to shorter observation lengths, but fewer than 3 observations is not advised as there are two growth parameters per individual. 
@@ -88,7 +90,7 @@ The workflow for the second example is the same as the first, with the change in
 ```{r}
 lizard_vb_fit <- hmde_model("vb_multi_ind") |>
   hmde_assign_data(data = Lizard_Size_Data)  |>
-  hmde_run(chains = 4, cores = 4, iter = 2000)
+  hmde_run(chains = 4, cores = 1, iter = 2000)
 
 lizard_vb_estimates <- hmde_extract_estimates(model = "vb_multi_ind",
                                  fit = lizard_vb_fit,
@@ -207,5 +209,5 @@ print(paste0("95% CI for log growth par standard deviation: (",
 
 ```
 
-
 #### References
+

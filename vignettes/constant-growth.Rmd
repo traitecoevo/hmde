@@ -12,12 +12,14 @@ bibliography: vignette.bib
 knitr::opts_chunk$set(
   collapse = TRUE,
   comment = "#>",
-  fig.align='center',
+  fig.align = 'center',
   message = FALSE, 
   warning = FALSE
 )
 
 library(patchwork)
+
+options(rmarkdown.html_vignette.check_title = FALSE)
 ```
 
 ## Overview
@@ -211,21 +213,24 @@ hmde_model("constant_multi_ind") |>
 
 <!-- Explainer of each parameter -->
 
-As the `Trout_Size_Data` is already in the form required by the `hmde_assign_data()` function we don't need to do any further re-naming and can pass it directly. 
+Now we will actually fit the model and extract the estimates. As the provided trout data is already in the form required by the hmde_assign_data function we don't need to do any further re-naming and can pass it directly.
+
 
 ```{r}
 trout_constant_fit <- hmde_model("constant_multi_ind") |>
   hmde_assign_data(data = Trout_Size_Data)  |>
-  hmde_run(chains = 4, cores = 4, iter = 2000)
-
-trout_constant_estimates <- hmde_extract_estimates(model = "constant_multi_ind",
-                                 fit = trout_constant_fit,
-                                 input_measurement_data = Trout_Size_Data)
+  hmde_run(chains = 4, cores = 1, iter = 2000)
 ```
 
 ### Inspect estimates
 
-Once the model has finished running, we can have a look at the distribution of estimated sizes, estimated growth increments, and annualised growth rates at the level of sizes over time.
+Once the model has finished running, we can extract the model estimates and have a look at the distribution of estimated sizes, estimated growth increments, and annualised growth rates at the level of sizes over time.
+
+```{r}
+trout_constant_estimates <- hmde_extract_estimates(model = "constant_multi_ind",
+                                 fit = trout_constant_fit,
+                                 input_measurement_data = Trout_Size_Data)
+```
 
 First, let's do some quick data wrangling to calculate our parameters of interest.
 
@@ -340,6 +345,7 @@ ind_hist_beta + de_pieces
 ### Population hyper-parameters 
 
 We also get estimates of the population-level hyper-parameters that govern the distribution of $\beta$ -- $\mu$ and $\sigma$ for the log-normal distribution. These are calculated in the context of the log-transformed parameters so the easiest way to interpret $\mu$ is to back-transform it through exponentiation, but this does not so easily transfer to $\sigma$. The CIs in this output are posterior credible intervals taken as the central 95% quantiles of the posterior samples. 
+
 ```{r}
 #Mean of normal distribution
 trout_constant_estimates$population_data$mean[1] #Raw value
