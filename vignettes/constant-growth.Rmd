@@ -204,17 +204,24 @@ The constant growth model assumes non-negative growth and uses a log-normal dist
 
 Now we will actually fit the model and extract the estimates.
 
-You can see what the names are needed for the constant growth model by calling:
+You can see what data structures are needed for the constant growth model by calling:
 
 ```{r}
 hmde_model("constant_multi_ind") |> 
   names()
 ```
 
-<!-- Explainer of each parameter -->
+Each represents an element of the list that gets passed to the model: 
+- `n_obs` is the integer number of observations $y_{ij}$
+- `n_ind` is the integer number of individuals
+- `y_obs` is the vector of $y_{ij}$ observations and should have length `n_obs`
+- `obs_index` is a vector containing integer the $j$ index for individual $i$, and counts which observation $y_{ij}$ is in sequence
+- `time` is a vector that determines when an observation happened relative to the first observation for that individual. The first observation has time 0
+- `ind_id` is a vector the same length as `y_obs` that tracks which individual an observation comes from
+- `y_0_obs` is a vector of length `n_ind` that gives the first observed size for each individual
+- `model` is the name of the model
 
-Now we will actually fit the model and extract the estimates. As the provided trout data is already in the form required by the hmde_assign_data function we don't need to do any further re-naming and can pass it directly.
-
+Now we will actually fit the model and extract the estimates. As the provided trout data is already in the form required by the `hmde_assign_data` function we don't need to do any further re-naming and can pass it directly.
 
 ```{r}
 trout_constant_fit <- hmde_model("constant_multi_ind") |>
@@ -279,19 +286,15 @@ est_hist_growth_rate <- histogram_func(measurement_data_transformed, est_growth_
 (est_hist_y_hat + est_hist_delta_y_est) / est_hist_growth_rate 
 ```
 
-We can see that the negative growth increments are gone! 
-
-<!-- A quick explainer on why?  -->
+We can see that the negative growth increments are gone! Because we fit a positive growth function ($f = \beta > 0$) the model cannot actually estimate negative growth increments.
 
 #### $R^2$
 
 We can also directly compare the observed sizes over time to estimated values. 
 
-We can use $R^2$ calculated on $(y_{ij}, \hat{Y}_{ij})$, and inspect we can look at plots of sizes over time.
+We can use $R^2$ calculated on $(y_{ij}, \hat{Y}_{ij})$, and inspect we can look at plots of sizes over time. The $R^2$ statistic is a metric primarily used in linear regression that measures the proportion (ie. decimal value in the [0,1] interval) of variance in one coordinate that can be explained by the regression model. In this context, we interpret it as how strongly the fitted and observed values agree. We don't expect perfect agreement -- $R^2=1$ -- because we don't get perfect agreement. @obrien2024allindividuals showed that the change between observed and fitted values can actually correct for measurement errors in size, so disagreement is not a bad thing overall.
 
-<!-- A quick explainer of what R2 is and how to interpret -->
-
-Here, we are looking at 5 random individuals to start with because plotting every individuals' sizes over time can get very messy.
+In the next block, we are looking at 5 random individuals to start with because plotting every individuals' sizes over time can get very messy.
 ```{r, fig.width=4, fig.height=4}
 #Quantitative R^2
 cor(measurement_data_transformed$y_obs, measurement_data_transformed$y_hat)^2
@@ -365,3 +368,6 @@ print(paste0("95% CI for log growth standard deviation: (",
              trout_constant_estimates$population_data$CI_upper[2], ")")) #Raw CI
 ```
 From the species-level data we can say that the average annual growth rate for the species is estimated to be 2.4cm/yr, with a 95% posterior CI of (1.83, 3.04). As we fit a constant growth model there's only so much we can say about the growth behaviour. 
+
+## References
+
