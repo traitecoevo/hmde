@@ -225,7 +225,7 @@ We get clear bimodality in both the histograms and the scatter plot. Bias in the
 We can double-check the numerical error by using an independent solver with the same step size. We use the `deSolve` package which has an implementation of RK4 and allows us to choose the step sizes using the time parameter.
 ```{r}
 #install.packages("deSolve")
-library(deSolve)
+#library(deSolve)
 
 #Create DE function
 DE <- function(Time, State, Pars) { #Implementation of DE
