@@ -40,7 +40,9 @@ Suggests:
     rmarkdown,
     testthat (>= 3.0.0),
     withr,
-    mnormt
+    mnormt,
+    here,
+    patchwork
 VignetteBuilder: knitr
 Config/testthat/edition: 3
 LazyData: true

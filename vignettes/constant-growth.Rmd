@@ -3,21 +3,22 @@ title: "Case study 1: Constant growth with SUSTAIN Trout data"
 output: rmarkdown::html_vignette
 vignette: >
   %\VignetteIndexEntry{constant-growth}
-  %\VignetteEncoding{UTF-8}
   %\VignetteEngine{knitr::rmarkdown}
-editor_options: 
-  chunk_output_type: console
+  %\VignetteEncoding{UTF-8}
+bibliography: vignette.bib
 ---
 
 ```{r, include = FALSE}
 knitr::opts_chunk$set(
   collapse = TRUE,
   comment = "#>",
-  fig.align='center'
+  fig.align = 'center',
+  message = FALSE, 
+  warning = FALSE
 )
-```
 
-```{r}
+library(patchwork)
+
 options(rmarkdown.html_vignette.check_title = FALSE)
 ```
 
@@ -42,17 +43,23 @@ library(dplyr)
 library(ggplot2)
 ```
 
-### Visualise data
+### Simulate data
 
-Here are some plots to demonstrate how the constant growth function relates to sizes over time for a single individual. Feel free to play around with the parameter settings (`beta`, `y_0`) and see how the plot changes.
-
-```{r, fig.width=3, fig.height=3}
-#Simulate data
+```{r}
 beta <- 2 #Annual growth rate
 y_0 <- 1 #Starting size
 time <- c(0,20) 
 sizes_over_time <- tibble(Y_t = 1 + beta*time, #Linear sizes over time
                           t = time)
+
+sizes_over_time
+```
+
+### Visualise data
+
+Here are some plots to demonstrate how the constant growth function relates to sizes over time for a single individual. Feel free to play around with the parameter settings (`beta`, `y_0`) and see how the plot changes.
+
+```{r, echo=FALSE, fig.width=6, fig.height=3}
 #Plot of growth function
 constant_growth_function <- ggplot() +
   xlim(y_0, max(sizes_over_time$Y_t)) +
@@ -76,11 +83,35 @@ sizes_over_time <- ggplot(data = sizes_over_time, aes(x=t, y = Y_t)) +
   theme(axis.text=element_text(size=16),
         axis.title=element_text(size=18,face="bold"))
 
-constant_growth_function
-sizes_over_time
+constant_growth_function + sizes_over_time
 ```
 
-A key take-away of the function plot is the relationship to what we think of as a "reasonable growth model". We don't expect constant growth rates to be realistic, at best they represent the average rate of change over a period. More complex models may be more realistic, but in this case study we are only interested in different mechanisms of size dependence, we do not use environmental covariates for example.
+```{r, eval=FALSE, fold}
+#Plot of growth function
+ggplot() +
+  geom_function(fun = hmde_model_des("constant_single_ind"), # Visualising the growth function
+                args = list(pars = list(beta)),
+                colour = "green4", linewidth=1,
+                xlim = c(y_0, max(sizes_over_time))) + 
+  xlim(y_0, max(sizes_over_time$Y_t)) + # Creating the x axis
+  ylim(0, beta*2) + # Creating the y axis
+  labs(x = "Y(t)", y = "f", title = "Constant growth") + # Axe labels and plot title
+  theme_classic() + # Theme for the plot
+  theme(axis.text=element_text(size=16), # Plot customising
+        axis.title=element_text(size=18,face="bold")) 
+
+#Sizes over time
+ggplot(data = sizes_over_time, aes(x=t, y = Y_t)) + 
+  geom_line(colour="green4", linewidth=1) + # Line graph of sizes_over_time
+  xlim(0, max(sizes_over_time$t)) +
+  ylim(0, max(sizes_over_time$Y_t)*1.05) +
+  labs(x = "Time", y = "Y(t)", title = "Constant growth") +
+  theme_classic() +
+  theme(axis.text=element_text(size=16),
+        axis.title=element_text(size=18,face="bold"))
+```
+
+A key take-away of the function plot (on the left) is the relationship to what we think of as a "reasonable growth model". We don't expect constant growth rates to be realistic, at best they represent the average rate of change over a period. More complex models may be more realistic, but in this case study we are only interested in different mechanisms of size dependence, we do not use environmental covariates for example.
 
 ## SUSTAIN trout data
 Our example data for the constant model comes from @moe2020_TroutData, a publicly available dataset of mark-recapture data for _Salmo trutta_ in Norway. The time between observations is not controlled, nor is the number of observations per individual. As a result the data consists primarily of individuals with two observations of size, constituting a single observation of growth which limits the growth functions that can be fit to individuals as a single parameter model is the best that can be fit to two sizes. The constant growth function in Equation \eqref{eqn_3_const} is the most appropriate of the functions we have in `hmde`, as we can interpret the single growth interval as an estimate of the average growth rate that gets fit to $\beta$.
@@ -90,6 +121,8 @@ In order to best reflect the survey data we took a stratified sample of individu
 ```{r}
 Trout_Size_Data
 ```
+
+### Transform data
 
 As initial exploration we will have a look at the distribution of observed sizes, growth behaviour, and observation intervals. First we transform the data to extract growth increment and observation interval information, then plot it.
 ```{r}
@@ -101,30 +134,13 @@ Trout_Size_Data_transformed <- Trout_Size_Data %>%
     obs_growth_rate = delta_y_obs/obs_interval
   ) %>%
   ungroup()
+
+Trout_Size_Data_transformed
 ```
 
-```{r}
-histogram_func <- function(data, var, main, xlab, ...){
-  ggplot2::ggplot(data = data, aes(x = {{var}})) + 
-  geom_histogram(colour = "black", fill = "grey", ...) + 
-  labs(title = main,
-       xlab = xlab) +
-  theme_classic()
-}
+### Visualise raw data
 
-histogram_func(Trout_Size_Data, y_obs, 
-               "Observed size distribution", "Size (cm)", binwidth = 5)
-
-histogram_func(Trout_Size_Data_transformed, obs_interval, 
-               "Observed interval distribution", "Time (yr)", binwidth = 0.55)
-
-histogram_func(Trout_Size_Data_transformed, delta_y_obs, 
-               "Observed growth increments", "Growth increment (cm)", binwidth = 5.5)
-
-histogram_func(Trout_Size_Data_transformed, obs_growth_rate, 
-               "Observed annualised growth rate distribution", "Growth rate (cm/yr)", binwidth = 80)
-```
-
+Let's create some histograms to investigate the distribution of size, growth interval and growth increments. 
 
 ```{r, eval=FALSE}
 hist(Trout_Size_Data$y_obs, 
@@ -143,20 +159,88 @@ hist(Trout_Size_Data_transformed$obs_growth_rate,
      main = "Observed annualised growth rate distribution",
      xlab = "Growth rate (cm/yr)")
 ```
-The growth histograms show that there's a number of negative growth increments, some reasonably extreme, and when combined with some short observation periods we get very extreme estimates of growth rates. We can further investigate these if needed. The constant growth model assumes non-negative growth and uses a log-normal distribution for $\beta$, which will eliminate those increments from the estimated sizes. We consider eliminating negative growth biologically reasonable as we don't expect the length of fish to decrease over time, even if their mass or width might.
 
-Now we will actually fit the model and extract the estimates. As the provided trout data is already in the form required by the hmde_assign_data function we don't need to do any further re-naming and can pass it directly.
+```{r, echo = FALSE, fig.width=6, fig.height=6}
+histogram_func <- function(data, var, main, xlab, ...){
+  ggplot2::ggplot(data = data, aes(x = {{var}})) + 
+  geom_histogram(colour = "black", fill = "grey", ...) + 
+  labs(title = main,
+       x= xlab) + 
+    theme_classic() 
+}
+
+hist_a <- histogram_func(Trout_Size_Data, 
+                         y_obs, 
+                         "Observed size distribution",
+                         "Size (cm)",
+                         binwidth = 5)
+
+hist_b <- histogram_func(Trout_Size_Data_transformed, 
+                         obs_interval, 
+                         "Observed interval distribution",
+                         "Time (yr)", 
+                         binwidth = 0.55)
+
+hist_c <- histogram_func(Trout_Size_Data_transformed,
+                         delta_y_obs, 
+                         "Observed growth increments",
+                         "Growth increment (cm)", 
+                         binwidth = 5.5)
+
+hist_d <- histogram_func(Trout_Size_Data_transformed, 
+                         obs_growth_rate, 
+                         "Observed annualised growth \n rate distribution", 
+                         "Growth rate (cm/yr)", 
+                         binwidth = 80)
+
+hist_a + hist_b + hist_c + hist_d + plot_layout(ncol = 2)
+```
+
+The growth histograms show that there's a number of negative growth increments, some reasonably extreme, and when combined with some short observation periods we get very extreme estimates of growth rates. We can further investigate these if needed.
+
+The constant growth model assumes non-negative growth and uses a log-normal distribution for $\beta$, which will eliminate those increments from the estimated sizes. We consider eliminating negative growth biologically reasonable as we don't expect the length of fish to decrease over time, even if their mass or width might.
+
+### Fit model using {hmde}
+
+Now we will actually fit the model and extract the estimates.
+
+You can see what data structures are needed for the constant growth model by calling:
+
+```{r}
+hmde_model("constant_multi_ind") |> 
+  names()
+```
+
+Each represents an element of the list that gets passed to the model: 
+- `n_obs` is the integer number of observations $y_{ij}$
+- `n_ind` is the integer number of individuals
+- `y_obs` is the vector of $y_{ij}$ observations and should have length `n_obs`
+- `obs_index` is a vector containing integer the $j$ index for individual $i$, and counts which observation $y_{ij}$ is in sequence
+- `time` is a vector that determines when an observation happened relative to the first observation for that individual. The first observation has time 0
+- `ind_id` is a vector the same length as `y_obs` that tracks which individual an observation comes from
+- `y_0_obs` is a vector of length `n_ind` that gives the first observed size for each individual
+- `model` is the name of the model
+
+Now we will actually fit the model and extract the estimates. As the provided trout data is already in the form required by the `hmde_assign_data` function we don't need to do any further re-naming and can pass it directly.
+
 ```{r}
 trout_constant_fit <- hmde_model("constant_multi_ind") |>
   hmde_assign_data(data = Trout_Size_Data)  |>
   hmde_run(chains = 4, cores = 1, iter = 2000)
+```
 
+### Inspect estimates
+
+Once the model has finished running, we can extract the model estimates and have a look at the distribution of estimated sizes, estimated growth increments, and annualised growth rates at the level of sizes over time.
+
+```{r}
 trout_constant_estimates <- hmde_extract_estimates(model = "constant_multi_ind",
                                  fit = trout_constant_fit,
                                  input_measurement_data = Trout_Size_Data)
 ```
 
-At the level of sizes over time we can have a look at the distribution of estimated sizes, estimated growth increments, and annualised growth rates. The negative increments are gone without actually removing those from the data set.
+First, let's do some quick data wrangling to calculate our parameters of interest.
+
 ```{r}
 measurement_data_transformed <- trout_constant_estimates$measurement_data %>%
   group_by(ind_id) %>%
@@ -168,7 +252,11 @@ measurement_data_transformed <- trout_constant_estimates$measurement_data %>%
     est_growth_rate = delta_y_est/obs_interval
   ) %>%
   ungroup()
+```
 
+Now we can have a look at the distirbution of each of the estimated parameter by creating histograms 
+
+```{r, eval=FALSE}
 hist(measurement_data_transformed$y_hat, 
      main = "Estimated size distribution",
      xlab = "Size (cm)")
@@ -179,17 +267,45 @@ hist(measurement_data_transformed$est_growth_rate,
      main = "Estimated annualised growth rate distribution",
      xlab = "Growth rate (cm/yr)")
 ```
-We can also directly compare the observed sizes over time to estimated values. Quantitatively we can use statistics such as $R^2$ calculated on $(y_{ij}, \hat{Y}_{ij})$, and qualitatively we can look at plots of sizes over time. We look at 5 individuals to start with because the joint plot of sizes over time can get very messy very fast.
-```{r}
+
+```{r, fig.width=5, fig.height=6}
+est_hist_y_hat <- histogram_func(measurement_data_transformed, y_hat, 
+               "Estimated size distribution",
+               xlab = "Size (cm)",
+               binwidth = 5)
+
+est_hist_delta_y_est <-  histogram_func(measurement_data_transformed, delta_y_est, 
+               "Estimated growth  \n increments",
+               xlab = "Growth increment (cm)",
+               binwidth = 2)
+
+est_hist_growth_rate <- histogram_func(measurement_data_transformed, est_growth_rate, 
+               "Estimated annualised growth rate distribution", xlab = "Growth rate (cm/yr)",
+               binwidth = 1)
+
+(est_hist_y_hat + est_hist_delta_y_est) / est_hist_growth_rate 
+```
+
+We can see that the negative growth increments are gone! Because we fit a positive growth function ($f = \beta > 0$) the model cannot actually estimate negative growth increments.
+
+#### $R^2$
+
+We can also directly compare the observed sizes over time to estimated values. 
+
+We can use $R^2$ calculated on $(y_{ij}, \hat{Y}_{ij})$, and inspect we can look at plots of sizes over time. The $R^2$ statistic is a metric primarily used in linear regression that measures the proportion (ie. decimal value in the [0,1] interval) of variance in one coordinate that can be explained by the regression model. In this context, we interpret it as how strongly the fitted and observed values agree. We don't expect perfect agreement -- $R^2=1$ -- because we don't get perfect agreement. @obrien2024allindividuals showed that the change between observed and fitted values can actually correct for measurement errors in size, so disagreement is not a bad thing overall.
+
+In the next block, we are looking at 5 random individuals to start with because plotting every individuals' sizes over time can get very messy.
+```{r, fig.width=4, fig.height=4}
 #Quantitative R^2
 cor(measurement_data_transformed$y_obs, measurement_data_transformed$y_hat)^2
 
 #Plots of size over time for a sample of 5 individuals
 sample_ids <- sample(1:nrow(trout_constant_estimates$individual_data), size=5)
-plot_data <- measurement_data_transformed %>%
-  filter(ind_id %in% sample_ids)
 
-ggplot(data=plot_data, aes(group = ind_id)) +
+# Line plots of sizes over time
+measurement_data_transformed %>%
+  filter(ind_id %in% sample_ids) %>%
+  ggplot(aes(group = ind_id)) +
   geom_point(aes(x = time, y=y_obs, colour = as.factor(ind_id)), 
              shape = 1) +
   geom_line(aes(x = time, y=y_obs, colour = as.factor(ind_id)), 
@@ -202,8 +318,10 @@ ggplot(data=plot_data, aes(group = ind_id)) +
   theme_classic()
 ```
 
-At the level of individuals we are interested in the distribution of $\beta$ estimates, which will align with the estimated annualised growth rates as that's precisely what they represent. We also provide an easy way to produce a plot of the fitted growth functions in order to see how they compare to the observed sizes.
-```{r}
+### Indvidual growth functions ($\beta$)
+
+At the level of individuals we are interested in the distribution of $\beta$ estimates, which will align with the estimated annualised growth rates as that's precisely what they represent. Here is one way to visualise  the fitted growth functions in order to see how they compare to the observed sizes.
+```{r, eval=FALSE}
 hist(trout_constant_estimates$individual_data$ind_beta_mean,
      main = "Individual beta parameters", 
      xlab = "beta estimate")
@@ -213,7 +331,24 @@ hmde_plot_de_pieces(model = "constant_multi_ind",
                     measurement_data = trout_constant_estimates$measurement_data)
 ```
 
+```{r, echo=FALSE, fig.width=6.5, fig.height=5}
+ind_hist_beta <- histogram_func(trout_constant_estimates$individual_data,
+               ind_beta_mean,
+               main = "Individual beta parameters", 
+               xlab = "beta estimate")
+
+de_pieces <- hmde_plot_de_pieces(model = "constant_multi_ind",
+                    individual_data = trout_constant_estimates$individual_data,
+                    measurement_data = trout_constant_estimates$measurement_data)
+
+
+ind_hist_beta + de_pieces 
+```
+
+### Population hyper-parameters 
+
 We also get estimates of the population-level hyper-parameters that govern the distribution of $\beta$ -- $\mu$ and $\sigma$ for the log-normal distribution. These are calculated in the context of the log-transformed parameters so the easiest way to interpret $\mu$ is to back-transform it through exponentiation, but this does not so easily transfer to $\sigma$. The CIs in this output are posterior credible intervals taken as the central 95% quantiles of the posterior samples. 
+
 ```{r}
 #Mean of normal distribution
 trout_constant_estimates$population_data$mean[1] #Raw value
@@ -233,3 +368,6 @@ print(paste0("95% CI for log growth standard deviation: (",
              trout_constant_estimates$population_data$CI_upper[2], ")")) #Raw CI
 ```
 From the species-level data we can say that the average annual growth rate for the species is estimated to be 2.4cm/yr, with a 95% posterior CI of (1.83, 3.04). As we fit a constant growth model there's only so much we can say about the growth behaviour. 
+
+## References
+
