@@ -24,12 +24,14 @@ knitr::opts_chunk$set(
 options(rmarkdown.html_vignette.check_title = FALSE)
 ```
 
+## Load dependencies
 ```{r}
 #remotes::install_github("traitecoevo/hmde@a93e02e48657bb648378f584c4a2166d38fea263", force = TRUE)
 
 library(hmde)
 library(dplyr)
 library(ggplot2)
+library(deSolve)
 ```
 
 This vignette demonstrates an interaction between errors from numerical integration methods and MCMC sampling. The underlying issue is that if, given errors in the chosen numerical integration method, two sets of parameters for a differential equation $f$ give "the same" (more in a second) output for
