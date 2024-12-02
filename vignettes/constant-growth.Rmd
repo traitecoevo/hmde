@@ -5,6 +5,7 @@ vignette: >
   %\VignetteIndexEntry{constant-growth}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
+bibliography: vignette.bib
 ---
 
 ```{r, include = FALSE}

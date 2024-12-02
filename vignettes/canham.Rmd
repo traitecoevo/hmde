@@ -5,6 +5,7 @@ vignette: >
   %\VignetteIndexEntry{canham}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
+bibliography: vignette.bib
 ---
 
 ```{r, include = FALSE}
@@ -13,10 +14,6 @@ knitr::opts_chunk$set(
   comment = "#>",
   eval = TRUE
 )
-
-# job::job({
-# knitr::knit("vignettes/3-canham.Rmd.orig", "vignettes/3-canham.Rmd")
-# })
 ```
 
 ```{r}
@@ -98,7 +95,6 @@ We have saved the model output for you so you can follow along this case study w
 tree_canham_fit <-  here::here("inst/extdata/tree_canham_fit.rds") |> readRDS()
 tree_canham_estimates <- here::here("inst/extdata/tree_canham_estimates.rds") |> readRDS()
 ```
-
 
 ```{r, eval=FALSE}
 tree_canham_fit <- file.path(system.file(package = "hmde"), "extdata/tree_canham_fit.rds") |> readRDS()
@@ -250,3 +246,7 @@ print(paste0("95% CI for log spread parameter standard deviation: (",
              tree_canham_estimates$population_data$CI_lower[6], " , ",
              tree_canham_estimates$population_data$CI_upper[], ")")) #Raw CI
 ```
+
+
+
+#### References

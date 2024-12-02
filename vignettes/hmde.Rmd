@@ -7,6 +7,7 @@ vignette: >
   %\VignetteEngine{knitr::rmarkdown}
 editor_options: 
   chunk_output_type: console
+bibliography: vignette.bib
 ---
 
 ```{r, include = FALSE}
@@ -72,5 +73,8 @@ vignettes("von-bertalanffy")
 vignettes("canham")
 ```
 
-For each case study, we will discuss why that growth function was chosen in the context of the survey process as data availability is a key factor in determining which functions can be used. We will not discuss the mathematical and statistical theory in depth, if that is of interest, check out the vignette 'hmde for Mathematicians' or check out the methodology preprint \cite{OBrien2024_Methods} at \url{https://www.biorxiv.org/content/10.1101/2024.08.27.609830v1}.
+For each case study, we will discuss why that growth function was chosen in the context of the survey process as data availability is a key factor in determining which functions can be used. We will not discuss the mathematical and statistical theory in depth, if that is of interest, check out the vignette 'hmde for Mathematicians' or check out the methodology preprint [@OBrien2024_Methods](https://www.biorxiv.org/content/10.1101/2024.08.27.609830v1})
 
+
+
+#### References
