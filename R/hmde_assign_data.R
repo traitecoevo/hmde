@@ -2,13 +2,12 @@
 #'
 #' @param model_template output from hmde_model
 #' @param data Input data tibble with columns including time, y_obs, obs_index, and additionally ind_id for multi-individual models
-#' @param step_size Step size for numerical integration.
 #' @param ... data-masking name-value pairs allowing specific input of elements
 #'
 #' @return updated named list with your data assigned to Stan model parameters
 #' @export
 
-hmde_assign_data <- function(model_template, data = NULL, step_size = NULL, ...){
+hmde_assign_data <- function(model_template, data = NULL,...){
   if(!model_template$model %in% hmde_model_name()){
     stop("Model name not recognised. Run hmde_model_name() to see available models.")
   }

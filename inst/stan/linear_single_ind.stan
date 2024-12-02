@@ -1,8 +1,8 @@
 //Growth function
 functions{
   //Growth function for use with Runge-Kutta method
-  //pars = (growth_par, max_size)
-  real DE(real y, array[] real pars){ //change number of pars
+  //pars = (beta_0, beta_1, y_bar)
+  real DE_rk4(real y, array[] real pars){ //change number of pars
     return pars[1] - (pars[2] * (y-pars[3])); //growth function
   }
 
@@ -13,10 +13,10 @@ functions{
     real k4;
     real y_hat;
 
-    k1 = DE(y, pars);
-    k2 = DE(y+interval*k1/2.0, pars);
-    k3 = DE(y+interval*k2/2.0, pars);
-    k4 = DE(y+interval*k3, pars);
+    k1 = DE_rk4(y, pars);
+    k2 = DE_rk4(y+interval*k1/2.0, pars);
+    k3 = DE_rk4(y+interval*k2/2.0, pars);
+    k4 = DE_rk4(y+interval*k3, pars);
 
     y_hat = y + (1.0/6.0) * (k1 + 2.0*k2 + 2.0*k3 + k4) * interval;
 
@@ -54,8 +54,8 @@ data {
   real y_obs[n_obs];
   int obs_index[n_obs];
   real time[n_obs];
-  real y_bar;
   real y_0_obs;
+  real y_bar;
 }
 
 // The parameters accepted by the model.
@@ -85,27 +85,22 @@ model {
     }
 
     if(i < n_obs){
-      //Estimate growth rate
+      //Estimate next size
       y_hat[i+1] = rk4(y_hat[i], pars, (time[i+1] - time[i]), step_size);
     }
   }
 
   //Likelihood
-  y_obs ~ normal(y_hat, global_error_sigma);
+  y_obs ~ normal(y_hat, 0.1);
 
   //Priors
   //Individual level
-  ind_y_0 ~ normal(y_0_obs, global_error_sigma);
-  ind_const ~lognormal(0, 5);
-  ind_beta_1 ~lognormal(0, 5);
-
-  //Global level
-  global_error_sigma ~cauchy(0,1);
+  ind_const ~lognormal(0, 2);
+  ind_beta_1 ~lognormal(0, 2);
 }
 
 generated quantities{
   real y_hat[n_obs];
-  real Delta_hat[n_obs];
   array[3] real pars;
   real ind_beta_0;
 
@@ -124,10 +119,6 @@ generated quantities{
     if(i < n_obs){
       //Estimate next size
       y_hat[i+1] = rk4(y_hat[i], pars, (time[i+1] - time[i]), step_size);
-      Delta_hat[i] = y_hat[i+1] - y_hat[i];
-
-    } else {
-      Delta_hat[i] = DE(y_hat[i], pars)*(time[i] - time[i-1]);
     }
   }
 }

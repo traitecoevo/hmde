@@ -60,11 +60,11 @@ For each growth function, we have implementation to model the growth of a single
 
 ## Workflow
 
-Broadly, the workflow for `hdme` is to: 
+Broadly, the workflow for `hmde` is to: 
 
 1. Wrangle the data into the required format for a chosen model, 
 2. Pass the data and the model to a function that runs the sampling with Stan's MCMC algorithms. 
-3. Inspect and anaysis the returned `Stan` fit object.
+3. Inspect and analysis the returned `Stan` fit object.
 
 We will demonstrate this workflow using case studies that uses the three growth functions that are supported in `hmde`. You can find these on our website or you can view these in R using:
 ```{r, eval=FALSE}
