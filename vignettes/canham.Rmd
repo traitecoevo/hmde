@@ -91,8 +91,6 @@ Tree_Size_Ests <- hmde_extract_estimates(model = "canham_multi_ind",
 # saveRDS(tree_canham_estimates, "tree_canham_estimates.rds")
 ```
 
-We have saved the model output for you so you can follow along this case study without running the model.
-
 The model analysis follows the same workflow as the previous demonstrations: we look at how individual sizes over time and fitted growth functions behave, then examine evidence of relationships between parameter values at the individual level. We also look at the species-level parameter CIs and estimates.
 
 ```{r}
