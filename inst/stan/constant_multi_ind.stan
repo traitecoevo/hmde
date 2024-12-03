@@ -60,17 +60,16 @@ model {
                     pop_beta_sigma);
 
   //Population level
-  pop_beta_mu ~ normal(0.1, 1);
-  pop_beta_sigma ~cauchy(0.1, 1);
+  pop_beta_mu ~ normal(0, 1);
+  pop_beta_sigma ~cauchy(0, 1);
 
   //Global level
-  global_error_sigma ~cauchy(0.1, 1);
+  global_error_sigma ~cauchy(0, 2);
 }
 
 // The output
 generated quantities {
   real y_hat[n_obs];
-  real Delta_hat[n_obs];
 
   for(i in 1:n_obs){
 
@@ -83,12 +82,7 @@ generated quantities {
     if(i < n_obs){
       if(ind_id[i+1]==ind_id[i]){
         y_hat[i+1] = size_step(y_hat[i], ind_beta[ind_id[i]], (time[i+1]-time[i]));
-        Delta_hat[i] = y_hat[i+1] - y_hat[i];
-      } else {
-        Delta_hat[i] = DE(ind_beta[ind_id[i]]) * (time[i]-time[i-1]);
       }
-    } else {
-      Delta_hat[i] = DE(ind_beta[ind_id[i]]) * (time[i]-time[i-1]);
     }
   }
 }
