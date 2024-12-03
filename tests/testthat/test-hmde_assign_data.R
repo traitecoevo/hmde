@@ -3,8 +3,7 @@ test_that("Execution and output: Constant single ind", {
     hmde_assign_data(n_obs = 2,
                      y_obs = c(1,2),
                      obs_index = c(1,2),
-                     time = c(0,1),
-                     y_0_obs = 1)
+                     time = c(0,1))
 
   expect_named(constant_single)
 
@@ -27,8 +26,7 @@ test_that("Execution and output: Constant multi ind manual input", {
                      y_obs = Trout_Size_Data$y_obs,         #vector length N_obs
                      obs_index = Trout_Size_Data$obs_index, #vector length N_obs
                      time = Trout_Size_Data$time,           #Vector length N_obs
-                     ind_id = Trout_Size_Data$ind_id,       #Vector length N_obs
-                     y_0_obs = Trout_Size_Data$y_obs[which(Trout_Size_Data$obs_index == 1)]        #Vector length N_ind
+                     ind_id = Trout_Size_Data$ind_id       #Vector length N_obs
     )
 
   expect_named(constant_multi)

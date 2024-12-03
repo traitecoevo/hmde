@@ -117,7 +117,6 @@ for(i in 1:runs){
                      y_obs = obs_data_frame$y_obs,
                      obs_index = obs_data_frame$obs_index,
                      time = obs_data_frame$time,
-                     y_0_obs = obs_data_frame$y_obs[1],
                      y_bar = mean(obs_data_frame$y_obs),
                      step_size = step_size)  |>
     hmde_run(chains = 1, cores = 1, iter = 2000)
@@ -152,7 +151,6 @@ for(j in 1:length(step_sizes)){
                      y_obs = obs_data_frame$y_obs,
                      obs_index = obs_data_frame$obs_index,
                      time = obs_data_frame$time,
-                     y_0_obs = obs_data_frame$y_obs[1],
                      y_bar = mean(obs_data_frame$y_obs),
                      step_size = step_sizes[j])  |>
     hmde_run(chains = 1, cores = 1, iter = 2000)

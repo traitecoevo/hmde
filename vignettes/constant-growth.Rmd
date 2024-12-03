@@ -218,7 +218,6 @@ Each represents an element of the list that gets passed to the model:
 - `obs_index` is a vector containing integer the $j$ index for individual $i$, and counts which observation $y_{ij}$ is in sequence
 - `time` is a vector that determines when an observation happened relative to the first observation for that individual. The first observation has time 0
 - `ind_id` is a vector the same length as `y_obs` that tracks which individual an observation comes from
-- `y_0_obs` is a vector of length `n_ind` that gives the first observed size for each individual
 - `model` is the name of the model
 
 Now we will actually fit the model and extract the estimates. As the provided trout data is already in the form required by the `hmde_assign_data` function we don't need to do any further re-naming and can pass it directly.
