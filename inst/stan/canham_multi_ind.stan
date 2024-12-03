@@ -16,7 +16,6 @@ data {
   int obs_index[n_obs];
   real time[n_obs];
   int ind_id[n_obs];
-  real y_0_obs[n_ind];
 }
 
 // The parameters accepted by the model.
@@ -67,7 +66,6 @@ model {
 
   //Priors
   //Individual level
-  ind_y_0 ~ normal(y_0_obs, global_error_sigma);
   ind_max_growth ~lognormal(pop_max_growth_mean,
                             pop_max_growth_sd);
   ind_size_at_max_growth ~lognormal(pop_size_at_max_growth_mean,

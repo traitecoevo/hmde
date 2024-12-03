@@ -15,7 +15,6 @@ data {
   int obs_index[n_obs];
   real time[n_obs];
   int ind_id[n_obs];
-  real y_0_obs[n_ind];
   real y_bar;
 }
 
@@ -64,7 +63,6 @@ model {
 
   //Priors
   //Individual level
-  ind_y_0 ~normal(y_0_obs, global_error_sigma);
   ind_growth_rate ~lognormal(pop_growth_rate_mean, pop_growth_rate_sd);
   ind_max_size ~lognormal(pop_max_size_mean, pop_max_size_sd);
 

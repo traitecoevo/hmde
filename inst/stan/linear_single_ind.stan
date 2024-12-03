@@ -54,7 +54,6 @@ data {
   real y_obs[n_obs];
   int obs_index[n_obs];
   real time[n_obs];
-  real y_0_obs;
   real y_bar;
 }
 

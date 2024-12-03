@@ -14,7 +14,6 @@ data {
   real y_obs[n_obs];
   int obs_index[n_obs];
   real time[n_obs];
-  real y_0_obs;
 }
 
 // The parameters accepted by the model.
@@ -54,7 +53,6 @@ model {
 
   //Priors
   //Individual level
-  ind_y_0 ~ normal(y_0_obs, global_error_sigma);
   ind_max_growth ~lognormal(0, 1);
   ind_size_at_max_growth ~lognormal(3, 1);
   ind_k ~lognormal(0, 1);

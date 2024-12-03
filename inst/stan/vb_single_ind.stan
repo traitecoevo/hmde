@@ -13,7 +13,6 @@ data {
   real y_obs[n_obs];
   int obs_index[n_obs];
   real time[n_obs];
-  real y_0_obs;
   real y_bar;
 }
 
@@ -54,7 +53,6 @@ model {
 
   //Priors
   //Individual level
-  ind_y_0 ~ normal(y_0_obs, global_error_sigma);
   ind_max_size ~lognormal(0, 1);
   ind_growth_rate ~lognormal(0, 1); //Take max obs. size as average value
 

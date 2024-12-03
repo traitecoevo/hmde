@@ -51,7 +51,6 @@ hmde_assign_data <- function(model_template, data = NULL,...){
         i,
         n_obs = length(data$y_obs),
         n_ind = length(unique(data$ind_id)),
-        y_0_obs = data$y_obs[which(data$obs_index == 1)],
         y_bar = mean(data$y_obs),
         model = model_template$model
       )
