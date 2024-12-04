@@ -1,8 +1,5 @@
-hmde: Hierarchical Methods for Differential Equations
-================
 
-<img src="man/figures/hmde_hex.png" style="width:30.0%"
-data-fig-align="right" />
+# hmde <img src="man/figures/hmde_hex.png" align="right" alt="" width="220" />
 
 The goal of `hmde` is to implement hierarchical Bayesian longitudinal
 models to solve the Bayesian inverse problem of estimating differential
