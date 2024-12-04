@@ -22,8 +22,8 @@ hmde_extract_estimates <- function(model = NULL,
   }
 
   #Check for model
-  if(!model %in% hmde_model_name()){
-    stop("Model name not recognised. Run hmde_model_name() to see available models.")
+  if(!model %in% hmde_model_names()){
+    stop("Model name not recognised. Run hmde_model_names() to see available models.")
   }
 
   #Check for input measurement data

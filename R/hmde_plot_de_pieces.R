@@ -27,8 +27,8 @@ hmde_plot_de_pieces <- function(model = NULL,
                                 colour = "#006600",
                                 alpha = 0.4){
   #Check for model
-  if(!model %in% hmde_model_name()){
-    stop("Model name not recognised. Run hmde_model_name() to see available models.")
+  if(!model %in% hmde_model_names()){
+    stop("Model name not recognised. Run hmde_model_names() to see available models.")
   }
 
   if(is.null(model)){
