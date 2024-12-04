@@ -3,6 +3,8 @@ title: "hmde: Hierarchical Methods for Differential Equations"
 output: github_document
 ---
 
+![](man/figures/hmde_hex.png){fig-align="right" width=30%}
+
 The goal of `hmde` is to implement hierarchical Bayesian longitudinal models to solve the Bayesian inverse problem of estimating differential equation parameters based on repeat measurement surveys. Estimation is done using Markov Chain Monte Carlo, implemented through
 [Stan](https://mc-stan.org/) via [RStan](https://mc-stan.org/users/interfaces/rstan), built under [R](https://cran.r-project.org/) 4.3.3. The inbuilt models are based on case studies in ecology. The hierarchical Bayesian longitudinal method was first introduced in O'Brien et al., [2024](https://besjournals.onlinelibrary.wiley.com/doi/10.1111/2041-210X.14463).
 

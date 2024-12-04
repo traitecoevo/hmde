@@ -16,10 +16,6 @@ knitr::opts_chunk$set(
 )
 ```
 
-```{r}
-options(rmarkdown.html_vignette.check_title = FALSE)
-```
-
 ```{r setup}
 # remotes::install_github("traitecoevo/hmde")
 # install.packages(c("dplyr", "ggplot2"))

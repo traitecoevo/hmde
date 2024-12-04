@@ -1,3 +1,25 @@
 url: https://traitecoevo.github.io/hmde/
 template:
   bootstrap: 5
+  bootswatch: darkly
+
+navbar:
+  bg: dark
+  type: dark
+  structure:
+    left:  [intro, reference, articles]
+    right: [search, github]
+  components:
+   articles:
+    text: Articles
+    menu:
+    - text: "Case Studies"
+    - text: Constant growth model
+      href: 'articles/constant-growth.html'
+    - text: von Bertalanffy model
+      href: 'articles/von-bertalanffy.html'
+    - text: Canham
+      href: 'articles/canham.html'
+
+
+

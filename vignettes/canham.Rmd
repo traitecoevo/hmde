@@ -15,14 +15,6 @@ knitr::opts_chunk$set(
   comment = "#>",
   eval = TRUE
 )
-
-# job::job({
-# knitr::knit("vignettes/3-canham.Rmd.orig", "vignettes/3-canham.Rmd")
-# })
-```
-
-```{r}
-options(rmarkdown.html_vignette.check_title = FALSE)
 ```
 
 ```{r}
