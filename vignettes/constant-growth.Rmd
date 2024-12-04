@@ -99,29 +99,6 @@ Trout_Size_Data_transformed <- Trout_Size_Data %>%
   ungroup()
 ```
 
-```{r}
-histogram_func <- function(data, var, main, xlab, ...){
-  ggplot2::ggplot(data = data, aes(x = {{var}})) + 
-  geom_histogram(colour = "black", fill = "grey", ...) + 
-  labs(title = main,
-       xlab = xlab) +
-  theme_classic()
-}
-
-histogram_func(Trout_Size_Data, y_obs, 
-               "Observed size distribution", "Size (cm)", binwidth = 5)
-
-histogram_func(Trout_Size_Data_transformed, obs_interval, 
-               "Observed interval distribution", "Time (yr)", binwidth = 0.55)
-
-histogram_func(Trout_Size_Data_transformed, delta_y_obs, 
-               "Observed growth increments", "Growth increment (cm)", binwidth = 5.5)
-
-histogram_func(Trout_Size_Data_transformed, obs_growth_rate, 
-               "Observed annualised growth rate distribution", "Growth rate (cm/yr)", binwidth = 80)
-```
-
-
 ```{r, eval=FALSE}
 hist(Trout_Size_Data$y_obs, 
      main = "Observed size distribution",
