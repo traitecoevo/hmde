@@ -1,11 +1,9 @@
 url: https://traitecoevo.github.io/hmde/
 template:
   bootstrap: 5
-  bootswatch: darkly
+  bootswatch: flatly
 
 navbar:
-  bg: dark
-  type: dark
   structure:
     left:  [intro, reference, articles]
     right: [search, github]
@@ -18,7 +16,7 @@ navbar:
       href: 'articles/constant-growth.html'
     - text: von Bertalanffy model
       href: 'articles/von-bertalanffy.html'
-    - text: Canham
+    - text: Canham model
       href: 'articles/canham.html'
 
 
