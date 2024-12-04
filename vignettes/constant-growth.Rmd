@@ -300,22 +300,8 @@ In the next block, we are looking at 5 random individuals to start with because 
 cor(measurement_data_transformed$y_obs, measurement_data_transformed$y_hat)^2
 
 #Plots of size over time for a sample of 5 individuals
-sample_ids <- sample(1:nrow(trout_constant_estimates$individual_data), size=5)
-
-# Line plots of sizes over time
-measurement_data_transformed %>%
-  filter(ind_id %in% sample_ids) %>%
-  ggplot(aes(group = ind_id)) +
-  geom_point(aes(x = time, y=y_obs, colour = as.factor(ind_id)), 
-             shape = 1) +
-  geom_line(aes(x = time, y=y_obs, colour = as.factor(ind_id)), 
-            linetype = "dashed") +
-  geom_point(aes(x = time, y=y_hat, colour = as.factor(ind_id)), 
-             shape = 2) +
-  geom_line(aes(x = time, y=y_hat, colour = as.factor(ind_id)), 
-            linetype = "solid") +
-  labs(x="Time (years)", y="Size (cm)", colour="Ind. ID") +
-  theme_classic()
+hmde_plot_obs_est_inds(n_ind_to_plot = 5,
+                       measurement_data = trout_constant_estimates$measurement_data)
 ```
 
 ### Indvidual growth functions ($\beta$)
