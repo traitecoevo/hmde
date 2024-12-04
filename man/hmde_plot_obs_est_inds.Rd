@@ -27,12 +27,6 @@ hmde_plot_obs_est_inds(
 \item{ylab}{character string for replacement y axis label}
 
 \item{title}{character string for replacement plot title}
-
-\item{model}{model name character string}
-
-\item{colour}{character string for replacement line colour}
-
-\item{alpha}{real number for replacement alpha value}
 }
 \value{
 ggplot object

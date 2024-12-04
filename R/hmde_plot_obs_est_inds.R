@@ -2,15 +2,12 @@
 #' on posterior estimates. Structured to take in the measurement_data tibble constructed by
 #' the hmde_extract_estimates function.
 #'
-#' @param model model name character string
 #' @param measurement_data tibble with estimated measurements
 #' @param ind_id_vec vector with list of ind_id values
 #' @param n_ind_to_plot integer giving number of individuals to plot if not speciried
 #' @param xlab character string for replacement x axis label
 #' @param ylab character string for replacement y axis label
 #' @param title character string for replacement plot title
-#' @param colour character string for replacement line colour
-#' @param alpha real number for replacement alpha value
 #'
 #' @return ggplot object
 #' @export
