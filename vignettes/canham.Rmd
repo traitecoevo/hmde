@@ -120,21 +120,8 @@ hist(measurement_data_transformed$est_growth_rate,
 cor(measurement_data_transformed$y_obs, measurement_data_transformed$y_hat)^2
 
 #Plots of size over time for a sample of 5 individuals
-sample_ids <- sample(1:nrow(Tree_Size_Ests$individual_data), size=5)
-plot_data <- measurement_data_transformed %>%
-  filter(ind_id %in% sample_ids)
-
-ggplot(data=plot_data, aes(group = ind_id)) +
-  geom_point(aes(x = time, y=y_obs, colour = as.factor(ind_id)),
-             shape = 1) +
-  geom_line(aes(x = time, y=y_obs, colour = as.factor(ind_id)),
-            linetype = "dashed") +
-  geom_point(aes(x = time, y=y_hat, colour = as.factor(ind_id)),
-             shape = 2) +
-  geom_line(aes(x = time, y=y_hat, colour = as.factor(ind_id)),
-            linetype = "solid") +
-  labs(x="Time (years)", y="DBH (cm)", colour="Ind. ID") +
-  theme_classic()
+hmde_plot_obs_est_inds(n_ind_to_plot = 5,
+                       measurement_data = Tree_Size_Ests$measurement_data)
 ```
 
 Individual parameter analysis, growth function plots follow this.
