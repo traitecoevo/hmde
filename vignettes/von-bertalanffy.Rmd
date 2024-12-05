@@ -98,7 +98,7 @@ The workflow for the second example is the same as the first, with the change in
 ```{r}
 lizard_vb_fit <- hmde_model("vb_multi_ind") |>
   hmde_assign_data(data = Lizard_Size_Data)  |>
-  hmde_run(chains = 4, cores = 1, iter = 2000)
+  hmde_run(chains = 4, cores = 4, iter = 2000)
 
 lizard_vb_estimates <- hmde_extract_estimates(model = "vb_multi_ind",
                                  fit = lizard_vb_fit,
@@ -171,7 +171,8 @@ ggplot(data = lizard_vb_estimates$individual_data,
 
 #Correlation of parameters
 cor(lizard_vb_estimates$individual_data$ind_max_size_mean,
-    lizard_vb_estimates$individual_data$ind_growth_rate_mean)
+    lizard_vb_estimates$individual_data$ind_growth_rate_mean,
+    method = "spearman")
 
 #Plot function pieces over estimated sizes.
 hmde_plot_de_pieces(model = "vb_multi_ind",
@@ -181,40 +182,31 @@ hmde_plot_de_pieces(model = "vb_multi_ind",
 
 At the hyper-parameter level for the whole population we have centre and spread parameters for the log-normal distributions of $S_{max}$ and $\beta$. As before, we can look at these as species-level features.
 ```{r}
+pars_CI_names <- c(
+  "95% CI for mean log max size: (",
+  "95% CI for mean max size in mm: (",
+  "95% CI for log max size standard deviation: (",
+  "95% CI for mean log growth par: (",
+  "95% CI for mean growth par mm/yr: (",
+  "95% CI for log growth par standard deviation: ("
+)
+
+exp_vec <- c(FALSE, TRUE, FALSE, 
+             FALSE, TRUE, FALSE)
 #Max size
-lizard_vb_estimates$population_data$mean[1] #Raw value
-print(paste0("95% CI for mean log max size: (", 
-             lizard_vb_estimates$population_data$CI_lower[1], " , ",
-             lizard_vb_estimates$population_data$CI_upper[1], ")")) #Raw CI
-
-exp(lizard_vb_estimates$population_data$mean[1]) #In mm units
-print(paste0("95% CI for mean max size in mm: (", 
-             exp(lizard_vb_estimates$population_data$CI_lower[1]), " , ",
-             exp(lizard_vb_estimates$population_data$CI_upper[1]), ")"))
-
-#Standard deviation of underlying normal distribution
-lizard_vb_estimates$population_data$mean[2]
-print(paste0("95% CI for log max size standard deviation: (", 
-             lizard_vb_estimates$population_data$CI_lower[2], " , ",
-             lizard_vb_estimates$population_data$CI_upper[2], ")")) #Raw CI
-
-#Beta
-lizard_vb_estimates$population_data$mean[3] #Raw value
-print(paste0("95% CI for mean log growth par: (", 
-             lizard_vb_estimates$population_data$CI_lower[3], " , ",
-             lizard_vb_estimates$population_data$CI_upper[3], ")")) #Raw CI
-
-exp(lizard_vb_estimates$population_data$mean[3]) #In cm/yr units
-print(paste0("95% CI for mean growth par mm/yr: (", 
-             exp(lizard_vb_estimates$population_data$CI_lower[3]), " , ",
-             exp(lizard_vb_estimates$population_data$CI_upper[3]), ")"))
-
-#Standard deviation of underlying normal distribution
-lizard_vb_estimates$population_data$mean[4]
-print(paste0("95% CI for log growth par standard deviation: (", 
-             lizard_vb_estimates$population_data$CI_lower[4], " , ",
-             lizard_vb_estimates$population_data$CI_upper[4], ")")) #Raw CI
-
+for(i in 1:nrow(lizard_vb_estimates$population_data)){
+  if(!exp_vec[i]){
+    lizard_vb_estimates$population_data$mean[i] #Raw value
+    print(paste0(pars_CI_names[i],
+      lizard_vb_estimates$population_data$CI_lower[i], ", ",
+      lizard_vb_estimates$population_data$CI_upper[i], ")")) #Raw CI
+  } else {
+    exp(lizard_vb_estimates$population_data$mean[i]) #In mm units
+      print(paste0(pars_CI_names[i], 
+      exp(lizard_vb_estimates$population_data$CI_lower[i]), ", ",
+      exp(lizard_vb_estimates$population_data$CI_upper[i]), ")"))
+  }
+}
 ```
 
 ## References
