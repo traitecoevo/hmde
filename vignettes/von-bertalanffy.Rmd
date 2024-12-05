@@ -96,18 +96,18 @@ We took a simple random sample without replacement of 50 individuals with at lea
 ## Implementation
 The workflow for the second example is the same as the first, with the change in model name and data object.
 ```{r}
-lizard_vb_fit <- hmde_model("vb_multi_ind") |>
+lizard_fit <- hmde_model("vb_multi_ind") |>
   hmde_assign_data(data = Lizard_Size_Data)  |>
   hmde_run(chains = 4, cores = 4, iter = 2000)
 
-lizard_vb_estimates <- hmde_extract_estimates(model = "vb_multi_ind",
-                                 fit = lizard_vb_fit,
+lizard_estimates <- hmde_extract_estimates(model = "vb_multi_ind",
+                                 fit = lizard_fit,
                                  input_measurement_data = Lizard_Size_Data)
 ```
 
 As before, we can compare the observed sizes over time to those predicted by the model.
 ```{r}
-measurement_data_transformed <- lizard_vb_estimates$measurement_data %>%
+measurement_data_transformed <- lizard_estimates$measurement_data %>%
   group_by(ind_id) %>%
   mutate(
     delta_y_obs = y_obs - lag(y_obs),
@@ -134,22 +134,22 @@ cor(measurement_data_transformed$y_obs, measurement_data_transformed$y_hat)^2
 
 #Plots of size over time for a sample of 5 individuals
 hmde_plot_obs_est_inds(n_ind_to_plot = 5,
-                       measurement_data = lizard_vb_estimates$measurement_data)
+                       measurement_data = lizard_estimates$measurement_data)
 ```
 
 We have two parameters at the individual level and are interested in both their separate distributions, and if we see evidence of a relationship between them. We can also use the individual parameter estimates and estimated sizes to plot the growth function pieces.
 ```{r}
 #1-dimensional parameter distributions
-hist(lizard_vb_estimates$individual_data$ind_max_size_mean,
+hist(lizard_estimates$individual_data$ind_max_size_mean,
      main = "Individual max size parameters", 
      xlab = "Smax estimate")
 
-hist(lizard_vb_estimates$individual_data$ind_growth_rate_mean,
+hist(lizard_estimates$individual_data$ind_growth_rate_mean,
      main = "Individual growth rate parameters", 
      xlab = "beta estimate")
 
 #2-dimensional parameter distribution
-ggplot(data = lizard_vb_estimates$individual_data, 
+ggplot(data = lizard_estimates$individual_data, 
        aes(x = ind_max_size_mean, y = ind_growth_rate_mean)) +
   geom_point(shape = 16, size = 1, colour = "green4") +
   xlab("Individual max sizes (mm)") +
@@ -157,41 +157,49 @@ ggplot(data = lizard_vb_estimates$individual_data,
   theme_classic()
 
 #Correlation of parameters
-cor(lizard_vb_estimates$individual_data$ind_max_size_mean,
-    lizard_vb_estimates$individual_data$ind_growth_rate_mean,
+cor(lizard_estimates$individual_data$ind_max_size_mean,
+    lizard_estimates$individual_data$ind_growth_rate_mean,
     method = "spearman")
 
 #Plot function pieces over estimated sizes.
 hmde_plot_de_pieces(model = "vb_multi_ind",
-                    individual_data = lizard_vb_estimates$individual_data,
-                    measurement_data = lizard_vb_estimates$measurement_data)
+                    individual_data = lizard_estimates$individual_data,
+                    measurement_data = lizard_estimates$measurement_data)
 ```
 
 At the hyper-parameter level for the whole population we have centre and spread parameters for the log-normal distributions of $S_{max}$ and $\beta$. As before, we can look at these as species-level features.
 ```{r}
 pars_CI_names <- c(
-  "95% CI for mean log max size: (",
-  "95% CI for mean max size in mm: (",
-  "95% CI for log max size standard deviation: (",
-  "95% CI for mean log growth par: (",
-  "95% CI for mean growth par mm/yr: (",
-  "95% CI for log growth par standard deviation: ("
+  "mean log max size: (",
+  "mean max size in mm: (",
+  "log max size standard deviation: (",
+  "mean log growth par: (",
+  "mean growth par mm/yr: (",
+  "log growth par standard deviation: ("
 )
 
+#Vector that picks out which pars to be exponentiated
 exp_vec <- c(FALSE, TRUE, FALSE, 
              FALSE, TRUE, FALSE)
-#Max size
-for(i in 1:nrow(lizard_vb_estimates$population_data)){
+             
+#Print mean estimates and CIs
+for(i in 1:nrow(lizard_estimates$population_data)){
   if(!exp_vec[i]){
-    lizard_vb_estimates$population_data$mean[i] #Raw value
-    print(paste0(pars_CI_names[i],
-      lizard_vb_estimates$population_data$CI_lower[i], ", ",
-      lizard_vb_estimates$population_data$CI_upper[i], ")")) #Raw CI
+    lizard_estimates$population_data$mean[i] 
+    print(paste0("95% CI for ", 
+      pars_CI_names[i],
+      lizard_estimates$population_data$CI_lower[i],
+      ", ",
+      lizard_estimates$population_data$CI_upper[i],
+      ")"))
   } else {
-    exp(lizard_vb_estimates$population_data$mean[i]) #In mm units
-      print(paste0(pars_CI_names[i], 
-      exp(lizard_vb_estimates$population_data$CI_lower[i]), ", ",
-      exp(lizard_vb_estimates$population_data$CI_upper[i]), ")"))
+    exp(lizard_estimates$population_data$mean[i])
+      print(paste0("95% CI for ",
+      pars_CI_names[i], 
+      exp(lizard_estimates$population_data$CI_lower[i]),
+      ", ",
+      exp(lizard_estimates$population_data$CI_upper[i]),
+      ")"))
   }
 }
 ```
