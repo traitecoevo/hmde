@@ -83,12 +83,12 @@ tree_canham_fit <- hmde_model("canham_multi_ind") |>
   hmde_assign_data(data = Tree_Size_Data)  |>
   hmde_run(chains = 4, cores = 4, iter = 2000)
 
-Tree_Size_Ests <- hmde_extract_estimates(model = "canham_multi_ind",
+tree_canham_estimates <- hmde_extract_estimates(model = "canham_multi_ind",
                                  fit = tree_canham_fit,
                                  input_measurement_data = Tree_Size_Data)
 
-# saveRDS(tree_canham_fit, "tree_canham_fit.rds")
-# saveRDS(tree_canham_estimates, "tree_canham_estimates.rds")
+#saveRDS(tree_canham_fit, "tree_canham_fit.rds")
+#saveRDS(tree_canham_estimates, "tree_canham_estimates.rds")
 ```
 
 The model analysis follows the same workflow as the previous demonstrations: we look at how individual sizes over time and fitted growth functions behave, then examine evidence of relationships between parameter values at the individual level. We also look at the species-level parameter CIs and estimates.
@@ -106,38 +106,85 @@ measurement_data_transformed <- Tree_Size_Ests$measurement_data %>%
   ungroup()
 
 #Distributions of estimated growth and size
-hist(measurement_data_transformed$y_hat,
-     main = "Estimated size distribution",
-     xlab = "Size (cm)")
-hist(measurement_data_transformed$delta_y_est,
-     main = "Estimated growth increments",
-     xlab = "Growth increment (cm)")
-hist(measurement_data_transformed$est_growth_rate,
-     main = "Estimated annualised growth rate distribution",
-     xlab = "Growth rate (cm/yr)")
+ggplot(measurement_data_transformed, 
+       aes(y_hat)) +
+  geom_histogram(bins = 10,
+                 colour = "black",
+                 fill = "lightblue") +
+  labs(x="Size (cm)",
+       title = "Estimated size distribution") +
+  theme_classic()
+
+ggplot(measurement_data_transformed, 
+       aes(delta_y_est)) +
+  geom_histogram(bins = 10,
+                 colour = "black",
+                 fill = "lightblue") +
+  labs(x = "Growth increment (cm)",
+       title = "Estimated growth increments") +
+  theme_classic()
+
+ggplot(measurement_data_transformed, 
+       aes(est_growth_rate)) +
+  geom_histogram(bins = 10,
+                 colour = "black",
+                 fill = "lightblue") +
+  labs(x = "Growth rate (cm/yr)",
+       title = "Estimated annualised growth rate distribution") +
+  theme_classic()
 
 #Quantitative R^2
 cor(measurement_data_transformed$y_obs, measurement_data_transformed$y_hat)^2
 
+r_sq_est <- cor(Tree_Size_Ests$measurement_data$y_obs,
+                Tree_Size_Ests$measurement_data$y_hat)^2
+r_sq <- paste0("R^2 = ", 
+               signif(r_sq_est,
+                      digits = 3))
+
+ggplot(data = Tree_Size_Ests$measurement_data, 
+       aes(x = y_obs, y = y_hat)) +
+  geom_point(shape = 16, size = 1, colour = "green4") +
+  xlab("Y obs.") +
+  ylab("Y est.") +
+  geom_abline(slope = 1, linetype = "dashed") +
+  annotate("text", x = 25, y = 18, 
+           label = r_sq) +
+  theme_classic()
+
 #Plots of size over time for a sample of 5 individuals
 hmde_plot_obs_est_inds(n_ind_to_plot = 5,
-                       measurement_data = Tree_Size_Ests$measurement_data)
+                       measurement_data = Tree_Size_Ests$measurement_data)+
+  theme(legend.position = "inside",
+        legend.position.inside = c(0.05, 0.9))
 ```
 
 Individual parameter analysis, growth function plots follow this.
 ```{r}
 #1-dimensional parameter distributions
-hist(Tree_Size_Ests$individual_data$ind_max_growth_mean,
-     main = "Individual max growth rate parameters",
-     xlab = "g_max estimate")
+ggplot(Tree_Size_Ests$individual_data, 
+       aes(ind_max_growth_mean)) +
+  geom_histogram(bins = 10,
+                 colour = "black",
+                 fill = "lightblue") +
+  labs(x="g_max estimate") +
+  theme_classic()
 
-hist(Tree_Size_Ests$individual_data$ind_size_at_max_growth_mean,
-     main = "Individual size at max growth parameters",
-     xlab = "S_max estimate")
+ggplot(Tree_Size_Ests$individual_data, 
+       aes(ind_size_at_max_growth_mean)) +
+  geom_histogram(bins = 10,
+                 colour = "black",
+                 fill = "lightblue") +
+  labs(x="S_max estimate") +
+  theme_classic()
 
-hist(Tree_Size_Ests$individual_data$ind_max_growth_mean,
-     main = "Individual spread parameters",
-     xlab = "k estimate")
+ggplot(Tree_Size_Ests$individual_data, 
+       aes(ind_k_mean)) +
+  geom_histogram(bins = 10,
+                 colour = "black",
+                 fill = "lightblue") +
+  labs(x="k estimate") +
+  theme_classic()
 
 #2-dimensional parameter distributions
 ggplot(data = Tree_Size_Ests$individual_data,
@@ -161,8 +208,8 @@ ggplot(data = Tree_Size_Ests$individual_data,
   ylab("Individual size at max growth (cm) S_max") +
   theme_classic()
 
-#Linear correlation of parameters
-cor(Tree_Size_Ests$individual_data[,c(2,6,10)])
+#monotonic correlation of parameters
+cor(Tree_Size_Ests$individual_data[,c(2,6,10)], method="spearman")
 
 #Plot function pieces over estimated sizes.
 hmde_plot_de_pieces(model = "canham_multi_ind",
@@ -172,56 +219,49 @@ hmde_plot_de_pieces(model = "canham_multi_ind",
 
 At the hyper-parameter level for the whole population we have centre and spread parameters for the log-normal distributions of $g_{max}$, $S_{max}$ and $k$.
 ```{r}
-#Max growth
-Tree_Size_Ests$population_data$mean[1] #Raw value
-print(paste0("95% CI for mean log max growth rate: (",
-             Tree_Size_Ests$population_data$CI_lower[1], " , ",
-             Tree_Size_Ests$population_data$CI_upper[1], ")")) #Raw CI
+pars_CI_names <- c(
+  "mean log max growth rate",
+  "mean max growth rate in cm/yr",
+  "log max growth rate standard deviation",
+  "mean log size at max growth rate",
+  "mean max size at max growth rate in cm",
+  "log max size at growth rate standard deviation",
+  "mean mean log spread parameter",
+  "mean mean spread parameter",
+  "log spread parameter standard deviation"
+)
 
-exp(Tree_Size_Ests$population_data$mean[1]) #In cm units
-print(paste0("95% CI for mean max growth rate in cm/yr: (",
-             exp(Tree_Size_Ests$population_data$CI_lower[1]), " , ",
-             exp(Tree_Size_Ests$population_data$CI_upper[1]), ")"))
+#Vector that picks out which pars to be exponentiated
+exp_vec <- c(FALSE, TRUE, FALSE, 
+             FALSE, TRUE, FALSE,
+             FALSE, TRUE, FALSE)
 
-#Standard deviation of underlying normal distribution
-Tree_Size_Ests$population_data$mean[2]
-print(paste0("95% CI for log max growth rate standard deviation: (",
-             Tree_Size_Ests$population_data$CI_lower[2], " , ",
-             Tree_Size_Ests$population_data$CI_upper[2], ")")) #Raw CI
-
-#size at max growth
-Tree_Size_Ests$population_data$mean[3] #Raw value
-print(paste0("95% CI for mean log size at max growth rate: (",
-             Tree_Size_Ests$population_data$CI_lower[3], " , ",
-             Tree_Size_Ests$population_data$CI_upper[3], ")")) #Raw CI
-
-exp(Tree_Size_Ests$population_data$mean[3]) #In cm units
-print(paste0("95% CI for mean max size at growth rate in cm: (",
-             exp(Tree_Size_Ests$population_data$CI_lower[3]), " , ",
-             exp(Tree_Size_Ests$population_data$CI_upper[3]), ")"))
-
-#Standard deviation of underlying normal distribution
-Tree_Size_Ests$population_data$mean[4]
-print(paste0("95% CI for log max size at growth rate standard deviation: (",
-             Tree_Size_Ests$population_data$CI_lower[4], " , ",
-             Tree_Size_Ests$population_data$CI_upper[4], ")")) #Raw CI
-
-#Spread parameter k
-Tree_Size_Ests$population_data$mean[5] #Raw value
-print(paste0("95% CI for mean log spread parameter: (",
-             Tree_Size_Ests$population_data$CI_lower[5], " , ",
-             Tree_Size_Ests$population_data$CI_upper[5], ")")) #Raw CI
-
-exp(Tree_Size_Ests$population_data$mean[5]) #In cm units
-print(paste0("95% CI for mean spread parameter: (",
-             exp(Tree_Size_Ests$population_data$CI_lower[5]), " , ",
-             exp(Tree_Size_Ests$population_data$CI_upper[5]), ")"))
-
-#Standard deviation of underlying normal distribution
-Tree_Size_Ests$population_data$mean[6]
-print(paste0("95% CI for log spread parameter standard deviation: (",
-             Tree_Size_Ests$population_data$CI_lower[6], " , ",
-             Tree_Size_Ests$population_data$CI_upper[], ")")) #Raw CI
+#Print mean estimates and CIs
+for(i in 1:nrow(Tree_Size_Ests$population_data)){
+  if(!exp_vec[i]){
+    print(paste0(pars_CI_names[i],
+                 " estimate: ",
+                 Tree_Size_Ests$population_data$mean[i] ))
+    print(paste0("95% CI for ", 
+                 pars_CI_names[i],
+                 ": (",
+                 Tree_Size_Ests$population_data$CI_lower[i],
+                 ", ",
+                 Tree_Size_Ests$population_data$CI_upper[i],
+                 ")"))
+  } else {
+    print(paste0(pars_CI_names[i],
+                 " estimate: ",
+                 exp(Tree_Size_Ests$population_data$mean[i])))
+    print(paste0("95% CI for ",
+                 pars_CI_names[i], 
+                 ": (",
+                 exp(Tree_Size_Ests$population_data$CI_lower[i]),
+                 ", ",
+                 exp(Tree_Size_Ests$population_data$CI_upper[i]),
+                 ")"))
+  }
+}
 ```
 
 

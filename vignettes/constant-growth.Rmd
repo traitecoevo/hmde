@@ -142,28 +142,10 @@ Trout_Size_Data_transformed
 
 Let's create some histograms to investigate the distribution of size, growth interval and growth increments. 
 
-```{r, eval=FALSE}
-hist(Trout_Size_Data$y_obs, 
-     main = "Observed size distribution",
-     xlab = "Size (cm)")
-
-hist(Trout_Size_Data_transformed$obs_interval, 
-     main = "Observation interval distribution",
-     xlab = "Time (yr)")
-
-hist(Trout_Size_Data_transformed$delta_y_obs, 
-     main = "Observed growth increments",
-     xlab = "Growth increment (cm)")
-
-hist(Trout_Size_Data_transformed$obs_growth_rate, 
-     main = "Observed annualised growth rate distribution",
-     xlab = "Growth rate (cm/yr)")
-```
-
 ```{r, echo = FALSE, fig.width=6, fig.height=6}
 histogram_func <- function(data, var, main, xlab, ...){
   ggplot2::ggplot(data = data, aes(x = {{var}})) + 
-  geom_histogram(colour = "black", fill = "grey", ...) + 
+  geom_histogram(colour = "black", fill = "lightblue", ...) + 
   labs(title = main,
        x= xlab) + 
     theme_classic() 
@@ -255,32 +237,20 @@ measurement_data_transformed <- trout_constant_estimates$measurement_data %>%
 
 Now we can have a look at the distirbution of each of the estimated parameter by creating histograms 
 
-```{r, eval=FALSE}
-hist(measurement_data_transformed$y_hat, 
-     main = "Estimated size distribution",
-     xlab = "Size (cm)")
-hist(measurement_data_transformed$delta_y_est, 
-     main = "Estimated growth increments",
-     xlab = "Growth increment (cm)")
-hist(measurement_data_transformed$est_growth_rate, 
-     main = "Estimated annualised growth rate distribution",
-     xlab = "Growth rate (cm/yr)")
-```
-
 ```{r, fig.width=5, fig.height=6}
 est_hist_y_hat <- histogram_func(measurement_data_transformed, y_hat, 
                "Estimated size distribution",
                xlab = "Size (cm)",
-               binwidth = 5)
+               bins = 5)
 
 est_hist_delta_y_est <-  histogram_func(measurement_data_transformed, delta_y_est, 
                "Estimated growth  \n increments",
                xlab = "Growth increment (cm)",
-               binwidth = 2)
+               bins = 5)
 
 est_hist_growth_rate <- histogram_func(measurement_data_transformed, est_growth_rate, 
                "Estimated annualised growth rate distribution", xlab = "Growth rate (cm/yr)",
-               binwidth = 1)
+               bins = 5)
 
 (est_hist_y_hat + est_hist_delta_y_est) / est_hist_growth_rate 
 ```
@@ -297,24 +267,32 @@ In the next block, we are looking at 5 random individuals to start with because 
 ```{r, fig.width=4, fig.height=4}
 #Quantitative R^2
 cor(measurement_data_transformed$y_obs, measurement_data_transformed$y_hat)^2
+r_sq_est <- cor(trout_constant_estimates$measurement_data$y_obs,
+                          trout_constant_estimates$measurement_data$y_hat)^2
+r_sq <- paste0("R^2 = ", 
+               signif(r_sq_est,
+                      digits = 3))
+
+obs_est_size_plot <- ggplot(data = trout_constant_estimates$measurement_data, 
+       aes(x = y_obs, y = y_hat)) +
+  geom_point(shape = 16, size = 1, colour = "green4") +
+  xlab("Y obs.") +
+  ylab("Y est.") +
+  geom_abline(slope = 1, linetype = "dashed") +
+  annotate("text", x = 45, y = 80, 
+           label = r_sq) +
+  theme_classic()
+obs_est_size_plot
 
 #Plots of size over time for a sample of 5 individuals
-hmde_plot_obs_est_inds(n_ind_to_plot = 5,
+size_over_time_plot <- hmde_plot_obs_est_inds(n_ind_to_plot = 5,
                        measurement_data = trout_constant_estimates$measurement_data)
+size_over_time_plot
 ```
 
 ### Indvidual growth functions ($\beta$)
 
 At the level of individuals we are interested in the distribution of $\beta$ estimates, which will align with the estimated annualised growth rates as that's precisely what they represent. Here is one way to visualise  the fitted growth functions in order to see how they compare to the observed sizes.
-```{r, eval=FALSE}
-hist(trout_constant_estimates$individual_data$ind_beta_mean,
-     main = "Individual beta parameters", 
-     xlab = "beta estimate")
-
-hmde_plot_de_pieces(model = "constant_multi_ind",
-                    individual_data = trout_constant_estimates$individual_data,
-                    measurement_data = trout_constant_estimates$measurement_data)
-```
 
 ```{r, echo=FALSE, fig.width=6.5, fig.height=5}
 ind_hist_beta <- histogram_func(trout_constant_estimates$individual_data,

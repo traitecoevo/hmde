@@ -16,7 +16,6 @@ knitr::opts_chunk$set(
   comment = "#>",
   eval = TRUE
 )
-
 # job::job({
 # knitr::knit("vignettes/here-be-dragons.Rmd.orig", "vignettes/here-be-dragons.Rmd")
 # })
@@ -45,7 +44,7 @@ and have some finite level of precision. The numerical method may produce estima
 ## The model
 We are implementing a longitudinal model of the form in Equation (1) within a hierarchical Bayesian longitudinal model where
 $$f(Y(t), \beta_0, \beta_1) = \beta_0 - \beta_1 Y(t)\qquad (2)$$
-Equation (2) is known to produce pathological behaviour from numerical methods [@butcher2016numerical], so serves as an ideal simple example of the interaction between those pathologies and the MCMC sampling process. We are attempting to estimate the parameters $\beta_0$ and $\beta_1$ from observations $y_j$, which is based on estimating $\hat{Y}_j$ given the error model
+Equation (2) is known to produce pathological behaviour from numerical methods [@butcher2016numerical], so serves as an ideal simple example of the interaction between those pathologies and the MCMC sampling process. We are attempting to estimate the parameters $\beta_0$ and $\beta_1$ from observations $y_j$, which is based on estimating $\hat{Y}_j$ given the prior distribution
 $$y_j \sim \mathcal{N}(\hat{Y}_j, 0.1).$$
 
 As we are looking at a single individual, we have prior distributions for the parameters which are
@@ -62,7 +61,8 @@ beta_1 <- 1
 
 #True initial condition
 true_y_0 <- 1
-time <- 0:10
+max_time <- 9
+time <- 0:max_time
 
 #Analytic solution
 y_true <- (beta_0/beta_1) + (true_y_0 - (beta_0/beta_1)) * exp(-beta_1 * time)
@@ -239,14 +239,14 @@ DE <- function(Time, State, Pars) { #Implementation of DE
 yini  <- c(Y = true_y_0) #Initial condition
 y_over_time <- tibble(model="True Sizes",
                       y_hat = y_true,
-                      time = 0:10
+                      time = 0:max_time
                       )
 
 #Generate y(t) with RK4 given the parameter estimates
 for(i in 1:nrow(error_ests)){
   pars_combo <- c(beta_0 = error_ests$error_beta_0[i],
                     beta_1 = error_ests$error_beta_1[i])
-    times <- seq(0, 10, by = error_ests$step_size[i])
+    times <- seq(0, max_time, by = error_ests$step_size[i])
     
     numerical_output <- ode(yini, times, DE, pars_combo, method = "rk4")
     
@@ -263,7 +263,7 @@ for(i in 1:nrow(error_ests)){
 For plotting purposes, we're going to filter out the numerical estimates that occur at sub-steps of the observation times.
 ```{r}
 y_over_time_filtered <- y_over_time %>%
-  filter(time %in% 0:10)
+  filter(time %in% 0:max_time)
   
 #Plot sizes over time
 compare_sizes_over_time <- ggplot(y_over_time_filtered, 
@@ -285,13 +285,13 @@ What we're interested in here is that despite the wildly different parameter est
 #Generate y(t) with RK4 given the parameter estimates
 y_over_time_smallstep <- tibble(model="True Sizes",
                       y_hat = y_true,
-                      time = 0:10
+                      time = 0:max_time
                       )
 
 for(i in 1:nrow(error_ests)){
   pars_combo <- c(beta_0 = error_ests$error_beta_0[i],
                     beta_1 = error_ests$error_beta_1[i])
-    times <- seq(0, 10, by = 0.001)
+    times <- seq(0, max_time, by = 0.001)
     
     numerical_output <- ode(yini, times, DE, pars_combo, method = "rk4")
     
@@ -305,7 +305,7 @@ for(i in 1:nrow(error_ests)){
 }
 
 point_data <- y_over_time_smallstep %>%
-  filter(time %in% 0:10)
+  filter(time %in% 0:max_time)
 
 #Plot sizes over time
 compare_sizes_over_time_smallstep <- ggplot(y_over_time_smallstep, 

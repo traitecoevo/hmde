@@ -1,14 +1,14 @@
 ---
-title: "Case study 2: von Bertalanffy growth with lizard size data"
+  title: "Case study 2: von Bertalanffy growth with lizard size data"
 output: rmarkdown::html_vignette
 vignette: >
   %\VignetteIndexEntry{von-bertalanffy}
-  %\VignetteEngine{knitr::rmarkdown}
-  %\VignetteEncoding{UTF-8}
+%\VignetteEngine{knitr::rmarkdown}
+%\VignetteEncoding{UTF-8}
 bibliography: vignette.bib
 ---
-
-```{r, include = FALSE}
+  
+  ```{r, include = FALSE}
 knitr::opts_chunk$set(
   collapse = TRUE,
   comment = "#>"
@@ -96,13 +96,13 @@ We took a simple random sample without replacement of 50 individuals with at lea
 ## Implementation
 The workflow for the second example is the same as the first, with the change in model name and data object.
 ```{r}
-lizard_fit <- hmde_model("vb_multi_ind") |>
+lizard_vb_fit <- hmde_model("vb_multi_ind") |>
   hmde_assign_data(data = Lizard_Size_Data)  |>
   hmde_run(chains = 4, cores = 4, iter = 2000)
 
 lizard_estimates <- hmde_extract_estimates(model = "vb_multi_ind",
-                                 fit = lizard_fit,
-                                 input_measurement_data = Lizard_Size_Data)
+                                           fit = lizard_vb_fit,
+                                           input_measurement_data = Lizard_Size_Data)
 ```
 
 As before, we can compare the observed sizes over time to those predicted by the model.
@@ -118,6 +118,7 @@ measurement_data_transformed <- lizard_estimates$measurement_data %>%
   ) %>%
   ungroup()
 
+
 #Distributions of estimated growth and size
 hist(measurement_data_transformed$y_hat, 
      main = "Estimated size distribution",
@@ -131,22 +132,47 @@ hist(measurement_data_transformed$est_growth_rate,
 
 #Quantitative R^2
 cor(measurement_data_transformed$y_obs, measurement_data_transformed$y_hat)^2
+r_sq_est <- cor(lizard_estimates$measurement_data$y_obs,
+                lizard_estimates$measurement_data$y_hat)^2
+r_sq <- paste0("R^2 = ", 
+               signif(r_sq_est,
+                      digits = 3))
+
+ggplot(data = lizard_estimates$measurement_data, 
+       aes(x = y_obs, y = y_hat)) +
+  geom_point(shape = 16, size = 1, colour = "green4") +
+  xlab("Y obs.") +
+  ylab("Y est.") +
+  geom_abline(slope = 1, linetype = "dashed") +
+  annotate("text", x = 25, y = 18, 
+           label = r_sq) +
+  theme_classic()
 
 #Plots of size over time for a sample of 5 individuals
 hmde_plot_obs_est_inds(n_ind_to_plot = 5,
-                       measurement_data = lizard_estimates$measurement_data)
+                       measurement_data = lizard_estimates$measurement_data) +
+  theme(legend.position = "inside",
+        legend.position.inside = c(0.05, 0.9))
 ```
 
 We have two parameters at the individual level and are interested in both their separate distributions, and if we see evidence of a relationship between them. We can also use the individual parameter estimates and estimated sizes to plot the growth function pieces.
 ```{r}
 #1-dimensional parameter distributions
-hist(lizard_estimates$individual_data$ind_max_size_mean,
-     main = "Individual max size parameters", 
-     xlab = "Smax estimate")
+ggplot(lizard_estimates$individual_data, 
+       aes(ind_max_size_mean)) +
+  geom_histogram(bins = 10,
+                 colour = "black",
+                 fill = "lightblue") +
+  labs(x="S_max estimate") +
+  theme_classic()
 
-hist(lizard_estimates$individual_data$ind_growth_rate_mean,
-     main = "Individual growth rate parameters", 
-     xlab = "beta estimate")
+ggplot(lizard_estimates$individual_data, 
+       aes(ind_growth_rate_mean)) +
+  geom_histogram(bins = 10,
+                 colour = "black",
+                 fill = "lightblue") +
+  labs(x="beta estimate") +
+  theme_classic()
 
 #2-dimensional parameter distribution
 ggplot(data = lizard_estimates$individual_data, 
@@ -170,36 +196,38 @@ hmde_plot_de_pieces(model = "vb_multi_ind",
 At the hyper-parameter level for the whole population we have centre and spread parameters for the log-normal distributions of $S_{max}$ and $\beta$. As before, we can look at these as species-level features.
 ```{r}
 pars_CI_names <- c(
-  "mean log max size: (",
-  "mean max size in mm: (",
-  "log max size standard deviation: (",
-  "mean log growth par: (",
-  "mean growth par mm/yr: (",
-  "log growth par standard deviation: ("
+  "mean log max size",
+  "mean max size in mm",
+  "log max size standard deviation",
+  "mean log growth par",
+  "mean growth par mm/yr",
+  "log growth par standard deviation"
 )
 
 #Vector that picks out which pars to be exponentiated
 exp_vec <- c(FALSE, TRUE, FALSE, 
              FALSE, TRUE, FALSE)
-             
+
 #Print mean estimates and CIs
 for(i in 1:nrow(lizard_estimates$population_data)){
   if(!exp_vec[i]){
     lizard_estimates$population_data$mean[i] 
     print(paste0("95% CI for ", 
-      pars_CI_names[i],
-      lizard_estimates$population_data$CI_lower[i],
-      ", ",
-      lizard_estimates$population_data$CI_upper[i],
-      ")"))
+                 pars_CI_names[i],
+                 ": (",
+                 lizard_estimates$population_data$CI_lower[i],
+                 ", ",
+                 lizard_estimates$population_data$CI_upper[i],
+                 ")"))
   } else {
     exp(lizard_estimates$population_data$mean[i])
-      print(paste0("95% CI for ",
-      pars_CI_names[i], 
-      exp(lizard_estimates$population_data$CI_lower[i]),
-      ", ",
-      exp(lizard_estimates$population_data$CI_upper[i]),
-      ")"))
+    print(paste0("95% CI for ",
+                 pars_CI_names[i], 
+                 ": (",
+                 exp(lizard_estimates$population_data$CI_lower[i]),
+                 ", ",
+                 exp(lizard_estimates$population_data$CI_upper[i]),
+                 ")"))
   }
 }
 ```
