@@ -142,21 +142,24 @@ r_sq <- paste0("R^2 = ",
                signif(r_sq_est,
                       digits = 3))
 
-ggplot(data = Tree_Size_Ests$measurement_data, 
+obs_est_scatter <- ggplot(data = Tree_Size_Ests$measurement_data, 
        aes(x = y_obs, y = y_hat)) +
   geom_point(shape = 16, size = 1, colour = "green4") +
   xlab("Y obs.") +
   ylab("Y est.") +
   geom_abline(slope = 1, linetype = "dashed") +
-  annotate("text", x = 25, y = 18, 
+  annotate("text", x = 7, y = 22, 
            label = r_sq) +
   theme_classic()
+obs_est_scatter
 
 #Plots of size over time for a sample of 5 individuals
-hmde_plot_obs_est_inds(n_ind_to_plot = 5,
-                       measurement_data = Tree_Size_Ests$measurement_data)+
+obs_est_size_plot <- hmde_plot_obs_est_inds(n_ind_to_plot = 5,
+                       measurement_data = Tree_Size_Ests$measurement_data) +
   theme(legend.position = "inside",
-        legend.position.inside = c(0.05, 0.9))
+        legend.position.inside = c(0.1, 0.85)) +
+  guides(colour=guide_legend(nrow=2,byrow=TRUE))
+obs_est_size_plot
 ```
 
 Individual parameter analysis, growth function plots follow this.
@@ -187,34 +190,39 @@ ggplot(Tree_Size_Ests$individual_data,
   theme_classic()
 
 #2-dimensional parameter distributions
-ggplot(data = Tree_Size_Ests$individual_data,
+pairplot1 <- ggplot(data = Tree_Size_Ests$individual_data,
        aes(x = ind_max_growth_mean, y = ind_size_at_max_growth_mean)) +
   geom_point(shape = 16, size = 1, colour = "green4") +
-  xlab("Individual max growth (cm/yr) g_max") +
-  ylab("Individual size at max growth (cm) S_max") +
+  xlab("Ind. max growth (cm/yr)") +
+  ylab("Ind. size at max growth (cm)") +
   theme_classic()
 
-ggplot(data = Tree_Size_Ests$individual_data,
+pairplot2 <- ggplot(data = Tree_Size_Ests$individual_data,
        aes(x = ind_max_growth_mean, y = ind_k_mean)) +
   geom_point(shape = 16, size = 1, colour = "green4") +
-  xlab("Individual max growth (cm/yr) g_max") +
-  ylab("Individual spread parameters k") +
+  xlab("Ind. max growth (cm/yr)") +
+  ylab("Ind. spread par.") +
   theme_classic()
 
-ggplot(data = Tree_Size_Ests$individual_data,
+pairplot3 <- ggplot(data = Tree_Size_Ests$individual_data,
        aes(x = ind_k_mean, y = ind_size_at_max_growth_mean)) +
   geom_point(shape = 16, size = 1, colour = "green4") +
-  xlab("Individual spread parameters k") +
-  ylab("Individual size at max growth (cm) S_max") +
+  xlab("Ind. spread par.") +
+  ylab("Ind. size at max growth (cm)") +
   theme_classic()
+
+pairplot1
+pairplot2
+pairplot3
 
 #monotonic correlation of parameters
 cor(Tree_Size_Ests$individual_data[,c(2,6,10)], method="spearman")
 
 #Plot function pieces over estimated sizes.
-hmde_plot_de_pieces(model = "canham_multi_ind",
+est_de_plot <- hmde_plot_de_pieces(model = "canham_multi_ind",
                     individual_data = Tree_Size_Ests$individual_data,
                     measurement_data = Tree_Size_Ests$measurement_data)
+est_de_plot
 ```
 
 At the hyper-parameter level for the whole population we have centre and spread parameters for the log-normal distributions of $g_{max}$, $S_{max}$ and $k$.
