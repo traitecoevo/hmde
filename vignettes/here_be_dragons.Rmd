@@ -177,13 +177,14 @@ for(j in 1:length(step_sizes)){
 
 # Analysis
 
-Let's look at the distribution of parameter estimates. First we'll get histograms of the 1-dimensional distributions, then we'll look at a scatter plot.
+Let's extract some summary statistics and look at the distribution of parameter estimates. First we'll get histograms of the 1-dimensional distributions, then we'll look at a scatter plot.
 ```{r}
 error_ests <- tibble(error_beta_0 = c(),
             error_beta_1 = c(), 
             step_size = c(),
             count = c(),
-            fraction = c())
+            fraction = c(),
+            dist = c())
 
 beta_0_plot_list <- list()
 beta_1_plot_list <- list()
@@ -203,7 +204,14 @@ for(i in 1:length(unique(par_est_tibble$step_size))){
             error_beta_1 = median(beta_1), 
             step_size = mean(step_size),
             count = n(),
-            fraction = n()/nrow(plot_data))
+            fraction = n()/nrow(plot_data)
+            )
+  
+  dist_table <- tibble(
+    b_0 = c(error_estimates_temp$error_beta_0, 10),
+    b_1 = c(error_estimates_temp$error_beta_0, 1)
+  )
+  error_estimates_temp$dist <- dist(dist_table)
   
   error_ests <- rbind(error_ests, error_estimates_temp)
   
@@ -280,6 +288,8 @@ plot_grid(beta_0_plot_list[[1]],
           beta_1_plot_list[[3]],
           nrow = 3, byrow = FALSE,
           align = "v")
+
+error_ests
 ```
 
 We get clear bimodality in both the histograms and the scatter plot. Bias in the estimates closest to the true values is due to the same measurement error in the 'observed' data for all the fits. The second mode in the estimates arises from the numerical integration error. 
