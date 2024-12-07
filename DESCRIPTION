@@ -42,7 +42,8 @@ Suggests:
     mnormt,
     here,
     patchwork,
-    deSolve
+    deSolve,
+    cowplot
 VignetteBuilder: knitr
 Config/testthat/edition: 3
 LazyData: true

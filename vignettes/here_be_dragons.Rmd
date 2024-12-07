@@ -31,6 +31,7 @@ library(hmde)
 library(dplyr)
 library(ggplot2)
 library(deSolve)
+library(cowplot)
 ```
 
 This vignette demonstrates an interaction between errors from numerical integration methods and MCMC sampling. The underlying issue is that if, given errors in the chosen numerical integration method, two sets of parameters for a differential equation $f$ give "the same" (more in a second) output for
@@ -184,40 +185,101 @@ error_ests <- tibble(error_beta_0 = c(),
             count = c(),
             fraction = c())
 
+beta_0_plot_list <- list()
+beta_1_plot_list <- list()
+scatterplot_errors_only <- list()
+colours <- c("#609cff", "#00ba38", "#f8766d")
+shapes <- c(15, 17, 19)
+
 for(i in 1:length(unique(par_est_tibble$step_size))){
   step_size_select <- unique(par_est_tibble$step_size)[i]
   
   plot_data <- par_est_tibble %>%
     filter(step_size == step_size_select)
   
-  hist(plot_data$beta_0, col = "lightblue", 
-       main = paste0("Step size: ", step_size_select),
-       xlab = "beta_0 ests")
-  hist(plot_data$beta_1, col = "lightgreen",
-       main = paste0("Step size: ", step_size_select),
-       xlab = "beta_1 ests")
-  
-  scatterplot <- ggplot(data = plot_data, aes(x = beta_0, y = beta_1)) +
-    geom_point(aes(colour = as.factor(step_size), 
-                   shape = as.factor(step_size)), 
-               alpha = 0.1,
-               size = 2) +
-    theme_classic() +
-    theme(legend.position = "inside",
-        legend.position.inside = c(0.7, 0.3))
-  
-  print(scatterplot)
-  
   error_estimates_temp <- plot_data %>%
-    filter(beta_0 > mean(plot_data$beta_0)) %>%
-    summarise(error_beta_0 = mean(beta_0),
-            error_beta_1 = mean(beta_1), 
+    filter(beta_0 > 20) %>%
+    summarise(error_beta_0 = median(beta_0),
+            error_beta_1 = median(beta_1), 
             step_size = mean(step_size),
             count = n(),
             fraction = n()/nrow(plot_data))
   
   error_ests <- rbind(error_ests, error_estimates_temp)
+  
+  beta_0_plot_list[[i]] <- ggplot(plot_data, 
+       aes(beta_0)) +
+    geom_histogram(bins = 25,
+                   colour = "black",
+                   fill = "lightblue") +
+    geom_vline(xintercept = beta_0,
+               linetype = "dashed",
+               linewidth = 1,
+               colour = "black") +
+    geom_vline(xintercept = error_ests$error_beta_0[i],
+               linetype = "dotted",
+               linewidth = 1,
+               colour = "cornflowerblue") +
+    xlim(0, 
+         max(par_est_tibble$beta_0)) +
+    labs(x = "beta_0 est.",
+         title = paste0("Step size: ", 
+                        step_size_select)) +
+    theme_classic()
+  
+  beta_1_plot_list[[i]] <- ggplot(plot_data, 
+       aes(beta_1)) +
+    geom_histogram(bins = 25,
+                   colour = "black",
+                   fill = "lightgreen") +
+    geom_vline(xintercept = beta_1,
+               linetype = "dashed",
+               linewidth = 1) +
+    geom_vline(xintercept = error_ests$error_beta_1[i],
+               linetype = "dotted",
+               linewidth = 1,
+               colour = "forestgreen") +
+    xlim(-1, 
+           max(par_est_tibble$beta_1)) +
+    labs(x = "beta_1 est.",
+         title = paste0("Step size: ", 
+                        step_size_select)) +
+    theme_classic()
+  
+  error_ests_scatter <- plot_data %>%
+    filter(beta_0 > 20)
+  
+  xpos <- (min(error_ests_scatter$beta_0) + 
+             0.2*(max(error_ests_scatter$beta_0) - 
+                    min(error_ests_scatter$beta_0)))
+  ypos <- (max(error_ests_scatter$beta_1) - 
+             0.1*(max(error_ests_scatter$beta_1) - 
+                    min(error_ests_scatter$beta_1)))
+  
+  scatterplot_errors_only[[i]] <- ggplot(data = error_ests_scatter, 
+                                         aes(x = beta_0, y = beta_1)) +
+    geom_point(colour = colours[i], 
+               shape = shapes[i], 
+               alpha = 0.5,
+               size = 2) +
+      labs(x = "beta_0 est.",
+           y = "beta_1 est.",
+           title = paste0("Step size: ", 
+                        step_size_select)) +
+    annotate("text", x = xpos, y = ypos, 
+             label = paste0("Error rate: \n",
+                            error_estimates_temp$fraction)) +
+      theme_classic()
 }
+
+plot_grid(beta_0_plot_list[[1]], 
+          beta_0_plot_list[[2]],
+          beta_0_plot_list[[3]],
+          beta_1_plot_list[[1]], 
+          beta_1_plot_list[[2]],
+          beta_1_plot_list[[3]],
+          nrow = 3, byrow = FALSE,
+          align = "v")
 ```
 
 We get clear bimodality in both the histograms and the scatter plot. Bias in the estimates closest to the true values is due to the same measurement error in the 'observed' data for all the fits. The second mode in the estimates arises from the numerical integration error. 
@@ -272,7 +334,8 @@ compare_sizes_over_time <- ggplot(y_over_time_filtered,
              shape = as.factor(model)),
              alpha=0.5, size = 2, stroke = 1.5) +
   geom_line(aes(colour = as.factor(model)), alpha=0.5, linewidth = 1) +
-  labs(x = "Time", y = "y(t)", colour = "Step size", shape = "Step size") +
+  labs(x = "Time", y = "Y(t)", title = "Fitted step size",
+       colour = "Step size", shape = "Step size") +
   theme_classic() +
   theme(legend.position = "inside",
         legend.position.inside = c(0.7, 0.3))
@@ -315,22 +378,81 @@ compare_sizes_over_time_smallstep <- ggplot(y_over_time_smallstep,
              aes(colour = as.factor(model),
              shape = as.factor(model)),
              alpha=0.5, size = 2, stroke = 1.5) +
-  labs(x = "Time", y = "Y(t)", colour = "Step size", shape = "Step size") +
-  theme_classic()
+  labs(x = "Time", y = "Y(t)", title = "Small step size",
+       colour = "Step size", shape = "Step size") +
+  theme_classic() +
+  theme(legend.position = "inside",
+        legend.position.inside = c(0.7, 0.3))
 
 compare_sizes_over_time_smallstep
+
+error_ests$Y_max <- error_ests$error_beta_0/error_ests$error_beta_1
+plot_data <- tibble(
+  x = c(0, (beta_0/beta_1), 0, 0, 0, error_ests$Y_max),
+  y = c(beta_0, 0, error_ests$error_beta_0, 0,0,0),
+  step_size = c("True", "True", error_ests$step_size, error_ests$step_size)
+)
+
+
+#Plot DEs 
+error_de_plot <- ggplot(data = plot_data, aes(x,y)) +
+  geom_line(aes(colour = as.factor(step_size),
+                linetype = as.factor(step_size)),
+            linewidth = 1) +
+  scale_linetype_manual(values = c("longdash", 
+                                   "dashed", 
+                                   "dotted", 
+                                   "solid")) +
+  labs(x = "Y(t)", y = "f", 
+       colour = "Step size", 
+       linetype = "Step size") +
+  theme_classic() +
+  theme(legend.position = "inside",
+        legend.position.inside = c(0.7, 0.7))
+
 ```
 
 The limiting behaviour at $\beta_0/\beta_1$ is consistent, what changes is how fast line approaches the asymptote. 
 
 If you have done multiple step sizes, this block will produce a scatter plot of all the parameter estimates together. We can see a very strong linear trend (slope is 1/10, which corresponds to the inverse limiting size), with the gap between the true parameter and the erroneous one getting larger as the step size shrinks. Also important to note that the frequency of bad estimates decreases along with the step size, which we believe comes from the greater distance: the further the bad estimates are from the true ones, the less likely the MCMC algorithm is to fall into them, particularly as the priors are close to the true values.
 ```{r, eval = FALSE}
-ggplot(data = par_est_tibble, aes(x = beta_0, y = beta_1)) +
+est_scatter <- ggplot(data = par_est_tibble, aes(x = beta_0, y = beta_1)) +
   geom_point(aes(colour = as.factor(step_size), 
                  shape = as.factor(step_size)), 
              alpha = 0.5,
              size = 2) +
-  theme_classic()
+  labs(colour = "Step size", shape = "Step size") +
+  theme_classic() +
+  theme(legend.position = "inside",
+        legend.position.inside = c(0.2, 0.8))
+```
+
+The following block uses the `plot_grid` function to produce arranged figures.
+```{r, eval=FALSE}
+#Histograms
+plot_grid(beta_0_plot_list[[1]], 
+          beta_0_plot_list[[2]],
+          beta_0_plot_list[[3]],
+          beta_1_plot_list[[1]], 
+          beta_1_plot_list[[2]],
+          beta_1_plot_list[[3]],
+          nrow = 3, byrow = FALSE,
+          align = "v")
+
+#DE, all parameters, and sizes over time
+plot_grid(
+  error_de_plot, est_scatter,
+  compare_sizes_over_time, compare_sizes_over_time_smallstep,
+  nrow = 2
+)
+
+#Erronious parameter distributions
+plot_grid(
+  scatterplot_errors_only[[1]],
+  scatterplot_errors_only[[2]],
+  scatterplot_errors_only[[3]],
+  nrow = 1
+)
 ```
 
 # Where to from here?
