@@ -146,6 +146,7 @@ step_sizes = c(0.25, 0.125)
 for(j in 1:length(step_sizes)){
   print(paste0("Fits for step size ", step_sizes[j]))
   for(i in 1:runs){
+    print(paste0("Run: ", i, " step size: ", step_sizes[j]))
     #Run the model
     fit <- hmde_model("linear_single_ind") |>
     hmde_assign_data(n_obs = nrow(obs_data_frame),
