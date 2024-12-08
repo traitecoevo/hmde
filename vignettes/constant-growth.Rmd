@@ -288,6 +288,7 @@ obs_est_size_plot
 size_over_time_plot <- hmde_plot_obs_est_inds(n_ind_to_plot = 5,
                        measurement_data = trout_constant_estimates$measurement_data)
 size_over_time_plot
+
 ```
 
 ### Indvidual growth functions ($\beta$)
