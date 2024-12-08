@@ -98,7 +98,7 @@ The workflow for the second example is the same as the first, with the change in
 ```{r}
 lizard_vb_fit <- hmde_model("vb_multi_ind") |>
   hmde_assign_data(data = Lizard_Size_Data)  |>
-  hmde_run(chains = 4, cores = 4, iter = 2000)
+  hmde_run(chains = 4, cores = 1, iter = 2000)
 
 lizard_estimates <- hmde_extract_estimates(model = "vb_multi_ind",
                                            fit = lizard_vb_fit,
