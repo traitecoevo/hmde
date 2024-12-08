@@ -14,7 +14,6 @@ data {
   real y_obs[n_obs];
   int obs_index[n_obs];
   real time[n_obs];
-  real y_0_obs;
 }
 
 // The parameters accepted by the model.
@@ -54,13 +53,12 @@ model {
 
   //Priors
   //Individual level
-  ind_y_0 ~ normal(y_0_obs, global_error_sigma);
   ind_max_growth ~lognormal(0, 1);
-  ind_size_at_max_growth ~lognormal(3, 1);
+  ind_size_at_max_growth ~lognormal(0, 1);
   ind_k ~lognormal(0, 1);
 
   //Global level
-  global_error_sigma ~cauchy(0,5);
+  global_error_sigma ~cauchy(0, 2);
 }
 
 generated quantities{
@@ -79,8 +77,9 @@ generated quantities{
       //Estimate next size
       y_hat[i+1] = ode_rk45(DE, y_temp,
         time[i], {time[i+1]},
-        ind_max_growth, ind_size_at_max_growth, ind_k)[1][1];
-
+        ind_max_growth,
+        ind_size_at_max_growth,
+        ind_k)[1][1];
     }
   }
 }

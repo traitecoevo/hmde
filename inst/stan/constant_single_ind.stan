@@ -16,7 +16,6 @@ data {
   real y_obs[n_obs];
   int obs_index[n_obs];
   real time[n_obs];
-  real y_0_obs;
 }
 
 // The parameters accepted by the model.
@@ -50,17 +49,15 @@ model {
 
   //Priors
   //Individual level
-  ind_y_0 ~ normal(y_0_obs, global_error_sigma);
   ind_beta ~ lognormal(0.1, 1);
 
   //Global level
-  global_error_sigma ~cauchy(0.1, 1);
+  global_error_sigma ~cauchy(0, 2);
 }
 
 // The output
 generated quantities {
   real y_hat[n_obs];
-  real Delta_hat[n_obs];
 
   for(i in 1:n_obs){
     //Fits the first size
@@ -71,9 +68,6 @@ generated quantities {
     // Estimate next size
     if(i < n_obs){
       y_hat[i+1] = size_step(y_hat[i], ind_beta, (time[i+1]-time[i]));
-      Delta_hat[i] = y_hat[i+1] - y_hat[i];
-    } else {
-      Delta_hat[i] = DE(ind_beta) * (time[i]-time[i-1]);
     }
   }
 }

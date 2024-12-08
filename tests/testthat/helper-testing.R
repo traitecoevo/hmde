@@ -24,8 +24,7 @@ hmde_test_single_individual <- function(model_name,
           hmde_assign_data(n_obs = data$n_obs, #integer
                            y_obs = data$y_obs,
                            obs_index = data$obs_index, #vector length N_obs
-                           time = data$time, #Vector length N_obs
-                           y_0_obs = data$y_0_obs #vector length N_ind
+                           time = data$time #Vector length N_obs
           ) |>
           hmde_run(chains = 1, iter = 1000, verbose = FALSE, show_messages = FALSE)
       )
@@ -37,8 +36,7 @@ hmde_test_single_individual <- function(model_name,
                            y_obs = data$y_obs,
                            obs_index = data$obs_index, #vector length N_obs
                            time = data$time, #Vector length N_obs
-                           y_bar = data$y_bar, #Real
-                           y_0_obs = data$y_0_obs #vector length N_ind
+                           y_bar = data$y_bar #Real
           ) |>
           hmde_run(chains = 1, iter = 1000, verbose = FALSE, show_messages = FALSE)
       )
@@ -74,8 +72,7 @@ hmde_test_multi_individual <- function(model_name, data, est_dim){
                            y_obs = data$y_obs, #vector length N_obs
                            obs_index = data$obs_index, #vector length N_obs
                            time = data$time, #Vector length N_obs
-                           ind_id = data$ind_id, #Vector length N_obs
-                           y_0_obs = data$y_0_obs #vector length N_ind
+                           ind_id = data$ind_id #Vector length N_obs
           ) |>
           hmde_run(chains = 2, iter = 100, verbose = FALSE, show_messages = FALSE)
       )
@@ -90,8 +87,7 @@ hmde_test_multi_individual <- function(model_name, data, est_dim){
                            obs_index = data$obs_index, #vector length N_obs
                            time = data$time, #Vector length N_obs
                            y_bar = data$y_bar, #Real
-                           ind_id = data$ind_id, #Vector length N_obs
-                           y_0_obs = data$y_0_obs #vector length N_ind
+                           ind_id = data$ind_id #Vector length N_obs
           ) |>
           hmde_run(chains = 2, iter = 100, verbose = FALSE, show_messages = FALSE)
       )
@@ -106,8 +102,7 @@ hmde_test_multi_individual <- function(model_name, data, est_dim){
                          y_obs = data$y_obs, #vector length N_obs
                          obs_index = data$obs_index, #vector length N_obs
                          time = data$time, #Vector length N_obs
-                         ind_id = data$ind_id, #Vector length N_obs
-                         y_0_obs = data$y_0_obs #vector length N_ind
+                         ind_id = data$ind_id #Vector length N_obs
         ) |>
         hmde_run(chains = 2, iter = 100, verbose = FALSE, show_messages = FALSE)
     )

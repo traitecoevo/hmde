@@ -8,8 +8,8 @@
 
 hmde_run <- function(model_template, ...) {
   #Check for model
-  if(!model_template$model %in% hmde_model_name()){
-    stop("Model name not recognised. Run hmde_model_name() to see available models.")
+  if(!model_template$model %in% hmde_model_names()){
+    stop("Model name not recognised. Run hmde_model_names() to see available models.")
   }
 
   # Detect model

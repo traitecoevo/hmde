@@ -13,7 +13,6 @@ data {
   real y_obs[n_obs];
   int obs_index[n_obs];
   real time[n_obs];
-  real y_0_obs;
   real y_bar;
 }
 
@@ -54,24 +53,20 @@ model {
 
   //Priors
   //Individual level
-  ind_y_0 ~ normal(y_0_obs, global_error_sigma);
   ind_max_size ~lognormal(0, 1);
   ind_growth_rate ~lognormal(0, 1); //Take max obs. size as average value
 
   //Global level
-  global_error_sigma ~cauchy(0,1);
+  global_error_sigma ~cauchy(0, 2);
 }
 
 generated quantities{
   real y_hat[n_obs];
-  real Delta_hat[n_obs];
   array[3] real pars;
 
   pars[1] = ind_max_size - y_bar;
   pars[2] = ind_growth_rate;
   pars[3] = ind_y_0 - y_bar;
-
-  real temp_y_final;
 
   for(i in 1:n_obs){
 
@@ -82,11 +77,6 @@ generated quantities{
     if(i < n_obs){
       //Estimate next size
       y_hat[i+1] = solution(time[i+1], pars) + y_bar;
-      Delta_hat[i] = y_hat[i+1] - y_hat[i];
-
-    } else { // Estimate next growth based on same time to last.
-      temp_y_final = solution(2*time[i] - time[i-1], pars) + y_bar;
-      Delta_hat[i] = temp_y_final - y_hat[i];
     }
   }
 }

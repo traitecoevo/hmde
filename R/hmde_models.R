@@ -7,8 +7,8 @@
 
 hmde_model <- function(model=NULL){
 
-  if(!model %in% hmde_model_name()){
-    stop("Model name not recognised. Run hmde_model_name() to see available models.")
+  if(!model %in% hmde_model_names()){
+    stop("Model name not recognised. Run hmde_model_names() to see available models.")
   }
 
   output <- switch(model,
@@ -34,7 +34,6 @@ hmde_const_single_ind <- function(){
        y_obs = NULL,
        obs_index = NULL,
        time = NULL,
-       y_0_obs = NULL,
        model = "constant_single_ind")
 }
 
@@ -49,7 +48,6 @@ hmde_const_multi_ind <- function(){
        obs_index = NULL,
        time = NULL,
        ind_id = NULL,
-       y_0_obs = NULL,
        model = "constant_multi_ind")
 }
 
@@ -62,7 +60,6 @@ hmde_canham_single_ind <- function(){
        y_obs = NULL,
        obs_index = NULL,
        time = NULL,
-       y_0_obs = NULL,
        model = "canham_single_ind")
 }
 
@@ -77,7 +74,6 @@ hmde_canham_multi_ind <- function(){
        obs_index = NULL,
        time = NULL,
        ind_id = NULL,
-       y_0_obs = NULL,
        model = "canham_multi_ind")
 }
 
@@ -91,7 +87,6 @@ hmde_vb_single_ind <- function(){
        y_obs = NULL,
        obs_index = NULL,
        time = NULL,
-       y_0_obs = NULL,
        y_bar = NULL,
        model = "vb_single_ind")
 }
@@ -107,7 +102,6 @@ hmde_vb_multi_ind <- function(){
        obs_index = NULL,
        time = NULL,
        ind_id = NULL,
-       y_0_obs = NULL,
        y_bar = NULL,
        model = "vb_multi_ind")
 }
@@ -122,7 +116,6 @@ hmde_linear_single_ind <- function(){
        y_obs = NULL,
        obs_index = NULL,
        time = NULL,
-       y_0_obs = NULL,
        y_bar = NULL,
        model = "linear_single_ind")
 }
