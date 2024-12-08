@@ -1,14 +1,14 @@
 ---
-  title: "Case study 2: von Bertalanffy growth with lizard size data"
+title: "Case study 2: von Bertalanffy growth with lizard size data"
 output: rmarkdown::html_vignette
 vignette: >
   %\VignetteIndexEntry{von-bertalanffy}
-%\VignetteEngine{knitr::rmarkdown}
-%\VignetteEncoding{UTF-8}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
 bibliography: vignette.bib
 ---
   
-  ```{r, include = FALSE}
+```{r, include = FALSE}
 knitr::opts_chunk$set(
   collapse = TRUE,
   comment = "#>"

@@ -53,7 +53,7 @@ $$\beta_k \sim \log\mathcal{N}(0,2),$$
 and enforce $\beta_k > 0$.
 
 
-# Simulating data
+## Simulating data
 For this demo code we use $\beta_0 = 10$ and $\beta_1 = 1$. If you wish to experiment with other values, input them in the next block and the rest will run based on that. We use the analytic solution to simulate true sizes over time, then add measurement error and round to the chosen measurement precision of 0.1 to give a sequence of observations over time that become the `y_obs` data for the model fit. Notice that `y_obs` can produces values that are bigger than the theoretical max value $\beta_0/\beta_1$ due to error.
 ```{r}
 #Change these values to change the model parameters. Must be positive values.
@@ -98,7 +98,7 @@ ggplot(plot_data, aes(x = x, y = y, group = source)) +
 
 A note on precision: the same bad behaviour occurs even if you use unrounded data with all the precision R offers. You can test this by uncommenting the line that just adds measurement error. We decided to round the observations in order to give a more realistic demonstration of the issue.
 
-# Implementing model
+## Implementing model
 We're going to run 100 fits with a step size of 1 using the custom RK4 solver and a single chain each. We do single chains because each can fall into the numerical error trap, and the easiest way to identify that trap is to extract the estimates afterwards.
 
 Each fit takes a few seconds to run, so allow several minutes for the following block. There are likely to be diagnostic problems but that is part of what we are here to explore so we will be ignoring them. Divergent transitions in particular are to be expected when we have the very different parameter estimates we see. Results are hidden for this block.
@@ -176,7 +176,7 @@ for(j in 1:length(step_sizes)){
 ```
 
 
-# Analysis
+## Analysis
 
 Let's extract some summary statistics and look at the distribution of parameter estimates. First we'll get histograms of the 1-dimensional distributions, then we'll look at a scatter plot.
 ```{r}
@@ -280,15 +280,6 @@ for(i in 1:length(unique(par_est_tibble$step_size))){
                             error_estimates_temp$fraction)) +
       theme_classic()
 }
-
-plot_grid(beta_0_plot_list[[1]], 
-          beta_0_plot_list[[2]],
-          beta_0_plot_list[[3]],
-          beta_1_plot_list[[1]], 
-          beta_1_plot_list[[2]],
-          beta_1_plot_list[[3]],
-          nrow = 3, byrow = FALSE,
-          align = "v")
 
 error_ests
 ```
@@ -399,8 +390,8 @@ compare_sizes_over_time_smallstep
 
 error_ests$Y_max <- error_ests$error_beta_0/error_ests$error_beta_1
 plot_data <- tibble(
-  x = c(0, (beta_0/beta_1), 0, 0, 0, error_ests$Y_max),
-  y = c(beta_0, 0, error_ests$error_beta_0, 0,0,0),
+  x = c(0, (beta_0/beta_1), rep(0, times = nrow(error_ests)), error_ests$Y_max),
+  y = c(beta_0, 0, error_ests$error_beta_0, rep(0, times = nrow(error_ests))),
   step_size = c("True", "True", error_ests$step_size, error_ests$step_size)
 )
 
@@ -438,7 +429,7 @@ est_scatter <- ggplot(data = par_est_tibble, aes(x = beta_0, y = beta_1)) +
         legend.position.inside = c(0.2, 0.8))
 ```
 
-The following block uses the `plot_grid` function to produce arranged figures.
+The following block uses the `plot_grid` function to produce arranged figures and is set up to use with 3 step sizes.
 ```{r, eval=FALSE}
 #Histograms
 plot_grid(beta_0_plot_list[[1]], 
