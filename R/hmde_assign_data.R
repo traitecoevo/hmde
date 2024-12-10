@@ -8,8 +8,8 @@
 #' @export
 
 hmde_assign_data <- function(model_template, data = NULL,...){
-  if(!model_template$model %in% hmde_model_name()){
-    stop("Model name not recognised. Run hmde_model_name() to see available models.")
+  if(!model_template$model %in% hmde_model_names()){
+    stop("Model name not recognised. Run hmde_model_names() to see available models.")
   }
 
   if(!is.null(data)){ # Use provided tibble
@@ -51,7 +51,6 @@ hmde_assign_data <- function(model_template, data = NULL,...){
         i,
         n_obs = length(data$y_obs),
         n_ind = length(unique(data$ind_id)),
-        y_0_obs = data$y_obs[which(data$obs_index == 1)],
         y_bar = mean(data$y_obs),
         model = model_template$model
       )
