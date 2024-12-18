@@ -74,6 +74,6 @@ hmde_vb_de <- function(y = NULL, pars = NULL){
 
 hmde_linear_de <- function(y = NULL, pars = NULL){
   return(
-    pars[[1]] + pars[[2]] * y
+    pars[[1]] - pars[[2]] * y
     )
 }

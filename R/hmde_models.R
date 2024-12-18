@@ -117,5 +117,6 @@ hmde_linear_single_ind <- function(){
        obs_index = NULL,
        time = NULL,
        y_bar = NULL,
+       int_method = NULL,
        model = "linear_single_ind")
 }
