@@ -45,6 +45,11 @@ functions{
 
     return y_hat;
   }
+
+  vector DE_RK45(real t, vector y, real ind_const, real beta_1, real y_bar){
+    vector[size(y)] dydt = ind_const - (beta_1 * (y-y_bar));
+    return dydt;
+  }
 }
 
 // Data structure
@@ -55,6 +60,7 @@ data {
   int obs_index[n_obs];
   real time[n_obs];
   real y_bar;
+  int int_method;
 }
 
 // The parameters accepted by the model.
@@ -72,6 +78,7 @@ parameters {
 model {
   real y_hat[n_obs];
   array[3] real pars;
+  vector[1] y_temp;
 
   pars[1] = ind_const;
   pars[2] = ind_beta_1;
@@ -85,7 +92,15 @@ model {
 
     if(i < n_obs){
       //Estimate next size
-      y_hat[i+1] = rk4(y_hat[i], pars, (time[i+1] - time[i]), step_size);
+      if(int_method == 1){
+        y_hat[i+1] = rk4(y_hat[i], pars, (time[i+1] - time[i]), step_size);
+      }
+      if(int_method == 2){
+        y_temp[1] = y_hat[i];
+        y_hat[i+1] = ode_rk45(DE_RK45, y_temp,
+                      time[i], {time[i+1]},
+                      ind_const, ind_beta_1, y_bar)[1][1];
+      }
     }
   }
 
@@ -102,6 +117,7 @@ generated quantities{
   real y_hat[n_obs];
   array[3] real pars;
   real ind_beta_0;
+  vector[1] y_temp;
 
   ind_beta_0 = ind_const + ind_beta_1*y_bar;
 
@@ -117,7 +133,15 @@ generated quantities{
 
     if(i < n_obs){
       //Estimate next size
-      y_hat[i+1] = rk4(y_hat[i], pars, (time[i+1] - time[i]), step_size);
+      if(int_method == 1){
+        y_hat[i+1] = rk4(y_hat[i], pars, (time[i+1] - time[i]), step_size);
+      }
+      if(int_method == 2){
+        y_temp[1] = y_hat[i];
+        y_hat[i+1] = ode_rk45(DE_RK45, y_temp,
+                      time[i], {time[i+1]},
+                      ind_const, ind_beta_1, y_bar)[1][1];
+      }
     }
   }
 }

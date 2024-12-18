@@ -32,15 +32,20 @@ library(dplyr)
 library(ggplot2)
 library(deSolve)
 library(cowplot)
+library(mixtools)
 ```
 
-This vignette demonstrates an interaction between errors from numerical integration methods and MCMC sampling. The underlying issue is that if, given errors in the chosen numerical integration method, two sets of parameters for a differential equation $f$ give "the same" (more in a second) output for
+This vignette demonstrates an interaction between errors from numerical integration methods and MCMC sampling that produces a bimodal posterior distribution as a result of numerical error. We stumbled across the problem and are documenting it here, but account for it in the package through either using analytic solutions, or numerical methods with adaptive step sizes where analytic solutions are not available.
+
+The underlying issue is that if, given errors in the chosen numerical integration method, two sets of parameters for a differential equation $f$ give "the same" (more in a second) output for
 $$Y(t_{j+1}) = Y(t_j) + \int_{t_j}^{t_{j+1}} f(Y(t), \boldsymbol{\theta})\,dt\qquad (1)$$
-the MCMC sampler will be unable to meaningfully distinguish the parameter combinations. Thus, there is a form of non-identifiability that arises from numerical errors in a longitudinal model based on Equation (1) that are separate to other issues of non-identifiability, and currently under-explored in the literature. In this demonstration we use a Runge-Kutta 4th order numerical method (\cite{butcher2016numerical}) with different step sizes to show that even 'small' step sizes can give problems.
+the MCMC sampler will be unable to meaningfully distinguish the parameter combinations. What you see in practice is chains converging to extremely different parameter combinations, one of which is the `true' combination, the other of which is wrong but produces the same $\hat{Y}(t_j)$ values due to the numerical error. Thus, there is a form of non-identifiability that arises from numerical errors in a longitudinal model based on Equation (1) that are separate to other issues of non-identifiability, and currently under-explored in the literature. In this demonstration we use a Runge-Kutta 4th order numerical method (\cite{butcher2016numerical}) with different step sizes to show that even 'small' step sizes can give problems.
 
 It is important to state that "the same" $Y(t)$ values in this context means within statistical error of each other. We assume that our data consists of observations of the form $y_{j}$ at time $t_j$ that look like
 $$y_j = Y(t_j) + \text{error},$$
-and have some finite level of precision. The numerical method may produce estimated values $\hat{Y}(t_j)$ that differ by some amount that is much smaller than the level of precision or observation error for the different parameter combinations, but due to the imprecision of the measurement process the MCMC sampler cannot meaningfully distinguish the estimates. For this demonstration we will use rounding to produce simulated data with measurement precision of 0.1, and error of $\mathcal{N}(0, 0.1)$, analogous to the 1mm measurement precision and approximate standard deviation of the real-world source data used in @obrien2024allindividuals.
+and have some finite level of precision. The numerical method may produce estimated values $\hat{Y}(t_j)$ that differ by some amount that is much smaller than the level of precision or observation error for the different parameter combinations, but due to the imprecision of the measurement process the MCMC sampler cannot meaningfully distinguish the estimates. 
+
+For this demonstration we will simulate data as though it is measured in centimetres. We use rounding to produce simulated data with measurement precision of 0.1, and error of $\mathcal{N}(0, 0.1)$, analogous to the 1mm measurement precision and approximate standard deviation of the real-world source data used in @obrien2024allindividuals.
 
 ## The model
 We are implementing a longitudinal model of the form in Equation (1) within a hierarchical Bayesian longitudinal model where
@@ -66,7 +71,18 @@ max_time <- 9
 time <- 0:max_time
 
 #Analytic solution
-y_true <- (beta_0/beta_1) + (true_y_0 - (beta_0/beta_1)) * exp(-beta_1 * time)
+analytic_solution <- function(x = NULL, pars = NULL){ #Pars is list of beta_0, beta_1, y_0
+  return(
+    (pars[[1]]/pars[[2]]) + (pars[[3]] - (pars[[1]]/pars[[2]])) * exp(-pars[[2]] * x)
+  )
+}
+pars <- list(
+  beta_0 = beta_0,
+  beta_1 = beta_1,
+  true_y_0 = true_y_0
+)
+
+y_true <- analytic_solution(time, pars)
 
 #Produce observations with error and limited precision
 y_obs <- round(y_true + rnorm(length(y_true), 0, 0.1), digits = 1)
@@ -85,21 +101,39 @@ obs_data_frame <- tibble(
 plot_data <- tibble(
   x = c(time, time),
   y = c(y_true,y_obs),
-  source = c(rep("True sizes", times = length(y_true)),
+  Data = c(rep("True sizes", times = length(y_true)),
              rep("Obs. sizes", times = length(y_obs)))
 )
-ggplot(plot_data, aes(x = x, y = y, group = source)) +
-  geom_point(aes(colour = source, shape = source)) +
-  geom_line(aes(colour = source, linetype = source)) +
+
+sizes_over_time <- ggplot(plot_data, aes(x = x, y = y, group = Data)) +
+  geom_point(aes(colour = Data, shape = Data), size = 2) +
+  geom_line(aes(colour = Data, linetype = Data), linewidth = 1) +
+  scale_linetype_manual(values = c("dashed", "dotted")) +
+  ylim(0, 10.5) +
+  labs(x = "Time", y = "Y") +
   theme_classic() +
   theme(legend.position = "inside",
         legend.position.inside = c(0.7, 0.3))
+sizes_over_time
+
+#Have a look at the observations against the analytic solution
+args_list <- list(pars = pars)
+analytic_observed <- ggplot(obs_data_frame, aes(x = time, y = y_obs)) +
+  geom_function(fun=analytic_solution, args = args_list,
+                linewidth = 1, colour = "black") +
+  geom_point(colour = "#f8766d", size = 2) +
+  geom_line(colour = "#f8766d", linewidth = 1,
+            linetype = "dashed") +
+  labs(x = "Time", y = "Y") +
+  ylim(0, 10.5) +
+  theme_classic()
+analytic_observed
 ```
 
-A note on precision: the same bad behaviour occurs even if you use unrounded data with all the precision R offers. You can test this by uncommenting the line that just adds measurement error. We decided to round the observations in order to give a more realistic demonstration of the issue.
+A note on precision: the same bad behaviour occurs even if you use unrounded data with all the precision R offers. You can test this by uncommenting the line that just adds measurement error. We decided to round the observations in order to give a more realistic demonstration of the issue. The same behaviour also occurs with smaller measurement error.
 
 ## Implementing model
-We're going to run 100 fits with a step size of 1 using the custom RK4 solver and a single chain each. We do single chains because each can fall into the numerical error trap, and the easiest way to identify that trap is to extract the estimates afterwards.
+We're going to run 100 fits with a step size of 1 using the custom RK4 solver and a single chain each. Each chain is expected to converge to a parameter combination that gives estimated $\hat{Y}(t_j)$ close to the analytic solution, but which combination is converged to is random. We do single chains because each can fall into the numerical error trap, and the easiest way to identify that trap is to extract the estimates afterwards.
 
 Each fit takes a few seconds to run, so allow several minutes for the following block. There are likely to be diagnostic problems but that is part of what we are here to explore so we will be ignoring them. Divergent transitions in particular are to be expected when we have the very different parameter estimates we see. Results are hidden for this block.
 ```{r, results='hide'}
@@ -190,6 +224,7 @@ error_ests <- tibble(error_beta_0 = c(),
 beta_0_plot_list <- list()
 beta_1_plot_list <- list()
 scatterplot_errors_only <- list()
+scatterplot_good_only <- list()
 colours <- c("#609cff", "#00ba38", "#f8766d")
 shapes <- c(15, 17, 19)
 
@@ -257,7 +292,10 @@ for(i in 1:length(unique(par_est_tibble$step_size))){
   
   error_ests_scatter <- plot_data %>%
     filter(beta_0 > 20)
+  good_ests_scatter <- plot_data %>%
+    filter(beta_0 <= 20)
   
+  #Scatter plot of erroneous parameters
   xpos <- (min(error_ests_scatter$beta_0) + 
              0.2*(max(error_ests_scatter$beta_0) - 
                     min(error_ests_scatter$beta_0)))
@@ -279,12 +317,65 @@ for(i in 1:length(unique(par_est_tibble$step_size))){
              label = paste0("Error rate: \n",
                             error_estimates_temp$fraction)) +
       theme_classic()
+  
+  #Scatter plot of good parameter estimates
+  xpos <- (min(good_ests_scatter$beta_0) + 
+             0.2*(max(good_ests_scatter$beta_0) - 
+                    min(good_ests_scatter$beta_0)))
+  ypos <- (max(good_ests_scatter$beta_1) - 
+             0.1*(max(good_ests_scatter$beta_1) - 
+                    min(good_ests_scatter$beta_1)))
+  
+  scatterplot_good_only[[i]] <- ggplot(data = good_ests_scatter, 
+                                         aes(x = beta_0, y = beta_1)) +
+    geom_point(colour = colours[i], 
+               shape = shapes[i], 
+               alpha = 0.5,
+               size = 2) +
+      labs(x = "beta_0 est.",
+           y = "beta_1 est.",
+           title = paste0("Step size: ", 
+                        step_size_select)) +
+    annotate("text", x = xpos, y = ypos, 
+             label = paste0("Correct rate: \n",
+                            (1-error_estimates_temp$fraction))) +
+      theme_classic()
 }
 
 error_ests
 ```
 
-We get clear bimodality in both the histograms and the scatter plot. Bias in the estimates closest to the true values is due to the same measurement error in the 'observed' data for all the fits. The second mode in the estimates arises from the numerical integration error. 
+We get bimodality in both the histograms and the scatter plot. Bias in the estimates closest to the true values is due to the same measurement error in the 'observed' data for all the fits. The second mode in the estimates arises from the numerical integration error as we will verify shortly. First we are going to fit a finite mixture model for each of the step sizes to tell us about the clustering and distribution.
+
+```{r}
+mix_models <- list()
+for(i in 1:length(unique(par_est_tibble$step_size))){
+  #Get data for single step size
+  step_size_selected <- unique(par_est_tibble$step_size)[i]
+  
+  analysis_data <- par_est_tibble %>%
+    filter(step_size == step_size_selected)
+  
+  error_est_vec <- error_ests %>%
+    filter(step_size == step_size_selected)
+  
+  #To speed up the iterative algorithm we provide some initial conditions
+  mu <- list( #Means
+    true = c(beta_0, beta_1),
+    error = c(error_est_vec$error_beta_0, error_est_vec$error_beta_1)
+  )
+  lambda <- c(1 - error_est_vec$fraction, error_est_vec$fraction) #Mixture probabilities
+  
+  #Fit multivariate normal finite mixture model to the estimates
+  mix_models[[i]] <- mvnormalmixEM(x = analysis_data[,c(3,4)], mu = mu, lambda = lambda)
+  
+  print(paste0("Summary of mixture model for step size ", step_size_selected))
+  summary(mix_models[[i]])
+  plot(mix_models[[i]], whichplots = 2, xlab2 = "Beta 0", ylab2 = "Beta 1")
+}
+
+```
+
 
 We can double-check the numerical error by using an independent solver with the same step size. We use the `deSolve` package which has an implementation of RK4 and allows us to choose the step sizes using the time parameter.
 ```{r}

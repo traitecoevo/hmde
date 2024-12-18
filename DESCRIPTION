@@ -43,7 +43,8 @@ Suggests:
     here,
     patchwork,
     deSolve,
-    cowplot
+    cowplot,
+    mixtools
 VignetteBuilder: knitr
 Config/testthat/edition: 3
 LazyData: true
