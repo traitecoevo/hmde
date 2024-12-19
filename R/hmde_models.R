@@ -118,5 +118,6 @@ hmde_linear_single_ind <- function(){
        time = NULL,
        y_bar = NULL,
        int_method = NULL,
+       prior_means = c(1,1),
        model = "linear_single_ind")
 }

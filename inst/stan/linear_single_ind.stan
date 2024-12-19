@@ -61,6 +61,7 @@ data {
   real time[n_obs];
   real y_bar;
   int int_method;
+  real prior_means[2]; #vector of means for beta parameter priors
 }
 
 // The parameters accepted by the model.
@@ -109,8 +110,8 @@ model {
 
   //Priors
   //Individual level
-  ind_const ~lognormal(0, 2);
-  ind_beta_1 ~lognormal(0, 2);
+  ind_const ~lognormal(log(prior_means[1]), 2);
+  ind_beta_1 ~lognormal(log(prior_means[2]), 2);
 }
 
 generated quantities{
