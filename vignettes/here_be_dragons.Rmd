@@ -25,7 +25,7 @@ options(rmarkdown.html_vignette.check_title = FALSE)
 
 ## Load dependencies
 ```{r}
-#remotes::install_github("traitecoevo/hmde@7e80ae278e6e4d478c38f36f83c199897d30f01b", force = TRUE)
+#remotes::install_github("traitecoevo/hmde@d09e4b331b41b810d0624335ea14e5390798455f", force = TRUE)
 
 library(hmde)
 library(dplyr)
@@ -188,15 +188,17 @@ for(j in 1:length(step_sizes)){
   for(i in 1:runs){
     print(paste0("Run: ", i, " step size: ", step_sizes[j]))
     #Run the model
-    fit <- hmde_model("linear_single_ind") |>
-    hmde_assign_data(n_obs = nrow(obs_data_frame),
-                     y_obs = obs_data_frame$y_obs,
-                     obs_index = obs_data_frame$obs_index,
-                     time = obs_data_frame$time,
-                     y_bar = mean(obs_data_frame$y_obs),
-                     step_size = step_sizes[j],
-                     int_method = 1)  |>  #RK4
-    hmde_run(chains = 1, cores = 1, iter = 2000)
+    suppressWarnings(
+      fit <- hmde_model("linear_single_ind") |>
+      hmde_assign_data(n_obs = nrow(obs_data_frame),
+                       y_obs = obs_data_frame$y_obs,
+                       obs_index = obs_data_frame$obs_index,
+                       time = obs_data_frame$time,
+                       y_bar = mean(obs_data_frame$y_obs),
+                       step_size = step_sizes[j],
+                       int_method = 1)  |>  #RK4
+      hmde_run(chains = 1, cores = 1, iter = 2000)
+    )
     
     #Extract parameter estimates
     ests <- hmde_extract_estimates(model = "linear_single_ind",
@@ -765,6 +767,61 @@ est_scatter <- ggplot(data = par_est_tibble, aes(x = beta_0, y = beta_1)) +
 est_scatter
 ```
 
+## Alternate prior testing
+As the default priors for the $\beta$ parameters are closer to the true parameter combination than any of the erroneous clusters we did follow-up testing to check if, and how much, this might bias the probability of a chain falling into the second mode in the posterior distribution. The Stan code for the linear model is set up to have a default pair of prior means at $\log(1) = 0$, but user-defined values can be passed as part of the data structure. We do this for the 0.5 step size only.
+```{r}
+step_size <- 0.5
+runs <- 10
+beta_prior_testing <- list(
+  average_point <- c(mean(c(mix_models_par_ests$good_beta_0[1], 
+                          mix_models_par_ests$error_beta_0[1])),
+                     mean(c(mix_models_par_ests$good_beta_1[1], 
+                          mix_models_par_ests$error_beta_1[1]))
+  )
+)
+
+prior_test_est_tibble <- tibble(run = c(),
+                                step_size = c(),
+                                beta_0 = c(),
+                                beta_1 = c())
+
+for(j in 1:length(beta_prior_testing)){
+  prior_means <- beta_prior_testing[[j]]
+  
+  for(i in 1:runs){
+    print(paste0("Run: ", i, " step size: ", step_size))
+    #Run the model
+    suppressWarnings(
+      fit <- hmde_model("linear_single_ind") |>
+      hmde_assign_data(n_obs = nrow(obs_data_frame),
+                       y_obs = obs_data_frame$y_obs,
+                       obs_index = obs_data_frame$obs_index,
+                       time = obs_data_frame$time,
+                       y_bar = mean(obs_data_frame$y_obs),
+                       step_size = step_size,
+                       int_method = 1,
+                       prior_means = prior_means)  |>  #RK4
+      hmde_run(chains = 1, cores = 1, iter = 2000)
+    )
+    
+    #Extract parameter estimates
+    ests <- hmde_extract_estimates(model = "linear_single_ind",
+                                   fit = fit,
+                                   input_measurement_data = obs_data_frame)
+    
+    temp <- tibble(
+      run = i,
+      step_size = step_size,
+      beta_0 = ests$individual_data$ind_beta_0_mean,
+      beta_1 = ests$individual_data$ind_beta_1_mean
+    )
+    
+    prior_test_est_tibble <- rbind(prior_test_est_tibble, temp)
+  }
+}
+```
+
+## Plots for paper
 The following block uses the `plot_grid` function to produce arranged figures and is set up to use with 3 step sizes.
 ```{r, eval=FALSE}
 #Histograms

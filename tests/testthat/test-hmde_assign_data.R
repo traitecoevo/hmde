@@ -119,3 +119,33 @@ test_that("Execution and output: bad input", {
       hmde_assign_data(data = mtcars)
   )
 })
+
+
+test_that("Execution and output: default values", {
+  time <- 1:5
+  y_obs <- 1:5
+  obs_index <- 1:5
+
+  default_used <- hmde_model("linear_single_ind") |>
+    hmde_assign_data(n_obs = length(y_obs),
+                     y_obs= y_obs,
+                     obs_index = obs_index,
+                     time = time,
+                     y_bar = mean(y_obs),
+                     step_size = 1,
+                     int_method = 1)
+
+  expect_equal(default_used$prior_means, c(1,1))
+
+  value_supplied <- hmde_model("linear_single_ind") |>
+    hmde_assign_data(n_obs = length(y_obs),
+                     y_obs= y_obs,
+                     obs_index = obs_index,
+                     time = time,
+                     y_bar = mean(y_obs),
+                     step_size = 1,
+                     int_method = 1,
+                     prior_means = c(5,5))
+
+  expect_equal(value_supplied$prior_means, c(5,5))
+})
