@@ -25,7 +25,7 @@ options(rmarkdown.html_vignette.check_title = FALSE)
 
 ## Load dependencies
 ```{r}
-#remotes::install_github("traitecoevo/hmde@d09e4b331b41b810d0624335ea14e5390798455f", force = TRUE)
+#remotes::install_github("traitecoevo/hmde@9633f09f158c6ee37e242bf1e3e0ae06638f722b", force = TRUE)
 
 library(hmde)
 library(dplyr)
@@ -57,7 +57,6 @@ $$y_j \sim \mathcal{N}(\hat{Y}_j, 0.1).$$
 As we are looking at a single individual, we have prior distributions for the parameters which are
 $$\beta_k \sim \log\mathcal{N}(0,2),$$
 and enforce $\beta_k > 0$.
-
 
 ## Simulating data
 For this demo code we use $\beta_0 = 10$ and $\beta_1 = 1$, which gives an asymptotic size of 10. If you wish to experiment with other values, input them in the next block and the rest will run based on that. We use the analytic solution to simulate true sizes over time, then add measurement error and round to the chosen measurement precision of 0.1cm to give a sequence of observations over time that become the `y_obs` data for the model fit. Notice that `y_obs` can produces values that are bigger than the theoretical asymptotic size $\beta_0/\beta_1$ due to error.
@@ -382,8 +381,6 @@ legend_spec_with_true$fancy_name[4] <-
          beta_1)
 ```
 
-
-
 We use scatter plots of the clusters for qualitative analysis. As the clusters are so distant from each other, and so tight around their means, we separate them out for plots. The mixture models gives a classification of each point in the data that we use to filter observations. As the clusters are so distant we can use other heuristics such as $\hat{\beta_}_0 > 2\beta_0$ which agree perfectly with the cluster analysis.
 
 The contours over the scatter plot come from data simulated from the cluster's multivariate normal distribution identified by the finite mixture model.
@@ -461,7 +458,6 @@ for(i in 1:length(unique(par_est_tibble$step_size))){
 }
 ```
 
-
 We can double-check the numerical error by using an independent solver with the same step size. We use the `deSolve` package which has an implementation of RK4 and allows us to choose the step sizes using the time parameter.
 ```{r}
 #install.packages("deSolve")
@@ -474,6 +470,27 @@ DE <- function(Time, State, Pars) { #Implementation of DE
 
     return(list(c(dY)))
   })
+}
+```
+
+### Numerics
+We can demonstrate the source of the problem at the erroneous cluster by looking at what the RK4 algorithm is doing. First here is a direct implementation of the RK4 algorithm for a single step.
+```{r}
+#Define DE function
+example_DE <- function(y, beta_0, beta_1){
+  return(beta_0 - beta_1*y)
+}
+
+#Define RK4 functions=
+rk4_step <- function(y,  pars, interval, DE){
+  k1 <- DE(y, pars)
+  k2 <- DE(y+interval*k1/2.0, pars)
+  k3 <- DE(y+interval*k2/2.0, pars)
+  k4 <- DE(y+interval*k3, pars)
+  
+  y_hat <- y + (1.0/6.0) * (k1 + 2.0*k2 + 2.0*k3 + k4) * interval
+  
+  return(y_hat)
 }
 ```
 
@@ -771,7 +788,7 @@ est_scatter
 As the default priors for the $\beta$ parameters are closer to the true parameter combination than any of the erroneous clusters we did follow-up testing to check if, and how much, this might bias the probability of a chain falling into the second mode in the posterior distribution. The Stan code for the linear model is set up to have a default pair of prior means at $\log(1) = 0$, but user-defined values can be passed as part of the data structure. We do this for the 0.5 step size only.
 ```{r}
 step_size <- 0.5
-runs <- 10
+runs <- 10000
 beta_prior_testing <- list(
   average_point <- c(mean(c(mix_models_par_ests$good_beta_0[1], 
                           mix_models_par_ests$error_beta_0[1])),
@@ -780,15 +797,17 @@ beta_prior_testing <- list(
   )
 )
 
-prior_test_est_tibble <- tibble(run = c(),
-                                step_size = c(),
-                                beta_0 = c(),
-                                beta_1 = c())
+prior_test_est_tibble_list <- list()
 
 for(j in 1:length(beta_prior_testing)){
   prior_means <- beta_prior_testing[[j]]
   
-  for(i in 1:runs){
+  prior_test_est_tibble <- tibble(run = c(),
+                                step_size = c(),
+                                beta_0 = c(),
+                                beta_1 = c())
+  
+  for(i in 1492:runs){
     print(paste0("Run: ", i, " step size: ", step_size))
     #Run the model
     suppressWarnings(
@@ -818,7 +837,44 @@ for(j in 1:length(beta_prior_testing)){
     
     prior_test_est_tibble <- rbind(prior_test_est_tibble, temp)
   }
+  
+  prior_test_est_tibble_list[[i]] <- prior_test_est_tibble
 }
+```
+
+For each combination of priors we run a mixture model to get probability estimates.
+```{r}
+mix_model_prior_list <- list()
+mix_model_prior_scatter <- list()
+#Scatter plot to check for evidence of further clusters
+for(i in 1:length(beta_prior_testing)){
+  mix_model_prior_scatter[[i]] <- ggplot(data = prior_test_est_tibble,
+       aes(x = beta_0, y = beta_1)) +
+    geom_point(colour = legend_spec$colours[1], 
+               shape = legend_spec$shapes[1], 
+               alpha = 0.5,
+               size = 2) +
+    labs(x = "beta_0 est.",
+           y = "beta_1 est.") +
+    theme_classic()
+
+  #Get some initialising estimates
+  possible_error <- prior_test_est_tibble %>%
+    filter(beta_0 > mean(prior_test_est_tibble$beta_0))
+  
+  #To speed up the iterative algorithm we provide some initial conditions
+  mu <- list( #Means from true parameters and extreme estimates
+    true = c(beta_0, beta_1),
+    error = c(mean(possible_error$beta_0), 
+              mean(possible_error$beta_1))
+  )
+  
+  #Fit multivariate normal finite mixture model to the estimates
+  mix_model_prior_list[[i]] <- mvnormalmixEM(x = prior_test_est_tibble[,c(3,4)], mu = mu)
+  summary(mix_model_prior_list[[i]])
+  print(mix_model_prior_list[[i]]$lambda)
+}
+
 ```
 
 ## Plots for paper
