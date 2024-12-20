@@ -25,7 +25,7 @@ options(rmarkdown.html_vignette.check_title = FALSE)
 
 ## Load dependencies
 ```{r}
-#remotes::install_github("traitecoevo/hmde@28bfb73b762114cf7da2dc46159d4b0945a278f0", force = TRUE)
+#remotes::install_github("traitecoevo/hmde@f035a3f986d000035824617805b36b8bf7d5dccf", force = TRUE)
 
 library(hmde)
 library(dplyr)
@@ -224,7 +224,7 @@ for(j in 1:length(step_sizes)){
 To show that these problems can be dealt with, we will use the RK45 solver which includes an adaptive step size to reduce error. These models can also take time to run because of the adaptive step size, so this block does not run by default. Occasionally the sampler will start at a bad parameter combination and the RK45 algorithm will fail to converge, but this is usually solved by the next sample iteration and is a result of the linear ODE being a numerical nightmare.
 
 ```{r, eval = FALSE}
-runs <- 10000
+runs <- 100
 rk45_par_est_tibble <- tibble(run = c(),
                          step_size = c(),
                          beta_0 = c(),
@@ -273,19 +273,17 @@ beta_prior_testing <- list(
     prior_means = c(mean(c(10, 49.4)),
                      mean(c(1, 4.92))
     ),
-    prior_sd = NULL
+    prior_sds = c(2,2) #Default value
   ),
   small_sd_test <- list(
-    prior_means = NULL,
-    prior_sd = c(0.1,0.1)
+    prior_means = c(1,1),
+    prior_sds = c(0.1,0.1)
   )
 )
 
 prior_test_est_tibble_list <- list()
 
 for(j in 1:length(beta_prior_testing)){
-  prior_means <- beta_prior_testing[[j]]
-  
   prior_test_est_tibble <- tibble(run = c(),
                                 step_size = c(),
                                 beta_0 = c(),
@@ -303,8 +301,8 @@ for(j in 1:length(beta_prior_testing)){
                        y_bar = mean(obs_data_frame$y_obs),
                        step_size = step_size,
                        int_method = 1,
-                       prior_means = prior_means,
-                       prior_sd = prior_sd)  |>  #RK4
+                       prior_means = beta_prior_testing[[j]]$prior_means,
+                       prior_sds = beta_prior_testing[[j]]$prior_sds)  |>  #RK4
       hmde_run(chains = 1, cores = 1, iter = 2000)
     )
     
