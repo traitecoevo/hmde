@@ -25,7 +25,7 @@ options(rmarkdown.html_vignette.check_title = FALSE)
 
 ## Load dependencies
 ```{r}
-#remotes::install_github("traitecoevo/hmde@9633f09f158c6ee37e242bf1e3e0ae06638f722b", force = TRUE)
+#remotes::install_github("traitecoevo/hmde@28bfb73b762114cf7da2dc46159d4b0945a278f0", force = TRUE)
 
 library(hmde)
 library(dplyr)
@@ -135,7 +135,10 @@ analytic_observed
 
 A note on error and precision: the same bad behaviour occurs even if you use unrounded data with all the precision R offers and much smaller error. You can test this by uncommenting the line that rounds the data and/or changing the measurement error standard deviation. The chosen values, and rounding, are intended to demonstrate that this is a problem that may occur with realistic precision and error.
 
-## Implementing model
+## Implementing models
+In this section we are going to run a sequence of sets of models. The first batch is about checking for the existence of bimodal posterior distributions across different step sizes for the same numerical method. We then use a different numerical method to see if the problem persists. Lastly, we use different means in the parameter priors to see if the posterior can be constrained by such methods.
+
+### Step size data
 We're going to run 100 fits with a step size of 1 using the custom RK4 solver and a single chain each. Each chain is expected to converge to a parameter combination that gives estimated $\hat{Y}(t_j)$ close to the analytic solution, but which combination is converged to is random. We do single chains because each can fall into the numerical error trap, and the easiest way to identify that trap is to extract the estimates afterwards.
 
 Each fit takes a few seconds to run, so allow several minutes for the following block. There are likely to be diagnostic problems but that is part of what we are here to explore so we will be ignoring them. Divergent transitions in particular are to be expected when we have the very different parameter estimates we see. Results are hidden for this block.
@@ -217,7 +220,8 @@ for(j in 1:length(step_sizes)){
 
 ```
 
-Finally, to show that these problems can be dealt with, we will use the RK45 solver which includes an adaptive step size to reduce error. These models can also take time to run because of the adaptive step size, so this block does not run by default. Occasionally the sampler will start at a bad parameter combination and the RK45 algorithm will fail to converge, but this is usually solved by the next sample iteration and is a result of the linear ODE being a numerical nightmare.
+### Better numerical method: Runge-Kutta 4-5 algorithm with adaptive step size
+To show that these problems can be dealt with, we will use the RK45 solver which includes an adaptive step size to reduce error. These models can also take time to run because of the adaptive step size, so this block does not run by default. Occasionally the sampler will start at a bad parameter combination and the RK45 algorithm will fail to converge, but this is usually solved by the next sample iteration and is a result of the linear ODE being a numerical nightmare.
 
 ```{r, eval = FALSE}
 runs <- 10000
@@ -255,6 +259,72 @@ for(i in 2005:runs){
   
   rk45_par_est_tibble <- rbind(rk45_par_est_tibble, temp)
 } 
+```
+
+### Testing different priors
+As the default priors for the $\beta$ parameters are closer to the true parameter combination than any of the erroneous clusters we did follow-up testing to check if, and how much, this might bias the probability of a chain falling into the second mode in the posterior distribution. The Stan code for the linear model is set up to have a default pair of prior means at $\log(1) = 0$, but user-defined values can be passed as part of the data structure. We do this for the 0.5 step size only.
+
+We are going to test two different prior configurations: a set of means that is half-way between the correct parameters and the (previously estimated) known error point for step size 0.5; and a much smaller standard deviation for the default mean of 1.
+```{r}
+step_size <- 0.5
+runs <- 10000
+beta_prior_testing <- list(
+  average_means_test = list(
+    prior_means = c(mean(c(10, 49.4)),
+                     mean(c(1, 4.92))
+    ),
+    prior_sd = NULL
+  ),
+  small_sd_test <- list(
+    prior_means = NULL,
+    prior_sd = c(0.1,0.1)
+  )
+)
+
+prior_test_est_tibble_list <- list()
+
+for(j in 1:length(beta_prior_testing)){
+  prior_means <- beta_prior_testing[[j]]
+  
+  prior_test_est_tibble <- tibble(run = c(),
+                                step_size = c(),
+                                beta_0 = c(),
+                                beta_1 = c())
+  
+  for(i in 1:runs){
+    print(paste0("Run: ", i, " step size: ", step_size))
+    #Run the model
+    suppressWarnings(
+      fit <- hmde_model("linear_single_ind") |>
+      hmde_assign_data(n_obs = nrow(obs_data_frame),
+                       y_obs = obs_data_frame$y_obs,
+                       obs_index = obs_data_frame$obs_index,
+                       time = obs_data_frame$time,
+                       y_bar = mean(obs_data_frame$y_obs),
+                       step_size = step_size,
+                       int_method = 1,
+                       prior_means = prior_means,
+                       prior_sd = prior_sd)  |>  #RK4
+      hmde_run(chains = 1, cores = 1, iter = 2000)
+    )
+    
+    #Extract parameter estimates
+    ests <- hmde_extract_estimates(model = "linear_single_ind",
+                                   fit = fit,
+                                   input_measurement_data = obs_data_frame)
+    
+    temp <- tibble(
+      run = i,
+      step_size = step_size,
+      beta_0 = ests$individual_data$ind_beta_0_mean,
+      beta_1 = ests$individual_data$ind_beta_1_mean
+    )
+    
+    prior_test_est_tibble <- rbind(prior_test_est_tibble, temp)
+  }
+  
+  prior_test_est_tibble_list[[i]] <- prior_test_est_tibble
+}
 ```
 
 ## Analysis
@@ -784,63 +854,8 @@ est_scatter <- ggplot(data = par_est_tibble, aes(x = beta_0, y = beta_1)) +
 est_scatter
 ```
 
-## Alternate prior testing
-As the default priors for the $\beta$ parameters are closer to the true parameter combination than any of the erroneous clusters we did follow-up testing to check if, and how much, this might bias the probability of a chain falling into the second mode in the posterior distribution. The Stan code for the linear model is set up to have a default pair of prior means at $\log(1) = 0$, but user-defined values can be passed as part of the data structure. We do this for the 0.5 step size only.
-```{r}
-step_size <- 0.5
-runs <- 10000
-beta_prior_testing <- list(
-  average_point <- c(mean(c(mix_models_par_ests$good_beta_0[1], 
-                          mix_models_par_ests$error_beta_0[1])),
-                     mean(c(mix_models_par_ests$good_beta_1[1], 
-                          mix_models_par_ests$error_beta_1[1]))
-  )
-)
+## Alternate prior analysis
 
-prior_test_est_tibble_list <- list()
-
-for(j in 1:length(beta_prior_testing)){
-  prior_means <- beta_prior_testing[[j]]
-  
-  prior_test_est_tibble <- tibble(run = c(),
-                                step_size = c(),
-                                beta_0 = c(),
-                                beta_1 = c())
-  
-  for(i in 1492:runs){
-    print(paste0("Run: ", i, " step size: ", step_size))
-    #Run the model
-    suppressWarnings(
-      fit <- hmde_model("linear_single_ind") |>
-      hmde_assign_data(n_obs = nrow(obs_data_frame),
-                       y_obs = obs_data_frame$y_obs,
-                       obs_index = obs_data_frame$obs_index,
-                       time = obs_data_frame$time,
-                       y_bar = mean(obs_data_frame$y_obs),
-                       step_size = step_size,
-                       int_method = 1,
-                       prior_means = prior_means)  |>  #RK4
-      hmde_run(chains = 1, cores = 1, iter = 2000)
-    )
-    
-    #Extract parameter estimates
-    ests <- hmde_extract_estimates(model = "linear_single_ind",
-                                   fit = fit,
-                                   input_measurement_data = obs_data_frame)
-    
-    temp <- tibble(
-      run = i,
-      step_size = step_size,
-      beta_0 = ests$individual_data$ind_beta_0_mean,
-      beta_1 = ests$individual_data$ind_beta_1_mean
-    )
-    
-    prior_test_est_tibble <- rbind(prior_test_est_tibble, temp)
-  }
-  
-  prior_test_est_tibble_list[[i]] <- prior_test_est_tibble
-}
-```
 
 For each combination of priors we run a mixture model to get probability estimates.
 ```{r}
