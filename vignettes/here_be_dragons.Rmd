@@ -268,7 +268,7 @@ for(i in 2005:runs){
 As the default priors for the $\beta$ parameters are closer to the true parameter combination than any of the erroneous clusters we did follow-up testing to check if, and how much, this might bias the probability of a chain falling into the second mode in the posterior distribution. The Stan code for the linear model is set up to have a default pair of prior means at $\log(1) = 0$, but user-defined values can be passed as part of the data structure. We do this for the 0.5 step size only.
 
 We are going to test two different prior configurations: a set of means that is half-way between the correct parameters and the (previously estimated) known error point for step size 0.5; and a much smaller standard deviation for the default mean of 1.
-```{r}
+```{r, eval = FALSE}
 step_size <- 0.5
 runs <- 10000
 beta_prior_testing <- list(
@@ -783,7 +783,7 @@ numeric_plot_good <- ggplot(plot_data, aes(x = index, y=y_hat, group=source)) +
   geom_line(aes(colour = source, linewidth = source), alpha = 0.8) +
   geom_point(aes(colour = source, shape =source, size = source), 
              alpha = 0.8, stroke = 0.8) +
-  scale_colour_manual(values = c("darkorchid4", "black", "darkorchid1")) +
+  scale_colour_manual(values = c("darkred", "black", "#f8766d")) +
   scale_linewidth_manual(values = c(0.5, 0.5, 0.8)) +
   scale_size_manual(values = c(2, 3, 3)) +
   scale_shape_manual(values = c(4, 3, 19)) +
@@ -977,7 +977,7 @@ error_de_plot <- ggplot(data = plot_data, aes(x,y)) +
             linewidth = 1) +
   scale_colour_manual(values = c(legend_spec$colours[3:1], "black")) +
   scale_linetype_manual(values = c(legend_spec$linetypes[3:1], "solid")) +
-  labs(title = "ODEs for bad estimates",
+  labs(title = "ODEs",
        x = "Y(t)", y = "f", 
        colour = "Step size", 
        linetype = "Step size") +
@@ -1011,13 +1011,13 @@ error_solution_plot <- error_solution_plot +
                 linetype = fancy_name_no_step_size,
                 x = x, y = y)) +
   scale_colour_manual(values = c(legend_spec_with_true$colours[4], 
-                                 legend_spec$colours[3:1])) +
+                                 legend_spec$colours[c(2,3,1)])) +
   scale_linetype_manual(values = c(legend_spec_with_true$linetypes[4], 
-                                   legend_spec$linetypes[3:1])) +
+                                   legend_spec$linetypes[c(2,3,1)])) +
   xlim(0, max_time) +
   ylim(true_y_0, (beta_0/beta_1+0.5)) +
   labs(x = "Time", y = "Y(t)", 
-       title = "Analytic solutions for bad estimates",
+       title = "Analytic solutions",
        colour = "Parameters", 
        linetype = "Parameters") +
   theme_classic() +
@@ -1045,9 +1045,52 @@ est_scatter <- ggplot(data = par_est_tibble, aes(x = beta_0, y = beta_1)) +
 est_scatter
 ```
 
+## RK45 analysis
+We're going to take a look at the RK45 method parameter estimates.
+```{r}
+rk45_hist_0 <- ggplot(data = rk45_par_est_tibble, aes(x=beta_0)) +
+  geom_histogram(fill = "lightblue",
+                 colour = "black") +
+  labs(x = "beta_0 estimates",
+       title = "Parameter histograms from RK45") +
+  theme_classic()
+rk45_hist_1 <- ggplot(data = rk45_par_est_tibble, aes(x=beta_1)) +
+  geom_histogram(fill = "lightgreen",
+                 colour = "black") +
+  labs(x = "beta_1 estimates") +
+  theme_classic()
+
+#Get some extreme estimates
+possible_error <- rk45_par_est_tibble %>%
+  filter(beta_0 > mean(rk45_par_est_tibble$beta_0))
+
+#To speed up the iterative algorithm we provide some initial conditions
+mu <- list( #Means from true parameters and extreme estimates
+  true = c(beta_0, beta_1),
+  error = c(mean(possible_error$beta_0), 
+            mean(possible_error$beta_1))
+)
+
+#Fit multivariate normal finite mixture model to the estimates
+rk45_mix_models <- mvnormalmixEM(x = rk45_par_est_tibble[,c(3,4)], mu = mu)
+
+summary(rk45_mix_models)
+
+plot(rk45_mix_models,
+     whichplots = 2,
+     xlab2 = "Beta 0",
+     ylab2 = "Beta 1")
+
+dist_table <- tibble( #Data to calculate distance
+    b_0 = c(rk45_mix_models$mu[[2]][1], 
+            rk45_mix_models$mu[[1]][1]),
+    b_1 = c(rk45_mix_models$mu[[2]][2], 
+            rk45_mix_models$mu[[1]][2])
+  )
+dist(dist_table)
+```
+
 ## Alternate prior analysis
-
-
 For each combination of priors we run a mixture model to get probability estimates.
 ```{r}
 mix_model_prior_list <- list()
@@ -1081,6 +1124,14 @@ for(i in 1:length(beta_prior_testing)){
   mix_model_prior_list[[i]] <- mvnormalmixEM(x = prior_test_est_tibble[,c(3,4)], mu = mu)
   summary(mix_model_prior_list[[i]])
   print(mix_model_prior_list[[i]]$lambda)
+  
+  dist_table <- tibble( #Data to calculate distance
+    b_0 = c(mix_model_prior_list[[i]]$mu[[2]][1], 
+            mix_model_prior_list[[i]]$mu[[1]][1]),
+    b_1 = c(mix_model_prior_list[[i]]$mu[[2]][2], 
+            mix_model_prior_list[[i]]$mu[[1]][2])
+  )
+  print(dist(dist_table))
 }
 
 ```
@@ -1133,6 +1184,13 @@ for(i in 1:3){
     labels=lab_vec_4
   )
 }
+
+plot_grid(
+  rk45_hist_0,
+  rk45_hist_1,
+  ncol = 1,
+  labels = lab_vec_4[c(1,2)]
+)
 
 ```
 
