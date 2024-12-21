@@ -329,9 +329,9 @@ for(j in 1:length(beta_prior_testing)){
 We are going to fit a finite mixture model for each of the step sizes to tell us about the clustering in the posterior distributions. We assume that there are two clusters (you can check with scatter plots), that one is close to the true values and the other some distance away with much larger estimates for both, and use the mean for rows where $\hat{\beta_}_0 > mean(\hat{\beta_}_0)$ as our starting value for the iterative process to avoid singularities. The overall mean of the estimates works as a threshold for extreme values because of the bimodality and distance between clusters.
 
 ```{r}
-mix_models <- list()
-mix_model_plots <- list()
-mix_models_par_ests <- tibble(
+step_size_mix_models <- list()
+step_size_mix_model_plots <- list()
+step_size_mix_models_par_ests <- tibble(
   good_beta_0 = c(),
   good_beta_1 = c(),
   error_beta_0 = c(),
@@ -360,41 +360,45 @@ for(i in 1:length(unique(par_est_tibble$step_size))){
   )
   
   #Fit multivariate normal finite mixture model to the estimates
-  mix_models[[i]] <- mvnormalmixEM(x = analysis_data[,c(3,4)], mu = mu)
+  step_size_mix_models[[i]] <- mvnormalmixEM(x = analysis_data[,c(3,4)], mu = mu)
   
   print(paste0("Summary of mixture model for step size ", step_size_selected))
-  print(summary(mix_models[[i]]))
+  print(summary(step_size_mix_models[[i]]))
   
-  mix_model_plots[[i]] <- plot(mix_models[[i]], 
+  step_size_mix_model_plots[[i]] <- plot(step_size_mix_models[[i]], 
                                whichplots = 2, 
                                xlab2 = "Beta 0", 
                                ylab2 = "Beta 1")
   
   dist_table <- tibble( #Data to calculate distance
-    b_0 = c(mix_models[[i]]$mu[[2]][1], 
-            mix_models[[i]]$mu[[1]][1]),
-    b_1 = c(mix_models[[i]]$mu[[2]][2], 
-            mix_models[[i]]$mu[[1]][2])
+    b_0 = c(step_size_mix_models[[i]]$mu[[2]][1], 
+            step_size_mix_models[[i]]$mu[[1]][1]),
+    b_1 = c(step_size_mix_models[[i]]$mu[[2]][2], 
+            step_size_mix_models[[i]]$mu[[1]][2])
   )
   
   #Extract values
-  mix_models_par_ests_temp <- tibble(
-    good_beta_0 = mix_models[[i]]$mu[[1]][1],
-    good_beta_1 = mix_models[[i]]$mu[[1]][2],
-    error_beta_0 = mix_models[[i]]$mu[[2]][1],
-    error_beta_1 = mix_models[[i]]$mu[[2]][2],
+  step_size_mix_models_par_ests_temp <- tibble(
+    good_beta_0 = step_size_mix_models[[i]]$mu[[1]][1],
+    good_beta_1 = step_size_mix_models[[i]]$mu[[1]][2],
+    error_beta_0 = step_size_mix_models[[i]]$mu[[2]][1],
+    error_beta_1 = step_size_mix_models[[i]]$mu[[2]][2],
     step_size = step_size_selected,
-    error_prob = mix_models[[i]]$lambda[2],
+    error_prob = step_size_mix_models[[i]]$lambda[2],
     dist = dist(dist_table)
   )
   
-  mix_models_par_ests <- rbind(mix_models_par_ests, mix_models_par_ests_temp)
+  step_size_mix_models_par_ests <- rbind(step_size_mix_models_par_ests, 
+                                         step_size_mix_models_par_ests_temp)
 }
 
 #Have a look at the estimates
-mix_models_par_ests
+step_size_mix_models_par_ests
 ```
 We get bimodality in the posterior distributions, for all it's rarer for the smaller step sizes. Bias in the estimates closest to the true values is due to the same measurement error in the 'observed' data for all the fits. The second mode in the estimates arises from the numerical integration error as we will verify shortly. The extreme bimodality of the posterior is consistent behaviour, even though the point of the second mode shifts based on the step size.
+
+### Mixture models for prior distribution testing
+
 
 Some aesthetics before plots.
 ```{r}
@@ -421,15 +425,15 @@ legend_spec_with_true <- tibble(
 for(i in 1:nrow(legend_spec)){
   fancy_name_no_step_size <- 
   paste0("Beta_0 = ",
-         signif(mix_models_par_ests$error_beta_0[i],
+         signif(step_size_mix_models_par_ests$error_beta_0[i],
                 digits = 3),
          ",\n Beta_1 = ",
-         signif(mix_models_par_ests$error_beta_1[i], 
+         signif(step_size_mix_models_par_ests$error_beta_1[i], 
                              digits = 3))
   legend_spec$fancy_name_no_step_size[i] <- fancy_name_no_step_size
   legend_spec_with_true$fancy_name_no_step_size[i] <- fancy_name_no_step_size
   
-  fancy_name <- paste0("Step size ", mix_models_par_ests$step_size[i], 
+  fancy_name <- paste0("Step size ", step_size_mix_models_par_ests$step_size[i], 
                        "\n", fancy_name_no_step_size)
   
   legend_spec$fancy_name[i] <- fancy_name
@@ -541,28 +545,8 @@ DE <- function(Time, State, Pars) { #Implementation of DE
 }
 ```
 
-### Numerics
-We can demonstrate the source of the problem at the erroneous cluster by looking at what the RK4 algorithm is doing. First here is a direct implementation of the RK4 algorithm for a single step.
-```{r}
-#Define DE function
-example_DE <- function(y, beta_0, beta_1){
-  return(beta_0 - beta_1*y)
-}
-
-#Define RK4 functions=
-rk4_step <- function(y,  pars, interval, DE){
-  k1 <- DE(y, pars)
-  k2 <- DE(y+interval*k1/2.0, pars)
-  k3 <- DE(y+interval*k2/2.0, pars)
-  k4 <- DE(y+interval*k3, pars)
-  
-  y_hat <- y + (1.0/6.0) * (k1 + 2.0*k2 + 2.0*k3 + k4) * interval
-  
-  return(y_hat)
-}
-```
-
-More plots: we want to look at the behaviour of the numerical method for the bad estimate clusters. To do so we project forward from the initial condition using the chosen step size, bad parameter combination, and see what happens. We can compare the numerical solution to both the true sizes over time, and to the analytic solution with those same bad parameter estimates.
+### Second cluster analysis
+We want to look at the behaviour of the numerical method for the bad estimate clusters. To do so we project forward from the initial condition using the chosen step size, bad parameter combination, and see what happens. We can compare the numerical solution to both the true sizes over time, and to the analytic solution with those same bad parameter estimates.
 
 First we generate the numerical and analytic solution data.
 ```{r}
@@ -576,10 +560,10 @@ y_over_time <- tibble(model="True Sizes",
                       )
 
 #Generate Y(t) with RK4
-for(i in 1:nrow(mix_models_par_ests)){
-  pars_combo <- c(beta_0 = mix_models_par_ests$error_beta_0[i],
-                    beta_1 = mix_models_par_ests$error_beta_1[i])
-  times <- seq(0, max_time, by = mix_models_par_ests$step_size[i])
+for(i in 1:nrow(step_size_mix_models_par_ests)){
+  pars_combo <- c(beta_0 = step_size_mix_models_par_ests$error_beta_0[i],
+                    beta_1 = step_size_mix_models_par_ests$error_beta_1[i])
+  times <- seq(0, max_time, by = step_size_mix_models_par_ests$step_size[i])
   
   solution_pars <- c(pars_combo, true_y_0)
   y_true_temp <- analytic_solution(times, solution_pars)
@@ -587,12 +571,12 @@ for(i in 1:nrow(mix_models_par_ests)){
   numerical_output <- ode(yini, times, DE, pars_combo, method = "rk4")
   
   y_over_time_temp <- tibble(
-    model = mix_models_par_ests$step_size[i],
+    model = step_size_mix_models_par_ests$step_size[i],
     y_analytic = y_true_temp,
     y_numeric = numerical_output[,2],
     time = times,
-    beta_0_par = mix_models_par_ests$error_beta_0[i],
-    beta_1_par = mix_models_par_ests$error_beta_1[i]
+    beta_0_par = step_size_mix_models_par_ests$error_beta_0[i],
+    beta_1_par = step_size_mix_models_par_ests$error_beta_1[i]
   )
   
   y_over_time <- rbind(y_over_time, y_over_time_temp)
@@ -622,6 +606,89 @@ compare_sizes_over_time <- ggplot(y_over_time_filtered,
 compare_sizes_over_time
 ```
 These are indistinguishable values. If you look extremely closely you get some deviation due to parameter bias, but that is not statistically relevant to the process.
+
+### Numerics
+We can demonstrate the source of the problem at the erroneous cluster by looking at what the RK4 algorithm is doing. First here is a direct implementation of the RK4 algorithm for a single step.
+```{r}
+#Define DE function
+example_DE <- function(y, pars){
+  return(pars[1] - pars[2]*y)
+}
+
+#Define RK4 functions=
+rk4_step <- function(y, pars, interval, DE){
+  k1 <- DE(y, pars)
+  k2 <- DE(y+interval*k1/2.0, pars)
+  k3 <- DE(y+interval*k2/2.0, pars)
+  k4 <- DE(y+interval*k3, pars)
+  
+  y_hat <- y + (1.0/6.0) * (k1 + 2.0*k2 + 2.0*k3 + k4) * interval
+  
+  k_vec <- c(k1, k2, k3, k4)
+  
+  return(list(
+    y_hat = y_hat,
+    k_vec = k_vec)
+  )
+}
+```
+The behaviour of the sub-step values is of interest to us. Because the affine DE is negative for $Y(t) > \beta_0/\beta_1$, we can actually get sub-steps that oscillate back and forth, with both positive and negative increments. Here we will plot that for the erroneous parameters that arise at step size 0.5.
+```{r}
+pars <- c(49.4, 4.94)
+step_size <- 0.5
+steps <- 18
+y_0 <- 1
+y_est <- tibble(
+  y_hat = y_0,
+  source = "Est. Y(t_j)"
+)
+
+y_start <- y_0
+for(i in 1:steps){
+  numeric_sol <- rk4_step(y_start, pars,  step_size, example_DE)
+  
+  y_est_temp <- tibble(
+    y_hat = c(numeric_sol$k_vec*(1/6)*c(1, 2, 2, 1), numeric_sol$y_hat),
+    source = c("k1", "k2", "k3", "k4", "Est. Y(t_j)")
+  )
+  
+  y_est <- rbind(y_est, y_est_temp)
+  y_start <- numeric_sol$y_hat
+}
+
+y_est$index <- 1:nrow(y_est)
+
+plot_data_all <- y_est %>%
+  filter(source != "Est. Y(t_j)") %>%
+  mutate(source = "RK4 weights k_j")
+plot_data_y_hat <- y_est %>%
+  filter(source == "Est. Y(t_j)") 
+plot_data_Y_t <- plot_data_y_hat[seq(from = 1, to = 20, by = 2),]
+plot_data_y_hat$source <- "Substep Y(t)"
+
+plot_data <- rbind(plot_data_all, plot_data_Y_t, plot_data_y_hat)
+
+#numeric_plot <- 
+ggplot(plot_data, aes(x = index, y=y_hat, group=source)) +
+  geom_line(aes(colour = source, linewidth = source), alpha = 0.8) +
+  geom_point(aes(colour = source, shape =source, size = source), 
+             alpha = 0.8, stroke = 0.8) +
+  scale_colour_manual(values = c("#f8766d", "black", "darkred")) +
+  scale_linewidth_manual(values = c(0.8, 0.5, 0.5)) +
+  scale_size_manual(values = c(3, 2, 3)) +
+  scale_shape_manual(values = c(19, 4, 3)) +
+  labs(x = "Step",
+       y = "Estimated Y",
+       title = "Numerical estimates for step size 0.5, beta_0 = 49.4, beta_1 = 4.94",
+       colour = "Source",
+       shape = "Source",
+       linewidth = "Source",
+       size = "Source") +
+  geom_hline(yintercept=0, colour = "black", linewidth = 0.25, linetype = "dashed")+
+  theme_classic() +
+  theme(legend.position = "inside",
+        legend.position.inside = c(0.7,0.2))
+```
 
 Back to analysis of the individual step sizes. This time we will look at the numerical method stability and error directly for the erroneous parameter values.
 ```{r}
