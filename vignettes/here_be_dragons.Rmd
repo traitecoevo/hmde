@@ -86,7 +86,10 @@ true_args_list <- list(pars = c(beta_0,
                              true_y_0))
 
 y_true <- analytic_solution(time, true_pars)
+```
 
+From the analytic solution we produce observations by adding measurement error and rounding to a precision of 0.1.
+```{r}
 #Produce observations with error and limited precision
 y_obs <- round(y_true + rnorm(length(y_true), 0, 0.1), digits = 1)
 
@@ -123,8 +126,8 @@ sizes_over_time
 analytic_observed <- ggplot(obs_data_frame, aes(x = time, y = y_obs)) +
   geom_function(fun=analytic_solution, args = true_args_list,
                 linewidth = 1, colour = "black") +
-  geom_point(colour = "#f8766d", size = 3) +
-  geom_line(colour = "#f8766d", linewidth = 1,
+  geom_point(colour = "darkorchid", size = 3) +
+  geom_line(colour = "darkorchid", linewidth = 1,
             linetype = "dashed") +
   labs(x = "Time", y = "Y",
        title = "Data simulation") +
@@ -467,7 +470,7 @@ for(i in 1:length(unique(par_est_tibble$step_size))){
     filter(step_size == step_size_select)
   
   #Get classification from mixture model
-  plot_data$good_est <- mix_models[[i]][["posterior"]][,1]
+  plot_data$good_est <- step_size_mix_models[[i]][["posterior"]][,1]
   
   error_ests_scatter <- plot_data %>%
     filter(!as.logical(good_est))
@@ -482,8 +485,8 @@ for(i in 1:length(unique(par_est_tibble$step_size))){
              0.1*(max(error_ests_scatter$beta_1) - 
                     min(error_ests_scatter$beta_1)))
   norm_data <- as.data.frame(mvrnorm(n = 10000,
-                       mu = mix_models[[i]][["mu"]][[2]],
-                       Sigma = mix_models[[i]][["sigma"]][[2]]))
+                       mu = step_size_mix_models[[i]][["mu"]][[2]],
+                       Sigma = step_size_mix_models[[i]][["sigma"]][[2]]))
   names(norm_data) <- c("beta_0", "beta_1")
     
   scatterplot_errors_only[[i]] <- ggplot(data = error_ests_scatter, 
@@ -498,7 +501,7 @@ for(i in 1:length(unique(par_est_tibble$step_size))){
            title = "Second cluster") +
     annotate("text", x = xpos, y = ypos, 
              label = paste0("Probability: \n",
-                            mix_models_par_ests$error_prob[i])) +
+                            step_size_mix_models_par_ests$error_prob[i])) +
     theme_classic()
   
   #Scatter plot of good parameter estimates
@@ -509,8 +512,8 @@ for(i in 1:length(unique(par_est_tibble$step_size))){
              0.1*(max(good_ests_scatter$beta_1) - 
                     min(good_ests_scatter$beta_1)))
   norm_data <- as.data.frame(mvrnorm(n = 10000,
-                       mu = mix_models[[i]][["mu"]][[1]],
-                       Sigma = mix_models[[i]][["sigma"]][[1]]))
+                       mu = step_size_mix_models[[i]][["mu"]][[1]],
+                       Sigma = step_size_mix_models[[i]][["sigma"]][[1]]))
   names(norm_data) <- c("beta_0", "beta_1")
   
   scatterplot_good_only[[i]] <- ggplot(data = good_ests_scatter, 
@@ -525,7 +528,7 @@ for(i in 1:length(unique(par_est_tibble$step_size))){
            title = "First cluster") +
     annotate("text", x = xpos, y = ypos, 
              label = paste0("Probability: \n",
-                            (1-mix_models_par_ests$error_prob[i]))) +
+                            (1-step_size_mix_models_par_ests$error_prob[i]))) +
       theme_classic()
 }
 ```
@@ -624,14 +627,19 @@ rk4_step <- function(y, pars, interval, DE){
   
   y_hat <- y + (1.0/6.0) * (k1 + 2.0*k2 + 2.0*k3 + k4) * interval
   
-  k_vec <- c(k1, k2, k3, k4)
+  intermediate_step <- c(y+interval*k1/2.0, 
+                         y+interval*k2/2.0, 
+                         y+interval*k3)
+  k_vals <- c(k1, k2, k3, k4)
   
   return(list(
     y_hat = y_hat,
-    k_vec = k_vec)
+    k_vals = k_vals,
+    intermediate_step = intermediate_step)
   )
 }
 ```
+
 The behaviour of the sub-step values is of interest to us. Because the affine DE is negative for $Y(t) > \beta_0/\beta_1$, we can actually get sub-steps that oscillate back and forth, with both positive and negative increments. Here we will plot that for the erroneous parameters that arise at step size 0.5.
 ```{r}
 pars <- c(49.4, 4.94)
@@ -640,7 +648,9 @@ steps <- 18
 y_0 <- 1
 y_est <- tibble(
   y_hat = y_0,
-  source = "Est. Y(t_j)"
+  source = "Est. Y(t_j)",
+  k_vals = NA,
+  step = 0
 )
 
 y_start <- y_0
@@ -648,8 +658,10 @@ for(i in 1:steps){
   numeric_sol <- rk4_step(y_start, pars,  step_size, example_DE)
   
   y_est_temp <- tibble(
-    y_hat = c(numeric_sol$k_vec*(1/6)*c(1, 2, 2, 1), numeric_sol$y_hat),
-    source = c("k1", "k2", "k3", "k4", "Est. Y(t_j)")
+    y_hat = c(numeric_sol$intermediate_step, numeric_sol$y_hat),
+    source = c(rep("RK4 weights k_j", times = 3), "Est. Y(t_j)"),
+    k_vals = c(numeric_sol$k_vals),
+    step = i
   )
   
   y_est <- rbind(y_est, y_est_temp)
@@ -658,28 +670,42 @@ for(i in 1:steps){
 
 y_est$index <- 1:nrow(y_est)
 
-plot_data_all <- y_est %>%
-  filter(source != "Est. Y(t_j)") %>%
-  mutate(source = "RK4 weights k_j")
+plot_data_first_step <- y_est %>%
+  filter(source == "RK4 weights k_j",
+         step == 1) %>%
+  mutate(source = "Substep Y(t) ests")
+
+plot_data_other_steps <- y_est %>%
+  filter(source == "RK4 weights k_j",
+         step > 1) %>%
+  mutate(source = "Substep Y(t) ests")
+
 plot_data_y_hat <- y_est %>%
-  filter(source == "Est. Y(t_j)") 
-plot_data_Y_t <- plot_data_y_hat[seq(from = 1, to = 20, by = 2),]
-plot_data_y_hat$source <- "Substep Y(t)"
+  filter(source == "Est. Y(t_j)") %>%
+  mutate(source = "Numerical Est.")
 
-plot_data <- rbind(plot_data_all, plot_data_Y_t, plot_data_y_hat)
+plot_data_Y_t <- plot_data_y_hat[seq(from = 1, to = 20, by = 2),] %>%
+  mutate(source = "True Y(t_j)")
+plot_data_Y_t$y_hat = y_true
 
-#numeric_plot <- 
-ggplot(plot_data, aes(x = index, y=y_hat, group=source)) +
+plot_data <- rbind(plot_data_first_step, plot_data_Y_t, plot_data_y_hat)
+
+numeric_plot_bad <- ggplot(plot_data, aes(x = index, y=y_hat, group=source)) +
   geom_line(aes(colour = source, linewidth = source), alpha = 0.8) +
   geom_point(aes(colour = source, shape =source, size = source), 
              alpha = 0.8, stroke = 0.8) +
-  scale_colour_manual(values = c("#f8766d", "black", "darkred")) +
-  scale_linewidth_manual(values = c(0.8, 0.5, 0.5)) +
-  scale_size_manual(values = c(3, 2, 3)) +
-  scale_shape_manual(values = c(19, 4, 3)) +
+  scale_colour_manual(values = c("darkred", "black", "#f8766d")) +
+  scale_linewidth_manual(values = c(0.5, 0.5, 0.8)) +
+  scale_size_manual(values = c(2, 3, 3)) +
+  scale_shape_manual(values = c(4, 3, 19)) +
+  geom_line(data = plot_data_other_steps, aes(group = as.factor(step)),
+            colour = "black", linewidth = 0.5, alpha = 0.8) +
+  geom_point(data = plot_data_other_steps,
+             colour = "black", shape = 3, size = 2, 
+             alpha = 0.8, stroke = 0.8) +
   labs(x = "Step",
        y = "Estimated Y",
-       title = "Numerical estimates for step size 0.5, beta_0 = 49.4, beta_1 = 4.94",
+       title = "Numerical est.: step size 0.5, beta_0 = 49.4, beta_1 = 4.94",
        colour = "Source",
        shape = "Source",
        linewidth = "Source",
@@ -687,9 +713,111 @@ ggplot(plot_data, aes(x = index, y=y_hat, group=source)) +
   geom_hline(yintercept=0, colour = "black", linewidth = 0.25, linetype = "dashed")+
   theme_classic() +
   theme(legend.position = "inside",
-        legend.position.inside = c(0.7,0.2))
+        legend.position.inside = c(0.7,0.7))
+
+#Plot of within-step k-values
+k_plot_data <- y_est %>% filter(!is.na(k_vals))
+  
+weights_plot_bad <- ggplot(k_plot_data, aes(x = index, y=k_vals, group=as.factor(step))) +
+  geom_line(colour = "black", linewidth = 0.5, alpha = 0.8) +
+  geom_point(colour = "black", shape = 3, size = 2, 
+             alpha = 0.8, stroke = 0.8) +
+  labs(x = "Index",
+       y = "k value",
+       title = "Gradient est.: step size 0.5, beta_0 = 49.4, beta_1 = 4.94") +
+  geom_hline(yintercept=0, colour = "black", linewidth = 0.25, linetype = "dashed")+
+  theme_classic()
 ```
 
+For comparison, here's the numerical behaviour at the true parameter combination.
+```{r}
+pars <- c(10, 1)
+step_size <- 0.5
+steps <- 18
+y_0 <- 1
+y_est <- tibble(
+  y_hat = y_0,
+  source = "Est. Y(t_j)",
+  k_vals = NA,
+  step = 0
+)
+
+y_start <- y_0
+for(i in 1:steps){
+  numeric_sol <- rk4_step(y_start, pars,  step_size, example_DE)
+  
+  y_est_temp <- tibble(
+    y_hat = c(numeric_sol$intermediate_step, numeric_sol$y_hat),
+    source = c(rep("RK4 weights k_j", times = 3), "Est. Y(t_j)"),
+    k_vals = c(numeric_sol$k_vals),
+    step = i
+  )
+  
+  y_est <- rbind(y_est, y_est_temp)
+  y_start <- numeric_sol$y_hat
+}
+
+y_est$index <- 1:nrow(y_est)
+
+plot_data_first_step <- y_est %>%
+  filter(source == "RK4 weights k_j",
+         step == 1) %>%
+  mutate(source = "Substep Y(t) ests")
+
+plot_data_other_steps <- y_est %>%
+  filter(source == "RK4 weights k_j",
+         step > 1) %>%
+  mutate(source = "Substep Y(t) ests")
+
+plot_data_y_hat <- y_est %>%
+  filter(source == "Est. Y(t_j)") %>%
+  mutate(source = "Numerical Est.")
+
+plot_data_Y_t <- plot_data_y_hat[seq(from = 1, to = 20, by = 2),] %>%
+  mutate(source = "True Y(t_j)")
+plot_data_Y_t$y_hat = y_true
+
+plot_data <- rbind(plot_data_first_step, plot_data_Y_t, plot_data_y_hat)
+
+numeric_plot_good <- ggplot(plot_data, aes(x = index, y=y_hat, group=source)) +
+  geom_line(aes(colour = source, linewidth = source), alpha = 0.8) +
+  geom_point(aes(colour = source, shape =source, size = source), 
+             alpha = 0.8, stroke = 0.8) +
+  scale_colour_manual(values = c("darkorchid4", "black", "darkorchid1")) +
+  scale_linewidth_manual(values = c(0.5, 0.5, 0.8)) +
+  scale_size_manual(values = c(2, 3, 3)) +
+  scale_shape_manual(values = c(4, 3, 19)) +
+  geom_line(data = plot_data_other_steps, aes(group = as.factor(step)),
+            colour = "black", linewidth = 0.5, alpha = 0.8) +
+  geom_point(data = plot_data_other_steps,
+             colour = "black", shape = 3, size = 2, 
+             alpha = 0.8, stroke = 0.8) +
+  labs(x = "Step",
+       y = "Estimated Y",
+       title = "Numerical est.: step size 0.5, beta_0 = 10, beta_1 = 1",
+       colour = "Source",
+       shape = "Source",
+       linewidth = "Source",
+       size = "Source") +
+  geom_hline(yintercept=0, colour = "black", linewidth = 0.25, linetype = "dashed")+
+  theme_classic() +
+  theme(legend.position = "inside",
+        legend.position.inside = c(0.7,0.4))
+
+#Plot of within-step k-values
+k_plot_data <- y_est %>% filter(!is.na(k_vals))
+weights_plot_good <- ggplot(k_plot_data, aes(x = index, y=k_vals, group=as.factor(step))) +
+  geom_line(colour = "black", linewidth = 0.5, alpha = 0.8) +
+  geom_point(colour = "black", shape = 3, size = 2, 
+             alpha = 0.8, stroke = 0.8) +
+  labs(x = "Index",
+       y = "k value",
+       title = "Gradient est.: step size 0.5, beta_0 = 10, beta_1 = 1") +
+  geom_hline(yintercept=0, colour = "black", linewidth = 0.25, linetype = "dashed")+
+  theme_classic()
+```
+
+### Step sizes
 Back to analysis of the individual step sizes. This time we will look at the numerical method stability and error directly for the erroneous parameter values.
 ```{r}
 #Plot sizes over time with analytic solution for each step size individually
@@ -697,17 +825,17 @@ size_analytic_plots <- list()
 size_scatter_plot <- list()
 stability_plots <- list()
 
-for(i in 1:nrow(mix_models_par_ests)){
+for(i in 1:nrow(step_size_mix_models_par_ests)){
   #Get data for that step size
   plot_data <- y_over_time %>%
-    filter(model == mix_models_par_ests$step_size[i]) %>%
+    filter(model == step_size_mix_models_par_ests$step_size[i]) %>%
     mutate(numerical_error = y_numeric - y_analytic,
            solname = "Analytic solution:\n Beta_0 = 10,\n Beta_1 = 1",
            pointname = paste0("Numerical method:\n Beta_0 = ", 
-                      signif(mix_models_par_ests$error_beta_0[i], 
+                      signif(step_size_mix_models_par_ests$error_beta_0[i], 
                              digits = 3),
                       ",\n Beta_1 = ", 
-                      signif(mix_models_par_ests$error_beta_1[i], 
+                      signif(step_size_mix_models_par_ests$error_beta_1[i], 
                              digits = 3)))
   
   #Plot numerical stability
@@ -720,11 +848,9 @@ for(i in 1:nrow(mix_models_par_ests)){
               linetype = legend_spec$linetypes[i], 
               linewidth = 1) +
     geom_hline(yintercept = 0, linetype = "solid", colour = "black") +
-    labs(title = paste0("Step size ", plot_data$model[1],
-                        ", Beta_0 = ", signif(plot_data$beta_0_par[1], digits = 3),
-                        ", Beta_1 = ", signif(plot_data$beta_1_par[1], digits = 3)),
+    labs(title = "Numerical error for bad parameters",
          x = "Time",
-         y = "Numerical error") +
+         y = "Error (numerical - analytic)") +
     theme_classic()
   
   #Scatter of numerical and analytic values
@@ -778,9 +904,9 @@ y_over_time_smallstep <- tibble(model=legend_spec_with_true$fancy_name[4],
                       time = 0:max_time
                       )
 
-for(i in 1:nrow(mix_models_par_ests)){
-  pars_combo <- c(beta_0 = mix_models_par_ests$error_beta_0[i],
-                    beta_1 = mix_models_par_ests$error_beta_1[i])
+for(i in 1:nrow(step_size_mix_models_par_ests)){
+  pars_combo <- c(beta_0 = step_size_mix_models_par_ests$error_beta_0[i],
+                    beta_1 = step_size_mix_models_par_ests$error_beta_1[i])
     times <- seq(0, max_time, by = 0.001)
     
     numerical_output <- ode(yini, times, DE, pars_combo, method = "rk4")
@@ -829,19 +955,19 @@ compare_sizes_over_time_smallstep
 Here are two plots showing the ODEs and analytic solutions with the bad estimates compared to the true parameter values. To plot the ODEs we exploit the fact that they are straight lines rather than plotting the functions properly.
 ```{r}
 #Get asymptotic size
-mix_models_par_ests$Y_max <- mix_models_par_ests$error_beta_0/mix_models_par_ests$error_beta_1
+step_size_mix_models_par_ests$Y_max <- step_size_mix_models_par_ests$error_beta_0/step_size_mix_models_par_ests$error_beta_1
 
 #Build points for start and end of lines
 plot_data <- tibble(
   x = c(0, (beta_0/beta_1), 
-        rep(0, times = nrow(mix_models_par_ests)), 
-        mix_models_par_ests$Y_max),
+        rep(0, times = nrow(step_size_mix_models_par_ests)), 
+        step_size_mix_models_par_ests$Y_max),
   y = c(beta_0, 0, 
-        mix_models_par_ests$error_beta_0, 
-        rep(0, times = nrow(mix_models_par_ests))),
+        step_size_mix_models_par_ests$error_beta_0, 
+        rep(0, times = nrow(step_size_mix_models_par_ests))),
   step_size = c("True pars", "True pars", 
-                mix_models_par_ests$step_size, 
-                mix_models_par_ests$step_size)
+                step_size_mix_models_par_ests$step_size, 
+                step_size_mix_models_par_ests$step_size)
 )
 
 #Plot DEs 
@@ -867,9 +993,9 @@ error_solution_plot <- ggplot() +
                   linetype = "solid",
                   linewidth=1) 
 
-for(i in 1:nrow(mix_models_par_ests)){ #Add the analytic solutions
-  args_list <- list(pars=c(mix_models_par_ests$error_beta_0[i],
-                           mix_models_par_ests$error_beta_1[i],
+for(i in 1:nrow(step_size_mix_models_par_ests)){ #Add the analytic solutions
+  args_list <- list(pars=c(step_size_mix_models_par_ests$error_beta_0[i],
+                           step_size_mix_models_par_ests$error_beta_1[i],
                            true_y_0))
   error_solution_plot <- error_solution_plot +
     geom_function(fun=analytic_solution, args=args_list,
@@ -928,6 +1054,8 @@ mix_model_prior_list <- list()
 mix_model_prior_scatter <- list()
 #Scatter plot to check for evidence of further clusters
 for(i in 1:length(beta_prior_testing)){
+  prior_test_est_tibble <- prior_test_est_tibble_list[[i]]
+  
   mix_model_prior_scatter[[i]] <- ggplot(data = prior_test_est_tibble,
        aes(x = beta_0, y = beta_1)) +
     geom_point(colour = legend_spec$colours[1], 
@@ -972,6 +1100,16 @@ plot_grid(beta_0_plot_list[[1]],
 
 #Labels
 lab_vec_4 <- c("(a)", "(b)", "(c)", "(d)")
+
+#Numerics plots
+plot_grid(
+  numeric_plot_bad,
+  numeric_plot_good,
+  weights_plot_bad,
+  weights_plot_good,
+  nrow = 2,
+  labels= lab_vec_4
+)
 
 #DE, analytic solutions, all parameters, and sizes over time
 plot_grid(
