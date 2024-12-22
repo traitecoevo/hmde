@@ -1045,7 +1045,7 @@ est_scatter <- ggplot(data = par_est_tibble, aes(x = beta_0, y = beta_1)) +
 est_scatter
 ```
 
-## RK45 analysis
+### RK45 analysis
 We're going to take a look at the RK45 method parameter estimates.
 ```{r}
 rk45_hist_0 <- ggplot(data = rk45_par_est_tibble, aes(x=beta_0)) +
@@ -1090,7 +1090,7 @@ dist_table <- tibble( #Data to calculate distance
 dist(dist_table)
 ```
 
-## Alternate prior analysis
+### Alternate prior analysis
 For each combination of priors we run a mixture model to get probability estimates.
 ```{r}
 mix_model_prior_list <- list()
