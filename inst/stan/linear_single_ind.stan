@@ -111,11 +111,11 @@ model {
       }
 
       if(int_method == 3){ //Analytic solution
-        y_hat[i+1] = analytic_solution(t = time[i+1] - time[1],
-                          y_0 = ind_y_0,
-                          ind_const = ind_const,
-                          beta_1 = ind_beta_1,
-                          y_bar = y_bar);
+        y_hat[i+1] = analytic_solution((time[i+1] - time[1]),
+                          ind_y_0,
+                          ind_const,
+                          ind_beta_1,
+                          y_bar);
       }
     }
   }
@@ -161,11 +161,11 @@ generated quantities{
       }
 
       if(int_method == 3){ //Analytic solution
-        y_hat[i+1] = analytic_solution(t = time[i+1] - time[1],
-                          y_0 = ind_y_0,
-                          ind_const = ind_const,
-                          beta_1 = ind_beta_1,
-                          y_bar = y_bar);
+        y_hat[i+1] = analytic_solution((time[i+1] - time[1]),
+                          ind_y_0,
+                          ind_const,
+                          ind_beta_1,
+                          y_bar);
       }
     }
   }
