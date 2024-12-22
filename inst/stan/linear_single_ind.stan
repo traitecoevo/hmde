@@ -52,8 +52,8 @@ functions{
   }
 
   real analytic_solution(real t, real y_0, real ind_const, real beta_1, real y_bar){
-    real y_max = (ind_const/beta_1 - y_bar);
-    return y_max + ((y_0 - y_bar) - y_max) * exp(-beta_1 * t);
+    real y_0_translate = y_0 - y_bar;
+    return ind_const/beta_1 + (y_0_translate - (ind_const/beta_1)) * exp(-beta_1 * t) + y_bar;
   }
 }
 
@@ -134,6 +134,7 @@ generated quantities{
   array[3] real pars;
   real ind_beta_0;
   vector[1] y_temp;
+  int vers = 1;
 
   ind_beta_0 = ind_const + ind_beta_1*y_bar;
 

@@ -25,7 +25,7 @@ options(rmarkdown.html_vignette.check_title = FALSE)
 
 ## Load dependencies
 ```{r}
-#remotes::install_github("traitecoevo/hmde@f035a3f986d000035824617805b36b8bf7d5dccf", force = TRUE)
+#remotes::install_github("traitecoevo/hmde@db680a5888e8dc083e565f8ea2925df1a770c283", force = TRUE)
 
 library(hmde)
 library(dplyr)
@@ -261,6 +261,46 @@ for(i in 2005:runs){
   )
   
   rk45_par_est_tibble <- rbind(rk45_par_est_tibble, temp)
+} 
+```
+
+### Analytic solution
+To check the bias on the observed data and for any other posterior pathologies we use the analytic solution to get estimates.
+```{r}
+runs <- 10000
+analytic_par_est_tibble <- tibble(run = c(),
+                         step_size = c(),
+                         beta_0 = c(),
+                         beta_1 = c())
+
+for(i in 1:runs){
+  print(paste0("Run: ", i))
+  #Run the model
+  suppressWarnings(
+    fit <- hmde_model("linear_single_ind") |>
+    hmde_assign_data(n_obs = nrow(obs_data_frame),
+                     y_obs = obs_data_frame$y_obs,
+                     obs_index = obs_data_frame$obs_index,
+                     time = obs_data_frame$time,
+                     y_bar = mean(obs_data_frame$y_obs),
+                     step_size = 0,
+                     int_method = 3)  |>  #Analytic solution
+    hmde_run(chains = 1, cores = 1, iter = 2000)
+  )
+  
+  #Extract parameter estimates
+  ests <- hmde_extract_estimates(model = "linear_single_ind",
+                                 fit = fit,
+                                 input_measurement_data = obs_data_frame)
+  
+  temp <- tibble(
+    run = i,
+    step_size = "Analyic",
+    beta_0 = ests$individual_data$ind_beta_0_mean,
+    beta_1 = ests$individual_data$ind_beta_1_mean
+  )
+  
+  analytic_par_est_tibble <- rbind(analytic_par_est_tibble, temp)
 } 
 ```
 
@@ -1134,6 +1174,43 @@ for(i in 1:length(beta_prior_testing)){
   print(dist(dist_table))
 }
 
+```
+
+### Analytic solution analysis
+```{r}
+mix_model_analytic_scatter <- ggplot(data = analytic_par_est_tibble,
+     aes(x = beta_0, y = beta_1)) +
+  geom_point(colour = "darkorchid", 
+             shape = 5, 
+             alpha = 0.5,
+             size = 2) +
+  labs(x = "beta_0 est.",
+         y = "beta_1 est.") +
+  theme_classic()
+
+#Get some initialising estimates
+possible_error <- analytic_par_est_tibble %>%
+  filter(beta_0 > mean(analytic_par_est_tibble$beta_0))
+
+#To speed up the iterative algorithm we provide some initial conditions
+mu <- list( #Means from true parameters and extreme estimates
+  true = c(beta_0, beta_1),
+  error = c(mean(possible_error$beta_0), 
+            mean(possible_error$beta_1))
+)
+
+#Fit multivariate normal finite mixture model to the estimates
+mix_model_analytic <- mvnormalmixEM(x = analytic_par_est_tibble[,c(3,4)], mu = mu)
+summary(mix_model_analytic)
+print(mix_model_analytic$lambda)
+
+dist_table <- tibble( #Data to calculate distance
+  b_0 = c(mix_model_analytic$mu[[2]][1], 
+          mix_model_analytic$mu[[1]][1]),
+  b_1 = c(mix_model_analytic$mu[[2]][2], 
+          mix_model_analytic$mu[[1]][2])
+)
+print(dist(dist_table))
 ```
 
 ## Plots for paper
