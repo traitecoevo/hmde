@@ -20,7 +20,7 @@ hmde_run <- function(model_template, ...) {
          canham_multi_ind = rstan::sampling(stanmodels$canham_multi_ind, data = model_template, ...),
          vb_single_ind = rstan::sampling(stanmodels$vb_single_ind, data = model_template, ...),
          vb_multi_ind = rstan::sampling(stanmodels$vb_multi_ind, data = model_template, ...),
-         linear_single_ind = rstan::sampling(stanmodels$linear_single_ind, data = model_template, ...))
+         affine_single_ind = rstan::sampling(stanmodels$affine_single_ind, data = model_template, ...))
 
   return(out)
 }

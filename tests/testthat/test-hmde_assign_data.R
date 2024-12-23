@@ -126,7 +126,7 @@ test_that("Execution and output: default values", {
   y_obs <- 1:5
   obs_index <- 1:5
 
-  default_used <- hmde_model("linear_single_ind") |>
+  default_used <- hmde_model("affine_single_ind") |>
     hmde_assign_data(n_obs = length(y_obs),
                      y_obs= y_obs,
                      obs_index = obs_index,
@@ -137,7 +137,7 @@ test_that("Execution and output: default values", {
 
   expect_equal(default_used$prior_means, c(1,1))
 
-  value_supplied <- hmde_model("linear_single_ind") |>
+  value_supplied <- hmde_model("affine_single_ind") |>
     hmde_assign_data(n_obs = length(y_obs),
                      y_obs= y_obs,
                      obs_index = obs_index,

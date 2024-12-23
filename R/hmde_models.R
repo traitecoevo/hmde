@@ -18,7 +18,7 @@ hmde_model <- function(model=NULL){
                    canham_multi_ind = hmde_canham_multi_ind(),
                    vb_single_ind = hmde_vb_single_ind(),
                    vb_multi_ind = hmde_vb_multi_ind(),
-                   linear_single_ind = hmde_linear_single_ind())
+                   affine_single_ind = hmde_affine_single_ind())
 
   class(output) <- "hmde_object"
 
@@ -106,11 +106,11 @@ hmde_vb_multi_ind <- function(){
        model = "vb_multi_ind")
 }
 
-#' Data configuration template for linear growth single individual model
+#' Data configuration template for affine growth single individual model
 #' @keywords internal
 #' @noRd
 #'
-hmde_linear_single_ind <- function(){
+hmde_affine_single_ind <- function(){
   list(step_size = NULL,
        n_obs = NULL,
        y_obs = NULL,
@@ -120,5 +120,5 @@ hmde_linear_single_ind <- function(){
        int_method = NULL,
        prior_means = c(1,1),
        prior_sds = c(2,2),
-       model = "linear_single_ind")
+       model = "affine_single_ind")
 }

@@ -156,7 +156,7 @@ par_est_tibble <- tibble(run = c(),
 for(i in 1:runs){
   #Run the model
   suppressWarnings(
-    fit <- hmde_model("linear_single_ind") |>
+    fit <- hmde_model("affine_single_ind") |>
     hmde_assign_data(n_obs = nrow(obs_data_frame),
                      y_obs = obs_data_frame$y_obs,
                      obs_index = obs_data_frame$obs_index,
@@ -168,7 +168,7 @@ for(i in 1:runs){
   )
   
   #Extract parameter estimates
-  ests <- hmde_extract_estimates(model = "linear_single_ind",
+  ests <- hmde_extract_estimates(model = "affine_single_ind",
                                  fit = fit,
                                  input_measurement_data = obs_data_frame)
   
@@ -194,7 +194,7 @@ for(j in 1:length(step_sizes)){
     print(paste0("Run: ", i, " step size: ", step_sizes[j]))
     #Run the model
     suppressWarnings(
-      fit <- hmde_model("linear_single_ind") |>
+      fit <- hmde_model("affine_single_ind") |>
       hmde_assign_data(n_obs = nrow(obs_data_frame),
                        y_obs = obs_data_frame$y_obs,
                        obs_index = obs_data_frame$obs_index,
@@ -206,7 +206,7 @@ for(j in 1:length(step_sizes)){
     )
     
     #Extract parameter estimates
-    ests <- hmde_extract_estimates(model = "linear_single_ind",
+    ests <- hmde_extract_estimates(model = "affine_single_ind",
                                    fit = fit,
                                    input_measurement_data = obs_data_frame)
     
@@ -224,7 +224,7 @@ for(j in 1:length(step_sizes)){
 ```
 
 ### Better numerical method: Runge-Kutta 4-5 algorithm with adaptive step size
-To show that these problems can be dealt with, we will use the RK45 solver which includes an adaptive step size to reduce error. These models can also take time to run because of the adaptive step size, so this block does not run by default. Occasionally the sampler will start at a bad parameter combination and the RK45 algorithm will fail to converge, but this is usually solved by the next sample iteration and is a result of the linear ODE being a numerical nightmare.
+To show that these problems can be dealt with, we will use the RK45 solver which includes an adaptive step size to reduce error. These models can also take time to run because of the adaptive step size, so this block does not run by default. Occasionally the sampler will start at a bad parameter combination and the RK45 algorithm will fail to converge, but this is usually solved by the next sample iteration and is a result of the affine ODE being a numerical nightmare.
 
 ```{r, eval = FALSE}
 runs <- 100
@@ -237,7 +237,7 @@ for(i in 2005:runs){
   print(paste0("Run: ", i))
   #Run the model
   suppressWarnings(
-    fit <- hmde_model("linear_single_ind") |>
+    fit <- hmde_model("affine_single_ind") |>
     hmde_assign_data(n_obs = nrow(obs_data_frame),
                      y_obs = obs_data_frame$y_obs,
                      obs_index = obs_data_frame$obs_index,
@@ -249,7 +249,7 @@ for(i in 2005:runs){
   )
   
   #Extract parameter estimates
-  ests <- hmde_extract_estimates(model = "linear_single_ind",
+  ests <- hmde_extract_estimates(model = "affine_single_ind",
                                  fit = fit,
                                  input_measurement_data = obs_data_frame)
   
@@ -277,7 +277,7 @@ for(i in 1:runs){
   print(paste0("Run: ", i))
   #Run the model
   suppressWarnings(
-    fit <- hmde_model("linear_single_ind") |>
+    fit <- hmde_model("affine_single_ind") |>
     hmde_assign_data(n_obs = nrow(obs_data_frame),
                      y_obs = obs_data_frame$y_obs,
                      obs_index = obs_data_frame$obs_index,
@@ -289,7 +289,7 @@ for(i in 1:runs){
   )
   
   #Extract parameter estimates
-  ests <- hmde_extract_estimates(model = "linear_single_ind",
+  ests <- hmde_extract_estimates(model = "affine_single_ind",
                                  fit = fit,
                                  input_measurement_data = obs_data_frame)
   
@@ -305,7 +305,7 @@ for(i in 1:runs){
 ```
 
 ### Testing different priors
-As the default priors for the $\beta$ parameters are closer to the true parameter combination than any of the erroneous clusters we did follow-up testing to check if, and how much, this might bias the probability of a chain falling into the second mode in the posterior distribution. The Stan code for the linear model is set up to have a default pair of prior means at $\log(1) = 0$, but user-defined values can be passed as part of the data structure. We do this for the 0.5 step size only.
+As the default priors for the $\beta$ parameters are closer to the true parameter combination than any of the erroneous clusters we did follow-up testing to check if, and how much, this might bias the probability of a chain falling into the second mode in the posterior distribution. The Stan code for the affine model is set up to have a default pair of prior means at $\log(1) = 0$, but user-defined values can be passed as part of the data structure. We do this for the 0.5 step size only.
 
 We are going to test two different prior configurations: a set of means that is half-way between the correct parameters and the (previously estimated) known error point for step size 0.5; and a much smaller standard deviation for the default mean of 1.
 ```{r, eval = FALSE}
@@ -336,7 +336,7 @@ for(j in 1:length(beta_prior_testing)){
     print(paste0("Run: ", i, " step size: ", step_size))
     #Run the model
     suppressWarnings(
-      fit <- hmde_model("linear_single_ind") |>
+      fit <- hmde_model("affine_single_ind") |>
       hmde_assign_data(n_obs = nrow(obs_data_frame),
                        y_obs = obs_data_frame$y_obs,
                        obs_index = obs_data_frame$obs_index,
@@ -350,7 +350,7 @@ for(j in 1:length(beta_prior_testing)){
     )
     
     #Extract parameter estimates
-    ests <- hmde_extract_estimates(model = "linear_single_ind",
+    ests <- hmde_extract_estimates(model = "affine_single_ind",
                                    fit = fit,
                                    input_measurement_data = obs_data_frame)
     
@@ -366,6 +366,94 @@ for(j in 1:length(beta_prior_testing)){
   
   prior_test_est_tibble_list[[i]] <- prior_test_est_tibble
 }
+```
+
+### Checking Canham model for multi-modality in the posterior
+For reassurance we check whether the Canham model is also succeptable to posterior multimodality 
+```{r}
+#Build data
+Canham_DE <- function(Time, State, Pars) { #Pars: g_max, y_max, k
+  with(as.list(c(State, Pars)), {
+    dY <- g_max * exp(-0.5 * (log(Y / y_max) / k)^2)
+    
+    return(list(c(dY)))
+  })
+}
+
+pars_combo <- c(g_max = 0.8,
+                y_max = 8,
+                k = 1)
+times <- seq(0, 49, by = 0.0001)
+yini  <- c(Y = 1) #Initial condition
+canham_true_y <- ode(yini, times, Canham_DE, pars_combo, method = "rk4")[,2]
+canham_true_data <- tibble(
+  y = canham_true_y,
+  time = times
+) %>%
+  filter(time %in% seq(from = 0, to = 49, by = 5))
+
+canham_obs_data <- tibble(
+  y_obs = canham_true_data$y + rnorm(nrow(canham_true_data), 0, 0.1),
+  time = canham_true_data$time,
+  obs_index = 1:nrow(canham_true_data)
+)
+
+#Plot Canham function
+y_0 <- yini[1] #Starting size
+y_final <- canham_obs_data$y_obs[nrow(canham_obs_data)]
+
+#Plot of growth function
+ggplot() +
+  xlim(y_0, y_final) +
+  labs(x = "Y(t)", y = "f", title = "Canham growth") +
+  geom_function(fun=hmde_model_des("canham_single_ind"),
+                args=list(pars = list(pars_combo[1],
+                                      pars_combo[2],
+                                      pars_combo[3])),
+                colour="darkorchid", linewidth=1,
+                xlim=c(y_0, y_final)) +
+  theme_classic()
+
+#Plot Canham simulated data
+sizes_over_time_canham <- ggplot(canham_obs_data, aes(x = time, y = y_obs)) +
+  geom_point(colour = "darkorchid", size = 3) +
+  geom_line(colour = "darkorchid", linewidth = 1) +
+  labs(x = "Time", y = "Y") +
+  theme_classic()
+sizes_over_time_canham
+
+runs <- 1000
+canham_par_est_tibble <- tibble(run = c(),
+                                g_max = c(),
+                                y_max = c(),
+                                k = c())
+
+for(i in 216:runs){
+  print(paste0("Run: ", i))
+  #Run the model
+  suppressWarnings(
+    fit <- hmde_model("canham_single_ind") |>
+      hmde_assign_data(n_obs = nrow(canham_obs_data),
+                       y_obs = canham_obs_data$y_obs,
+                       obs_index = canham_obs_data$obs_index,
+                       time = canham_obs_data$time)  |> 
+      hmde_run(chains = 1, cores = 1, iter = 2000)
+  )
+  
+  #Extract parameter estimates
+  ests <- hmde_extract_estimates(model = "canham_single_ind",
+                                 fit = fit,
+                                 input_measurement_data = canham_obs_data)
+  
+  temp <- tibble(
+    run = i,
+    g_max = ests$individual_data$ind_max_growth_mean,
+    y_max = ests$individual_data$ind_size_at_max_growth_mean,
+    k = ests$individual_data$ind_k_mean
+  )
+  
+  canham_par_est_tibble <- rbind(canham_par_est_tibble, temp)
+} 
 ```
 
 ## Analysis

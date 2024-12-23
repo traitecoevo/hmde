@@ -47,7 +47,7 @@ which is considered a reasonable approximation of long term growth behaviour for
 $$f = \beta_0 - \beta_1 Y(t)$$ 
 which is only included for demonstration purposes of where numerical methods can go wrong as it is a re-parameterisation of the von Bertalanffy model.
 
-Choice of appropriate function is an exercise for the user and depends on the available data. Aside from the linear model all have versions that work with both a single individual, and multiple individuals. We provide example data intended for use with each of the primary models:
+Choice of appropriate function is an exercise for the user and depends on the available data. Aside from the affine model all have versions that work with both a single individual, and multiple individuals. We provide example data intended for use with each of the primary models:
 - `Trout_Size_Data` for the constant model,
 - `Lizard_Size_Data` for the von Bertalanffy model,
 - `Tree_Size_Data` for the Canham model.
