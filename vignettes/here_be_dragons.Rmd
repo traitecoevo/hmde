@@ -25,7 +25,7 @@ options(rmarkdown.html_vignette.check_title = FALSE)
 
 ## Load dependencies
 ```{r}
-#remotes::install_github("traitecoevo/hmde@db680a5888e8dc083e565f8ea2925df1a770c283", force = TRUE)
+#remotes::install_github("traitecoevo/hmde@450c0243a8c7f32bba2d11dfa94790560bd4f7fb", force = TRUE)
 
 library(hmde)
 library(dplyr)
@@ -428,7 +428,7 @@ canham_par_est_tibble <- tibble(run = c(),
                                 y_max = c(),
                                 k = c())
 
-for(i in 216:runs){
+for(i in 1:runs){
   print(paste0("Run: ", i))
   #Run the model
   suppressWarnings(
