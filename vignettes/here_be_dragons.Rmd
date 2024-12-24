@@ -25,7 +25,7 @@ options(rmarkdown.html_vignette.check_title = FALSE)
 
 ## Load dependencies
 ```{r}
-#remotes::install_github("traitecoevo/hmde@450c0243a8c7f32bba2d11dfa94790560bd4f7fb", force = TRUE)
+#remotes::install_github("traitecoevo/hmde@29accb55b69bcc207e5299a84f931fe329c0d265", force = TRUE)
 
 library(hmde)
 library(dplyr)
@@ -138,7 +138,7 @@ analytic_observed
 
 A note on error and precision: the same bad behaviour occurs even if you use unrounded data with all the precision R offers and much smaller error. You can test this by uncommenting the line that rounds the data and/or changing the measurement error standard deviation. The chosen values, and rounding, are intended to demonstrate that this is a problem that may occur with realistic precision and error.
 
-## Implementing models
+## Implementing models and collecting posterior estimates
 In this section we are going to run a sequence of sets of models. The first batch is about checking for the existence of bimodal posterior distributions across different step sizes for the same numerical method. We then use a different numerical method to see if the problem persists. Lastly, we use different means in the parameter priors to see if the posterior can be constrained by such methods.
 
 ### Step size data
@@ -310,7 +310,7 @@ As the default priors for the $\beta$ parameters are closer to the true paramete
 We are going to test two different prior configurations: a set of means that is half-way between the correct parameters and the (previously estimated) known error point for step size 0.5; and a much smaller standard deviation for the default mean of 1.
 ```{r, eval = FALSE}
 step_size <- 0.5
-runs <- 10000
+runs <- 100
 beta_prior_testing <- list(
   average_means_test = list(
     prior_means = c(mean(c(10, 49.4)),
@@ -457,6 +457,9 @@ for(i in 1:runs){
 ```
 
 ## Analysis
+The general workflow for each model is the same: fit a finite mixture model to identify clustering, get an estimate of the distance between clusters, then plot the posterior distribution clusters. Additional plots may be produced depending on which model is being tested.
+
+### Different step sizes
 We are going to fit a finite mixture model for each of the step sizes to tell us about the clustering in the posterior distributions. We assume that there are two clusters (you can check with scatter plots), that one is close to the true values and the other some distance away with much larger estimates for both, and use the mean for rows where $\hat{\beta_}_0 > mean(\hat{\beta_}_0)$ as our starting value for the iterative process to avoid singularities. The overall mean of the estimates works as a threshold for extreme values because of the bimodality and distance between clusters.
 
 ```{r}
