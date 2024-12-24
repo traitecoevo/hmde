@@ -531,9 +531,6 @@ step_size_mix_models_par_ests
 ```
 We get bimodality in the posterior distributions, for all it's rarer for the smaller step sizes. Bias in the estimates closest to the true values is due to the same measurement error in the 'observed' data for all the fits. The second mode in the estimates arises from the numerical integration error as we will verify shortly. The extreme bimodality of the posterior is consistent behaviour, even though the point of the second mode shifts based on the step size.
 
-### Mixture models for prior distribution testing
-
-
 Some aesthetics before plots.
 ```{r}
 legend_spec <- tibble(
@@ -1224,6 +1221,19 @@ dist(dist_table)
 ### Alternate prior analysis
 For each combination of priors we run a mixture model to get probability estimates.
 ```{r}
+beta_prior_testing <- list(
+  average_means_test = list(
+    prior_means = c(mean(c(10, 49.4)),
+                     mean(c(1, 4.92))
+    ),
+    prior_sds = c(2,2) #Default value
+  ),
+  small_sd_test <- list(
+    prior_means = c(1,1),
+    prior_sds = c(0.1,0.1)
+  )
+)
+
 mix_model_prior_list <- list()
 mix_model_prior_scatter <- list()
 #Scatter plot to check for evidence of further clusters
@@ -1279,6 +1289,18 @@ mix_model_analytic_scatter <- ggplot(data = analytic_par_est_tibble,
          y = "beta_1 est.") +
   theme_classic()
 
+analytic_hist_0 <- ggplot(data = analytic_par_est_tibble, aes(x=beta_0)) +
+  geom_histogram(fill = "lightblue",
+                 colour = "black") +
+  labs(x = "beta_0 estimates",
+       title = "Parameter histograms from analytic solution") +
+  theme_classic()
+analytic_hist_1 <- ggplot(data = analytic_par_est_tibble, aes(x=beta_1)) +
+  geom_histogram(fill = "lightgreen",
+                 colour = "black") +
+  labs(x = "beta_1 estimates") +
+  theme_classic()
+
 #Get some initialising estimates
 possible_error <- analytic_par_est_tibble %>%
   filter(beta_0 > mean(analytic_par_est_tibble$beta_0))
@@ -1302,6 +1324,58 @@ dist_table <- tibble( #Data to calculate distance
           mix_model_analytic$mu[[1]][2])
 )
 print(dist(dist_table))
+```
+
+### Canham testing
+```{r}
+pars_combo <- c(g_max = 0.8,
+                y_max = 8,
+                k = 1)
+
+canham_hist_0 <- ggplot(data = canham_par_est_tibble, aes(x=g_max)) +
+  geom_histogram(fill = "lightblue",
+                 colour = "black") +
+  labs(x = "g_max estimates",
+       title = "Parameter histograms from Canham model") +
+  theme_classic()
+canham_hist_1 <- ggplot(data = canham_par_est_tibble, aes(x=y_max)) +
+  geom_histogram(fill = "lightgreen",
+                 colour = "black") +
+  labs(x = "y_max estimates") +
+  theme_classic()
+canham_hist_3 <- ggplot(data = canham_par_est_tibble, aes(x=k)) +
+  geom_histogram(fill = "#DDB8F9",
+                 colour = "black") +
+  labs(x = "k estimates") +
+  theme_classic()
+
+#Get some initialising estimates
+possible_error <- canham_par_est_tibble %>%
+  filter(g_max > mean(canham_par_est_tibble$g_max))
+
+#To speed up the iterative algorithm we provide some initial conditions
+mu <- list( #Means from true parameters and extreme estimates
+  true = pars_combo,
+  error = c(mean(possible_error$g_max), 
+            mean(possible_error$y_max),
+            mean(possible_error$k))
+)
+
+#Fit multivariate normal finite mixture model to the estimates
+mix_model_canham <- mvnormalmixEM(x = canham_par_est_tibble[,3:5], mu = mu)
+summary(mix_model_canham)
+print(mix_model_canham$lambda)
+
+dist_table <- tibble( #Data to calculate distance
+  g_max = c(mix_model_canham$mu[[2]][1], 
+            mix_model_canham$mu[[1]][1]),
+  y_max = c(mix_model_canham$mu[[2]][2], 
+            mix_model_canham$mu[[1]][2]),
+  k = c(mix_model_canham$mu[[2]][3],
+        mix_model_canham$mu[[1]][3])
+)
+print(dist(dist_table))
+
 ```
 
 ## Plots for paper
@@ -1356,8 +1430,17 @@ for(i in 1:3){
 plot_grid(
   rk45_hist_0,
   rk45_hist_1,
+  analytic_hist_0,
+  analytic_hist_1,
   ncol = 1,
-  labels = lab_vec_4[c(1,2)]
+  labels = lab_vec_4
+)
+
+plot_grid(
+  canham_hist_0,
+  canham_hist_1,
+  ncol = 1,
+  labels = lab_vec_4[1:3]
 )
 
 ```
