@@ -31,6 +31,8 @@ library(hmde)
 library(dplyr)
 library(ggplot2)
 library(deSolve)
+library(mixtools)
+library(MASS)
 ```
 
 This vignette demonstrates an interaction between errors from numerical integration methods and MCMC sampling that produces a bimodal posterior distribution as a result of numerical error. We stumbled across the problem and are documenting it here, but account for it in the package through either using analytic solutions, or numerical methods with adaptive step sizes where analytic solutions are not available.
