@@ -10,7 +10,7 @@ hmde_model_names <- function(){
               "canham_multi_ind",
               "vb_single_ind",
               "vb_multi_ind",
-              "linear_single_ind")
+              "affine_single_ind")
 
   return(output)
 }

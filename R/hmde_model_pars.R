@@ -18,7 +18,7 @@ hmde_model_pars <- function(model=NULL){
                    canham_multi_ind = hmde_canham_multi_ind_pars(),
                    vb_single_ind = hmde_vb_single_ind_pars(),
                    vb_multi_ind = hmde_vb_multi_ind_pars(),
-                   linear_single_ind = hmde_linear_single_ind_pars())
+                   affine_single_ind = hmde_affine_single_ind_pars())
 
   return(output)
 }
@@ -95,13 +95,13 @@ hmde_vb_multi_ind_pars <- function(){
        model = "vb_multi_ind")
 }
 
-#' Parameter names for linear growth single individual model
+#' Parameter names for affine growth single individual model
 #' @keywords internal
 #' @noRd
 #'
-hmde_linear_single_ind_pars <- function(){
+hmde_affine_single_ind_pars <- function(){
   list(measurement_pars_names = c("y_hat"),
        individual_pars_names = c("ind_beta_0", "ind_beta_1"),
        error_pars_names = c(NULL),
-       model = "linear_single_ind")
+       model = "affine_single_ind")
 }

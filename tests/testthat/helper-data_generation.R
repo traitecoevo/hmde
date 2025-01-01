@@ -60,7 +60,7 @@ hmde_export_test_data <- function(n_obs_per_ind,
                                   true_data,
                                   model_name,
                                   step_size = 1){
-  if(grepl("linear", model_name)){ #Step size for linear model
+  if(grepl("affine", model_name)){ #Step size for affine model
     single_ind_data <- list(
       step_size = step_size, #Number for model RK4 alg
       n_obs = n_obs_per_ind, #Number

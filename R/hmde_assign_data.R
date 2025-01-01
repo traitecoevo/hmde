@@ -46,7 +46,7 @@ hmde_assign_data <- function(model_template, data = NULL,...){
   for(i in model_fields){ # Iterate through required fields and fill them
     if(i %in% user_fields){
       model_template <- purrr::list_modify(model_template, !!!data[i])
-    } else {
+    } else if(is.null(model_template[[i]])){ # allows for default values
       model_template[[i]] <- switch(
         i,
         n_obs = length(data$y_obs),
