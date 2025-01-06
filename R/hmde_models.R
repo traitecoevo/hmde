@@ -116,7 +116,6 @@ hmde_affine_single_ind <- function(){
        y_obs = NULL,
        obs_index = NULL,
        time = NULL,
-       y_bar = NULL,
        int_method = NULL,
        prior_means = c(1,1),
        prior_sds = c(2,2),
