@@ -76,9 +76,6 @@ parameters {
   real<lower=0> ind_y_0;
   real<lower=0> ind_const;
   real<lower=0> ind_beta_1;
-
-  //Global level
-  real<lower=0> global_error_sigma;
 }
 
 // The model to be estimated.
