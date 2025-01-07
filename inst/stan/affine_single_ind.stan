@@ -1,7 +1,7 @@
 //Growth function
 functions{
   //Growth function for use with Runge-Kutta method
-  //pars = (beta_0, beta_1, y_bar)
+  //pars = (ind_const, beta_1, y_bar)
   real DE_rk4(real y, array[] real pars){ //change number of pars
     return pars[1] - (pars[2] * (y-pars[3])); //growth function
   }
