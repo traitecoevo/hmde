@@ -9,8 +9,8 @@
 #' @import dplyr
 #' @importFrom stats quantile
 
-hmde_extract_estimates <- function(model = NULL,
-                                   fit = NULL,
+hmde_extract_estimates <- function(fit = NULL,
+                                   model = NULL,
                                    input_measurement_data = NULL){
   #Check for fit
   if(is.null(fit)){
