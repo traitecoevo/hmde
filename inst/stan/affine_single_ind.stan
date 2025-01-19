@@ -1,7 +1,7 @@
 //Growth function
 functions{
   //Growth function for use with Runge-Kutta method
-  //pars = (beta_0, beta_1, y_bar)
+  //pars = (const, beta_1, y_bar)
   real DE_rk4(real y, array[] real pars){ //change number of pars
     return pars[1] - (pars[2] * (y-pars[3])); //growth function
   }
@@ -74,11 +74,8 @@ data {
 parameters {
   //Individual level
   real<lower=0> ind_y_0;
-  real<lower=0> ind_const;
+  real ind_const;
   real<lower=0> ind_beta_1;
-
-  //Global level
-  real<lower=0> global_error_sigma;
 }
 
 // The model to be estimated.
@@ -125,7 +122,7 @@ model {
 
   //Priors
   //Individual level
-  ind_const ~lognormal(log(prior_means[1]), prior_sds[1]);
+  ind_const ~normal(prior_means[1], prior_sds[1]);
   ind_beta_1 ~lognormal(log(prior_means[2]), prior_sds[2]);
 }
 
