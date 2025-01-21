@@ -1,6 +1,5 @@
 #' Extract samples and return measurement, individual, and population-level estimates
 #'
-#' @param model model name character string
 #' @param fit fitted model Stan fit
 #' @param input_measurement_data data used to fit the model with ind_id, y_obs, time, obs_index tibble
 #'
