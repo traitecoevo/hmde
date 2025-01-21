@@ -6,8 +6,7 @@ test_that("Execution and output: plot_de_pieces function", {
                verbose = FALSE, show_messages = FALSE)
   )
 
-  output <- hmde_extract_estimates(model = "constant_multi_ind",
-                                   fit = multi_ind_trout,
+  output <- hmde_extract_estimates(fit = multi_ind_trout,
                                    input_measurement_data = Trout_Size_Data)
 
   plot <- hmde_plot_de_pieces(model = "constant_multi_ind",
@@ -33,8 +32,7 @@ test_that("Execution and output: bad input", {
                verbose = FALSE, show_messages = FALSE)
   )
 
-  output <- hmde_extract_estimates(model = "constant_multi_ind",
-                                   fit = multi_ind_trout,
+  output <- hmde_extract_estimates(fit = multi_ind_trout,
                                    input_measurement_data = Trout_Size_Data)
 
   expect_error(

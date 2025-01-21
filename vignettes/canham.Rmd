@@ -83,8 +83,7 @@ tree_canham_fit <- hmde_model("canham_multi_ind") |>
   hmde_assign_data(data = Tree_Size_Data)  |>
   hmde_run(chains = 4, cores = 4, iter = 2000)
 
-tree_canham_estimates <- hmde_extract_estimates(model = "canham_multi_ind",
-                                 fit = tree_canham_fit,
+tree_canham_estimates <- hmde_extract_estimates(fit = tree_canham_fit,
                                  input_measurement_data = Tree_Size_Data)
 
 #saveRDS(tree_canham_fit, "tree_canham_fit.rds")

@@ -66,8 +66,8 @@ data {
   real time[n_obs];
   real y_bar;
   int int_method;
-  real prior_means[2]; #vector of means for beta parameter priors
-  real prior_sds[2]; #Vector of SDs for beta parameter priors
+  real prior_means[2]; //vector of means for beta parameter priors
+  real prior_sds[2]; //Vector of SDs for beta parameter priors
 }
 
 // The parameters accepted by the model.
