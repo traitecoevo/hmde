@@ -10,7 +10,6 @@
 #' @importFrom stats quantile
 
 hmde_extract_estimates <- function(fit = NULL,
-                                   model = NULL,
                                    input_measurement_data = NULL){
   #Check for fit
   if(is.null(fit)){
@@ -21,9 +20,11 @@ hmde_extract_estimates <- function(fit = NULL,
     stop("Fit not S4 stanfit type.")
   }
 
+  model <- fit@model_name
   #Check for model
   if(!model %in% hmde_model_names()){
-    stop("Model name not recognised. Run hmde_model_names() to see available models.")
+    stop(paste0("Model name not recognised: ", model,
+                " Run hmde_model_names() to see available models."))
   }
 
   #Check for input measurement data
@@ -33,7 +34,7 @@ hmde_extract_estimates <- function(fit = NULL,
     }
   }
 
-  estimate_list <- list()
+  estimate_list <- list(model_name = model)
   par_names <- hmde_model_pars(model)
 
   if(grepl("multi", model)){ #Get n_ind for multi-individual

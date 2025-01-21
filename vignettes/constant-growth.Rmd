@@ -215,7 +215,7 @@ trout_constant_fit <- hmde_model("constant_multi_ind") |>
 Once the model has finished running, we can extract the model estimates and have a look at the distribution of estimated sizes, estimated growth increments, and annualised growth rates at the level of sizes over time.
 
 ```{r}
-trout_constant_estimates <- hmde_extract_estimates(model = "constant_multi_ind",
+trout_constant_estimates <- hmde_extract_estimates(                                 
                                  fit = trout_constant_fit,
                                  input_measurement_data = Trout_Size_Data)
 ```
