@@ -4,14 +4,14 @@
 \alias{hmde_extract_estimates}
 \title{Extract samples and return measurement, individual, and population-level estimates}
 \usage{
-hmde_extract_estimates(fit = NULL, model = NULL, input_measurement_data = NULL)
+hmde_extract_estimates(fit = NULL, input_measurement_data = NULL)
 }
 \arguments{
 \item{fit}{fitted model Stan fit}
 
-\item{model}{model name character string}
-
 \item{input_measurement_data}{data used to fit the model with ind_id, y_obs, time, obs_index tibble}
+
+\item{model}{model name character string}
 }
 \value{
 named list with data frames for measurement, individual, population-level, and error parameter estimates

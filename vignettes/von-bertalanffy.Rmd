@@ -100,8 +100,7 @@ lizard_vb_fit <- hmde_model("vb_multi_ind") |>
   hmde_assign_data(data = Lizard_Size_Data)  |>
   hmde_run(chains = 4, cores = 1, iter = 2000)
 
-lizard_estimates <- hmde_extract_estimates(model = "vb_multi_ind",
-                                           fit = lizard_vb_fit,
+lizard_estimates <- hmde_extract_estimates(fit = lizard_vb_fit,
                                            input_measurement_data = Lizard_Size_Data)
 ```
 

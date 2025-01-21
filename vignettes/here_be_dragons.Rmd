@@ -167,8 +167,7 @@ for(i in 1:runs){
   )
   
   #Extract parameter estimates
-  ests <- hmde_extract_estimates(model = "affine_single_ind",
-                                 fit = fit,
+  ests <- hmde_extract_estimates(fit = fit,
                                  input_measurement_data = obs_data_frame)
   
   temp <- tibble(

@@ -104,8 +104,7 @@ canham_multi_ind_fit <- hmde_model("canham_multi_ind") |>
   hmde_assign_data(data = Tree_Size_Data)  |>
   hmde_run(chains = 1, cores = 1, iter = 1000)
 
-Tree_Size_Ests <- hmde_extract_estimates(model = "canham_multi_ind",
-                                 fit = canham_multi_ind_fit,
+Tree_Size_Ests <- hmde_extract_estimates(fit = canham_multi_ind_fit,
                                  input_measurement_data = Tree_Size_Data)
 ```
 

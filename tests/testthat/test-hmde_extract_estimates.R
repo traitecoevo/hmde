@@ -11,8 +11,7 @@ test_that("Execution and output: extract_estimates function", {
       hmde_assign_data(data = data) |>
       hmde_run(chains = 1, iter = 20, cores = 1,
                verbose = FALSE, show_messages = FALSE) |>
-      hmde_extract_estimates(model = "constant_single_ind",
-                             input_measurement_data = data)
+      hmde_extract_estimates(input_measurement_data = data)
   )
 
   expect_named(output)
