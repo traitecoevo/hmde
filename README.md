@@ -16,7 +16,7 @@ The goal of hmde is to fit a model for the rate of change in some quantity based
 In other language, `hmde` implements hierarchical Bayesian longitudinal models to solve the Bayesian inverse problem of estimating differential equation parameters based on repeat measurement surveys. Estimation is done using Markov Chain Monte Carlo, implemented through
 [Stan](https://mc-stan.org/) via [RStan](https://mc-stan.org/users/interfaces/rstan), built under [R](https://cran.r-project.org/) 4.3.3. The inbuilt models are based on case studies in ecology.
 
-A pre-print paper is available on [bioarXiv](https://www.biorxiv.org/content/10.1101/2025.01.15.633280v1), or as the [hmde_paper.pdf](https://github.com/traitecoevo/hmde/blob/master/hmde_paper.pdf) file here.
+A pre-print paper is available on [bioarXiv](https://doi.org/10.1101/2025.01.15.633280), or as the [hmde_paper.pdf](https://github.com/traitecoevo/hmde/blob/master/hmde_paper.pdf) file here.
 
 ## The Maths
 
