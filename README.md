@@ -10,11 +10,16 @@
 coverage](https://codecov.io/gh/traitecoevo/hmde/branch/master/graph/badge.svg)](https://app.codecov.io/gh/traitecoevo/hmde?branch=master)
 [![Lifecycle:
 experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://lifecycle.r-lib.org/articles/stages.html#experimental)
+[![DOI:
+10.1101/2025.01.15.633280](https://img.shields.io/badge/DOI%3A-10.1101%2F2025.01.15.633280-blue?link=https%3A%2F%2Fdoi.org%2F10.1101%2F2025.01.15.633280)](https://doi.org/10.1101/2025.01.15.633280)
 <!-- badges: end -->
+
 
 The goal of hmde is to fit a model for the rate of change in some quantity based on a set of pre-defined functions arising from ecological applications. We estimate differential equation parameters from repeated observations of a process, such as growth rate parameters to data of sizes over time.
 In other language, `hmde` implements hierarchical Bayesian longitudinal models to solve the Bayesian inverse problem of estimating differential equation parameters based on repeat measurement surveys. Estimation is done using Markov Chain Monte Carlo, implemented through
 [Stan](https://mc-stan.org/) via [RStan](https://mc-stan.org/users/interfaces/rstan), built under [R](https://cran.r-project.org/) 4.3.3. The inbuilt models are based on case studies in ecology.
+
+A pre-print paper is available on [bioarXiv](https://doi.org/10.1101/2025.01.15.633280), or as the [hmde_paper.pdf](https://github.com/traitecoevo/hmde/blob/master/inst/doc/hmde_paper.pdf) file here.
 
 ## The Maths
 
