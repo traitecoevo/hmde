@@ -63,6 +63,10 @@ model {
 generated quantities {
   real y_hat[n_obs];
 
+  //Return the used prior parameters
+  real check_prior_pars_ind_beta[2] = prior_pars_ind_beta;
+  real check_prior_pars_global_error_sigma[2] = prior_pars_global_error_sigma;
+
   for(i in 1:n_obs){
     //Fits the first size
     if(obs_index[i]==1){

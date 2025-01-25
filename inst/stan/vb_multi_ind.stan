@@ -90,6 +90,14 @@ generated quantities{
   real y_hat[n_obs];
   array[3] real pars;
 
+  //Return the used prior parameters
+  real check_prior_pars_pop_max_size_mean_sd_only = prior_pars_pop_max_size_mean_sd_only;
+  real check_prior_pars_pop_max_size_mean_mean_max_obs = log(max(y_obs));
+  real check_prior_pars_pop_max_size_sd[2] = prior_pars_pop_max_size_sd;
+  real check_prior_pars_pop_growth_rate_mean[2] = prior_pars_pop_growth_rate_mean;
+  real check_prior_pars_pop_growth_rate_sd[2] = prior_pars_pop_growth_rate_sd;
+  real check_prior_pars_global_error_sigma[2] = prior_pars_global_error_sigma;
+
   for(i in 1:n_obs){
     // Initialise the parameters for the observation
     pars[1] = ind_max_size[ind_id[i]] - y_bar;

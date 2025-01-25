@@ -131,7 +131,10 @@ generated quantities{
   array[3] real pars;
   real ind_beta_0;
   vector[1] y_temp;
-  int vers = 1;
+
+  //Return the used prior parameters
+  real check_prior_pars_ind_const[2] = prior_pars_ind_const;
+  real check_prior_pars_ind_beta[2] = prior_pars_ind_beta_1;
 
   ind_beta_0 = ind_const + ind_beta_1*y_bar;
 

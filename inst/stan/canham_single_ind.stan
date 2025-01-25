@@ -72,6 +72,12 @@ generated quantities{
   real y_hat[n_obs];
   vector[1] y_temp;
 
+  //Return the used prior parameters
+  real check_prior_pars_ind_max_growth[2] = prior_pars_ind_max_growth;
+  real check_prior_pars_ind_size_at_max_growth[2] = prior_pars_ind_size_at_max_growth;
+  real check_prior_pars_ind_k[2] = prior_pars_ind_k;
+  real check_prior_pars_global_error_sigma[2] = prior_pars_global_error_sigma;
+
   for(i in 1:n_obs){
 
     if(obs_index[i]==1){//Fits the first size

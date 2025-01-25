@@ -41,6 +41,7 @@ test_that("Execution: Constant multiple individuals", {
     data$n_pars * 2  +         #Population parameters
     1 +                        #Global error
     data$n_obs +               #y_ij
+    3 +                        #checks for priors
     1                          #lp__
 
   hmde_test_multi_individual(model_name, data, est_dim)
