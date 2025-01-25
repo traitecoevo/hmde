@@ -14,7 +14,7 @@ data {
   int obs_index[n_obs];
   real time[n_obs];
   real y_bar;
-  prior_pars_ind_max_size[2];
+  real prior_pars_ind_max_size_sd_only;
   prior_pars_ind_growth_rate[2];
   prior_pars_global_error_sigma[2];
 }
@@ -57,7 +57,7 @@ model {
   //Priors
   //Individual level
   ind_max_size ~lognormal(log(max(y_obs)),
-                          prior_pars_ind_max_size[2]);
+                          prior_pars_ind_max_size_sd_only);
   ind_growth_rate ~lognormal(prior_pars_ind_growth_rate[1],
                              prior_pars_ind_growth_rate);
 
