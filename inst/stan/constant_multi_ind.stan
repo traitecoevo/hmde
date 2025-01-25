@@ -18,9 +18,9 @@ data {
   int obs_index[n_obs];
   real time[n_obs];
   int ind_id[n_obs];
-  prior_pars_pop_beta_mu[2];
-  prior_pars_pop_beta_sigma[2];
-  prior_pars_global_error_sigma[2];
+  real prior_pars_pop_beta_mu[2];
+  real prior_pars_pop_beta_sigma[2];
+  real prior_pars_global_error_sigma[2];
 }
 
 // The parameters accepted by the model.

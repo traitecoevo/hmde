@@ -14,10 +14,10 @@ data {
   real y_obs[n_obs];
   int obs_index[n_obs];
   real time[n_obs];
-  prior_pars_ind_max_growth[2];
-  prior_pars_ind_size_at_max_growth[2];
-  prior_pars_ind_k[2];
-  prior_pars_global_error_sigma[2];
+  real prior_pars_ind_max_growth[2];
+  real prior_pars_ind_size_at_max_growth[2];
+  real prior_pars_ind_k[2];
+  real prior_pars_global_error_sigma[2];
 }
 
 // The parameters accepted by the model.

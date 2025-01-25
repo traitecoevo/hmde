@@ -16,13 +16,13 @@ data {
   int obs_index[n_obs];
   real time[n_obs];
   int ind_id[n_obs];
-  prior_pars_pop_max_growth_mean[2];
-  prior_pars_pop_max_growth_sd[2];
-  prior_pars_pop_size_at_max_growth_mean[2];
-  prior_pars_pop_size_at_max_growth_sd[2];
-  prior_pars_pop_k_mean[2];
-  prior_pars_pop_k_sd[2];
-  prior_pars_global_error_sigma[2];
+  real prior_pars_pop_max_growth_mean[2];
+  real prior_pars_pop_max_growth_sd[2];
+  real prior_pars_pop_size_at_max_growth_mean[2];
+  real prior_pars_pop_size_at_max_growth_sd[2];
+  real prior_pars_pop_k_mean[2];
+  real prior_pars_pop_k_sd[2];
+  real prior_pars_global_error_sigma[2];
 }
 
 // The parameters accepted by the model.

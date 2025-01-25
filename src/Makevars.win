@@ -9,3 +9,4 @@ PKG_LIBS = $(shell "$(R_HOME)/bin$(R_ARCH_BIN)/Rscript" -e "RcppParallel::RcppPa
 
 CXX_STD = CXX17
 PKG_CXXFLAGS += -Wa,-mbig-obj
+PKG_CXXFLAGS += -Wa,-mbig-obj

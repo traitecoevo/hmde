@@ -15,8 +15,8 @@ data {
   real time[n_obs];
   real y_bar;
   real prior_pars_ind_max_size_sd_only;
-  prior_pars_ind_growth_rate[2];
-  prior_pars_global_error_sigma[2];
+  real prior_pars_ind_growth_rate[2];
+  real prior_pars_global_error_sigma[2];
 }
 
 // The parameters accepted by the model.

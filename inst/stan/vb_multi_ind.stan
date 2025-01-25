@@ -16,11 +16,11 @@ data {
   real time[n_obs];
   int ind_id[n_obs];
   real y_bar;
-  prior_pars_pop_max_size_mean_sd_only;
-  prior_pars_pop_max_size_sd[2];
-  prior_pars_pop_growth_rate_mean[2];
-  prior_pars_pop_growth_rate_sd[2];
-  prior_pars_global_error_sigma[2];
+  real prior_pars_pop_max_size_mean_sd_only;
+  real prior_pars_pop_max_size_sd[2];
+  real prior_pars_pop_growth_rate_mean[2];
+  real prior_pars_pop_growth_rate_sd[2];
+  real prior_pars_global_error_sigma[2];
 }
 
 // The parameters accepted by the model.
