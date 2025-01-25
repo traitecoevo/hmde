@@ -30,6 +30,22 @@ f(Y(t), \beta) = \beta
 \end{equation}
 where $\beta$ is the average growth rate. The constant growth model corresponds to linear sizes over time, and is equivalent to a linear mixed model for size, where there is an individual effect when fit to multiple individuals.
 
+### Priors
+The default priors for the constant top-level parameters in the single individual model are
+$$\beta\sim \log\mathcal{N}(0, 2),$$
+$$0 <\sigma_e \sim Cauchy(0, 2).$$
+
+For the multi-individual model the prior structure and default parameters are
+$$\mu_{\beta} \sim \mathcal{N}(0, 2),$$
+$$0 < \sigma_{\beta} \sim Cauchy(0, 2),$$
+$$0 < \sigma_{e} \sim Cauchy(0, 2).$$
+To change the prior parameter values (the distributions are fixed) optional arguments can be passed to `hmde_assign_data` with names corresponding to the `prior_pars` argument for the associated parameter as output by `hmde_models()`. For example in the following we want to change the prior for $\beta$ (`ind_beta`) in the individual model:
+```{r}
+hmde_model("constant_single_ind")
+#prior_pars_ind_beta is the argument name for the prior parameters
+```
+The mean passed to a log-normal distribution is the mean of the **underlying normal distribution**, so if you want to pass a value based on raw observations you need to log-transform it first.
+
 Let's simulate some data to visualise the constant growth function.  
 
 ### Load dependencies

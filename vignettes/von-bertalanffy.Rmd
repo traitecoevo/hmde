@@ -25,7 +25,26 @@ where $S_{max}$ is the asymptotic maximum size and $\beta$ controls the growth r
 \begin{equation}\label{eqn_vb_soln}
 Y(t) = S_{max} + (Y(0) - S_{max}) \exp(-t\beta)
 \end{equation}
-which is independent of age at the starting size $Y(0)$ and instead uses the first size as the initial condition. The key behaviour of the von Bertalanffy model is a high growth rate at small sizes that declines linearly as the size approaches $S_{max}$. This manifests as growth slowing as a creature matures with a hard finite limit on the eventual size. We restrict $\beta$ and $S_{max}$ to be positive, and $S_{max}$ to be larger than the observed sizes. As a result the growth rate is non-negative. 
+which is independent of age at the starting size $Y(0)$ and instead uses the first size as the initial condition. The key behaviour of the von Bertalanffy model is a high growth rate at small sizes that declines linearly as the size approaches $S_{max}$. This manifests as growth slowing as a creature matures with a hard finite limit on the eventual size. We restrict $\beta$ and $S_{max}$ to be positive. As a result the growth rate is non-negative. 
+
+### Priors
+The default priors for the constant top-level parameters in the single individual model are
+$$S_{max} \sim \log\mathcal{N}(\log(\max(y_{obs})), 2),$$
+$$\beta \sim \log\mathcal{N}(0, 2),$$
+$$0 <\sigma_e \sim Cauchy(0, 2).$$
+
+For the multi-individual model the prior structure and default parameters are
+$$\mu_{S_{max}} \sim \mathcal{N}(\log(\max(y_{obs})), 2),$$
+$$0 < \sigma_{S_{max}} \sim Cauchy(0, 2),$$
+$$\mu_{\beta} \sim \mathcal{N}(0, 2),$$
+$$0 < \sigma_{\beta} \sim Cauchy(0, 2),$$
+$$0 < \sigma_{e} \sim Cauchy(0, 2).$$
+The max size parameter priors are always centred at the (transformed) maximum observed size. This is not changeable, but the standard deviation is. To see the name for the prior parameter run `hmde_model`. For example in the following we want to change the prior for $S_{max}$ standard deviation (`ind_max_size`) in the individual model:
+```{r}
+hmde_model("vb_single_ind")
+#prior_pars_ind_max_size_sd_only is the argument name for the prior parameters
+```
+
 
 ### Load dependencies
 

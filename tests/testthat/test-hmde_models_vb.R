@@ -4,7 +4,11 @@ test_that("Model structures: vb", {
   single_model <- hmde_model("vb_single_ind")
   expect_named(single_model, c("n_obs", "y_obs",
                                "obs_index", "time",
-                               "y_bar", "model"))
+                               "y_bar",
+                               "prior_pars_ind_max_size_sd_only",
+                               "prior_pars_ind_growth_rate",
+                               "prior_pars_global_error_sigma",
+                               "model"))
   expect_type(single_model, "list")
   expect_visible(single_model)
 
@@ -12,7 +16,13 @@ test_that("Model structures: vb", {
   multi_model <- hmde_model("vb_multi_ind")
   expect_named(multi_model, c("n_obs", "n_ind", "y_obs",
                               "obs_index", "time", "ind_id",
-                              "y_bar", "model"))
+                              "y_bar",
+                              "prior_pars_pop_max_size_mean_sd_only",
+                              "prior_pars_pop_max_size_sd",
+                              "prior_pars_pop_growth_rate_mean",
+                              "prior_pars_pop_growth_rate_sd",
+                              "prior_pars_global_error_sigma",
+                              "model"))
   expect_type(multi_model, "list")
   expect_visible(multi_model)
 })

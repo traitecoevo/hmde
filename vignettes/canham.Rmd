@@ -53,6 +53,25 @@ ggplot() +
                 xlim=c(y_0, y_final))
 ```
 
+The default priors for the Canham top-level parameters for the single individual model are
+$$g_{max} \sim \log\mathcal{N}(0, 2),$$
+$$S_{max} \sim \log\mathcal{N}(0, 2),$$
+$$k \sim \log\mathcal{N}(0, 2)$$
+$$0 <\sigma_e \sim Cauchy(0, 2).$$
+For the multi-individual model the prior structure and default parameters are
+$$\mu_{g_{max}} \sim \mathcal{N}(0, 2),$$
+$$0 < \sigma_{g_{max}} \sim Cauchy(0, 2),$$
+$$\mu_{S_{max}} \sim \mathcal{N}(0, 2),$$
+$$0 < \sigma_{S_{max}} \sim Cauchy(0, 2),$$
+$$\mu_{k} \sim \mathcal{N}(0, 2),$$
+$$0 < \sigma_{k} \sim \sim Cauchy(0, 2),$$
+$$0 <\sigma_e \sim Cauchy(0, 2).$$
+To see the name for the prior parameter run `hmde_model`. For example in the following we want to change the prior for $g_{max}$ (`ind_max_growth`) in the individual model:
+```{r}
+hmde_model("canham_single_ind")
+#prior_pars_ind_max_growth is the argument name for the prior parameters
+```
+
 The data we use for this demonstration comes from the Barro Colorado Island long term forest plot @condit2019dataset. We have a simple random sample without replacement of 50 individuals from \textit{Garcinia recondita}, subject to the following inclusion criteria for individuals:
 \begin{itemize}
 \item 6 observations since the 1990 change in measurement precision,

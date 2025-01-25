@@ -142,7 +142,7 @@ hmde_affine_single_ind <- function(){
        time = NULL,
        int_method = NULL,
        y_bar = NULL,
-       prior_means = c(1,1),
-       prior_sds = c(2,2),
+       prior_pars_ind_const = c(1,2),
+       prior_pars_ind_beta_1 = c(0,2),
        model = "affine_single_ind")
 }

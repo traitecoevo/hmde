@@ -43,7 +43,7 @@ f = f_{max} \exp\Bigg(-\frac{1}{2}\bigg(\frac{\log(Y(t)/Y_{max})}{k} \bigg)^2 \B
 $$
 which is considered a reasonable approximation of long term growth behaviour for some tree species as shown in \cite{obrien2024allindividuals} and [Chapter 2]. Equation (3) is extremely non-linear and does not have an analytic solution, forcing the use of numerical methods in order to estimate the growth increments in Equation (1).
 
-- Linear: 
+- Affine: 
 $$f = \beta_0 - \beta_1 Y(t)$$ 
 which is only included for demonstration purposes of where numerical methods can go wrong as it is a re-parameterisation of the von Bertalanffy model.
 
@@ -71,10 +71,14 @@ $$
 $$
 and typically use the following priors:
 $$
-\mu_k \sim\mathcal{N}(0,1), \quad 0 < \sigma_k\sim Cauchy(0, 1).
+\mu_k \sim\mathcal{N}(0,2), \quad 0 < \sigma_k\sim Cauchy(0, 2).
 $$
+For details on the prior distributions see the vignette for a specific model or check the Stan file. To see the default values run `hmde_model` on the model name as a string and look at the `prior_pars` argument for the parameter name:
+```{r}
+hmde_model("canham_multi_ind")
+```
 
-The error parameter $\sigma_e >0$ is assumed to operate at a global level independent of individual and typically has a Cauchy prior with location 0, spread parameter 1.
+The error parameter $\sigma_e >0$ is assumed to operate at a global level independent of individual and typically has a Cauchy prior with location 0, spread parameter 2.
 
 Estimation is done using MCMC through Stan. 
 
