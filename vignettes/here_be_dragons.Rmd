@@ -50,11 +50,16 @@ For this demonstration we will simulate data as though it is measured in centime
 ## The model
 We are implementing a longitudinal model of the form in Equation (1) within a hierarchical Bayesian longitudinal model where
 $$f(Y(t), \beta_0, \beta_1) = \beta_0 - \beta_1 Y(t)\qquad (2)$$
-Equation (2) is known to produce pathological behaviour from numerical methods [@butcher2016numerical], so serves as an ideal simple example of the interaction between those pathologies and the MCMC sampling process. We are attempting to estimate the parameters $\beta_0$ and $\beta_1$ from observations $y_j$, which is based on estimating $\hat{Y}_j$ given the prior distribution
+Equation (2) is known to produce pathological behaviour from numerical methods [@butcher2016numerical], so serves as an ideal simple example of the interaction between those pathologies and the MCMC sampling process. For the purpose of estimation we shift Equation (2) by the mean observed size which gives
+$$f_{fit}(Y(t), \beta_c, \beta_1) = \beta_c - \beta_1(Y(t) - \bar{y}),$$
+then the back-transformation
+$$\beta_0 = \beta_c + \beta_1 \bar{y}.$$
+
+We are attempting to estimate the parameters $\beta_0$ and $\beta_1$ from observations $y_j$, which is based on estimating $\hat{Y}_j$ given the prior distribution
 $$y_j \sim \mathcal{N}(\hat{Y}_j, 0.1).$$
 
-As we are looking at a single individual, we have prior distributions for the parameters which are
-$$\beta_k \sim \log\mathcal{N}(0,2),$$
+As we are looking at a single individual, we have prior distributions for the default parameters which are
+$$\beta_1, \beta_c \sim \log\mathcal{N}(0,2),$$
 and enforce $\beta_k > 0$.
 
 ## Simulating data
