@@ -77,12 +77,14 @@ model {
 generated quantities {
   real y_hat[n_obs];
 
-  int version = 1;
-
   //Return the used prior parameters
-  real check_prior_pars_pop_beta_mu[2] = prior_pars_pop_beta_mu;
-  real check_prior_pars_pop_beta_sigma[2] = prior_pars_pop_beta_sigma;
-  real check_prior_pars_global_error_sigma[2] = prior_pars_global_error_sigma;
+  real check_prior_pars_pop_beta_mu[2];
+  real check_prior_pars_pop_beta_sigma[2];
+  real check_prior_pars_global_error_sigma[2];
+
+  check_prior_pars_pop_beta_mu = prior_pars_pop_beta_mu;
+  check_prior_pars_pop_beta_sigma = prior_pars_pop_beta_sigma;
+  check_prior_pars_global_error_sigma = prior_pars_global_error_sigma;
 
   for(i in 1:n_obs){
 
