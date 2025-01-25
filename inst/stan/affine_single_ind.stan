@@ -123,7 +123,7 @@ model {
   //Priors
   //Individual level
   ind_const ~normal(prior_pars_ind_const[1], prior_pars_ind_const[2]);
-  ind_beta_1 ~lognormal(prior_pars_ind_beta_1[1], prior_pars_ind_beta_1[1]);
+  ind_beta_1 ~lognormal(prior_pars_ind_beta_1[1], prior_pars_ind_beta_1[2]);
 }
 
 generated quantities{
