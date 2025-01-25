@@ -80,13 +80,6 @@ model {
   ind_k ~lognormal(pop_k_mean,
                    pop_k_sd);
 
-prior_pars_pop_max_growth_mean[2];
-  prior_pars_pop_max_growth_sd[2];
-  prior_pars_pop_size_at_max_growth_mean[2];
-  prior_pars_pop_size_at_max_growth_sd[2];
-  prior_pars_pop_k_mean[2];
-  prior_pars_pop_k_sd[2];
-
   //Species level
   pop_max_growth_mean ~normal(prior_pars_pop_max_growth_mean[1],
                               prior_pars_pop_max_growth_mean[2]);
