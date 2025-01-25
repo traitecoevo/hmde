@@ -16,6 +16,17 @@ knitr::opts_chunk$set(
 options(rmarkdown.html_vignette.check_title = FALSE)
 ```
 
+### Load dependencies
+
+```{r setup}
+# remotes::install_github("traitecoevo/hmde")
+# install.packages(c("dplyr", "ggplot2"))
+
+library(hmde)
+library(dplyr)
+library(ggplot2)
+```
+
 ## Overview
 Our second demo introduces size-dependent growth based on the von Bertalanffy function
 \begin{equation}\label{eqn_vb_DE}
@@ -43,18 +54,6 @@ The max size parameter priors are always centred at the (transformed) maximum ob
 ```{r}
 hmde_model("vb_single_ind")
 #prior_pars_ind_max_size_sd_only is the argument name for the prior parameters
-```
-
-
-### Load dependencies
-
-```{r setup}
-# remotes::install_github("traitecoevo/hmde")
-# install.packages(c("dplyr", "ggplot2"))
-
-library(hmde)
-library(dplyr)
-library(ggplot2)
 ```
 
 ### Visualise model

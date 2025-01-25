@@ -26,7 +26,7 @@ library(hmde)
 
 ```{r, eval=FALSE}
 # install.packages("remotes")
-remotes::install_github("traitecoevo/hmde")
+remotes::install_github("traitecoevo/hmde@afb1d4dd1bbec79ac64b25f0e6373d62823fd81c")
 ```
 
 ## Overview

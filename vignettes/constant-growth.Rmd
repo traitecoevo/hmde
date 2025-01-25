@@ -30,6 +30,17 @@ f(Y(t), \beta) = \beta
 \end{equation}
 where $\beta$ is the average growth rate. The constant growth model corresponds to linear sizes over time, and is equivalent to a linear mixed model for size, where there is an individual effect when fit to multiple individuals.
 
+### Load dependencies
+
+```{r setup}
+# remotes::install_github("traitecoevo/hmde")
+# install.packages(c("dplyr", "ggplot2"))
+
+library(hmde)
+library(dplyr)
+library(ggplot2)
+```
+
 ### Priors
 The default priors for the constant top-level parameters in the single individual model are
 $$\beta\sim \log\mathcal{N}(0, 2),$$
@@ -47,17 +58,6 @@ hmde_model("constant_single_ind")
 The mean passed to a log-normal distribution is the mean of the **underlying normal distribution**, so if you want to pass a value based on raw observations you need to log-transform it first.
 
 Let's simulate some data to visualise the constant growth function.  
-
-### Load dependencies
-
-```{r setup}
-# remotes::install_github("traitecoevo/hmde")
-# install.packages(c("dplyr", "ggplot2"))
-
-library(hmde)
-library(dplyr)
-library(ggplot2)
-```
 
 ### Simulate data
 

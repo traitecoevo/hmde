@@ -19,6 +19,20 @@ knitr::opts_chunk$set(
 
 This vignette is intended for a statistical/mathematical audience who are interested in Bayesian inverse problems. For biologists looking for an applications-based walkthrough the other vignettes in this package -- `hmde`, `constant-growth`, `von-bertalanffy`, and `canham` -- are less theoretical.
 
+# Getting started with {hmde} 
+'hmde' is under active development, you can install the development version of 'hmde' from [GitHub](https://github.com/) with:
+
+```{r, eval=FALSE}
+# install.packages("remotes")
+remotes::install_github("traitecoevo/hmde")
+```
+
+```{r}
+library(dplyr)
+library(ggplot2)
+library(hmde)
+```
+
 # The Theory
 The underlying method that the hmde package implements leverages the longitudinal structure of repeat measurement data to estimate parameters for an underlying differential equation, as first demonstrated in \cite{obrien2024allindividuals}. This method is an example of a Bayesian inverse method for differential equation estimation: we are attempting to estimate the parameters of a chosen DE based on observations of the resulting process. We assume that the data consists of a finite number of discrete (likely sparse) observations with measurement error at the individual level, and have a set number of possible differential equations ready to be fit to data.
 
@@ -87,19 +101,7 @@ Numerical methods are required for the Canham model as it has no analytic soluti
 
 For the von Bertalanffy model an analytic solution is used in order to avoid numerical problems. For the constant model all numerical methods are the same and give the same result as the analytic solution so Euler is used.
 
-# Getting started with {hmde} 
-'hmde' is under active development, you can install the development version of 'hmde' from [GitHub](https://github.com/) with:
 
-```{r, eval=FALSE}
-# install.packages("remotes")
-remotes::install_github("traitecoevo/hmde")
-```
-
-```{r}
-library(dplyr)
-library(ggplot2)
-library(hmde)
-```
 # Demonstration: Canham Growth - Multiple Individuals
 The provided tree data for 50 individuals takes a few hours to run. As such, the following block does not run by default, and instead we leverage the provided estimates data file: `Tree_Size_Ests`. The estimates are posterior mean, median, and 95\% central credible intervals for parameters, and mean posterior estimates of sizes over time based on the longitudinal model.
 ```{r, eval=FALSE}
