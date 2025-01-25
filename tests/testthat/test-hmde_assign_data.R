@@ -135,7 +135,7 @@ test_that("Execution and output: default values", {
                      step_size = 1,
                      int_method = 1)
 
-  expect_equal(default_used$prior_means, c(1,1))
+  expect_equal(default_used$prior_pars_ind_const, c(1,2))
 
   value_supplied <- hmde_model("affine_single_ind") |>
     hmde_assign_data(n_obs = length(y_obs),
@@ -145,7 +145,7 @@ test_that("Execution and output: default values", {
                      y_bar = mean(y_obs),
                      step_size = 1,
                      int_method = 1,
-                     prior_means = c(5,5))
+                     prior_pars_ind_const = c(5,5))
 
-  expect_equal(value_supplied$prior_means, c(5,5))
+  expect_equal(value_supplied$prior_pars_ind_const, c(5,5))
 })

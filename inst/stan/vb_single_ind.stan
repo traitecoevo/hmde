@@ -59,7 +59,7 @@ model {
   ind_max_size ~lognormal(log(max(y_obs)),
                           prior_pars_ind_max_size_sd_only);
   ind_growth_rate ~lognormal(prior_pars_ind_growth_rate[1],
-                             prior_pars_ind_growth_rate);
+                             prior_pars_ind_growth_rate[2]);
 
   //Global level
   global_error_sigma ~cauchy(prior_pars_global_error_sigma[1],
