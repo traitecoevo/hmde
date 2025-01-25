@@ -18,6 +18,9 @@ data {
   int obs_index[n_obs];
   real time[n_obs];
   int ind_id[n_obs];
+  prior_pars_pop_beta_mu[2];
+  prior_pars_pop_beta_sigma[2];
+  prior_pars_global_error_sigma[2];
 }
 
 // The parameters accepted by the model.
@@ -60,11 +63,14 @@ model {
                     pop_beta_sigma);
 
   //Population level
-  pop_beta_mu ~ normal(0, 1);
-  pop_beta_sigma ~cauchy(0, 1);
+  pop_beta_mu ~ normal(prior_pars_pop_beta_mu[1],
+                       prior_pars_pop_beta_mu[2]);
+  pop_beta_sigma ~cauchy(prior_pars_pop_beta_sigma[1],
+                         prior_pars_pop_beta_sigma[2]);
 
   //Global level
-  global_error_sigma ~cauchy(0, 2);
+  global_error_sigma ~cauchy(prior_pars_global_error_sigma[1],
+                             prior_pars_global_error_sigma[2]);
 }
 
 // The output

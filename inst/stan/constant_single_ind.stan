@@ -16,6 +16,8 @@ data {
   real y_obs[n_obs];
   int obs_index[n_obs];
   real time[n_obs];
+  prior_pars_ind_beta[2];
+  prior_pars_global_error_sigma[2];
 }
 
 // The parameters accepted by the model.
@@ -49,10 +51,12 @@ model {
 
   //Priors
   //Individual level
-  ind_beta ~ lognormal(0.1, 1);
+  ind_beta ~ lognormal(prior_pars_ind_beta[1],
+                       prior_pars_ind_beta[2]);
 
   //Global level
-  global_error_sigma ~cauchy(0, 2);
+  global_error_sigma ~cauchy(prior_pars_global_error_sigma[1],
+                             prior_pars_global_error_sigma[2]);
 }
 
 // The output

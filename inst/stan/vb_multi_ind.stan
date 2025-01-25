@@ -16,6 +16,11 @@ data {
   real time[n_obs];
   int ind_id[n_obs];
   real y_bar;
+  prior_pars_pop_max_size_mean[2];
+  prior_pars_pop_max_size_sd[2];
+  prior_pars_pop_growth_rate_mean[2];
+  prior_pars_pop_growth_rate_sd[2];
+  prior_pars_global_error_sigma[2];
 }
 
 // The parameters accepted by the model.
@@ -67,13 +72,18 @@ model {
   ind_max_size ~lognormal(pop_max_size_mean, pop_max_size_sd);
 
   //Population level
-  pop_growth_rate_mean ~normal(0, 2);
-  pop_growth_rate_sd ~cauchy(0, 2);
-  pop_max_size_mean ~normal(max(log(y_obs)), 2);
-  pop_max_size_sd ~cauchy(0, 2);
+  pop_max_size_mean ~normal(log(max(y_obs)),
+                            prior_pars_pop_max_size_mean[2]);
+  pop_max_size_sd ~cauchy(prior_pars_pop_max_size_sd[1],
+                          prior_pars_pop_max_size_sd[2]);
+  pop_growth_rate_mean ~normal(prior_pars_pop_growth_rate_mean[1],
+                               prior_pars_pop_growth_rate_mean[2]);
+  pop_growth_rate_sd ~cauchy(prior_pars_pop_growth_rate_sd[1],
+                             prior_pars_pop_growth_rate_sd[2]);
 
   //Global level
-  global_error_sigma ~cauchy(0, 2);
+  global_error_sigma ~cauchy(prior_pars_global_error_sigma[1],
+                             prior_pars_global_error_sigma[2]);
 }
 
 generated quantities{

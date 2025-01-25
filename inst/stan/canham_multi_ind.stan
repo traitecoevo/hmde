@@ -16,6 +16,13 @@ data {
   int obs_index[n_obs];
   real time[n_obs];
   int ind_id[n_obs];
+  prior_pars_pop_max_growth_mean[2];
+  prior_pars_pop_max_growth_sd[2];
+  prior_pars_pop_size_at_max_growth_mean[2];
+  prior_pars_pop_size_at_max_growth_sd[2];
+  prior_pars_pop_k_mean[2];
+  prior_pars_pop_k_sd[2];
+  prior_pars_global_error_sigma[2];
 }
 
 // The parameters accepted by the model.
@@ -73,16 +80,28 @@ model {
   ind_k ~lognormal(pop_k_mean,
                    pop_k_sd);
 
+prior_pars_pop_max_growth_mean[2];
+  prior_pars_pop_max_growth_sd[2];
+  prior_pars_pop_size_at_max_growth_mean[2];
+  prior_pars_pop_size_at_max_growth_sd[2];
+  prior_pars_pop_k_mean[2];
+  prior_pars_pop_k_sd[2];
+
   //Species level
-  pop_max_growth_mean ~normal(0, 1);
-  pop_max_growth_sd ~cauchy(0, 1);
-  pop_size_at_max_growth_mean ~normal(0, 1);
-  pop_size_at_max_growth_sd ~cauchy(0, 1);
-  pop_k_mean ~normal(0, 1);
-  pop_k_sd ~cauchy(0, 1);
+  pop_max_growth_mean ~normal(prior_pars_pop_max_growth_mean[1],
+                              prior_pars_pop_max_growth_mean[2]);
+  pop_max_growth_sd ~cauchy(prior_pars_pop_max_growth_sd[1],
+                            prior_pars_pop_max_growth_sd[2]);
+  pop_size_at_max_growth_mean ~normal(prior_pars_pop_size_at_max_growth_mean[1],
+                                      prior_pars_pop_size_at_max_growth_mean[2]);
+  pop_size_at_max_growth_sd ~cauchy(prior_pars_pop_size_at_max_growth_sd[1],
+                                    prior_pars_pop_size_at_max_growth_sd[2]);
+  pop_k_mean ~normal(prior_pars_pop_k_mean[1], prior_pars_pop_k_mean[2]);
+  pop_k_sd ~cauchy(prior_pars_pop_k_sd[1], prior_pars_pop_k_sd[2]);
 
   //Global level
-  global_error_sigma ~cauchy(0, 2);
+  global_error_sigma ~cauchy(prior_pars_global_error_sigma[1],
+                             prior_pars_global_error_sigma[2]);
 }
 
 generated quantities{
