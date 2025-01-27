@@ -3,9 +3,11 @@ title: "Case study 2: von Bertalanffy growth with lizard size data"
 output: rmarkdown::html_vignette
 vignette: >
   %\VignetteIndexEntry{von-bertalanffy}
-  %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
+  %\VignetteEngine{knitr::rmarkdown}
 bibliography: vignette.bib
+editor_options: 
+  chunk_output_type: console
 ---
   
 ```{r, include = FALSE}
@@ -53,7 +55,7 @@ $$0 < \sigma_{e} \sim Cauchy(0, 2).$$
 The max size parameter priors are always centred at the (transformed) maximum observed size. This is not changeable, but the standard deviation is. To see the name for the prior parameter run `hmde_model`. For example in the following we want to change the prior for $S_{max}$ standard deviation (`ind_max_size`) in the individual model:
 ```{r}
 hmde_model("vb_single_ind")
-#prior_pars_ind_max_size_sd_only is the argument name for the prior parameters
+#prior_pars_ind_max_size_sd_only is the argument name for the prior parameter
 ```
 
 ### Visualise model
@@ -155,7 +157,7 @@ r_sq <- paste0("R^2 = ",
                signif(r_sq_est,
                       digits = 3))
 
-ggplot(data = lizard_estimates$measurement_data, 
+obs_scatter <- ggplot(data = lizard_estimates$measurement_data, 
        aes(x = y_obs, y = y_hat)) +
   geom_point(shape = 16, size = 1, colour = "green4") +
   xlab("Y obs.") +
@@ -166,16 +168,16 @@ ggplot(data = lizard_estimates$measurement_data,
   theme_classic()
 
 #Plots of size over time for a sample of 5 individuals
-hmde_plot_obs_est_inds(n_ind_to_plot = 5,
+obs_est_ind <- hmde_plot_obs_est_inds(n_ind_to_plot = 5,
                        measurement_data = lizard_estimates$measurement_data) +
   theme(legend.position = "inside",
-        legend.position.inside = c(0.05, 0.9))
+        legend.position.inside = c(0.8, 0.2))
 ```
 
 We have two parameters at the individual level and are interested in both their separate distributions, and if we see evidence of a relationship between them. We can also use the individual parameter estimates and estimated sizes to plot the growth function pieces.
 ```{r}
 #1-dimensional parameter distributions
-ggplot(lizard_estimates$individual_data, 
+s_max_hist <- ggplot(lizard_estimates$individual_data, 
        aes(ind_max_size_mean)) +
   geom_histogram(bins = 10,
                  colour = "black",
@@ -183,7 +185,7 @@ ggplot(lizard_estimates$individual_data,
   labs(x="S_max estimate") +
   theme_classic()
 
-ggplot(lizard_estimates$individual_data, 
+beta_hist <- ggplot(lizard_estimates$individual_data, 
        aes(ind_growth_rate_mean)) +
   geom_histogram(bins = 10,
                  colour = "black",
@@ -192,7 +194,7 @@ ggplot(lizard_estimates$individual_data,
   theme_classic()
 
 #2-dimensional parameter distribution
-ggplot(data = lizard_estimates$individual_data, 
+par_scatter <- ggplot(data = lizard_estimates$individual_data, 
        aes(x = ind_max_size_mean, y = ind_growth_rate_mean)) +
   geom_point(shape = 16, size = 1, colour = "green4") +
   xlab("Individual max sizes (mm)") +
@@ -205,7 +207,7 @@ cor(lizard_estimates$individual_data$ind_max_size_mean,
     method = "spearman")
 
 #Plot function pieces over estimated sizes.
-hmde_plot_de_pieces(model = "vb_multi_ind",
+de_pieces <- hmde_plot_de_pieces(model = "vb_multi_ind",
                     individual_data = lizard_estimates$individual_data,
                     measurement_data = lizard_estimates$measurement_data)
 ```
