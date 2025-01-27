@@ -48,7 +48,7 @@ test_that("Execution: canham multiple individuals", {
     1 +                        #Global error
     data$n_obs +               #y_ij
     1 +                        #y_temp
-    7 +                        #checks for priors
+    14 +                        #checks for priors
     1                          #lp__
 
   hmde_test_multi_individual(model_name, data, est_dim)

@@ -47,7 +47,7 @@ test_that("Execution: vb multiple individuals", {
     1 +                             #Global error
     data$n_obs +                    #y_ij
     data$n_pars + 1 +               #Pars temp vector
-    6 +                        #checks for priors
+    10 +                        #checks for priors
     1                               #lp__
 
   hmde_test_multi_individual(model_name, data, est_dim)
