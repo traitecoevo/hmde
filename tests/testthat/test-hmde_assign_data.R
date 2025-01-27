@@ -121,7 +121,7 @@ test_that("Execution and output: bad input", {
 })
 
 
-test_that("Execution and output: default values", {
+test_that("Execution and output: prior values", {
   time <- 1:5
   y_obs <- 1:5
   obs_index <- 1:5
@@ -148,4 +148,10 @@ test_that("Execution and output: default values", {
                      prior_pars_ind_const = c(5,5))
 
   expect_equal(value_supplied$prior_pars_ind_const, c(5,5))
+
+  value_supplied_tibble_used <- hmde_model("constant_multi_ind") |>
+    hmde_assign_data(data = Trout_Size_Data,
+                     prior_pars_pop_beta_mu = c(1, 3))
+
+  expect_equal(value_supplied_tibble_used$prior_pars_pop_beta_mu, c(1, 3))
 })

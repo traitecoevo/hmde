@@ -15,7 +15,15 @@ hmde_assign_data <- function(model_template, data = NULL,...){
   if(!is.null(data)){ # Use provided tibble
     user_fields <- names(data)
 
+    user_code <- rlang::enquos(..., .check_assign = TRUE)
+    additional_user_fields <- names(user_code)
+    # Evaluate the RHS of expressions (the values)
+    additional_data <- purrr::map(user_code,
+                       ~rlang::eval_tidy(.x, env = rlang::caller_env())
+    )
+
   } else { # Grab user expressions from individual list items and extract data
+    additional_user_fields <- NULL
     user_code <- rlang::enquos(..., .check_assign = TRUE)
     user_fields <- names(user_code)
     # Evaluate the RHS of expressions (the values)
@@ -44,15 +52,21 @@ hmde_assign_data <- function(model_template, data = NULL,...){
   }
 
   for(i in model_fields){ # Iterate through required fields and fill them
-    if(i %in% user_fields){
+    if(i %in% user_fields){ #Check if the user has supplied it in a tibble
       model_template <- purrr::list_modify(model_template, !!!data[i])
-    } else if(is.null(model_template[[i]])){ # allows for default values
+
+    } else if(!is.null(additional_user_fields)){
+      if(i %in% additional_user_fields){ #Check if the user supplied it directly
+        model_template <- purrr::list_modify(model_template, !!!additional_data[i])
+      }
+    }
+
+    if(is.null(model_template[[i]])){ #Catches default tibble transformations
       model_template[[i]] <- switch(
         i,
         n_obs = length(data$y_obs),
         n_ind = length(unique(data$ind_id)),
-        y_bar = mean(data$y_obs),
-        model = model_template$model
+        y_bar = mean(data$y_obs)
       )
     }
 
