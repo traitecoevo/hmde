@@ -121,7 +121,7 @@ test_that("Execution and output: bad input", {
 })
 
 
-test_that("Execution and output: default values", {
+test_that("Execution and output: prior values", {
   time <- 1:5
   y_obs <- 1:5
   obs_index <- 1:5
@@ -135,7 +135,7 @@ test_that("Execution and output: default values", {
                      step_size = 1,
                      int_method = 1)
 
-  expect_equal(default_used$prior_means, c(1,1))
+  expect_equal(default_used$prior_pars_ind_const, c(1,2))
 
   value_supplied <- hmde_model("affine_single_ind") |>
     hmde_assign_data(n_obs = length(y_obs),
@@ -145,7 +145,13 @@ test_that("Execution and output: default values", {
                      y_bar = mean(y_obs),
                      step_size = 1,
                      int_method = 1,
-                     prior_means = c(5,5))
+                     prior_pars_ind_const = c(5,5))
 
-  expect_equal(value_supplied$prior_means, c(5,5))
+  expect_equal(value_supplied$prior_pars_ind_const, c(5,5))
+
+  value_supplied_tibble_used <- hmde_model("constant_multi_ind") |>
+    hmde_assign_data(data = Trout_Size_Data,
+                     prior_pars_pop_beta_mu = c(1, 3))
+
+  expect_equal(value_supplied_tibble_used$prior_pars_pop_beta_mu, c(1, 3))
 })

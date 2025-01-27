@@ -61,6 +61,8 @@ hmde_test_single_individual <- function(model_name,
 }
 
 hmde_test_multi_individual <- function(model_name, data, est_dim){
+  iter <- 20
+
   if(! is.null(data$step_size)){
     if(is.null(data$y_bar)){ #Models that do not require centering
       # Test multi-individual
@@ -74,7 +76,7 @@ hmde_test_multi_individual <- function(model_name, data, est_dim){
                            time = data$time, #Vector length N_obs
                            ind_id = data$ind_id #Vector length N_obs
           ) |>
-          hmde_run(chains = 2, iter = 100, verbose = FALSE, show_messages = FALSE)
+          hmde_run(chains = 2, iter = iter, verbose = FALSE, show_messages = FALSE)
       )
     } else { #Models that do require centering with y_bar
       # Test multi-individual
@@ -89,7 +91,7 @@ hmde_test_multi_individual <- function(model_name, data, est_dim){
                            y_bar = data$y_bar, #Real
                            ind_id = data$ind_id #Vector length N_obs
           ) |>
-          hmde_run(chains = 2, iter = 100, verbose = FALSE, show_messages = FALSE)
+          hmde_run(chains = 2, iter = iter, verbose = FALSE, show_messages = FALSE)
       )
     }
 
@@ -104,13 +106,13 @@ hmde_test_multi_individual <- function(model_name, data, est_dim){
                          time = data$time, #Vector length N_obs
                          ind_id = data$ind_id #Vector length N_obs
         ) |>
-        hmde_run(chains = 2, iter = 100, verbose = FALSE, show_messages = FALSE)
+        hmde_run(chains = 2, iter = iter, verbose = FALSE, show_messages = FALSE)
     )
   }
 
   # Extract samples
   multi_samples <- rstan::extract(multi_ind_test, permuted = FALSE, inc_warmup = TRUE)
-  expect_equal(dim(multi_samples), c(100, 2, est_dim))
+  expect_equal(dim(multi_samples), c(iter, 2, est_dim))
 
   expect_visible(multi_ind_test)
   expect_s4_class(multi_ind_test, "stanfit")

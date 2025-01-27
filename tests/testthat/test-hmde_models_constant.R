@@ -4,6 +4,8 @@ test_that("Model structures: Constant", {
   single_model <- hmde_model("constant_single_ind")
   expect_named(single_model, c("n_obs", "y_obs",
                                "obs_index", "time",
+                               "prior_pars_ind_beta",
+                               "prior_pars_global_error_sigma",
                                "model"))
   expect_type(single_model, "list")
   expect_visible(single_model)
@@ -12,6 +14,9 @@ test_that("Model structures: Constant", {
   multi_model <- hmde_model("constant_multi_ind")
   expect_named(multi_model, c("n_obs", "n_ind", "y_obs",
                               "obs_index", "time", "ind_id",
+                              "prior_pars_pop_beta_mu",
+                              "prior_pars_pop_beta_sigma",
+                              "prior_pars_global_error_sigma",
                               "model"))
   expect_type(multi_model, "list")
   expect_visible(multi_model)
@@ -36,6 +41,7 @@ test_that("Execution: Constant multiple individuals", {
     data$n_pars * 2  +         #Population parameters
     1 +                        #Global error
     data$n_obs +               #y_ij
+    6 +                        #checks for priors
     1                          #lp__
 
   hmde_test_multi_individual(model_name, data, est_dim)

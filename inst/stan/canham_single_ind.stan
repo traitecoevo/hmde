@@ -14,6 +14,10 @@ data {
   real y_obs[n_obs];
   int obs_index[n_obs];
   real time[n_obs];
+  real prior_pars_ind_max_growth[2];
+  real prior_pars_ind_size_at_max_growth[2];
+  real prior_pars_ind_k[2];
+  real prior_pars_global_error_sigma[2];
 }
 
 // The parameters accepted by the model.
@@ -53,17 +57,26 @@ model {
 
   //Priors
   //Individual level
-  ind_max_growth ~lognormal(0, 1);
-  ind_size_at_max_growth ~lognormal(0, 1);
-  ind_k ~lognormal(0, 1);
+  ind_max_growth ~lognormal(prior_pars_ind_max_growth[1],
+                            prior_pars_ind_max_growth[2]);
+  ind_size_at_max_growth ~lognormal(prior_pars_ind_size_at_max_growth[1],
+                                    prior_pars_ind_size_at_max_growth[2]);
+  ind_k ~lognormal(prior_pars_ind_k[1], prior_pars_ind_k[2]);
 
   //Global level
-  global_error_sigma ~cauchy(0, 2);
+  global_error_sigma ~cauchy(prior_pars_global_error_sigma[1],
+                             prior_pars_global_error_sigma[2]);
 }
 
 generated quantities{
   real y_hat[n_obs];
   vector[1] y_temp;
+
+  //Return the used prior parameters
+  real check_prior_pars_ind_max_growth[2] = prior_pars_ind_max_growth;
+  real check_prior_pars_ind_size_at_max_growth[2] = prior_pars_ind_size_at_max_growth;
+  real check_prior_pars_ind_k[2] = prior_pars_ind_k;
+  real check_prior_pars_global_error_sigma[2] = prior_pars_global_error_sigma;
 
   for(i in 1:n_obs){
 
