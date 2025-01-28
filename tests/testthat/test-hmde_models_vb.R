@@ -3,8 +3,12 @@ test_that("Model structures: vb", {
   # Single individual
   single_model <- hmde_model("vb_single_ind")
   expect_named(single_model, c("n_obs", "y_obs",
-                               "obs_index", "time", "y_0_obs",
-                               "y_bar", "model"))
+                               "obs_index", "time",
+                               "y_bar",
+                               "prior_pars_ind_max_size_sd_only",
+                               "prior_pars_ind_growth_rate",
+                               "prior_pars_global_error_sigma",
+                               "model"))
   expect_type(single_model, "list")
   expect_visible(single_model)
 
@@ -12,7 +16,13 @@ test_that("Model structures: vb", {
   multi_model <- hmde_model("vb_multi_ind")
   expect_named(multi_model, c("n_obs", "n_ind", "y_obs",
                               "obs_index", "time", "ind_id",
-                              "y_0_obs", "y_bar", "model"))
+                              "y_bar",
+                              "prior_pars_pop_max_size_mean_sd_only",
+                              "prior_pars_pop_max_size_sd",
+                              "prior_pars_pop_growth_rate_mean",
+                              "prior_pars_pop_growth_rate_sd",
+                              "prior_pars_global_error_sigma",
+                              "model"))
   expect_type(multi_model, "list")
   expect_visible(multi_model)
 })
@@ -32,15 +42,13 @@ test_that("Execution: vb multiple individuals", {
 
   #Dimension is:
   est_dim <- data$n_ind +           #Initial condition
-    (data$n_pars-1) * data$n_ind +  #Individual parameters, -1 as y_bar not estimated
-    (data$n_pars-1) * 2 +           #Population parameters
+    data$n_pars * data$n_ind +      #Individual parameters
+    data$n_pars * 2 +               #Population parameters
     1 +                             #Global error
     data$n_obs +                    #y_ij
-    data$n_obs +                    #Delta y_ij
-    (data$n_pars) +                 #Pars temp vector
-    1 +                             #lp__
-    1 +                             #temp_y_final
-    6                               #Generated quantities
+    data$n_pars + 1 +               #Pars temp vector
+    10 +                        #checks for priors
+    1                               #lp__
 
   hmde_test_multi_individual(model_name, data, est_dim)
 })

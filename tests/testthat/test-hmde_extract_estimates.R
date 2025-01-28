@@ -7,15 +7,12 @@ test_that("Execution and output: extract_estimates function", {
   )
 
   suppressWarnings(
-    constant_single_fit <- hmde_model("constant_single_ind") |>
+    output <- hmde_model("constant_single_ind") |>
       hmde_assign_data(data = data) |>
       hmde_run(chains = 1, iter = 20, cores = 1,
-               verbose = FALSE, show_messages = FALSE)
+               verbose = FALSE, show_messages = FALSE) |>
+      hmde_extract_estimates(input_measurement_data = data)
   )
-
-  output <- hmde_extract_estimates(model = "constant_single_ind",
-                                   fit = constant_single_fit,
-                                   input_measurement_data = data)
 
   expect_named(output)
 

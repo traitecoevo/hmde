@@ -3,8 +3,7 @@ test_that("Execution and output: Constant single ind", {
     hmde_assign_data(n_obs = 2,
                      y_obs = c(1,2),
                      obs_index = c(1,2),
-                     time = c(0,1),
-                     y_0_obs = 1)
+                     time = c(0,1))
 
   expect_named(constant_single)
 
@@ -27,8 +26,7 @@ test_that("Execution and output: Constant multi ind manual input", {
                      y_obs = Trout_Size_Data$y_obs,         #vector length N_obs
                      obs_index = Trout_Size_Data$obs_index, #vector length N_obs
                      time = Trout_Size_Data$time,           #Vector length N_obs
-                     ind_id = Trout_Size_Data$ind_id,       #Vector length N_obs
-                     y_0_obs = Trout_Size_Data$y_obs[which(Trout_Size_Data$obs_index == 1)]        #Vector length N_ind
+                     ind_id = Trout_Size_Data$ind_id       #Vector length N_obs
     )
 
   expect_named(constant_multi)
@@ -120,4 +118,40 @@ test_that("Execution and output: bad input", {
     hmde_model("constant_multi_ind") |>
       hmde_assign_data(data = mtcars)
   )
+})
+
+
+test_that("Execution and output: prior values", {
+  time <- 1:5
+  y_obs <- 1:5
+  obs_index <- 1:5
+
+  default_used <- hmde_model("affine_single_ind") |>
+    hmde_assign_data(n_obs = length(y_obs),
+                     y_obs= y_obs,
+                     obs_index = obs_index,
+                     time = time,
+                     y_bar = mean(y_obs),
+                     step_size = 1,
+                     int_method = 1)
+
+  expect_equal(default_used$prior_pars_ind_const, c(1,2))
+
+  value_supplied <- hmde_model("affine_single_ind") |>
+    hmde_assign_data(n_obs = length(y_obs),
+                     y_obs= y_obs,
+                     obs_index = obs_index,
+                     time = time,
+                     y_bar = mean(y_obs),
+                     step_size = 1,
+                     int_method = 1,
+                     prior_pars_ind_const = c(5,5))
+
+  expect_equal(value_supplied$prior_pars_ind_const, c(5,5))
+
+  value_supplied_tibble_used <- hmde_model("constant_multi_ind") |>
+    hmde_assign_data(data = Trout_Size_Data,
+                     prior_pars_pop_beta_mu = c(1, 3))
+
+  expect_equal(value_supplied_tibble_used$prior_pars_pop_beta_mu, c(1, 3))
 })

@@ -27,8 +27,8 @@ hmde_plot_de_pieces <- function(model = NULL,
                                 colour = "#006600",
                                 alpha = 0.4){
   #Check for model
-  if(!model %in% hmde_model_name()){
-    stop("Model name not recognised. Run hmde_model_name() to see available models.")
+  if(!model %in% hmde_model_names()){
+    stop("Model name not recognised. Run hmde_model_names() to see available models.")
   }
 
   if(is.null(model)){
@@ -89,9 +89,9 @@ hmde_ggplot_de_pieces <- function(pars_data,
   plot <- ggplot() +
     xlim(min(y_0), max(y_final)) +
     labs(x = xlab, y = ylab, title = title) +
-    theme_classic() +
-    theme(axis.text=element_text(size=16),
-          axis.title=element_text(size=18,face="bold"))
+    theme_classic()# +
+    #theme(axis.text=element_text(size=16),
+    #      axis.title=element_text(size=18,face="bold"))
 
   for(i in 1:nrow(pars_data)){
     args_list <- list(pars=pars_data[i,-1]) #Remove ind_id

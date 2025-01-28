@@ -5,8 +5,8 @@
 #' @export
 
 hmde_model_des <- function(model = NULL){
-  if(!model %in% hmde_model_name()){
-    stop("Model name not recognised. Run hmde_model_name() to see available models.")
+  if(!model %in% hmde_model_names()){
+    stop("Model name not recognised. Run hmde_model_names() to see available models.")
   }
 
   output <- switch(
@@ -17,7 +17,7 @@ hmde_model_des <- function(model = NULL){
     canham_multi_ind = hmde_canham_de,
     vb_single_ind = hmde_vb_de,
     vb_multi_ind = hmde_vb_de,
-    linear_single_ind = hmde_linear_de
+    affine_single_ind = hmde_affine_de
   )
 
   return(output)
@@ -65,15 +65,15 @@ hmde_vb_de <- function(y = NULL, pars = NULL){
     )
 }
 
-#' Differential equation for linear growth single individual model
+#' Differential equation for affine growth single individual model
 #' @param y input real
 #' @param pars list of parameters beta_0, beta_1
 #'
 #' @return value of differential equation at y
 #' @export
 
-hmde_linear_de <- function(y = NULL, pars = NULL){
+hmde_affine_de <- function(y = NULL, pars = NULL){
   return(
-    pars[[1]] + pars[[2]] * y
+    pars[[1]] - pars[[2]] * y
     )
 }

@@ -2,21 +2,28 @@
 #'
 #' @param model_template output from hmde_model
 #' @param data Input data tibble with columns including time, y_obs, obs_index, and additionally ind_id for multi-individual models
-#' @param step_size Step size for numerical integration.
 #' @param ... data-masking name-value pairs allowing specific input of elements
 #'
 #' @return updated named list with your data assigned to Stan model parameters
 #' @export
 
-hmde_assign_data <- function(model_template, data = NULL, step_size = NULL, ...){
-  if(!model_template$model %in% hmde_model_name()){
-    stop("Model name not recognised. Run hmde_model_name() to see available models.")
+hmde_assign_data <- function(model_template, data = NULL,...){
+  if(!model_template$model %in% hmde_model_names()){
+    stop("Model name not recognised. Run hmde_model_names() to see available models.")
   }
 
   if(!is.null(data)){ # Use provided tibble
     user_fields <- names(data)
 
+    user_code <- rlang::enquos(..., .check_assign = TRUE)
+    additional_user_fields <- names(user_code)
+    # Evaluate the RHS of expressions (the values)
+    additional_data <- purrr::map(user_code,
+                       ~rlang::eval_tidy(.x, env = rlang::caller_env())
+    )
+
   } else { # Grab user expressions from individual list items and extract data
+    additional_user_fields <- NULL
     user_code <- rlang::enquos(..., .check_assign = TRUE)
     user_fields <- names(user_code)
     # Evaluate the RHS of expressions (the values)
@@ -45,16 +52,21 @@ hmde_assign_data <- function(model_template, data = NULL, step_size = NULL, ...)
   }
 
   for(i in model_fields){ # Iterate through required fields and fill them
-    if(i %in% user_fields){
+    if(i %in% user_fields){ #Check if the user has supplied it in a tibble
       model_template <- purrr::list_modify(model_template, !!!data[i])
-    } else {
+
+    } else if(!is.null(additional_user_fields)){
+      if(i %in% additional_user_fields){ #Check if the user supplied it directly
+        model_template <- purrr::list_modify(model_template, !!!additional_data[i])
+      }
+    }
+
+    if(is.null(model_template[[i]])){ #Catches default tibble transformations
       model_template[[i]] <- switch(
         i,
         n_obs = length(data$y_obs),
         n_ind = length(unique(data$ind_id)),
-        y_0_obs = data$y_obs[which(data$obs_index == 1)],
-        y_bar = mean(data$y_obs),
-        model = model_template$model
+        y_bar = mean(data$y_obs)
       )
     }
 

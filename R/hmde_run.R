@@ -8,20 +8,19 @@
 
 hmde_run <- function(model_template, ...) {
   #Check for model
-  if(!model_template$model %in% hmde_model_name()){
-    stop("Model name not recognised. Run hmde_model_name() to see available models.")
+  if(!model_template$model %in% hmde_model_names()){
+    stop("Model name not recognised. Run hmde_model_names() to see available models.")
   }
 
   # Detect model
   out <- switch(model_template$model,
-         linear = rstan::sampling(stanmodels$linear, data = model_template, ...),
          constant_single_ind = rstan::sampling(stanmodels$constant_single_ind, data = model_template, ...),
          constant_multi_ind = rstan::sampling(stanmodels$constant_multi_ind, data = model_template, ...),
          canham_single_ind = rstan::sampling(stanmodels$canham_single_ind, data = model_template, ...),
          canham_multi_ind = rstan::sampling(stanmodels$canham_multi_ind, data = model_template, ...),
          vb_single_ind = rstan::sampling(stanmodels$vb_single_ind, data = model_template, ...),
          vb_multi_ind = rstan::sampling(stanmodels$vb_multi_ind, data = model_template, ...),
-         linear_single_ind = rstan::sampling(stanmodels$linear_single_ind, data = model_template, ...))
+         affine_single_ind = rstan::sampling(stanmodels$affine_single_ind, data = model_template, ...))
 
   return(out)
 }

@@ -1,22 +1,23 @@
 
 # hmde <img src="man/figures/hmde_hex.png" align="right" alt="" width="220" />
 
-The goal of `hmde` is to implement hierarchical Bayesian longitudinal
-models to solve the Bayesian inverse problem of estimating differential
-equation parameters based on repeat measurement surveys. Estimation is
-done using Markov Chain Monte Carlo, implemented through
-[Stan](https://mc-stan.org/) via
+The goal of hmde is to fit a model for the rate of change in some
+quantity based on a set of pre-defined functions arising from ecological
+applications. We estimate differential equation parameters from repeated
+observations of a process, such as growth rate parameters to data of
+sizes over time. In other language, `hmde` implements hierarchical
+Bayesian longitudinal models to solve the Bayesian inverse problem of
+estimating differential equation parameters based on repeat measurement
+surveys. Estimation is done using Markov Chain Monte Carlo, implemented
+through [Stan](https://mc-stan.org/) via
 [RStan](https://mc-stan.org/users/interfaces/rstan), built under
 [R](https://cran.r-project.org/) 4.3.3. The inbuilt models are based on
-case studies in ecology. The hierarchical Bayesian longitudinal method
-was first introduced in O’Brien et al.,
-[2024](https://besjournals.onlinelibrary.wiley.com/doi/10.1111/2041-210X.14463).
+case studies in ecology.
 
-As `hmde` is first intended for biologists, the initial set of vignettes
-(`hmde`, `constant-growth`, `von-bertalanffy`, and `canham`) are written
-aimed at an audience more interested in applications than the underlying
-theory. A vignette for the more mathematically interested is under
-development.
+A pre-print paper is available on
+[bioarXiv](https://doi.org/10.1101/2025.01.15.633280), or as the
+[hmde_paper.pdf](https://github.com/traitecoevo/hmde/blob/master/inst/doc/hmde_paper.pdf)
+file here.
 
 ## The Maths
 
@@ -69,8 +70,6 @@ $$f \left( Y \left( t \right), f_{max}, Y_{max}, k \right) = \frac{dY}{dt} = f_{
 where $f_{max}$ is the maximum growth rate, $Y_{max}$ is the $Y$-value
 at which that maximum occurs, and $k$ controls how narrow or wide the
 peak is.
-
-## 
 
 ## Installation
 

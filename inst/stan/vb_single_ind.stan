@@ -13,8 +13,10 @@ data {
   real y_obs[n_obs];
   int obs_index[n_obs];
   real time[n_obs];
-  real y_0_obs;
   real y_bar;
+  real prior_pars_ind_max_size_sd_only;
+  real prior_pars_ind_growth_rate[2];
+  real prior_pars_global_error_sigma[2];
 }
 
 // The parameters accepted by the model.
@@ -54,24 +56,29 @@ model {
 
   //Priors
   //Individual level
-  ind_y_0 ~ normal(y_0_obs, global_error_sigma);
-  ind_max_size ~lognormal(0, 1);
-  ind_growth_rate ~lognormal(0, 1); //Take max obs. size as average value
+  ind_max_size ~lognormal(log(max(y_obs)),
+                          prior_pars_ind_max_size_sd_only);
+  ind_growth_rate ~lognormal(prior_pars_ind_growth_rate[1],
+                             prior_pars_ind_growth_rate[2]);
 
   //Global level
-  global_error_sigma ~cauchy(0,1);
+  global_error_sigma ~cauchy(prior_pars_global_error_sigma[1],
+                             prior_pars_global_error_sigma[2]);
 }
 
 generated quantities{
   real y_hat[n_obs];
-  real Delta_hat[n_obs];
   array[3] real pars;
+
+  //Return the used prior parameters
+  real check_prior_pars_ind_max_size_sd_only = prior_pars_ind_max_size_sd_only;
+  real check_prior_pars_ind_max_size_mean_max_obs = log(max(y_obs));
+  real check_prior_pars_ind_growth_rate[2] = prior_pars_ind_growth_rate;
+  real check_prior_pars_global_error_sigma[2] = prior_pars_global_error_sigma;
 
   pars[1] = ind_max_size - y_bar;
   pars[2] = ind_growth_rate;
   pars[3] = ind_y_0 - y_bar;
-
-  real temp_y_final;
 
   for(i in 1:n_obs){
 
@@ -82,11 +89,6 @@ generated quantities{
     if(i < n_obs){
       //Estimate next size
       y_hat[i+1] = solution(time[i+1], pars) + y_bar;
-      Delta_hat[i] = y_hat[i+1] - y_hat[i];
-
-    } else { // Estimate next growth based on same time to last.
-      temp_y_final = solution(2*time[i] - time[i-1], pars) + y_bar;
-      Delta_hat[i] = temp_y_final - y_hat[i];
     }
   }
 }

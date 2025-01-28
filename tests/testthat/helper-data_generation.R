@@ -60,14 +60,13 @@ hmde_export_test_data <- function(n_obs_per_ind,
                                   true_data,
                                   model_name,
                                   step_size = 1){
-  if(grepl("linear", model_name)){ #Step size for linear model
+  if(grepl("affine", model_name)){ #Step size for affine model
     single_ind_data <- list(
       step_size = step_size, #Number for model RK4 alg
       n_obs = n_obs_per_ind, #Number
       y_obs = y_obs[1:n_obs_per_ind], #Vector indexed by n_obs
       obs_index = 1:n_obs_per_ind, #Vector indexed by n_obs
       time = time, #Vector indexed by n_obs
-      y_0_obs = y_obs[1], #Number
       n_pars = ncol(DE_pars), #Number
       single_true_data = list(
         DE_pars = DE_pars[1,],
@@ -85,7 +84,6 @@ hmde_export_test_data <- function(n_obs_per_ind,
       obs_index = rep(1:n_obs_per_ind, times = n_ind), #Vector indexed by n_obs
       time = rep(time, times=n_ind), #Vector indexed by n_obs
       ind_id = sort(rep(1:n_ind, times = n_obs_per_ind)), #Vector indexed by n_obs
-      y_0_obs = y_obs[seq(from = 1, to=n_ind*n_obs_per_ind, by=n_obs_per_ind)], #Vector indexed by n_ind
       n_pars = ncol(DE_pars),
       multi_true_data = list(
         DE_pars = DE_pars,
@@ -102,7 +100,6 @@ hmde_export_test_data <- function(n_obs_per_ind,
         y_obs = y_obs[1:n_obs_per_ind], #Vector indexed by n_obs
         obs_index = 1:n_obs_per_ind, #Vector indexed by n_obs
         time = time, #Vector indexed by n_obs
-        y_0_obs = y_obs[1], #Number
         y_bar = y_bar, #Real
         n_pars = ncol(DE_pars), #Number
         single_true_data = list(
@@ -120,7 +117,6 @@ hmde_export_test_data <- function(n_obs_per_ind,
         obs_index = rep(1:n_obs_per_ind, times = n_ind), #Vector indexed by n_obs
         time = rep(time, times=n_ind), #Vector indexed by n_obs
         ind_id = sort(rep(1:n_ind, times = n_obs_per_ind)), #Vector indexed by n_obs
-        y_0_obs = y_obs[seq(from = 1, to=n_ind*n_obs_per_ind, by=n_obs_per_ind)], #Vector indexed by n_ind
         y_bar = y_bar, #Real
         n_pars = ncol(DE_pars),
         multi_true_data = list(
@@ -137,7 +133,6 @@ hmde_export_test_data <- function(n_obs_per_ind,
         y_obs = y_obs[1:n_obs_per_ind], #Vector indexed by n_obs
         obs_index = 1:n_obs_per_ind, #Vector indexed by n_obs
         time = time, #Vector indexed by n_obs
-        y_0_obs = y_obs[1], #Number
         n_pars = ncol(DE_pars), #Number
         single_true_data = list(
           DE_pars = DE_pars[1,],
@@ -154,7 +149,6 @@ hmde_export_test_data <- function(n_obs_per_ind,
         obs_index = rep(1:n_obs_per_ind, times = n_ind), #Vector indexed by n_obs
         time = rep(time, times=n_ind), #Vector indexed by n_obs
         ind_id = sort(rep(1:n_ind, times = n_obs_per_ind)), #Vector indexed by n_obs
-        y_0_obs = y_obs[seq(from = 1, to=n_ind*n_obs_per_ind, by=n_obs_per_ind)], #Vector indexed by n_ind
         n_pars = ncol(DE_pars),
         multi_true_data = list(
           DE_pars = DE_pars,

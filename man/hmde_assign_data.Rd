@@ -4,14 +4,12 @@
 \alias{hmde_assign_data}
 \title{Assign data to template for chosen model}
 \usage{
-hmde_assign_data(model_template, data = NULL, step_size = NULL, ...)
+hmde_assign_data(model_template, data = NULL, ...)
 }
 \arguments{
 \item{model_template}{output from hmde_model}
 
 \item{data}{Input data tibble with columns including time, y_obs, obs_index, and additionally ind_id for multi-individual models}
-
-\item{step_size}{Step size for numerical integration.}
 
 \item{...}{data-masking name-value pairs allowing specific input of elements}
 }

@@ -18,7 +18,9 @@ data {
   int obs_index[n_obs];
   real time[n_obs];
   int ind_id[n_obs];
-  real y_0_obs[n_ind];
+  real prior_pars_pop_beta_mu[2];
+  real prior_pars_pop_beta_sigma[2];
+  real prior_pars_global_error_sigma[2];
 }
 
 // The parameters accepted by the model.
@@ -57,22 +59,32 @@ model {
 
   //Priors
   //Individual level
-  ind_y_0 ~ normal(y_0_obs, global_error_sigma);
   ind_beta ~ lognormal(pop_beta_mu,
                     pop_beta_sigma);
 
   //Population level
-  pop_beta_mu ~ normal(0.1, 1);
-  pop_beta_sigma ~cauchy(0.1, 1);
+  pop_beta_mu ~ normal(prior_pars_pop_beta_mu[1],
+                       prior_pars_pop_beta_mu[2]);
+  pop_beta_sigma ~cauchy(prior_pars_pop_beta_sigma[1],
+                         prior_pars_pop_beta_sigma[2]);
 
   //Global level
-  global_error_sigma ~cauchy(0.1, 1);
+  global_error_sigma ~cauchy(prior_pars_global_error_sigma[1],
+                             prior_pars_global_error_sigma[2]);
 }
 
 // The output
 generated quantities {
   real y_hat[n_obs];
-  real Delta_hat[n_obs];
+
+  //Return the used prior parameters
+  real check_prior_pars_pop_beta_mu[2];
+  real check_prior_pars_pop_beta_sigma[2];
+  real check_prior_pars_global_error_sigma[2];
+
+  check_prior_pars_pop_beta_mu = prior_pars_pop_beta_mu;
+  check_prior_pars_pop_beta_sigma = prior_pars_pop_beta_sigma;
+  check_prior_pars_global_error_sigma = prior_pars_global_error_sigma;
 
   for(i in 1:n_obs){
 
@@ -85,12 +97,7 @@ generated quantities {
     if(i < n_obs){
       if(ind_id[i+1]==ind_id[i]){
         y_hat[i+1] = size_step(y_hat[i], ind_beta[ind_id[i]], (time[i+1]-time[i]));
-        Delta_hat[i] = y_hat[i+1] - y_hat[i];
-      } else {
-        Delta_hat[i] = DE(ind_beta[ind_id[i]]) * (time[i]-time[i-1]);
       }
-    } else {
-      Delta_hat[i] = DE(ind_beta[ind_id[i]]) * (time[i]-time[i-1]);
     }
   }
 }
