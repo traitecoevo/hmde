@@ -49,3 +49,5 @@ Suggests:
 VignetteBuilder: knitr
 Config/testthat/edition: 3
 LazyData: true
+URL: https://traitecoevo.github.io/hmde/
+BugReports: https://github.com/traitecoevo/austraits/issues
