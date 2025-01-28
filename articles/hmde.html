@@ -62,13 +62,13 @@
       <h1>hmde</h1>
             
       
-      <small class="dont-index">Source: <a href="https://github.com/traitecoevo/austraits/blob/website/vignettes/hmde.Rmd" class="external-link"><code>vignettes/hmde.Rmd</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/traitecoevo/austraits/blob/master/vignettes/hmde.Rmd" class="external-link"><code>vignettes/hmde.Rmd</code></a></small>
       <div class="d-none name"><code>hmde.Rmd</code></div>
     </div>
 
     
     
-<p>‘hmde’ which stands for <strong>h</strong>ierarchical
+<p><code>hmde</code> which stands for <strong>h</strong>ierarchical
 <strong>m</strong>ethods for <strong>d</strong>ifferential
 <strong>e</strong>quations is a package built for biologists with repeat
 size measurement data who want to fit a specific set of growth
@@ -76,8 +76,8 @@ functions.</p>
 <div class="section level2">
 <h2 id="installation">Installation<a class="anchor" aria-label="anchor" href="#installation"></a>
 </h2>
-<p>‘hmde’ is under active development, you can install the stable,
-development version of ‘hmde’ from <a href="https://github.com/" class="external-link">GitHub</a> with:</p>
+<p><code>hmde</code> is under active development, you can install the
+stable, development version of <code>hmde</code> from <a href="https://github.com/" class="external-link">GitHub</a> with:</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># install.packages("remotes")</span></span>
 <span><span class="fu">remotes</span><span class="fu">::</span><span class="fu">install_github</span><span class="op">(</span><span class="st">"traitecoevo/hmde"</span><span class="op">)</span></span></code></pre></div>
@@ -122,7 +122,8 @@ see the true sizes, and instead have observed size
 <math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>y</mi><mrow><mi>i</mi><mi>j</mi></mrow></msub><mo>=</mo><msub><mi>Y</mi><mi>i</mi></msub><mrow><mo stretchy="true" form="prefix">(</mo><msub><mi>t</mi><mi>j</mi></msub><mo stretchy="true" form="postfix">)</mo></mrow><mo>+</mo><mrow><mspace width="0.333em"></mspace><mtext mathvariant="normal"> error</mtext></mrow><mi>.</mi></mrow><annotation encoding="application/x-tex">y_{ij} = Y_i(t_j) + \text{ error}.</annotation></semantics></math>
 We have assumed normally distributed error in <code>hmde</code>,this has
 proven reasonably robust in simulation for a more general size-dependent
-error model. For details see .</p>
+error model. For details see <span class="citation">O’Brien, Warton, and
+Falster (2024)</span>.</p>
 <p>Due to the hierarchical structure of the statistical model, we have
 distributions that govern the behaviour of growth parameters. If we are
 modelling only a single individual, we don’t worry about the underlying
@@ -135,7 +136,8 @@ deviation as population-level features.</p>
 </div>
 </div>
 <div class="section level2">
-<h2 id="hmde-supported-growth-functions">{hmde} supported growth functions<a class="anchor" aria-label="anchor" href="#hmde-supported-growth-functions"></a>
+<h2 id="hmde-supported-growth-functions">
+<code>hmde</code> supported growth functions<a class="anchor" aria-label="anchor" href="#hmde-supported-growth-functions"></a>
 </h2>
 <ul>
 <li>Constant growth</li>
@@ -148,12 +150,12 @@ of a single or for multiple individuals.</p>
 <div class="section level2">
 <h2 id="workflow">Workflow<a class="anchor" aria-label="anchor" href="#workflow"></a>
 </h2>
-<p>Broadly, the workflow for <code>hdme</code> is to:</p>
+<p>Broadly, the workflow for <code>hmde</code> is to:</p>
 <ol style="list-style-type: decimal">
 <li>Wrangle the data into the required format for a chosen model,</li>
 <li>Pass the data and the model to a function that runs the sampling
 with Stan’s MCMC algorithms.</li>
-<li>Inspect and anaysis the returned <code>Stan</code> fit object.</li>
+<li>Inspect and analysis the returned <code>Stan</code> fit object.</li>
 </ol>
 <p>We will demonstrate this workflow using case studies that uses the
 three growth functions that are supported in <code>hmde</code>. You can
@@ -167,7 +169,20 @@ chosen in the context of the survey process as data availability is a
 key factor in determining which functions can be used. We will not
 discuss the mathematical and statistical theory in depth, if that is of
 interest, check out the vignette ‘hmde for Mathematicians’ or check out
-the methodology paper: .</p>
+the methodology paper <span class="citation">O’Brien, Warton, and
+Falster (2024)</span>.</p>
+</div>
+<div class="section level2 unnumbered">
+<h2 class="unnumbered" id="references">References<a class="anchor" aria-label="anchor" href="#references"></a>
+</h2>
+<div id="refs" class="references csl-bib-body hanging-indent" entry-spacing="0">
+<div id="ref-obrien2024allindividuals" class="csl-entry">
+O’Brien, Tess, David Warton, and Daniel Falster. 2024. <span>“Yes,
+They’re All Individuals: Hierarchical Models for Repeat Survey Data
+Improve Estimates of Tree Growth and Sie.”</span> <em>Methods in Ecology
+and Evolution</em>.
+</div>
+</div>
 </div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>
     </nav></aside>

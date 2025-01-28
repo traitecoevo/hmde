@@ -81,6 +81,12 @@
         <dd>The 'hmde' package.</dd>
       </dl><dl><dt>
 
+          <code><a href="hmde_affine_de.html">hmde_affine_de()</a></code>
+
+        </dt>
+        <dd>Differential equation for affine growth single individual model</dd>
+      </dl><dl><dt>
+
           <code><a href="hmde_assign_data.html">hmde_assign_data()</a></code>
 
         </dt>
@@ -105,12 +111,6 @@
         <dd>Extract samples and return measurement, individual, and population-level estimates</dd>
       </dl><dl><dt>
 
-          <code><a href="hmde_linear_de.html">hmde_linear_de()</a></code>
-
-        </dt>
-        <dd>Differential equation for linear growth single individual model</dd>
-      </dl><dl><dt>
-
           <code><a href="hmde_model.html">hmde_model()</a></code>
 
         </dt>
@@ -123,7 +123,7 @@
         <dd>Function to select DE given model name</dd>
       </dl><dl><dt>
 
-          <code><a href="hmde_model_name.html">hmde_model_name()</a></code>
+          <code><a href="hmde_model_names.html">hmde_model_names()</a></code>
 
         </dt>
         <dd>Returns names of available models.</dd>
@@ -139,6 +139,12 @@
 
         </dt>
         <dd>Plot pieces of chosen differential equation model for each individual. Structured to take the individual data tibble that is built by the hmde_extract_estimates function using the ind_par_name_mean estimates. Function piece will go from the first fitted size to the last. Accepted ggplot arguments will change the axis labels, title, line colour, alpha</dd>
+      </dl><dl><dt>
+
+          <code><a href="hmde_plot_obs_est_inds.html">hmde_plot_obs_est_inds()</a></code>
+
+        </dt>
+        <dd>Plot estimated and observed values over time for a chosen number of individuals based on posterior estimates. Structured to take in the measurement_data tibble constructed by the hmde_extract_estimates function.</dd>
       </dl><dl><dt>
 
           <code><a href="hmde_run.html">hmde_run()</a></code>
