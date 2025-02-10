@@ -3,9 +3,11 @@ title: "Case study 1: Constant growth with SUSTAIN Trout data"
 output: rmarkdown::html_vignette
 vignette: >
   %\VignetteIndexEntry{constant-growth}
-  %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
+  %\VignetteEngine{knitr::rmarkdown}
 bibliography: vignette.bib
+editor_options: 
+  chunk_output_type: console
 ---
 
 ```{r, include = FALSE}
@@ -64,7 +66,7 @@ Let's simulate some data to visualise the constant growth function.
 ```{r}
 beta <- 2 #Annual growth rate
 y_0 <- 1 #Starting size
-time <- c(0,20) 
+time <- 0:20 
 sizes_over_time <- tibble(Y_t = 1 + beta*time, #Linear sizes over time
                           t = time)
 
@@ -90,7 +92,7 @@ constant_growth_function <- ggplot() +
                 xlim=c(y_0, max(sizes_over_time)))
 
 #Sizes over time
-sizes_over_time <- ggplot(data = sizes_over_time, aes(x=t, y = Y_t)) +
+sizes_over_time_plot <- ggplot(data = sizes_over_time, aes(x=t, y = Y_t)) +
   geom_line(colour="green4", linewidth=1) +
   xlim(0, max(sizes_over_time$t)) +
   ylim(0, max(sizes_over_time$Y_t)*1.05) +
@@ -99,7 +101,7 @@ sizes_over_time <- ggplot(data = sizes_over_time, aes(x=t, y = Y_t)) +
   theme(axis.text=element_text(size=16),
         axis.title=element_text(size=18,face="bold"))
 
-constant_growth_function + sizes_over_time
+constant_growth_function + sizes_over_time_plot
 ```
 
 ```{r, eval=FALSE, fold}
@@ -216,6 +218,9 @@ Each represents an element of the list that gets passed to the model:
 - `obs_index` is a vector containing integer the $j$ index for individual $i$, and counts which observation $y_{ij}$ is in sequence
 - `time` is a vector that determines when an observation happened relative to the first observation for that individual. The first observation has time 0
 - `ind_id` is a vector the same length as `y_obs` that tracks which individual an observation comes from
+- `prior_pars_pop_log_beta_mu` is the vector of prior parameters for the log-beta mean hyper-parameter
+- `prior_pars_pop_log_beta_sigma` is the vector of prior parameters for the log-beta standard deviation hyper-parameter
+- `prior_pars_global_error_sigma` is the vector of prior parameters for the global error standard deviation
 - `model` is the name of the model
 
 Now we will actually fit the model and extract the estimates. As the provided trout data is already in the form required by the `hmde_assign_data` function we don't need to do any further re-naming and can pass it directly.
