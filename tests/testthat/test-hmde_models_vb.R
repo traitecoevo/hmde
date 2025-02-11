@@ -17,10 +17,10 @@ test_that("Model structures: vb", {
   expect_named(multi_model, c("n_obs", "n_ind", "y_obs",
                               "obs_index", "time", "ind_id",
                               "y_bar",
-                              "prior_pars_pop_max_size_mean_sd_only",
-                              "prior_pars_pop_max_size_sd",
-                              "prior_pars_pop_growth_rate_mean",
-                              "prior_pars_pop_growth_rate_sd",
+                              "prior_pars_pop_log_max_size_mean_sd_only",
+                              "prior_pars_pop_log_max_size_sd",
+                              "prior_pars_pop_log_growth_rate_mean",
+                              "prior_pars_pop_log_growth_rate_sd",
                               "prior_pars_global_error_sigma",
                               "model"))
   expect_type(multi_model, "list")
