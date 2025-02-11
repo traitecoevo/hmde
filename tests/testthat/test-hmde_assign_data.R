@@ -151,7 +151,7 @@ test_that("Execution and output: prior values", {
 
   value_supplied_tibble_used <- hmde_model("constant_multi_ind") |>
     hmde_assign_data(data = Trout_Size_Data,
-                     prior_pars_log_pop_beta_mu = c(1, 3))
+                     prior_pars_pop_log_beta_mu = c(1, 3))
 
   expect_equal(value_supplied_tibble_used$prior_pars_pop_log_beta_mu, c(1, 3))
 })
