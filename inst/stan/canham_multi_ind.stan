@@ -16,12 +16,12 @@ data {
   int obs_index[n_obs];
   real time[n_obs];
   int ind_id[n_obs];
-  real prior_pars_pop_max_growth_mean[2];
-  real prior_pars_pop_max_growth_sd[2];
-  real prior_pars_pop_size_at_max_growth_mean[2];
-  real prior_pars_pop_size_at_max_growth_sd[2];
-  real prior_pars_pop_k_mean[2];
-  real prior_pars_pop_k_sd[2];
+  real prior_pars_pop_log_max_growth_mean[2];
+  real prior_pars_pop_log_max_growth_sd[2];
+  real prior_pars_pop_log_size_at_max_growth_mean[2];
+  real prior_pars_pop_log_size_at_max_growth_sd[2];
+  real prior_pars_pop_log_k_mean[2];
+  real prior_pars_pop_log_k_sd[2];
   real prior_pars_global_error_sigma[2];
 }
 
@@ -34,12 +34,12 @@ parameters {
   real<lower=0> ind_k[n_ind];
 
   //Population level
-  real pop_max_growth_mean;
-  real<lower=0> pop_max_growth_sd;
-  real pop_size_at_max_growth_mean;
-  real<lower=0> pop_size_at_max_growth_sd;
-  real pop_k_mean;
-  real<lower=0> pop_k_sd;
+  real pop_log_max_growth_mean;
+  real<lower=0> pop_log_max_growth_sd;
+  real pop_log_size_at_max_growth_mean;
+  real<lower=0> pop_log_size_at_max_growth_sd;
+  real pop_log_k_mean;
+  real<lower=0> pop_log_k_sd;
 
   //Global level
   real<lower=0> global_error_sigma;
@@ -73,24 +73,24 @@ model {
 
   //Priors
   //Individual level
-  ind_max_growth ~lognormal(pop_max_growth_mean,
-                            pop_max_growth_sd);
-  ind_size_at_max_growth ~lognormal(pop_size_at_max_growth_mean,
-                                        pop_size_at_max_growth_sd);
-  ind_k ~lognormal(pop_k_mean,
-                   pop_k_sd);
+  ind_max_growth ~lognormal(pop_log_max_growth_mean,
+                            pop_log_max_growth_sd);
+  ind_size_at_max_growth ~lognormal(pop_log_size_at_max_growth_mean,
+                                        pop_log_size_at_max_growth_sd);
+  ind_k ~lognormal(pop_log_k_mean,
+                   pop_log_k_sd);
 
   //Species level
-  pop_max_growth_mean ~normal(prior_pars_pop_max_growth_mean[1],
-                              prior_pars_pop_max_growth_mean[2]);
-  pop_max_growth_sd ~cauchy(prior_pars_pop_max_growth_sd[1],
-                            prior_pars_pop_max_growth_sd[2]);
-  pop_size_at_max_growth_mean ~normal(prior_pars_pop_size_at_max_growth_mean[1],
-                                      prior_pars_pop_size_at_max_growth_mean[2]);
-  pop_size_at_max_growth_sd ~cauchy(prior_pars_pop_size_at_max_growth_sd[1],
-                                    prior_pars_pop_size_at_max_growth_sd[2]);
-  pop_k_mean ~normal(prior_pars_pop_k_mean[1], prior_pars_pop_k_mean[2]);
-  pop_k_sd ~cauchy(prior_pars_pop_k_sd[1], prior_pars_pop_k_sd[2]);
+  pop_log_max_growth_mean ~normal(prior_pars_pop_log_max_growth_mean[1],
+                              prior_pars_pop_log_max_growth_mean[2]);
+  pop_log_max_growth_sd ~cauchy(prior_pars_pop_log_max_growth_sd[1],
+                            prior_pars_pop_log_max_growth_sd[2]);
+  pop_log_size_at_max_growth_mean ~normal(prior_pars_pop_log_size_at_max_growth_mean[1],
+                                      prior_pars_pop_log_size_at_max_growth_mean[2]);
+  pop_log_size_at_max_growth_sd ~cauchy(prior_pars_pop_log_size_at_max_growth_sd[1],
+                                    prior_pars_pop_log_size_at_max_growth_sd[2]);
+  pop_log_k_mean ~normal(prior_pars_pop_log_k_mean[1], prior_pars_pop_log_k_mean[2]);
+  pop_log_k_sd ~cauchy(prior_pars_pop_log_k_sd[1], prior_pars_pop_log_k_sd[2]);
 
   //Global level
   global_error_sigma ~cauchy(prior_pars_global_error_sigma[1],
@@ -102,12 +102,12 @@ generated quantities{
   vector[1] y_temp;
 
   //Return the used prior parameters
-  real check_prior_pars_pop_max_growth_mean[2] = prior_pars_pop_max_growth_mean;
-  real check_prior_pars_pop_max_growth_sd[2] = prior_pars_pop_max_growth_sd;
-  real check_prior_pars_pop_size_at_max_growth_mean[2] = prior_pars_pop_size_at_max_growth_mean;
-  real check_prior_pars_pop_size_at_max_growth_sd[2] = prior_pars_pop_size_at_max_growth_sd;
-  real check_prior_pars_pop_k_mean[2] = prior_pars_pop_k_mean;
-  real check_prior_pars_pop_k_sd[2] = prior_pars_pop_k_sd;
+  real check_prior_pars_pop_log_max_growth_mean[2] = prior_pars_pop_log_max_growth_mean;
+  real check_prior_pars_pop_log_max_growth_sd[2] = prior_pars_pop_log_max_growth_sd;
+  real check_prior_pars_pop_log_size_at_max_growth_mean[2] = prior_pars_pop_log_size_at_max_growth_mean;
+  real check_prior_pars_pop_log_size_at_max_growth_sd[2] = prior_pars_pop_log_size_at_max_growth_sd;
+  real check_prior_pars_pop_log_k_mean[2] = prior_pars_pop_log_k_mean;
+  real check_prior_pars_pop_log_k_sd[2] = prior_pars_pop_log_k_sd;
   real check_prior_pars_global_error_sigma[2] = prior_pars_global_error_sigma;
 
   for(i in 1:n_obs){

@@ -16,12 +16,12 @@ test_that("Model structures: canham", {
   multi_model <- hmde_model("canham_multi_ind")
   expect_named(multi_model, c("n_obs", "n_ind", "y_obs",
                               "obs_index", "time", "ind_id",
-                              "prior_pars_pop_max_growth_mean",
-                              "prior_pars_pop_max_growth_sd",
-                              "prior_pars_pop_size_at_max_growth_mean",
-                              "prior_pars_pop_size_at_max_growth_sd",
-                              "prior_pars_pop_k_mean",
-                              "prior_pars_pop_k_sd",
+                              "prior_pars_pop_log_max_growth_mean",
+                              "prior_pars_pop_log_max_growth_sd",
+                              "prior_pars_pop_log_size_at_max_growth_mean",
+                              "prior_pars_pop_log_size_at_max_growth_sd",
+                              "prior_pars_pop_log_k_mean",
+                              "prior_pars_pop_log_k_sd",
                               "prior_pars_global_error_sigma",
                               "model"))
   expect_type(multi_model, "list")
