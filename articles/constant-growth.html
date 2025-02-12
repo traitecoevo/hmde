@@ -152,16 +152,25 @@ function.</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">beta</span> <span class="op">&lt;-</span> <span class="fl">2</span> <span class="co">#Annual growth rate</span></span>
 <span><span class="va">y_0</span> <span class="op">&lt;-</span> <span class="fl">1</span> <span class="co">#Starting size</span></span>
-<span><span class="va">time</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0</span>,<span class="fl">20</span><span class="op">)</span> </span>
+<span><span class="va">time</span> <span class="op">&lt;-</span> <span class="fl">0</span><span class="op">:</span><span class="fl">20</span> </span>
 <span><span class="va">sizes_over_time</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://tibble.tidyverse.org/reference/tibble.html" class="external-link">tibble</a></span><span class="op">(</span>Y_t <span class="op">=</span> <span class="fl">1</span> <span class="op">+</span> <span class="va">beta</span><span class="op">*</span><span class="va">time</span>, <span class="co">#Linear sizes over time</span></span>
 <span>                          t <span class="op">=</span> <span class="va">time</span><span class="op">)</span></span>
 <span></span>
 <span><span class="va">sizes_over_time</span></span>
-<span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 2 × 2</span></span></span>
-<span><span class="co">#&gt;     Y_t     t</span></span>
-<span><span class="co">#&gt;   <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">1</span>     1     0</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">2</span>    41    20</span></span></code></pre></div>
+<span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 21 × 2</span></span></span>
+<span><span class="co">#&gt;      Y_t     t</span></span>
+<span><span class="co">#&gt;    <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;int&gt;</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 1</span>     1     0</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 2</span>     3     1</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 3</span>     5     2</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 4</span>     7     3</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 5</span>     9     4</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 6</span>    11     5</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 7</span>    13     6</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 8</span>    15     7</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 9</span>    17     8</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">10</span>    19     9</span></span>
+<span><span class="co">#&gt; <span style="color: #949494;"># ℹ 11 more rows</span></span></span></code></pre></div>
 </div>
 <div class="section level3">
 <h3 id="visualise-data">Visualise data<a class="anchor" aria-label="anchor" href="#visualise-data"></a>
@@ -301,7 +310,7 @@ model by calling:</p>
 <span><span class="co">#&gt;  [1] "n_obs"                         "n_ind"                        </span></span>
 <span><span class="co">#&gt;  [3] "y_obs"                         "obs_index"                    </span></span>
 <span><span class="co">#&gt;  [5] "time"                          "ind_id"                       </span></span>
-<span><span class="co">#&gt;  [7] "prior_pars_pop_beta_mu"        "prior_pars_pop_beta_sigma"    </span></span>
+<span><span class="co">#&gt;  [7] "prior_pars_pop_log_beta_mu"    "prior_pars_pop_log_beta_sigma"</span></span>
 <span><span class="co">#&gt;  [9] "prior_pars_global_error_sigma" "model"</span></span></code></pre></div>
 <p>Each represents an element of the list that gets passed to the model:
 - <code>n_obs</code> is the integer number of observations
@@ -320,8 +329,14 @@ is in sequence - <code>time</code> is a vector that determines when an
 observation happened relative to the first observation for that
 individual. The first observation has time 0 - <code>ind_id</code> is a
 vector the same length as <code>y_obs</code> that tracks which
-individual an observation comes from - <code>model</code> is the name of
-the model</p>
+individual an observation comes from -
+<code>prior_pars_pop_log_beta_mu</code> is the vector of prior
+parameters for the log-beta mean hyper-parameter -
+<code>prior_pars_pop_log_beta_sigma</code> is the vector of prior
+parameters for the log-beta standard deviation hyper-parameter -
+<code>prior_pars_global_error_sigma</code> is the vector of prior
+parameters for the global error standard deviation - <code>model</code>
+is the name of the model</p>
 <p>Now we will actually fit the model and extract the estimates. As the
 provided trout data is already in the form required by the
 <code>hmde_assign_data</code> function we don’t need to do any further
@@ -351,9 +366,9 @@ re-naming and can pass it directly.</p>
 <span><span class="co">#&gt; Chain 1: Iteration: 1800 / 2000 [ 90%]  (Sampling)</span></span>
 <span><span class="co">#&gt; Chain 1: Iteration: 2000 / 2000 [100%]  (Sampling)</span></span>
 <span><span class="co">#&gt; Chain 1: </span></span>
-<span><span class="co">#&gt; Chain 1:  Elapsed Time: 0.654 seconds (Warm-up)</span></span>
-<span><span class="co">#&gt; Chain 1:                0.549 seconds (Sampling)</span></span>
-<span><span class="co">#&gt; Chain 1:                1.203 seconds (Total)</span></span>
+<span><span class="co">#&gt; Chain 1:  Elapsed Time: 0.66 seconds (Warm-up)</span></span>
+<span><span class="co">#&gt; Chain 1:                0.555 seconds (Sampling)</span></span>
+<span><span class="co">#&gt; Chain 1:                1.215 seconds (Total)</span></span>
 <span><span class="co">#&gt; Chain 1: </span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; SAMPLING FOR MODEL 'constant_multi_ind' NOW (CHAIN 2).</span></span>
@@ -376,9 +391,9 @@ re-naming and can pass it directly.</p>
 <span><span class="co">#&gt; Chain 2: Iteration: 1800 / 2000 [ 90%]  (Sampling)</span></span>
 <span><span class="co">#&gt; Chain 2: Iteration: 2000 / 2000 [100%]  (Sampling)</span></span>
 <span><span class="co">#&gt; Chain 2: </span></span>
-<span><span class="co">#&gt; Chain 2:  Elapsed Time: 0.616 seconds (Warm-up)</span></span>
-<span><span class="co">#&gt; Chain 2:                0.425 seconds (Sampling)</span></span>
-<span><span class="co">#&gt; Chain 2:                1.041 seconds (Total)</span></span>
+<span><span class="co">#&gt; Chain 2:  Elapsed Time: 0.622 seconds (Warm-up)</span></span>
+<span><span class="co">#&gt; Chain 2:                0.43 seconds (Sampling)</span></span>
+<span><span class="co">#&gt; Chain 2:                1.052 seconds (Total)</span></span>
 <span><span class="co">#&gt; Chain 2: </span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; SAMPLING FOR MODEL 'constant_multi_ind' NOW (CHAIN 3).</span></span>
@@ -401,15 +416,15 @@ re-naming and can pass it directly.</p>
 <span><span class="co">#&gt; Chain 3: Iteration: 1800 / 2000 [ 90%]  (Sampling)</span></span>
 <span><span class="co">#&gt; Chain 3: Iteration: 2000 / 2000 [100%]  (Sampling)</span></span>
 <span><span class="co">#&gt; Chain 3: </span></span>
-<span><span class="co">#&gt; Chain 3:  Elapsed Time: 0.653 seconds (Warm-up)</span></span>
-<span><span class="co">#&gt; Chain 3:                0.434 seconds (Sampling)</span></span>
-<span><span class="co">#&gt; Chain 3:                1.087 seconds (Total)</span></span>
+<span><span class="co">#&gt; Chain 3:  Elapsed Time: 0.661 seconds (Warm-up)</span></span>
+<span><span class="co">#&gt; Chain 3:                0.438 seconds (Sampling)</span></span>
+<span><span class="co">#&gt; Chain 3:                1.099 seconds (Total)</span></span>
 <span><span class="co">#&gt; Chain 3: </span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; SAMPLING FOR MODEL 'constant_multi_ind' NOW (CHAIN 4).</span></span>
 <span><span class="co">#&gt; Chain 4: </span></span>
-<span><span class="co">#&gt; Chain 4: Gradient evaluation took 2.1e-05 seconds</span></span>
-<span><span class="co">#&gt; Chain 4: 1000 transitions using 10 leapfrog steps per transition would take 0.21 seconds.</span></span>
+<span><span class="co">#&gt; Chain 4: Gradient evaluation took 2.2e-05 seconds</span></span>
+<span><span class="co">#&gt; Chain 4: 1000 transitions using 10 leapfrog steps per transition would take 0.22 seconds.</span></span>
 <span><span class="co">#&gt; Chain 4: Adjust your expectations accordingly!</span></span>
 <span><span class="co">#&gt; Chain 4: </span></span>
 <span><span class="co">#&gt; Chain 4: </span></span>
@@ -426,9 +441,9 @@ re-naming and can pass it directly.</p>
 <span><span class="co">#&gt; Chain 4: Iteration: 1800 / 2000 [ 90%]  (Sampling)</span></span>
 <span><span class="co">#&gt; Chain 4: Iteration: 2000 / 2000 [100%]  (Sampling)</span></span>
 <span><span class="co">#&gt; Chain 4: </span></span>
-<span><span class="co">#&gt; Chain 4:  Elapsed Time: 0.623 seconds (Warm-up)</span></span>
-<span><span class="co">#&gt; Chain 4:                0.518 seconds (Sampling)</span></span>
-<span><span class="co">#&gt; Chain 4:                1.141 seconds (Total)</span></span>
+<span><span class="co">#&gt; Chain 4:  Elapsed Time: 0.637 seconds (Warm-up)</span></span>
+<span><span class="co">#&gt; Chain 4:                0.525 seconds (Sampling)</span></span>
+<span><span class="co">#&gt; Chain 4:                1.162 seconds (Total)</span></span>
 <span><span class="co">#&gt; Chain 4:</span></span></code></pre></div>
 </div>
 <div class="section level3">
