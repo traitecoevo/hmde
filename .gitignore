@@ -70,9 +70,6 @@ testing.r
 testingOutput/
 vBtesting.r
 
-# Data prep files
-data-raw/
-
 # Output from vignettes
 figure/
 docs
