@@ -1,4 +1,6 @@
 # Code to produce samples for demonstration data.
+# Original data files are not included due to size, but links to the sources
+# are available.
 
 #-----------------------------------------------------------------------------#
 #Libraries
