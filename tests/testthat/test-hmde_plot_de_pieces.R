@@ -34,12 +34,12 @@ test_that("Execution and output: bad input", {
                                    input_measurement_data = Trout_Size_Data)
 
   output_error <- output
-  output_error$model <- "not_a_model"
+  output_error$model_name <- "not_a_model"
   expect_error(
     hmde_plot_de_pieces(output_error)
   )
 
-  output_error$model <- NULL
+  output_error$model_name <- NULL
   expect_error(
     hmde_plot_de_pieces(output_error)
   )
