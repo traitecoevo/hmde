@@ -9,9 +9,7 @@ Function piece will go from the first fitted size to the last.
 Accepted ggplot arguments will change the axis labels, title, line colour, alpha}
 \usage{
 hmde_plot_de_pieces(
-  model = NULL,
-  individual_data = NULL,
-  measurement_data = NULL,
+  estimate_list = NULL,
   xlab = "Y(t)",
   ylab = "f",
   title = NULL,
@@ -20,11 +18,7 @@ hmde_plot_de_pieces(
 )
 }
 \arguments{
-\item{model}{model name character string}
-
-\item{individual_data}{tibble with estimated DE parameters}
-
-\item{measurement_data}{tibble with estimated measurements}
+\item{estimate_list}{list output from hmde_extract_estimates}
 
 \item{xlab}{character string for replacement x axis label}
 
