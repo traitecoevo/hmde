@@ -300,17 +300,16 @@ individual between the first and last estimated size. The purpose of the
 plot is to look at how different individual growth functions behave.</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">Tree_Size_Ests</span><span class="op">)</span></span>
-<span><span class="co">#&gt;                  Length Class  Mode</span></span>
-<span><span class="co">#&gt; measurement_data  5     tbl_df list</span></span>
-<span><span class="co">#&gt; individual_data  13     tbl_df list</span></span>
-<span><span class="co">#&gt; error_data        5     tbl_df list</span></span>
+<span><span class="co">#&gt;                  Length Class  Mode     </span></span>
+<span><span class="co">#&gt; model             1     -none- character</span></span>
+<span><span class="co">#&gt; measurement_data  5     tbl_df list     </span></span>
+<span><span class="co">#&gt; individual_data  13     tbl_df list     </span></span>
+<span><span class="co">#&gt; error_data        5     tbl_df list     </span></span>
 <span><span class="co">#&gt; population_data   5     tbl_df list</span></span>
 <span></span>
 <span><span class="co"># Plot fitted growth function pieces</span></span>
 <span><span class="va">plot_par_individual_data</span> <span class="op">&lt;-</span> <span class="va">Tree_Size_Ests</span><span class="op">$</span><span class="va">individual_data</span><span class="op">[</span>,<span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">2</span>, <span class="fl">6</span>, <span class="fl">10</span><span class="op">)</span><span class="op">]</span> <span class="co">#Pull out estimates only</span></span>
-<span><span class="fu"><a href="../reference/hmde_plot_de_pieces.html">hmde_plot_de_pieces</a></span><span class="op">(</span>model <span class="op">=</span> <span class="st">"canham_multi_ind"</span>,</span>
-<span>                    individual_data <span class="op">=</span> <span class="va">plot_par_individual_data</span>,</span>
-<span>                    measurement_data <span class="op">=</span> <span class="va">Tree_Size_Ests</span><span class="op">$</span><span class="va">measurement_data</span><span class="op">)</span></span></code></pre></div>
+<span><span class="fu"><a href="../reference/hmde_plot_de_pieces.html">hmde_plot_de_pieces</a></span><span class="op">(</span><span class="va">Tree_Size_Ests</span><span class="op">)</span></span></code></pre></div>
 <p><img src="hmde_for_mathematicians_files/figure-html/unnamed-chunk-6-1.png" width="700">
 Each line represents 25 years of growth for the specific individual.
 Lines that sit lower on the
@@ -354,9 +353,7 @@ individual, use the <code>ind_id</code> value to select them.</p>
 <span><span class="va">DE_function</span> <span class="op">=</span> <span class="fu"><a href="../reference/hmde_model_des.html">hmde_model_des</a></span><span class="op">(</span><span class="st">"canham_multi_ind"</span><span class="op">)</span></span>
 <span></span>
 <span><span class="co">#Produce plot with focus inds</span></span>
-<span><span class="va">function_plot</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/hmde_plot_de_pieces.html">hmde_plot_de_pieces</a></span><span class="op">(</span>model <span class="op">=</span> <span class="st">"canham_multi_ind"</span>,</span>
-<span>                    individual_data <span class="op">=</span> <span class="va">plot_par_individual_data</span>,</span>
-<span>                    measurement_data <span class="op">=</span> <span class="va">Tree_Size_Ests</span><span class="op">$</span><span class="va">measurement_data</span>,</span>
+<span><span class="va">function_plot</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/hmde_plot_de_pieces.html">hmde_plot_de_pieces</a></span><span class="op">(</span><span class="va">Tree_Size_Ests</span>,</span>
 <span>                    alpha <span class="op">=</span> <span class="fl">0.2</span><span class="op">)</span> </span>
 <span><span class="kw">for</span><span class="op">(</span><span class="va">i</span> <span class="kw">in</span> <span class="fl">1</span><span class="op">:</span><span class="fu"><a href="https://rdrr.io/r/base/length.html" class="external-link">length</a></span><span class="op">(</span><span class="va">sample_ids</span><span class="op">)</span><span class="op">)</span><span class="op">{</span></span>
 <span>  <span class="va">args_list</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>pars<span class="op">=</span><span class="va">Tree_Size_Ests</span><span class="op">$</span><span class="va">individual_data</span><span class="op">[</span><span class="va">sample_ids</span><span class="op">[</span><span class="va">i</span><span class="op">]</span>,<span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">2</span>, <span class="fl">6</span>, <span class="fl">10</span><span class="op">)</span><span class="op">]</span><span class="op">)</span></span>
