@@ -17,5 +17,5 @@ test_that("Datasets: size", {
                           ncol(Tree_Size_Data)),
                expected = c(300, 4))
   expect_equal(object = length(Tree_Size_Ests),
-               expected = 4)
+               expected = 5)
 })
