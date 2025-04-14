@@ -20,7 +20,7 @@ Useful links:
 
 }
 \author{
-\strong{Maintainer}: Tess O'Brien \email{theresa.obrien@unsw.edu.au} (\href{https://orcid.org/XXXX-XXXX-XXXX-XXXX}{ORCID}) [copyright holder]
+\strong{Maintainer}: Tess O'Brien \email{tesslacoil@protonmail.com} (\href{https://orcid.org/XXXX-XXXX-XXXX-XXXX}{ORCID}) [copyright holder]
 
 Authors:
 \itemize{

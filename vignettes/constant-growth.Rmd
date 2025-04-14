@@ -322,9 +322,7 @@ ind_hist_beta <- histogram_func(trout_constant_estimates$individual_data,
                main = "Individual beta parameters", 
                xlab = "beta estimate")
 
-de_pieces <- hmde_plot_de_pieces(model = "constant_multi_ind",
-                    individual_data = trout_constant_estimates$individual_data,
-                    measurement_data = trout_constant_estimates$measurement_data)
+de_pieces <- hmde_plot_de_pieces(trout_constant_estimates)
 
 
 ind_hist_beta + de_pieces 

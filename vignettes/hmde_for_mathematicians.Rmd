@@ -120,9 +120,7 @@ summary(Tree_Size_Ests)
 
 # Plot fitted growth function pieces
 plot_par_individual_data <- Tree_Size_Ests$individual_data[,c(1, 2, 6, 10)] #Pull out estimates only
-hmde_plot_de_pieces(model = "canham_multi_ind",
-                    individual_data = plot_par_individual_data,
-                    measurement_data = Tree_Size_Ests$measurement_data)
+hmde_plot_de_pieces(Tree_Size_Ests)
 ```
 Each line represents 25 years of growth for the specific individual. Lines that sit lower on the $y$-axis are shorter horizontally because they are traversed more slowly, as $f$ is the rate of change in $Y$. 
 
@@ -156,9 +154,7 @@ ggplot(data=plot_data, aes(group = ind_id)) +
 DE_function = hmde_model_des("canham_multi_ind")
 
 #Produce plot with focus inds
-function_plot <- hmde_plot_de_pieces(model = "canham_multi_ind",
-                    individual_data = plot_par_individual_data,
-                    measurement_data = Tree_Size_Ests$measurement_data,
+function_plot <- hmde_plot_de_pieces(Tree_Size_Ests,
                     alpha = 0.2) 
 for(i in 1:length(sample_ids)){
   args_list <- list(pars=Tree_Size_Ests$individual_data[sample_ids[i],c(2, 6, 10)])

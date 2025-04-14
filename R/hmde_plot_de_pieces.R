@@ -4,9 +4,7 @@
 #' Function piece will go from the first fitted size to the last.
 #' Accepted ggplot arguments will change the axis labels, title, line colour, alpha
 #'
-#' @param model model name character string
-#' @param individual_data tibble with estimated DE parameters
-#' @param measurement_data tibble with estimated measurements
+#' @param estimate_list list output from hmde_extract_estimates
 #' @param xlab character string for replacement x axis label
 #' @param ylab character string for replacement y axis label
 #' @param title character string for replacement plot title
@@ -18,14 +16,16 @@
 #' @import ggplot2
 #' @import dplyr
 
-hmde_plot_de_pieces <- function(model = NULL,
-                                individual_data = NULL,
-                                measurement_data = NULL,
+hmde_plot_de_pieces <- function(estimate_list = NULL,
                                 xlab = "Y(t)",
                                 ylab = "f",
                                 title = NULL,
                                 colour = "#006600",
                                 alpha = 0.4){
+  model <- estimate_list$model
+  individual_data <- estimate_list$individual_data
+  measurement_data <- estimate_list$measurement_data
+
   #Check for model
   if(!model %in% hmde_model_names()){
     stop("Model name not recognised. Run hmde_model_names() to see available models.")

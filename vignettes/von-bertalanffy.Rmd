@@ -207,9 +207,7 @@ cor(lizard_estimates$individual_data$ind_max_size_mean,
     method = "spearman")
 
 #Plot function pieces over estimated sizes.
-de_pieces <- hmde_plot_de_pieces(model = "vb_multi_ind",
-                    individual_data = lizard_estimates$individual_data,
-                    measurement_data = lizard_estimates$measurement_data)
+de_pieces <- hmde_plot_de_pieces(lizard_estimates)
 ```
 
 At the hyper-parameter level for the whole population we have centre and spread parameters for the log-normal distributions of $S_{max}$ and $\beta$. As before, we can look at these as species-level features.

@@ -9,9 +9,7 @@ test_that("Execution and output: plot_de_pieces function", {
   output <- hmde_extract_estimates(fit = multi_ind_trout,
                                    input_measurement_data = Trout_Size_Data)
 
-  plot <- hmde_plot_de_pieces(model = "constant_multi_ind",
-                      individual_data = output$individual_data,
-                      measurement_data = output$measurement_data,
+  plot <- hmde_plot_de_pieces(output,
                       xlab = "S(t)",
                       ylab = "g",
                       title = "Constant growth")
@@ -35,27 +33,26 @@ test_that("Execution and output: bad input", {
   output <- hmde_extract_estimates(fit = multi_ind_trout,
                                    input_measurement_data = Trout_Size_Data)
 
+  output_error <- output
+  output_error$model_name <- "not_a_model"
   expect_error(
-    hmde_plot_de_pieces(model = "not_a_model",
-                              individual_data = output$individual_data,
-                              measurement_data = output$measurement_data)
+    hmde_plot_de_pieces(output_error)
   )
 
+  output_error$model_name <- NULL
   expect_error(
-    hmde_plot_de_pieces(model = NULL,
-                        individual_data = output$individual_data,
-                        measurement_data = output$measurement_data)
+    hmde_plot_de_pieces(output_error)
   )
 
+  output_error <- output
+  output_error$individual_data <- NULL
   expect_error(
-    hmde_plot_de_pieces(model = "constant_multi_ind",
-                        individual_data = NULL,
-                        measurement_data = output$measurement_data)
+    hmde_plot_de_pieces(output_error)
   )
 
+  output_error <- output
+  output_error$measurement_data <- NULL
   expect_error(
-    hmde_plot_de_pieces(model = "constant_multi_ind",
-                        individual_data = output$individual_data,
-                        measurement_data = NULL)
+    hmde_plot_de_pieces(output_error)
   )
 })

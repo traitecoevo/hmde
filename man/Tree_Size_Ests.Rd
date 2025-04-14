@@ -7,8 +7,9 @@
 \format{
 \subsection{\code{Tree_Size_Ests}}{
 
-A list with 4 elements:
+A list with 5 elements:
 \describe{
+\item{model}{A character string giving the model name - Canham with multiple individuals.}
 \item{measurement_data}{A tibble with 5 columns that gives information on size observations and estimates.}
 \item{individual_data}{A tibble with 13 columns that gives posterior estimates for individual growth parameters.}
 \item{error_data}{A tibble with 5 columns that gives posterior estimates of the error parameter.}
