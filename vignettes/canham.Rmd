@@ -238,9 +238,7 @@ pairplot3
 cor(Tree_Size_Ests$individual_data[,c(2,6,10)], method="spearman")
 
 #Plot function pieces over estimated sizes.
-est_de_plot <- hmde_plot_de_pieces(model = "canham_multi_ind",
-                    individual_data = Tree_Size_Ests$individual_data,
-                    measurement_data = Tree_Size_Ests$measurement_data)
+est_de_plot <- hmde_plot_de_pieces(Tree_Size_Ests)
 est_de_plot
 ```
 
