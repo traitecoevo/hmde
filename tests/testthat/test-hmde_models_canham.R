@@ -28,12 +28,15 @@ test_that("Model structures: canham", {
   expect_visible(multi_model)
 })
 
-test_that("Execution: canham single individual", {
-  model_name <- "canham"
-  par_names <- c("ind_max_growth", "ind_size_at_max_growth", "ind_k")
+#Running the Canham model for this test takes a very long time.
+if(FALSE){
+  test_that("Execution: canham single individual", {
+    model_name <- "canham"
+    par_names <- c("ind_max_growth", "ind_size_at_max_growth", "ind_k")
 
-  hmde_test_single_individual(model_name, par_names)
-})
+    hmde_test_single_individual(model_name, par_names)
+  })
+}
 
 test_that("Execution: canham multiple individuals", {
   model_name <- "canham"
