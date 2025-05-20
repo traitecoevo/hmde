@@ -1,9 +1,9 @@
 #Code to replicate results in hmde paper
 # install.packages("remotes")
-remotes::install_github("traitecoevo/hmde")
+#remotes::install_github("traitecoevo/hmde")
 
 {
-  library(hmde)
+  #library(hmde)
   library(ggplot2)
   library(cowplot)
   library(tidyverse)
@@ -14,8 +14,8 @@ remotes::install_github("traitecoevo/hmde")
 
 #-----------------------------------------------------------------------------#
 # Figure 1
-{
 set.seed(2025)
+{
 #Analytic solution for vB model
 solution <- function(t, pars = list(y_0, beta, S_max)){
   return(
@@ -287,9 +287,12 @@ obs_est_size_plot <- ggplot(data = trout_estimates$measurement_data,
 #Plots of size over time for a sample of 5 individuals
 size_over_time_plot <- hmde_plot_obs_est_inds(n_ind_to_plot = 5,
                                               measurement_data =
-                                                trout_estimates$measurement_data)
+                                                trout_estimates$measurement_data) +
+  theme(legend.position = "inside",
+        legend.position.inside = c(0.8,0.3)) +
+  guides(colour=guide_legend(ncol=2))
 
-ind_hist_beta <-histogram_func(trout_estimates$individual_data,
+ind_hist_beta <- histogram_func(trout_estimates$individual_data,
                                ind_beta_mean,
                                main = "Individual beta parameters",
                                xlab = "beta estimate")
@@ -314,10 +317,8 @@ exp_mean <- trout_estimates$population_data[1,c(1,2,4,5)] %>%
          CI_lower = exp(CI_lower),
          CI_upper = exp(CI_upper),
          par_name = "pop_beta_mu")
-rbind(trout_estimates$population_data[,c(1,2,4,5)],
+sp_ests <- rbind(trout_estimates$population_data[,c(1,2,4,5)],
       exp_mean)
-
-
 }
 
 #-----------------------------------------------------------------------------#
@@ -397,7 +398,7 @@ set.seed(2025)
     par_scatter,
     s_max_hist,
     beta_hist,
-    nrow = 2,
+    nrow = 3,
     byrow = TRUE,
     labels = c("(a)", "(b)",
                "(c)", "(d)",
@@ -409,7 +410,7 @@ set.seed(2025)
            CI_lower = exp(CI_lower),
            CI_upper = exp(CI_upper))
   exp_mean$par_name <- c("pop_max_size_mean", "pop_growth_rate_mean")
-  rbind(lizard_estimates$population_data[,c(1,2,4,5)],
+  sp_pars <- rbind(lizard_estimates$population_data[,c(1,2,4,5)],
         exp_mean)
 }
 
@@ -424,7 +425,7 @@ if(FALSE){ #Re-run model to produce tree estimates
     hmde_assign_data(data = Tree_Size_Data)  |>
     hmde_run(chains = 4, cores = 4, iter = 2000)
 
-  tree_estimates <-
+  Tree_Size_Ests <-
     hmde_extract_estimates(
       fit = tree_fit,
       input_measurement_data = Tree_Size_Data)
@@ -489,35 +490,50 @@ set.seed(2025)
     theme_classic()
 
   pairplot2 <- ggplot(data = Tree_Size_Ests$individual_data,
-                      aes(x = ind_max_growth_mean, y = ind_k_mean)) +
+                      aes(x = ind_k_mean, y = ind_max_growth_mean)) +
     geom_point(shape = 16, size = 1, colour = "green4") +
-    xlab("Ind. max growth (cm/yr)") +
-    ylab("Ind. spread par.") +
+    ylab("Ind. max growth (cm/yr)") +
+    xlab("Ind. spread par.") +
     theme_classic()
 
   pairplot3 <- ggplot(data = Tree_Size_Ests$individual_data,
-                      aes(x = ind_k_mean, y = ind_size_at_max_growth_mean)) +
+                      aes(x = ind_size_at_max_growth_mean, y = ind_k_mean)) +
     geom_point(shape = 16, size = 1, colour = "green4") +
-    xlab("Ind. spread par.") +
-    ylab("Ind. size at max growth (cm)") +
+    ylab("Ind. spread par.") +
+    xlab("Ind. size at max growth (cm)") +
     theme_classic()
 
   est_de_plot <- hmde_plot_de_pieces(Tree_Size_Ests)
 
   #Figure 4
-  plot_grid(
+  piece_1 <- plot_grid(
     obs_est_scatter,
     obs_est_size_plot,
     est_de_plot,
+    nrow = 1,
+    byrow = TRUE,
+    labels = c("(a)", "(b)",
+               "(c)")
+  )
+  piece_2 <-
+  plot_grid(
     gmax_hist,
     Smax_hist,
     k_hist,
     pairplot1,
-    pairplot2,
     pairplot3,
-    nrow = 3,
-    byrow = TRUE
+    pairplot2,
+    nrow = 2,
+    byrow = TRUE,
+    labels = c("(d)",
+               "(e)", "(f)",
+               "(g)", "(h)",
+               "(i)"),
+    align = "hv"
   )
+
+  plot_grid(piece_1, piece_2, nrow = 2,
+            rel_heights = c(1/3,2/3))
 
   exp_mean <- Tree_Size_Ests$population_data[c(1,3,5),c(1,2,4,5)] %>%
     mutate(mean = exp(mean),
@@ -526,7 +542,7 @@ set.seed(2025)
   exp_mean$par_name <- c("pop_max_growth_mean",
                          "pop_size_at_max_growth_mean",
                          "pop_k_mean")
-  rbind(Tree_Size_Ests$population_data[,c(1,2,4,5)],
+  canham_sp_data <- rbind(Tree_Size_Ests$population_data[,c(1,2,4,5)],
         exp_mean)
 
 }
