@@ -416,8 +416,21 @@ set.seed(2025)
 
 #-----------------------------------------------------------------------------#
 # Canham function demonstration
-set.seed(2025)
 #Due to the runtime we skip fitting the model and use provided model fit in Tree_Size_Ests object
+if(FALSE){ #Re-run model to produce tree estimates
+  set.seed(2025)
+  tree_fit <-
+    hmde_model("canham_multi_ind") |>
+    hmde_assign_data(data = Tree_Size_Data)  |>
+    hmde_run(chains = 4, cores = 4, iter = 2000)
+
+  tree_estimates <-
+    hmde_extract_estimates(
+      fit = tree_fit,
+      input_measurement_data = Tree_Size_Data)
+}
+
+set.seed(2025)
 {
   #Quantitative R^2
   r_sq_est <- cor(Tree_Size_Ests$measurement_data$y_obs,
