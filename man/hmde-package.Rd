@@ -15,12 +15,12 @@ Stan Development Team (NA). RStan: the R interface to Stan. R package version 2.
 Useful links:
 \itemize{
   \item \url{https://traitecoevo.github.io/hmde/}
-  \item Report bugs at \url{https://github.com/traitecoevo/austraits/issues}
+  \item Report bugs at \url{https://github.com/traitecoevo/hmde/issues}
 }
 
 }
 \author{
-\strong{Maintainer}: Tess O'Brien \email{tesslacoil@protonmail.com} (\href{https://orcid.org/XXXX-XXXX-XXXX-XXXX}{ORCID}) [copyright holder]
+\strong{Maintainer}: Tess O'Brien \email{tesslacoil@protonmail.com} (\href{https://orcid.org/0009-0000-5821-8801}{ORCID}) [copyright holder]
 
 Authors:
 \itemize{
