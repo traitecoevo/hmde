@@ -1,9 +1,9 @@
 #Code to replicate results in hmde paper
 # install.packages("remotes")
-#remotes::install_github("traitecoevo/hmde")
+#remotes::install_github("traitecoevo/hmde@a79baae6c2df22789cccc1fd96eb3a55da9628ec")
 
 {
-  #library(hmde)
+  library(hmde)
   library(ggplot2)
   library(cowplot)
   library(tidyverse)
@@ -85,6 +85,7 @@ fit <-
 
 #Diag plots
 diag_plot <- traceplot(fit, pars=c("ind_max_size", "ind_growth_rate"), inc_warmup=FALSE)
+diag_plot
 
 #plots of sizes over time
 ests <- hmde_extract_estimates(fit, data)
@@ -112,6 +113,7 @@ fit_plot <-
         legend.position.inside = c(0.8, 0.2),
         axis.ticks = element_blank(),
         axis.text = element_blank())
+fit_plot
 
 fitted_function_plot <- hmde_plot_de_pieces(estimate_list = ests,
                                             xlab = "Size",
@@ -121,6 +123,7 @@ fitted_function_plot <- hmde_plot_de_pieces(estimate_list = ests,
                                             alpha = 0.8) +
   theme(axis.ticks = element_blank(),
         axis.text = element_blank())
+fitted_function_plot
 
 #Theoretical size over time plots
 theory_pars_list <- list(
@@ -231,6 +234,7 @@ function_selection <- plot_grid(
   byrow = TRUE,
   align = "hv"
 )
+function_selection
 
 #Produces the plots for Figure 1, excluding the screenshot of code
 fig_1_pieces <- plot_grid(
@@ -242,6 +246,8 @@ fig_1_pieces <- plot_grid(
   nrow = 3,
   byrow = TRUE
 )
+
+print(fig_1_pieces)
 }
 
 #-----------------------------------------------------------------------------#
@@ -260,6 +266,13 @@ trout_constant_fit <-
   hmde_model("constant_multi_ind") |>
   hmde_assign_data(data = Trout_Size_Data)  |>
   hmde_run(chains = 4, cores = 4, iter = 2000)
+
+#Diag plots, requires large image size to see properly
+diag_plot_growth_rate <- traceplot(trout_constant_fit,
+                                    pars="ind_beta",
+                                    inc_warmup=FALSE)
+print(diag_plot_growth_rate)
+
 trout_estimates <-
   hmde_extract_estimates(trout_constant_fit,
                          input_measurement_data = Trout_Size_Data)
@@ -300,7 +313,7 @@ ind_hist_beta <- histogram_func(trout_estimates$individual_data,
 de_pieces <- hmde_plot_de_pieces(trout_estimates)
 
 #Figure 2
-plot_grid(
+fig_2 <- plot_grid(
   obs_est_size_plot,
   size_over_time_plot,
   de_pieces,
@@ -311,6 +324,8 @@ plot_grid(
              "(c)", "(d)")
 )
 
+print(fig_2)
+
 #Table 1: species-level hyper parameters
 exp_mean <- trout_estimates$population_data[1,c(1,2,4,5)] %>%
   mutate(mean = exp(mean),
@@ -319,6 +334,8 @@ exp_mean <- trout_estimates$population_data[1,c(1,2,4,5)] %>%
          par_name = "pop_beta_mu")
 sp_ests <- rbind(trout_estimates$population_data[,c(1,2,4,5)],
       exp_mean)
+
+print(sp_ests)
 }
 
 #-----------------------------------------------------------------------------#
@@ -328,6 +345,15 @@ set.seed(2025)
   lizard_vb_fit <- hmde_model("vb_multi_ind") |>
     hmde_assign_data(data = Lizard_Size_Data)  |>
     hmde_run(chains = 4, cores = 4, iter = 2000)
+
+  diag_max_size <- traceplot(lizard_vb_fit,
+            pars="ind_max_size",
+            inc_warmup=FALSE)
+  diag_growth_rate <- traceplot(lizard_vb_fit,
+                             pars="ind_growth_rate",
+                             inc_warmup=FALSE)
+  print(diag_max_size)
+  print(diag_growth_rate)
 
   lizard_estimates <- hmde_extract_estimates(fit = lizard_vb_fit,
                                              input_measurement_data = Lizard_Size_Data)
@@ -391,7 +417,7 @@ set.seed(2025)
   de_pieces <- hmde_plot_de_pieces(lizard_estimates)
 
   #Figure 3
-  plot_grid(
+  fig_3 <- plot_grid(
     obs_scatter,
     obs_est_ind,
     de_pieces,
@@ -404,6 +430,7 @@ set.seed(2025)
                "(c)", "(d)",
                "(e)", "(f)")
   )
+  print(fig_3)
 
   exp_mean <- lizard_estimates$population_data[c(1,3),c(1,2,4,5)] %>%
     mutate(mean = exp(mean),
@@ -412,13 +439,15 @@ set.seed(2025)
   exp_mean$par_name <- c("pop_max_size_mean", "pop_growth_rate_mean")
   sp_pars <- rbind(lizard_estimates$population_data[,c(1,2,4,5)],
         exp_mean)
+
+  print(sp_pars)
 }
 
 
 #-----------------------------------------------------------------------------#
 # Canham function demonstration
-#Due to the runtime we skip fitting the model and use provided model fit in Tree_Size_Ests object
-if(FALSE){ #Re-run model to produce tree estimates
+# Due to the runtime we skip fitting the model and use provided model fit in Tree_Size_Ests object
+if(FALSE){ #Re-run model to reproduce Tree_Size_Ests results
   set.seed(2025)
   tree_fit <-
     hmde_model("canham_multi_ind") |>
@@ -532,8 +561,9 @@ set.seed(2025)
     align = "hv"
   )
 
-  plot_grid(piece_1, piece_2, nrow = 2,
+  fig_4 <- plot_grid(piece_1, piece_2, nrow = 2,
             rel_heights = c(1/3,2/3))
+  print(fig_4)
 
   exp_mean <- Tree_Size_Ests$population_data[c(1,3,5),c(1,2,4,5)] %>%
     mutate(mean = exp(mean),
@@ -545,5 +575,7 @@ set.seed(2025)
   canham_sp_data <- rbind(Tree_Size_Ests$population_data[,c(1,2,4,5)],
         exp_mean)
 
+  print(canham_sp_data)
 }
 
+sessionInfo()
