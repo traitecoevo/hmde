@@ -269,7 +269,7 @@ species-level parameter CIs and estimates.</p>
 <code class="sourceCode R"><span></span>
 <span><span class="co">#Quantitative R^2</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/stats/cor.html" class="external-link">cor</a></span><span class="op">(</span><span class="va">measurement_data_transformed</span><span class="op">$</span><span class="va">y_obs</span>, <span class="va">measurement_data_transformed</span><span class="op">$</span><span class="va">y_hat</span><span class="op">)</span><span class="op">^</span><span class="fl">2</span></span>
-<span><span class="co">#&gt; [1] 0.9975356</span></span>
+<span><span class="co">#&gt; [1] 0.9975655</span></span>
 <span></span>
 <span><span class="va">r_sq_est</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/cor.html" class="external-link">cor</a></span><span class="op">(</span><span class="va">Tree_Size_Ests</span><span class="op">$</span><span class="va">measurement_data</span><span class="op">$</span><span class="va">y_obs</span>,</span>
 <span>                <span class="va">Tree_Size_Ests</span><span class="op">$</span><span class="va">measurement_data</span><span class="op">$</span><span class="va">y_hat</span><span class="op">)</span><span class="op">^</span><span class="fl">2</span></span>
@@ -366,12 +366,12 @@ species-level parameter CIs and estimates.</p>
 <span><span class="co">#monotonic correlation of parameters</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/stats/cor.html" class="external-link">cor</a></span><span class="op">(</span><span class="va">Tree_Size_Ests</span><span class="op">$</span><span class="va">individual_data</span><span class="op">[</span>,<span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">2</span>,<span class="fl">6</span>,<span class="fl">10</span><span class="op">)</span><span class="op">]</span>, method<span class="op">=</span><span class="st">"spearman"</span><span class="op">)</span></span>
 <span><span class="co">#&gt;                             ind_max_growth_mean ind_size_at_max_growth_mean</span></span>
-<span><span class="co">#&gt; ind_max_growth_mean                   1.0000000                   0.1951020</span></span>
-<span><span class="co">#&gt; ind_size_at_max_growth_mean           0.1951020                   1.0000000</span></span>
-<span><span class="co">#&gt; ind_k_mean                           -0.5110684                  -0.2568547</span></span>
+<span><span class="co">#&gt; ind_max_growth_mean                   1.0000000                   0.1714766</span></span>
+<span><span class="co">#&gt; ind_size_at_max_growth_mean           0.1714766                   1.0000000</span></span>
+<span><span class="co">#&gt; ind_k_mean                           -0.5167347                  -0.2566627</span></span>
 <span><span class="co">#&gt;                             ind_k_mean</span></span>
-<span><span class="co">#&gt; ind_max_growth_mean         -0.5110684</span></span>
-<span><span class="co">#&gt; ind_size_at_max_growth_mean -0.2568547</span></span>
+<span><span class="co">#&gt; ind_max_growth_mean         -0.5167347</span></span>
+<span><span class="co">#&gt; ind_size_at_max_growth_mean -0.2566627</span></span>
 <span><span class="co">#&gt; ind_k_mean                   1.0000000</span></span>
 <span></span>
 <span><span class="co">#Plot function pieces over estimated sizes.</span></span>
@@ -428,18 +428,18 @@ and
 <span>                 <span class="st">")"</span><span class="op">)</span><span class="op">)</span></span>
 <span>  <span class="op">}</span></span>
 <span><span class="op">}</span></span>
-<span><span class="co">#&gt; [1] "mean log max growth rate estimate: -1.17838395575986"</span></span>
-<span><span class="co">#&gt; [1] "95% CI for mean log max growth rate: (-1.39363326456076, -0.997820939206308)"</span></span>
-<span><span class="co">#&gt; [1] "mean max growth rate in cm/yr estimate: 1.54290437695289"</span></span>
-<span><span class="co">#&gt; [1] "95% CI for mean max growth rate in cm/yr: (1.37607761473168, 1.77533545997963)"</span></span>
-<span><span class="co">#&gt; [1] "log max growth rate standard deviation estimate: 2.30295807263064"</span></span>
-<span><span class="co">#&gt; [1] "95% CI for log max growth rate standard deviation: (2.11590171016965, 2.48471835607935)"</span></span>
-<span><span class="co">#&gt; [1] "mean log size at max growth rate estimate: 0.390877846201422"</span></span>
-<span><span class="co">#&gt; [1] "95% CI for mean log size at max growth rate: (0.224980511811054, 0.57514192415306)"</span></span>
-<span><span class="co">#&gt; [1] "mean max size at max growth rate in cm estimate: 0.575518788200537"</span></span>
-<span><span class="co">#&gt; [1] "95% CI for mean max size at max growth rate in cm: (0.422770667892036, 0.935907959093528)"</span></span>
-<span><span class="co">#&gt; [1] "log max size at growth rate standard deviation estimate: 0.565079022017211"</span></span>
-<span><span class="co">#&gt; [1] "95% CI for log max size at growth rate standard deviation: (0.308264694018834, 0.842276668231387)"</span></span></code></pre></div>
+<span><span class="co">#&gt; [1] "mean log max growth rate estimate: -1.17926905960628"</span></span>
+<span><span class="co">#&gt; [1] "95% CI for mean log max growth rate: (-1.35436217487034, -1.0097451150757)"</span></span>
+<span><span class="co">#&gt; [1] "mean max growth rate in cm/yr estimate: 1.54915299226772"</span></span>
+<span><span class="co">#&gt; [1] "95% CI for mean max growth rate in cm/yr: (1.38279241021618, 1.75860470370369)"</span></span>
+<span><span class="co">#&gt; [1] "log max growth rate standard deviation estimate: 2.31924077864107"</span></span>
+<span><span class="co">#&gt; [1] "95% CI for log max growth rate standard deviation: (2.14197700118498, 2.51005094657254)"</span></span>
+<span><span class="co">#&gt; [1] "mean log size at max growth rate estimate: 0.385303309010744"</span></span>
+<span><span class="co">#&gt; [1] "95% CI for mean log size at max growth rate: (0.236341614765895, 0.552561575432935)"</span></span>
+<span><span class="co">#&gt; [1] "mean max size at max growth rate in cm estimate: 0.56896188306983"</span></span>
+<span><span class="co">#&gt; [1] "95% CI for mean max size at max growth rate in cm: (0.422533038841024, 0.803549795885537)"</span></span>
+<span><span class="co">#&gt; [1] "log max size at growth rate standard deviation estimate: 0.583806457525299"</span></span>
+<span><span class="co">#&gt; [1] "95% CI for log max size at growth rate standard deviation: (0.351536816347528, 0.866585624778698)"</span></span></code></pre></div>
 <div class="section level2 unnumbered">
 <h2 class="unnumbered" id="references">References<a class="anchor" aria-label="anchor" href="#references"></a>
 </h2>
