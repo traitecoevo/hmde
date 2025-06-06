@@ -10,3 +10,4 @@ codecov.yml
 ^pkgdown$
 ^\.github$
 ^README\.Rmd$
+^LICENSE\.md$

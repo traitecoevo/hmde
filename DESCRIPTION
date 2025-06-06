@@ -9,7 +9,7 @@ Authors@R:
   person(given = "David", family=  "Warton", role = c("aut", "ctb"), email = "david.warton@unsw.edu.au", comment = c(ORCID = "0000-0002-1642-628X"))
     )
 Description: Wrapper for Stan that offers a number of in-built models to implement a hierarchical Bayesian longitudinal model for repeat observation data. Model choice selects the differential equation that is fit to the observations. Single and multi-individual models are available.
-License: MIT + file LICENSE
+License: GPL (>= 3) + file LICENSE
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.3.2
