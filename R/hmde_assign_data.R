@@ -5,6 +5,11 @@
 #' @param ... data-masking name-value pairs allowing specific input of elements
 #'
 #' @return updated named list with your data assigned to Stan model parameters
+#'
+#' @examples
+#' # basic usage of hmde_assign_data
+#' hmde_model("constant_single_ind") |> hmde_assign_data(Trout_Size_Data)
+#'
 #' @export
 
 hmde_assign_data <- function(model_template, data = NULL,...){

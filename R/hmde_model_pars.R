@@ -2,6 +2,10 @@
 #'
 #' @param model model name character string
 #'
+#' @examples
+#' # basic usage of hmde_model_pars
+#' hmde_model_pars("constant_single_ind")
+#'
 #' @return named list that matches Stan model parameters
 #' @export
 

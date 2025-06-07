@@ -9,17 +9,28 @@
 #' @param ylab character string for replacement y axis label
 #' @param title character string for replacement plot title
 #'
+#' @examples
+#' # basic usage of hmde_plot_obs_est_inds
+#' hmde_plot_obs_est_inds(estimate_list = Tree_Size_Ests,
+#'                        n_ind_to_plot = 5)
+#'
 #' @return ggplot object
 #' @export
 #' @import ggplot2
 #' @import dplyr
 
-hmde_plot_obs_est_inds <- function(ind_id_vec = NULL,
+hmde_plot_obs_est_inds <- function(estimate_list = NULL,
+                                   ind_id_vec = NULL,
                                    n_ind_to_plot = NULL,
                                    measurement_data = NULL,
                                    xlab = "Time",
                                    ylab = "Y(t)",
                                    title = NULL){
+  if(!is.null(estimate_list)){ #Allows for passing of estimate object.
+    ind_id_vec <- estimate_list$individual_data$ind_id
+    measurement_data <- estimate_list$measurement_data
+  }
+
   if(is.null(measurement_data)){
     stop("Measurement data not provided.")
   }

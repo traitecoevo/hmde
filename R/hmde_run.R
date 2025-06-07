@@ -4,6 +4,14 @@
 #' @param ... additional arguments passed to rstan::sampling
 #'
 #' @return Stanfit model output
+#'
+#' @examples
+#' # basic usage of hmde_run
+#' hmde_model("constant_single_ind") |>
+#'   hmde_assign_data(Trout_Size_Data)|>
+#'   hmde_run(chains = 1, iter = 1000,
+#'            verbose = FALSE, show_messages = FALSE)
+#'
 #' @export
 
 hmde_run <- function(model_template, ...) {

@@ -2,6 +2,11 @@
 #' @param model character string model name
 #'
 #' @return DE function corresponding to specific model
+#'
+#' @examples
+#' # basic usage of hmde_model_des
+#' hmde_model_des("constant_single_ind")
+#'
 #' @export
 
 hmde_model_des <- function(model = NULL){
