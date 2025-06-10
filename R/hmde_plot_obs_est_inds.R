@@ -2,6 +2,7 @@
 #' on posterior estimates. Structured to take in the measurement_data tibble constructed by
 #' the hmde_extract_estimates function.
 #'
+#' @param estimate_list list output of hmde_extract_estimates
 #' @param measurement_data tibble with estimated measurements
 #' @param ind_id_vec vector with list of ind_id values
 #' @param n_ind_to_plot integer giving number of individuals to plot if not speciried
@@ -20,9 +21,9 @@
 #' @import dplyr
 
 hmde_plot_obs_est_inds <- function(estimate_list = NULL,
+                                   measurement_data = NULL,
                                    ind_id_vec = NULL,
                                    n_ind_to_plot = NULL,
-                                   measurement_data = NULL,
                                    xlab = "Time",
                                    ylab = "Y(t)",
                                    title = NULL){

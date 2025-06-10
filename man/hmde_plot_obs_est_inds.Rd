@@ -7,20 +7,23 @@ on posterior estimates. Structured to take in the measurement_data tibble constr
 the hmde_extract_estimates function.}
 \usage{
 hmde_plot_obs_est_inds(
+  estimate_list = NULL,
+  measurement_data = NULL,
   ind_id_vec = NULL,
   n_ind_to_plot = NULL,
-  measurement_data = NULL,
   xlab = "Time",
   ylab = "Y(t)",
   title = NULL
 )
 }
 \arguments{
+\item{estimate_list}{list output of hmde_extract_estimates}
+
+\item{measurement_data}{tibble with estimated measurements}
+
 \item{ind_id_vec}{vector with list of ind_id values}
 
 \item{n_ind_to_plot}{integer giving number of individuals to plot if not speciried}
-
-\item{measurement_data}{tibble with estimated measurements}
 
 \item{xlab}{character string for replacement x axis label}
 
@@ -35,4 +38,10 @@ ggplot object
 Plot estimated and observed values over time for a chosen number of individuals based
 on posterior estimates. Structured to take in the measurement_data tibble constructed by
 the hmde_extract_estimates function.
+}
+\examples{
+# basic usage of hmde_plot_obs_est_inds
+hmde_plot_obs_est_inds(estimate_list = Tree_Size_Ests,
+                       n_ind_to_plot = 5)
+
 }

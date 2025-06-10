@@ -12,3 +12,8 @@ vector of character strings for model names.
 \description{
 Returns names of available models.
 }
+\examples{
+# basic usage of hmde_model_names
+hmde_model_names()
+
+}

@@ -19,3 +19,8 @@ updated named list with your data assigned to Stan model parameters
 \description{
 Assign data to template for chosen model
 }
+\examples{
+# basic usage of hmde_assign_data
+hmde_model("constant_single_ind") |> hmde_assign_data(Trout_Size_Data)
+
+}

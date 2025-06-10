@@ -15,3 +15,8 @@ named list that matches Stan model parameters
 \description{
 Show parameter list for hmde supported model
 }
+\examples{
+# basic usage of hmde_model_pars
+hmde_model_pars("constant_single_ind")
+
+}

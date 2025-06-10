@@ -15,3 +15,8 @@ DE function corresponding to specific model
 \description{
 Function to select DE given model name
 }
+\examples{
+# basic usage of hmde_model_des
+hmde_model_des("constant_single_ind")
+
+}

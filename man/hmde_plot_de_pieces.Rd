@@ -40,3 +40,8 @@ hmde_extract_estimates function using the ind_par_name_mean estimates.
 Function piece will go from the first fitted size to the last.
 Accepted ggplot arguments will change the axis labels, title, line colour, alpha
 }
+\examples{
+# basic usage of hmde_plot_de_pieces
+hmde_plot_de_pieces(estimate_list = Tree_Size_Ests)
+
+}

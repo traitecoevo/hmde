@@ -8,6 +8,7 @@ codecov.yml
 ^_pkgdown\.yml$
 ^docs$
 ^pkgdown$
+^data-raw$
 ^\.github$
 ^README\.Rmd$
 ^LICENSE\.md$
