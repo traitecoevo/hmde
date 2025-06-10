@@ -1,0 +1,3 @@
+2# hmde 0.1.0
+
+* Initial CRAN submission.
