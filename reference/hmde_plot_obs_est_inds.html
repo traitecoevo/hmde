@@ -11,7 +11,7 @@ the hmde_extract_estimates function."></head><body>
 
     <a class="navbar-brand me-2" href="../index.html">hmde</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.1.0</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.0.0</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -53,9 +53,10 @@ the hmde_extract_estimates function.</p>
     <div class="section level2">
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">hmde_plot_obs_est_inds</span><span class="op">(</span></span>
+<span>  estimate_list <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  measurement_data <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  ind_id_vec <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  n_ind_to_plot <span class="op">=</span> <span class="cn">NULL</span>,</span>
-<span>  measurement_data <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  xlab <span class="op">=</span> <span class="st">"Time"</span>,</span>
 <span>  ylab <span class="op">=</span> <span class="st">"Y(t)"</span>,</span>
 <span>  title <span class="op">=</span> <span class="cn">NULL</span></span>
@@ -66,16 +67,20 @@ the hmde_extract_estimates function.</p>
     <h2 id="arguments">Arguments<a class="anchor" aria-label="anchor" href="#arguments"></a></h2>
 
 
-<dl><dt id="arg-ind-id-vec">ind_id_vec<a class="anchor" aria-label="anchor" href="#arg-ind-id-vec"></a></dt>
+<dl><dt id="arg-estimate-list">estimate_list<a class="anchor" aria-label="anchor" href="#arg-estimate-list"></a></dt>
+<dd><p>list output of hmde_extract_estimates</p></dd>
+
+
+<dt id="arg-measurement-data">measurement_data<a class="anchor" aria-label="anchor" href="#arg-measurement-data"></a></dt>
+<dd><p>tibble with estimated measurements</p></dd>
+
+
+<dt id="arg-ind-id-vec">ind_id_vec<a class="anchor" aria-label="anchor" href="#arg-ind-id-vec"></a></dt>
 <dd><p>vector with list of ind_id values</p></dd>
 
 
 <dt id="arg-n-ind-to-plot">n_ind_to_plot<a class="anchor" aria-label="anchor" href="#arg-n-ind-to-plot"></a></dt>
 <dd><p>integer giving number of individuals to plot if not speciried</p></dd>
-
-
-<dt id="arg-measurement-data">measurement_data<a class="anchor" aria-label="anchor" href="#arg-measurement-data"></a></dt>
-<dd><p>tibble with estimated measurements</p></dd>
 
 
 <dt id="arg-xlab">xlab<a class="anchor" aria-label="anchor" href="#arg-xlab"></a></dt>
@@ -95,6 +100,15 @@ the hmde_extract_estimates function.</p>
     <p>ggplot object</p>
     </div>
 
+    <div class="section level2">
+    <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="co"># basic usage of hmde_plot_obs_est_inds</span></span></span>
+<span class="r-in"><span><span class="fu">hmde_plot_obs_est_inds</span><span class="op">(</span>estimate_list <span class="op">=</span> <span class="va">Tree_Size_Ests</span>,</span></span>
+<span class="r-in"><span>                       n_ind_to_plot <span class="op">=</span> <span class="fl">5</span><span class="op">)</span></span></span>
+<span class="r-plt img"><img src="hmde_plot_obs_est_inds-1.png" alt="" width="700" height="433"></span>
+<span class="r-in"><span></span></span>
+</code></pre></div>
+    </div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>
     </nav></aside></div>
 
@@ -104,7 +118,7 @@ the hmde_extract_estimates function.</p>
 </div>
 
 <div class="pkgdown-footer-right">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.1.2.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.1.3.</p>
 </div>
 
     </footer></div>

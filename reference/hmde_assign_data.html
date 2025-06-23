@@ -7,7 +7,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">hmde</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.1.0</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.0.0</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -70,6 +70,66 @@
     <p>updated named list with your data assigned to Stan model parameters</p>
     </div>
 
+    <div class="section level2">
+    <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="co"># basic usage of hmde_assign_data</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="hmde_model.html">hmde_model</a></span><span class="op">(</span><span class="st">"constant_single_ind"</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu">hmde_assign_data</span><span class="op">(</span><span class="va">Trout_Size_Data</span><span class="op">)</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $n_obs</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 135</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $y_obs</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   [1] 52 60 70 80 80 85 93 94 52 65 76 80 68 68 60 72 79 83 42 43 40 38 66 77 53</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [26] 61 83 87 86 81 79 68 77 58 69 76 74 87 90 78 87 83 64 70 74 51 59 65 59 66</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [51] 62 78 67 63 75 74 53 66 57 35 69 68 55 80 61 71 53 58 64 65 66 71 69 75 79</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [76] 64 66 61 61 57 59 84 85 62 64 71 75 76 78 40 42 65 73 81 86 64 74 82 78 88</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [101] 88 70 79 85 89 62 79 66 72 71 76 82 84 74 84 95 75 80 85 87 88 77 79 80 81</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [126] 86 90 90 62 73 82 83 67 84 89</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $obs_index</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   [1] 1 2 3 4 1 2 3 4 1 2 3 4 1 2 1 2 3 4 1 2 1 2 1 2 1 2 1 2 3 1 2 1 2 1 2 3 4</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [38] 1 2 1 2 3 1 2 3 1 2 3 1 2 1 2 3 1 2 3 1 2 1 2 1 2 1 2 1 2 1 2 3 4 1 2 3 1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [75] 2 1 2 1 2 1 2 1 2 1 2 1 2 3 4 1 2 1 2 1 2 1 2 3 1 2 3 1 2 3 4 1 2 1 2 3 1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [112] 2 3 1 2 3 1 2 1 2 3 1 2 3 1 2 3 4 1 2 3 4 1 2 3</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $time</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   [1] 0.000000000 1.913757700 4.019164956 6.036960986 0.000000000 1.897330595</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   [7] 3.937029432 5.963039014 0.000000000 2.026009582 4.232717317 5.420944559</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [13] 0.000000000 0.793976728 0.000000000 1.973990418 3.890485969 5.979466119</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [19] 0.000000000 0.851471595 0.000000000 0.002737851 0.000000000 1.754962355</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [25] 0.000000000 1.801505818 0.000000000 1.891854894 2.521560575 0.000000000</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [31] 0.741957563 0.000000000 2.047912389 0.000000000 2.031485284 4.005475702</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [37] 5.834360027 0.000000000 2.067077344 0.000000000 2.149212868 4.016427105</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [43] 0.000000000 1.889117043 4.068446270 0.000000000 2.004106776 3.742642026</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [49] 0.000000000 2.091718001 0.000000000 2.001368925 3.926078029 0.000000000</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [55] 2.009582478 2.015058179 0.000000000 4.054757016 0.000000000 2.047912389</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [61] 0.000000000 1.212867899 0.000000000 1.976728268 0.000000000 2.143737166</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [67] 0.000000000 1.853524983 3.901437372 4.925393566 0.000000000 2.132785763</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [73] 2.844626968 0.000000000 1.941136208 0.000000000 0.903490760 0.000000000</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [79] 0.917180014 0.000000000 0.848733744 0.000000000 2.759753593 0.000000000</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [85] 0.876112252 0.000000000 2.009582478 3.983572895 5.905544148 0.000000000</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [91] 1.670088980 0.000000000 0.818617385 0.000000000 3.299110198 0.000000000</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [97] 1.954825462 3.225188227 0.000000000 1.949349760 5.169062286 0.000000000</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [103] 1.760438056 3.874058864 5.043121150 0.000000000 1.582477755 0.000000000</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [109] 1.817932923 1.998631075 0.000000000 2.193018480 3.233401780 0.000000000</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [115] 2.020533881 5.809719370 0.000000000 0.229979466 0.000000000 1.916495551</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [121] 3.986310746 0.000000000 1.878165640 3.789185489 0.000000000 1.733059548</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [127] 3.822039699 8.780287474 0.000000000 1.924709103 4.005475702 6.995208761</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [133] 0.000000000 4.005475702 8.005475702</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $prior_pars_ind_beta</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 0 2</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $prior_pars_global_error_sigma</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 0 2</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $model</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "constant_single_ind"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> attr(,"class")</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "hmde_object"</span>
+<span class="r-in"><span></span></span>
+</code></pre></div>
+    </div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>
     </nav></aside></div>
 
@@ -79,7 +139,7 @@
 </div>
 
 <div class="pkgdown-footer-right">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.1.2.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.1.3.</p>
 </div>
 
     </footer></div>
