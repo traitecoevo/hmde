@@ -9,7 +9,7 @@ hmde_canham_de(y = NULL, pars = NULL)
 \arguments{
 \item{y}{input real}
 
-\item{pars}{list of parametera g_max, S_max, k}
+\item{pars}{list of parameters g_max, S_max, k}
 }
 \value{
 value of differential equation at y

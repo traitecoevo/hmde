@@ -23,7 +23,7 @@ hmde_plot_obs_est_inds(
 
 \item{ind_id_vec}{vector with list of ind_id values}
 
-\item{n_ind_to_plot}{integer giving number of individuals to plot if not speciried}
+\item{n_ind_to_plot}{integer giving number of individuals to plot if not specified}
 
 \item{xlab}{character string for replacement x axis label}
 

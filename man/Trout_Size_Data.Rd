@@ -17,7 +17,7 @@ A data frame with 135 rows and 4 columns:
 }
 }
 \source{
-\url{https://doi.org/10.3897/BDJ.8.e52157}
+\doi{10.3897/BDJ.8.e52157}
 }
 \usage{
 Trout_Size_Data

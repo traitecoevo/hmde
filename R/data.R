@@ -18,7 +18,7 @@
 #'   \item{y_obs}{Individual length in centimetres.}
 #'   \item{obs_index}{Index of observations for individual}
 #' }
-#' @source <https://doi.org/10.3897/BDJ.8.e52157>
+#' @source \doi{10.3897/BDJ.8.e52157}
 "Trout_Size_Data"
 
 #' Skink size data - Lampropholis delicata
@@ -61,8 +61,8 @@
 #'   \item{y_obs}{Individual diameter at breast height (DBH) in centimetres.}
 #'   \item{obs_index}{Index of observations for individual}
 #' }
-#' @references \url{https://doi.org/10.1002/ecy.4140}
-#' @source \url{https://doi.org/10.15146/5xcp-0d46}
+#' @references \doi{10.1002/ecy.4140}
+#' @source \doi{10.15146/5xcp-0d46}
 "Tree_Size_Data"
 
 #' Garcinia recondita model estimates - Barro Colorado Island data
