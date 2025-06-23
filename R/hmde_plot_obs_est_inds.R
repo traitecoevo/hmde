@@ -5,7 +5,7 @@
 #' @param estimate_list list output of hmde_extract_estimates
 #' @param measurement_data tibble with estimated measurements
 #' @param ind_id_vec vector with list of ind_id values
-#' @param n_ind_to_plot integer giving number of individuals to plot if not speciried
+#' @param n_ind_to_plot integer giving number of individuals to plot if not specified
 #' @param xlab character string for replacement x axis label
 #' @param ylab character string for replacement y axis label
 #' @param title character string for replacement plot title
