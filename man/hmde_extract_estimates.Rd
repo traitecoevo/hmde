@@ -17,3 +17,12 @@ named list with data frames for measurement, individual, population-level, and e
 \description{
 Extract samples and return measurement, individual, and population-level estimates
 }
+\examples{
+# basic usage of hmde_extract_estimates
+hmde_model("constant_single_ind") |>
+  hmde_assign_data(Trout_Size_Data)|>
+  hmde_run(chains = 1, iter = 1000,
+           verbose = FALSE, show_messages = FALSE) |>
+  hmde_extract_estimates(Trout_Size_Data)
+
+}

@@ -17,3 +17,11 @@ Stanfit model output
 \description{
 Run chosen pre-built model in Stan
 }
+\examples{
+# basic usage of hmde_run
+hmde_model("constant_single_ind") |>
+  hmde_assign_data(Trout_Size_Data)|>
+  hmde_run(chains = 1, iter = 1000,
+           verbose = FALSE, show_messages = FALSE)
+
+}

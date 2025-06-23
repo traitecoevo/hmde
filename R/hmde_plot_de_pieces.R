@@ -12,6 +12,11 @@
 #' @param alpha real number for replacement alpha value
 #'
 #' @return ggplot object
+#'
+#' @examples
+#' # basic usage of hmde_plot_de_pieces
+#' hmde_plot_de_pieces(estimate_list = Tree_Size_Ests)
+#'
 #' @export
 #' @import ggplot2
 #' @import dplyr

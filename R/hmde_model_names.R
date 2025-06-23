@@ -1,6 +1,11 @@
 #' Returns names of available models.
 #'
 #' @return vector of character strings for model names.
+#'
+#' @examples
+#' # basic usage of hmde_model_names
+#' hmde_model_names()
+#'
 #' @export
 
 hmde_model_names <- function(){

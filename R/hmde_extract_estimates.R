@@ -4,6 +4,15 @@
 #' @param input_measurement_data data used to fit the model with ind_id, y_obs, time, obs_index tibble
 #'
 #' @return named list with data frames for measurement, individual, population-level, and error parameter estimates
+#'
+#' @examples
+#' # basic usage of hmde_extract_estimates
+#' hmde_model("constant_single_ind") |>
+#'   hmde_assign_data(Trout_Size_Data)|>
+#'   hmde_run(chains = 1, iter = 1000,
+#'            verbose = FALSE, show_messages = FALSE) |>
+#'   hmde_extract_estimates(Trout_Size_Data)
+#'
 #' @export
 #' @import dplyr
 #' @importFrom stats quantile
