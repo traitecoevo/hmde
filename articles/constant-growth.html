@@ -62,7 +62,7 @@
       <h1>Case study 1: Constant growth with SUSTAIN Trout data</h1>
             
       
-      <small class="dont-index">Source: <a href="https://github.com/traitecoevo/hmde/blob/1.2/vignettes/constant-growth.Rmd" class="external-link"><code>vignettes/constant-growth.Rmd</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/traitecoevo/hmde/blob/master/vignettes/constant-growth.Rmd" class="external-link"><code>vignettes/constant-growth.Rmd</code></a></small>
       <div class="d-none name"><code>constant-growth.Rmd</code></div>
     </div>
 
@@ -366,15 +366,15 @@ re-naming and can pass it directly.</p>
 <span><span class="co">#&gt; Chain 1: Iteration: 1800 / 2000 [ 90%]  (Sampling)</span></span>
 <span><span class="co">#&gt; Chain 1: Iteration: 2000 / 2000 [100%]  (Sampling)</span></span>
 <span><span class="co">#&gt; Chain 1: </span></span>
-<span><span class="co">#&gt; Chain 1:  Elapsed Time: 0.654 seconds (Warm-up)</span></span>
-<span><span class="co">#&gt; Chain 1:                0.543 seconds (Sampling)</span></span>
-<span><span class="co">#&gt; Chain 1:                1.197 seconds (Total)</span></span>
+<span><span class="co">#&gt; Chain 1:  Elapsed Time: 0.65 seconds (Warm-up)</span></span>
+<span><span class="co">#&gt; Chain 1:                0.544 seconds (Sampling)</span></span>
+<span><span class="co">#&gt; Chain 1:                1.194 seconds (Total)</span></span>
 <span><span class="co">#&gt; Chain 1: </span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; SAMPLING FOR MODEL 'constant_multi_ind' NOW (CHAIN 2).</span></span>
 <span><span class="co">#&gt; Chain 2: </span></span>
-<span><span class="co">#&gt; Chain 2: Gradient evaluation took 2e-05 seconds</span></span>
-<span><span class="co">#&gt; Chain 2: 1000 transitions using 10 leapfrog steps per transition would take 0.2 seconds.</span></span>
+<span><span class="co">#&gt; Chain 2: Gradient evaluation took 2.1e-05 seconds</span></span>
+<span><span class="co">#&gt; Chain 2: 1000 transitions using 10 leapfrog steps per transition would take 0.21 seconds.</span></span>
 <span><span class="co">#&gt; Chain 2: Adjust your expectations accordingly!</span></span>
 <span><span class="co">#&gt; Chain 2: </span></span>
 <span><span class="co">#&gt; Chain 2: </span></span>
@@ -416,9 +416,9 @@ re-naming and can pass it directly.</p>
 <span><span class="co">#&gt; Chain 3: Iteration: 1800 / 2000 [ 90%]  (Sampling)</span></span>
 <span><span class="co">#&gt; Chain 3: Iteration: 2000 / 2000 [100%]  (Sampling)</span></span>
 <span><span class="co">#&gt; Chain 3: </span></span>
-<span><span class="co">#&gt; Chain 3:  Elapsed Time: 0.652 seconds (Warm-up)</span></span>
-<span><span class="co">#&gt; Chain 3:                0.43 seconds (Sampling)</span></span>
-<span><span class="co">#&gt; Chain 3:                1.082 seconds (Total)</span></span>
+<span><span class="co">#&gt; Chain 3:  Elapsed Time: 0.649 seconds (Warm-up)</span></span>
+<span><span class="co">#&gt; Chain 3:                0.432 seconds (Sampling)</span></span>
+<span><span class="co">#&gt; Chain 3:                1.081 seconds (Total)</span></span>
 <span><span class="co">#&gt; Chain 3: </span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; SAMPLING FOR MODEL 'constant_multi_ind' NOW (CHAIN 4).</span></span>
@@ -441,9 +441,9 @@ re-naming and can pass it directly.</p>
 <span><span class="co">#&gt; Chain 4: Iteration: 1800 / 2000 [ 90%]  (Sampling)</span></span>
 <span><span class="co">#&gt; Chain 4: Iteration: 2000 / 2000 [100%]  (Sampling)</span></span>
 <span><span class="co">#&gt; Chain 4: </span></span>
-<span><span class="co">#&gt; Chain 4:  Elapsed Time: 0.627 seconds (Warm-up)</span></span>
+<span><span class="co">#&gt; Chain 4:  Elapsed Time: 0.622 seconds (Warm-up)</span></span>
 <span><span class="co">#&gt; Chain 4:                0.515 seconds (Sampling)</span></span>
-<span><span class="co">#&gt; Chain 4:                1.142 seconds (Total)</span></span>
+<span><span class="co">#&gt; Chain 4:                1.137 seconds (Total)</span></span>
 <span><span class="co">#&gt; Chain 4:</span></span></code></pre></div>
 </div>
 <div class="section level3">
@@ -470,7 +470,7 @@ of interest.</p>
 <span>    est_growth_rate <span class="op">=</span> <span class="va">delta_y_est</span><span class="op">/</span><span class="va">obs_interval</span></span>
 <span>  <span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html" class="external-link">ungroup</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
-<p>Now we can have a look at the distirbution of each of the estimated
+<p>Now we can have a look at the distribution of each of the estimated
 parameter by creating histograms</p>
 <div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">est_hist_y_hat</span> <span class="op">&lt;-</span> <span class="fu">histogram_func</span><span class="op">(</span><span class="va">measurement_data_transformed</span>, <span class="va">y_hat</span>, </span>
@@ -549,8 +549,8 @@ messy.</p>
 </div>
 </div>
 <div class="section level3">
-<h3 id="indvidual-growth-functions-beta">Indvidual growth functions
-(<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>β</mi><annotation encoding="application/x-tex">\beta</annotation></semantics></math>)<a class="anchor" aria-label="anchor" href="#indvidual-growth-functions-beta"></a>
+<h3 id="individual-growth-functions-beta">Individual growth functions
+(<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>β</mi><annotation encoding="application/x-tex">\beta</annotation></semantics></math>)<a class="anchor" aria-label="anchor" href="#individual-growth-functions-beta"></a>
 </h3>
 <p>At the level of individuals we are interested in the distribution of
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>β</mi><annotation encoding="application/x-tex">\beta</annotation></semantics></math>
