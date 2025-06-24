@@ -17,7 +17,7 @@ A data frame with 300 rows and 4 columns:
 }
 }
 \source{
-\url{https://doi.org/10.15146/5xcp-0d46}
+\doi{10.15146/5xcp-0d46}
 }
 \usage{
 Tree_Size_Data
@@ -33,6 +33,6 @@ issues. Data was then transformed and renamed to match the required structure
 to act as demonstration for the package.
 }
 \references{
-\url{https://doi.org/10.1002/ecy.4140}
+\doi{10.1002/ecy.4140}
 }
 \keyword{datasets}

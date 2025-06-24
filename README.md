@@ -16,7 +16,7 @@ case studies in ecology.
 
 A pre-print paper is available on
 [bioarXiv](https://doi.org/10.1101/2025.01.15.633280), or as the
-[hmde_paper.pdf](https://github.com/traitecoevo/hmde/blob/master/inst/doc/hmde_paper.pdf)
+[hmde_paper.pdf](https://github.com/traitecoevo/hmde/blob/master/inst/article/hmde_paper.pdf)
 file here.
 
 ## The Maths

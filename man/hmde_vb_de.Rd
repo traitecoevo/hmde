@@ -9,7 +9,7 @@ hmde_vb_de(y = NULL, pars = NULL)
 \arguments{
 \item{y}{input real}
 
-\item{pars}{list of parameteters Y_max, growth_rate}
+\item{pars}{list of parameters Y_max, growth_rate}
 }
 \value{
 value of differential equation at y

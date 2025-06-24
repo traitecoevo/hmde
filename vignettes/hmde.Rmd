@@ -46,7 +46,7 @@ where the integral adds up all the growth over the intervening time. Each model 
 $$y_{ij} = Y_i(t_j) + \text{ error}.$$
 We have assumed normally distributed error in `hmde`,this has proven reasonably robust in simulation for a more general size-dependent error model. For details see @obrien2024allindividuals.
 
-Due to the hierarchical structure of the statistical model, we have distributions that govern the behaviour of growth parameters. If we are modelling only a single individual, we don't worry about the underlying distribution so much. If we have multiple individuals then we have a distribution with hyper-parameters that acts as a population-level feature, so 
+Due to the hierarchical structure of the statistical model, we have distributions that govern the behaviour of growth parameters. If we are modeling only a single individual, we don't worry about the underlying distribution so much. If we have multiple individuals then we have a distribution with hyper-parameters that acts as a population-level feature, so 
 $$\beta_i \sim \log\mathcal{N}(\mu, \sigma)$$
 for example, and we can examine the behaviour of the mean and standard deviation as population-level features.
 

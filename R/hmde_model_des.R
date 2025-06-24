@@ -44,7 +44,7 @@ hmde_const_de <- function(y = NULL, pars = NULL){
 
 #' Differential equation for Canham growth single and multi- individual models
 #' @param y input real
-#' @param pars list of parametera g_max, S_max, k
+#' @param pars list of parameters g_max, S_max, k
 #'
 #' @return value of differential equation at y
 #' @export
@@ -59,7 +59,7 @@ hmde_canham_de <- function(y = NULL, pars = NULL){
 
 #' Differential equation for von Bertalanffy growth single and multi- individual models
 #' @param y input real
-#' @param pars list of parameteters Y_max, growth_rate
+#' @param pars list of parameters Y_max, growth_rate
 #'
 #' @return value of differential equation at y
 #' @export

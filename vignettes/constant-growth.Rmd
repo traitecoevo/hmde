@@ -256,7 +256,7 @@ measurement_data_transformed <- trout_constant_estimates$measurement_data %>%
   ungroup()
 ```
 
-Now we can have a look at the distirbution of each of the estimated parameter by creating histograms 
+Now we can have a look at the distribution of each of the estimated parameter by creating histograms 
 
 ```{r, fig.width=5, fig.height=6}
 est_hist_y_hat <- histogram_func(measurement_data_transformed, y_hat, 
@@ -312,7 +312,7 @@ size_over_time_plot
 
 ```
 
-### Indvidual growth functions ($\beta$)
+### Individual growth functions ($\beta$)
 
 At the level of individuals we are interested in the distribution of $\beta$ estimates, which will align with the estimated annualised growth rates as that's precisely what they represent. Here is one way to visualise  the fitted growth functions in order to see how they compare to the observed sizes.
 
