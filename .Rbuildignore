@@ -13,3 +13,4 @@ codecov.yml
 ^README\.Rmd$
 ^LICENSE\.md$
 ^cran-comments\.md$
+^CRAN-SUBMISSION$

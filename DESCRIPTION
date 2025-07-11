@@ -1,15 +1,15 @@
 Package: hmde
 Title: Hierarchical Methods for Differential Equations
-Version: 1.0.0
+Version: 1.2.1
 Authors@R: 
     c(
   person(given = "Daniel", family = "Falster", role = c("aut", "ctb"), email = "daniel.falster@unsw.edu.au", comment = c(ORCID = "0000-0002-9814-092X")),
-  person(given = "Tess", family = "O'Brien", role = c("aut", "cre", "cph"), email = "tesslacoil@protonmail.com", comment = c(ORCID = "0009-0000-5821-8801")),
+  person(given = "Tess", family = "O'Brien", role = c("aut", "cre", "cph"), email = "tess_obrien@fastmail.com", comment = c(ORCID = "0009-0000-5821-8801")),
   person(given = "Fonti", family = "Kar", role = c("ctb"), email = "f.kar@unsw.edu.au", comment = c(ORCID = "0000-0002-2760-3974")),
   person(given = "David", family=  "Warton", role = c("aut", "ctb"), email = "david.warton@unsw.edu.au", comment = c(ORCID = "0000-0002-1642-628X"))
     )
-Description: Wrapper for Stan that offers a number of in-built models to implement a hierarchical Bayesian longitudinal model for repeat observation data. Model choice selects the differential equation that is fit to the observations. Single and multi-individual models are available. O'Brien et al. (2024) <doi:10.1111/2041-210X.14463>
-License: GPL (>= 3) + file LICENSE
+Description: Wrapper for Stan that offers a number of in-built models to implement a hierarchical Bayesian longitudinal model for repeat observation data. Model choice selects the differential equation that is fit to the observations. Single and multi-individual models are available. O'Brien et al. (2024) <doi:10.1111/2041-210X.14463>.
+License: GPL (>= 3)
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.3.2

@@ -88,3 +88,9 @@ hmde_ggplot_obs_est_inds <- function(plot_data,
 
   return(plot)
 }
+
+#' Set variable names to be regarded as globally defined
+#' @noRd
+globalVariables(c("ind_id", "time", "y_obs", "y_hat"),
+                "hmde",
+                add = TRUE)

@@ -108,3 +108,9 @@ hmde_ggplot_de_pieces <- function(pars_data,
 
   return(plot)
 }
+
+#' Set variable names to be regarded as globally defined
+#' @noRd
+globalVariables(c("obs_index", "y_0", "y_final"),
+                "hmde",
+                add = TRUE)
