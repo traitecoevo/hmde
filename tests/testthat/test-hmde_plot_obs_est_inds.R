@@ -6,7 +6,7 @@ test_that("Execution and output: plot_obs_est_inds function", {
 
   expect_visible(plot)
 
-  expect_type(plot, "list")
+  expect_true(is_ggplot(plot))
 })
 
 
