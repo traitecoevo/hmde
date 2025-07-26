@@ -15,6 +15,10 @@
 #' @export
 
 hmde_run <- function(model_template, ...) {
+  if(!class(model_template) == "hmde_model_template"){
+    stop("Model template not required class hmde_model_template.")
+  }
+
   #Check for model
   if(!model_template$model %in% hmde_model_names()){
     stop("Model name not recognised. Run hmde_model_names() to see available models.")

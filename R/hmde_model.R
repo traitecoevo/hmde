@@ -6,7 +6,7 @@
 #' # basic usage of hmde_model
 #' hmde_model("constant_single_ind")
 #'
-#' @return named list that matches Stan model parameters
+#' @return hmde_model_template class named list that matches Stan model parameters
 #' @export
 
 hmde_model <- function(model=NULL){
@@ -24,7 +24,7 @@ hmde_model <- function(model=NULL){
                    vb_multi_ind = hmde_vb_multi_ind(),
                    affine_single_ind = hmde_affine_single_ind())
 
-  class(output) <- "hmde_object"
+  class(output) <- "hmde_model_template"
 
   return(output)
 }
