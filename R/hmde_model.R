@@ -54,8 +54,8 @@ hmde_const_multi_ind <- function(){
        obs_index = NULL,
        time = NULL,
        ind_id = NULL,
-       prior_pars_pop_log_beta_mu = c(0,2),
-       prior_pars_pop_log_beta_sigma = c(0,2),
+       prior_pars_pop_log_beta_mean = c(0,2),
+       prior_pars_pop_log_beta_sd = c(0,2),
        prior_pars_global_error_sigma = c(0,2),
        model = "constant_multi_ind")
 }

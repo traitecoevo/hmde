@@ -14,8 +14,8 @@ test_that("Model structures: Constant", {
   multi_model <- hmde_model("constant_multi_ind")
   expect_named(multi_model, c("n_obs", "n_ind", "y_obs",
                               "obs_index", "time", "ind_id",
-                              "prior_pars_pop_log_beta_mu",
-                              "prior_pars_pop_log_beta_sigma",
+                              "prior_pars_pop_log_beta_mean",
+                              "prior_pars_pop_log_beta_sd",
                               "prior_pars_global_error_sigma",
                               "model"))
   expect_type(multi_model, "list")
