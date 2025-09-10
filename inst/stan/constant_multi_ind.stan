@@ -29,8 +29,8 @@ parameters {
   real<lower=0> ind_y_0[n_ind];
   real<lower=0> ind_beta[n_ind];
 
-  real pop_log_beta_mu;
-  real<lower=0> pop_log_beta_sigma;
+  real pop_log_beta_mean;
+  real<lower=0> pop_log_beta_sd;
 
   //Global level
   real<lower=0> global_error_sigma;
@@ -59,13 +59,13 @@ model {
 
   //Priors
   //Individual level
-  ind_beta ~ lognormal(pop_log_beta_mu,
-                    pop_log_beta_sigma);
+  ind_beta ~ lognormal(pop_log_beta_mean,
+                    pop_log_beta_sd);
 
   //Population level
-  pop_log_beta_mu ~ normal(prior_pars_pop_log_beta_mean[1],
+  pop_log_beta_mean ~ normal(prior_pars_pop_log_beta_mean[1],
                        prior_pars_pop_log_beta_mean[2]);
-  pop_log_beta_sigma ~cauchy(prior_pars_pop_log_beta_sd[1],
+  pop_log_beta_sd ~cauchy(prior_pars_pop_log_beta_sd[1],
                          prior_pars_pop_log_beta_sd[2]);
 
   //Global level

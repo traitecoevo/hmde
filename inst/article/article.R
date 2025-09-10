@@ -1,6 +1,6 @@
 #Code to replicate results in hmde paper
 # install.packages("remotes")
-#remotes::install_github("traitecoevo/hmde@a79baae6c2df22789cccc1fd96eb3a55da9628ec")
+#remotes::install_github("traitecoevo/hmde@86104f6ff875ec9344dc5a299c7a38c580f5f687")
 
 {
   library(hmde)
@@ -283,8 +283,13 @@ trout_estimates
 cor(trout_estimates$measurement_data$y_obs, trout_estimates$measurement_data$y_hat)^2
 r_sq_est <- cor(trout_estimates$measurement_data$y_obs,
                 trout_estimates$measurement_data$y_hat)^2
+rmse_est <- sqrt(sum((trout_estimates$measurement_data$y_obs -
+                        trout_estimates$measurement_data$y_hat)^2))
 r_sq <- paste0("R^2 = ",
                signif(r_sq_est,
+                      digits = 3),
+               "\n RMSE = ",
+               signif(rmse_est,
                       digits = 3))
 
 obs_est_size_plot <- ggplot(data = trout_estimates$measurement_data,
@@ -293,7 +298,7 @@ obs_est_size_plot <- ggplot(data = trout_estimates$measurement_data,
   xlab("Y obs.") +
   ylab("Y est.") +
   geom_abline(slope = 1, linetype = "dashed") +
-  annotate("text", x = 45, y = 80,
+  annotate("text", x = 45, y = 90,
            label = r_sq) +
   theme_classic()
 
