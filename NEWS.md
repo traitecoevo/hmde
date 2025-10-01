@@ -1,3 +1,4 @@
-# hmde 1.0.0
+# hmde 1.2.2
 
-* Initial CRAN submission.
+* Added a `NEWS.md` file to track changes to the package.
+* Updated use of ggplot2 to conform to new standard.
