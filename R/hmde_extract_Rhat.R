@@ -13,6 +13,7 @@
 #'   hmde_extract_Rhat()
 #'
 #' @export
+#' @importFrom rstan Rhat
 #'
 
 hmde_extract_Rhat <- function(fit){
