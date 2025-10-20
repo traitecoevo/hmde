@@ -54,7 +54,7 @@ hmde_extract_Rhat <- function(fit){
     temp_names <- c(names(R_hat_vec),
                     sample_name_vec[sample_par_index[i]])
     temp_vals <- c(as.numeric(R_hat_vec),
-                   Rhat(samples[,,sample_par_index[i]]))
+                   rstan::Rhat(samples[,,sample_par_index[i]]))
     R_hat_vec <- setNames(temp_vals,temp_names)
   }
 
