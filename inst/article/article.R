@@ -1,6 +1,6 @@
 #Code to replicate results in hmde paper
 # install.packages("remotes")
-#remotes::install_github("traitecoevo/hmde@adce5ee09127ab2adfd2f8afb36f4ce165cff701")
+#remotes::install_github("traitecoevo/hmde)
 
 {
   library(hmde)
