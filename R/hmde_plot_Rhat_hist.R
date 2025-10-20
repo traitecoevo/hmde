@@ -14,7 +14,6 @@
 #'
 #' @export
 #' @import ggplot2
-#' @importFrom rstan Rhat
 
 hmde_plot_Rhat_hist <- function(fit){
   #hmde_extract_Rhat excludes the NaNs associated with constant generated values

@@ -195,7 +195,7 @@ summary.hmde_fit <- function(object, ...){
 #'
 #' @export
 #'
-#' @importFrom rstan Rhat
+#' @importFrom cowplot plot_grid
 
 plot.hmde_fit <- function(x, ...){
 
@@ -252,7 +252,7 @@ plot.hmde_fit <- function(x, ...){
   plot_2 <- hmde_plot_Rhat_hist(x)
 
   #Combine plots
-  plot <- plot_grid(plot_1, plot_2, nrow = 1)
+  plot <- cowplot::plot_grid(plot_1, plot_2, nrow = 1)
 
   return(plot)
 }
