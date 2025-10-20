@@ -27,11 +27,11 @@ print.hmde_model_template <- function(x, ...){
 #'
 #' @export
 
-summary.hmde_model_template <- function(x, ...){
-  print(paste0("Model: ", x$model))
+summary.hmde_model_template <- function(object, ...){
+  print(paste0("Model: ", object$model))
   print("Input data template:")
   for(i in 1:length(x)){
-    print(x[i])
+    print(object[i])
   }
 }
 
@@ -139,7 +139,7 @@ print.hmde_fit <- function(x, ...){
 
 #' Summary function for hmde_fit object
 #'
-#' @param x hmde_fit output from hmde_run
+#' @param object hmde_fit output from hmde_run
 #'
 #' @examples
 #' # basic usage of summary.hmde_fit
@@ -151,12 +151,12 @@ print.hmde_fit <- function(x, ...){
 #'
 #' @export
 
-summary.hmde_fit <- function(x, ...){
+summary.hmde_fit <- function(object, ...){
   #Get model info
-  par_names <- hmde_model_pars(x@model_name)
+  par_names <- hmde_model_pars(object@model_name)
 
   #Get sample info
-  samples <- rstan::extract(x, permuted = TRUE, inc_warmup = FALSE)
+  samples <- rstan::extract(object, permuted = TRUE, inc_warmup = FALSE)
   sample_par_names <- names(samples)
 
   if(grepl("multi", x@model_name, fixed=TRUE)){ #Multi-species model has population level
@@ -171,13 +171,13 @@ summary.hmde_fit <- function(x, ...){
   }
 
   writeLines(paste0(
-    "Model: ", x@model_name,
+    "Model: ", object@model_name,
     "\nModel type: ", top_level
   ))
   print(pars_out_table)
 
   writeLines("Summary statisics for R_hat values:")
-  summary(hmde_extract_Rhat(x))
+  summary(hmde_extract_Rhat(object))
 }
 
 
