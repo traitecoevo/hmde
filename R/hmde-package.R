@@ -10,9 +10,11 @@
 #' @import Rcpp
 #' @import dplyr
 #' @importFrom rstan sampling
+#' @importFrom rstan Rhat
 #' @importFrom rstantools rstan_config
 #' @importFrom RcppParallel RcppParallelLibs
 #' @importFrom stats median
+#' @importFrom cowplot plot_grid
 #'
 #' @references
 #' Stan Development Team (NA). RStan: the R interface to Stan. R package version 2.26.23. https://mc-stan.org
