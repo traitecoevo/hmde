@@ -34,5 +34,7 @@ hmde_run <- function(model_template, ...) {
          vb_multi_ind = rstan::sampling(stanmodels$vb_multi_ind, data = model_template, ...),
          affine_single_ind = rstan::sampling(stanmodels$affine_single_ind, data = model_template, ...))
 
+  class(out) <- "hmde_fit"
+
   return(out)
 }
