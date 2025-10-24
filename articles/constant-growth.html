@@ -137,7 +137,7 @@ example in the following we want to change the prior for
 <span><span class="co">#&gt; [1] "constant_single_ind"</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; attr(,"class")</span></span>
-<span><span class="co">#&gt; [1] "hmde_object"</span></span>
+<span><span class="co">#&gt; [1] "hmde_model_template"</span></span>
 <span><span class="co">#prior_pars_ind_beta is the argument name for the prior parameters</span></span></code></pre></div>
 <p>The mean passed to a log-normal distribution is the mean of the
 <strong>underlying normal distribution</strong>, so if you want to pass
@@ -310,7 +310,7 @@ model by calling:</p>
 <span><span class="co">#&gt;  [1] "n_obs"                         "n_ind"                        </span></span>
 <span><span class="co">#&gt;  [3] "y_obs"                         "obs_index"                    </span></span>
 <span><span class="co">#&gt;  [5] "time"                          "ind_id"                       </span></span>
-<span><span class="co">#&gt;  [7] "prior_pars_pop_log_beta_mu"    "prior_pars_pop_log_beta_sigma"</span></span>
+<span><span class="co">#&gt;  [7] "prior_pars_pop_log_beta_mean"  "prior_pars_pop_log_beta_sd"   </span></span>
 <span><span class="co">#&gt;  [9] "prior_pars_global_error_sigma" "model"</span></span></code></pre></div>
 <p>Each represents an element of the list that gets passed to the model:
 - <code>n_obs</code> is the integer number of observations
@@ -330,9 +330,9 @@ observation happened relative to the first observation for that
 individual. The first observation has time 0 - <code>ind_id</code> is a
 vector the same length as <code>y_obs</code> that tracks which
 individual an observation comes from -
-<code>prior_pars_pop_log_beta_mu</code> is the vector of prior
+<code>prior_pars_pop_log_beta_mean</code> is the vector of prior
 parameters for the log-beta mean hyper-parameter -
-<code>prior_pars_pop_log_beta_sigma</code> is the vector of prior
+<code>prior_pars_pop_log_beta_sd</code> is the vector of prior
 parameters for the log-beta standard deviation hyper-parameter -
 <code>prior_pars_global_error_sigma</code> is the vector of prior
 parameters for the global error standard deviation - <code>model</code>
@@ -348,8 +348,8 @@ re-naming and can pass it directly.</p>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; SAMPLING FOR MODEL 'constant_multi_ind' NOW (CHAIN 1).</span></span>
 <span><span class="co">#&gt; Chain 1: </span></span>
-<span><span class="co">#&gt; Chain 1: Gradient evaluation took 4.9e-05 seconds</span></span>
-<span><span class="co">#&gt; Chain 1: 1000 transitions using 10 leapfrog steps per transition would take 0.49 seconds.</span></span>
+<span><span class="co">#&gt; Chain 1: Gradient evaluation took 3.6e-05 seconds</span></span>
+<span><span class="co">#&gt; Chain 1: 1000 transitions using 10 leapfrog steps per transition would take 0.36 seconds.</span></span>
 <span><span class="co">#&gt; Chain 1: Adjust your expectations accordingly!</span></span>
 <span><span class="co">#&gt; Chain 1: </span></span>
 <span><span class="co">#&gt; Chain 1: </span></span>
@@ -366,15 +366,15 @@ re-naming and can pass it directly.</p>
 <span><span class="co">#&gt; Chain 1: Iteration: 1800 / 2000 [ 90%]  (Sampling)</span></span>
 <span><span class="co">#&gt; Chain 1: Iteration: 2000 / 2000 [100%]  (Sampling)</span></span>
 <span><span class="co">#&gt; Chain 1: </span></span>
-<span><span class="co">#&gt; Chain 1:  Elapsed Time: 0.655 seconds (Warm-up)</span></span>
-<span><span class="co">#&gt; Chain 1:                0.545 seconds (Sampling)</span></span>
-<span><span class="co">#&gt; Chain 1:                1.2 seconds (Total)</span></span>
+<span><span class="co">#&gt; Chain 1:  Elapsed Time: 0.487 seconds (Warm-up)</span></span>
+<span><span class="co">#&gt; Chain 1:                0.409 seconds (Sampling)</span></span>
+<span><span class="co">#&gt; Chain 1:                0.896 seconds (Total)</span></span>
 <span><span class="co">#&gt; Chain 1: </span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; SAMPLING FOR MODEL 'constant_multi_ind' NOW (CHAIN 2).</span></span>
 <span><span class="co">#&gt; Chain 2: </span></span>
-<span><span class="co">#&gt; Chain 2: Gradient evaluation took 2.1e-05 seconds</span></span>
-<span><span class="co">#&gt; Chain 2: 1000 transitions using 10 leapfrog steps per transition would take 0.21 seconds.</span></span>
+<span><span class="co">#&gt; Chain 2: Gradient evaluation took 1.7e-05 seconds</span></span>
+<span><span class="co">#&gt; Chain 2: 1000 transitions using 10 leapfrog steps per transition would take 0.17 seconds.</span></span>
 <span><span class="co">#&gt; Chain 2: Adjust your expectations accordingly!</span></span>
 <span><span class="co">#&gt; Chain 2: </span></span>
 <span><span class="co">#&gt; Chain 2: </span></span>
@@ -391,15 +391,15 @@ re-naming and can pass it directly.</p>
 <span><span class="co">#&gt; Chain 2: Iteration: 1800 / 2000 [ 90%]  (Sampling)</span></span>
 <span><span class="co">#&gt; Chain 2: Iteration: 2000 / 2000 [100%]  (Sampling)</span></span>
 <span><span class="co">#&gt; Chain 2: </span></span>
-<span><span class="co">#&gt; Chain 2:  Elapsed Time: 0.616 seconds (Warm-up)</span></span>
-<span><span class="co">#&gt; Chain 2:                0.425 seconds (Sampling)</span></span>
-<span><span class="co">#&gt; Chain 2:                1.041 seconds (Total)</span></span>
+<span><span class="co">#&gt; Chain 2:  Elapsed Time: 0.466 seconds (Warm-up)</span></span>
+<span><span class="co">#&gt; Chain 2:                0.322 seconds (Sampling)</span></span>
+<span><span class="co">#&gt; Chain 2:                0.788 seconds (Total)</span></span>
 <span><span class="co">#&gt; Chain 2: </span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; SAMPLING FOR MODEL 'constant_multi_ind' NOW (CHAIN 3).</span></span>
 <span><span class="co">#&gt; Chain 3: </span></span>
-<span><span class="co">#&gt; Chain 3: Gradient evaluation took 2.1e-05 seconds</span></span>
-<span><span class="co">#&gt; Chain 3: 1000 transitions using 10 leapfrog steps per transition would take 0.21 seconds.</span></span>
+<span><span class="co">#&gt; Chain 3: Gradient evaluation took 1.7e-05 seconds</span></span>
+<span><span class="co">#&gt; Chain 3: 1000 transitions using 10 leapfrog steps per transition would take 0.17 seconds.</span></span>
 <span><span class="co">#&gt; Chain 3: Adjust your expectations accordingly!</span></span>
 <span><span class="co">#&gt; Chain 3: </span></span>
 <span><span class="co">#&gt; Chain 3: </span></span>
@@ -416,15 +416,15 @@ re-naming and can pass it directly.</p>
 <span><span class="co">#&gt; Chain 3: Iteration: 1800 / 2000 [ 90%]  (Sampling)</span></span>
 <span><span class="co">#&gt; Chain 3: Iteration: 2000 / 2000 [100%]  (Sampling)</span></span>
 <span><span class="co">#&gt; Chain 3: </span></span>
-<span><span class="co">#&gt; Chain 3:  Elapsed Time: 0.656 seconds (Warm-up)</span></span>
-<span><span class="co">#&gt; Chain 3:                0.433 seconds (Sampling)</span></span>
-<span><span class="co">#&gt; Chain 3:                1.089 seconds (Total)</span></span>
+<span><span class="co">#&gt; Chain 3:  Elapsed Time: 0.509 seconds (Warm-up)</span></span>
+<span><span class="co">#&gt; Chain 3:                0.334 seconds (Sampling)</span></span>
+<span><span class="co">#&gt; Chain 3:                0.843 seconds (Total)</span></span>
 <span><span class="co">#&gt; Chain 3: </span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; SAMPLING FOR MODEL 'constant_multi_ind' NOW (CHAIN 4).</span></span>
 <span><span class="co">#&gt; Chain 4: </span></span>
-<span><span class="co">#&gt; Chain 4: Gradient evaluation took 2.1e-05 seconds</span></span>
-<span><span class="co">#&gt; Chain 4: 1000 transitions using 10 leapfrog steps per transition would take 0.21 seconds.</span></span>
+<span><span class="co">#&gt; Chain 4: Gradient evaluation took 1.7e-05 seconds</span></span>
+<span><span class="co">#&gt; Chain 4: 1000 transitions using 10 leapfrog steps per transition would take 0.17 seconds.</span></span>
 <span><span class="co">#&gt; Chain 4: Adjust your expectations accordingly!</span></span>
 <span><span class="co">#&gt; Chain 4: </span></span>
 <span><span class="co">#&gt; Chain 4: </span></span>
@@ -441,9 +441,9 @@ re-naming and can pass it directly.</p>
 <span><span class="co">#&gt; Chain 4: Iteration: 1800 / 2000 [ 90%]  (Sampling)</span></span>
 <span><span class="co">#&gt; Chain 4: Iteration: 2000 / 2000 [100%]  (Sampling)</span></span>
 <span><span class="co">#&gt; Chain 4: </span></span>
-<span><span class="co">#&gt; Chain 4:  Elapsed Time: 0.624 seconds (Warm-up)</span></span>
-<span><span class="co">#&gt; Chain 4:                0.517 seconds (Sampling)</span></span>
-<span><span class="co">#&gt; Chain 4:                1.141 seconds (Total)</span></span>
+<span><span class="co">#&gt; Chain 4:  Elapsed Time: 0.471 seconds (Warm-up)</span></span>
+<span><span class="co">#&gt; Chain 4:                0.391 seconds (Sampling)</span></span>
+<span><span class="co">#&gt; Chain 4:                0.862 seconds (Total)</span></span>
 <span><span class="co">#&gt; Chain 4:</span></span></code></pre></div>
 </div>
 <div class="section level3">
