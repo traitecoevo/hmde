@@ -13,6 +13,10 @@
 #' @export
 
 hmde_assign_data <- function(model_template, data = NULL,...){
+  if(!class(model_template) == "hmde_model_template"){
+    stop("Model template not required class hmde_model_template.")
+  }
+
   if(!model_template$model %in% hmde_model_names()){
     stop("Model name not recognised. Run hmde_model_names() to see available models.")
   }

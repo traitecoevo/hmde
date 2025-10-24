@@ -37,7 +37,7 @@ hmde_plot_obs_est_inds <- function(estimate_list = NULL,
   }
 
   if(!is.null(ind_id_vec)){
-    for(i in ind_id_vec){ #Error if ID nujmber not in data.
+    for(i in ind_id_vec){ #Error if ID number not in data.
       if(!i %in% measurement_data$ind_id){
         stop(paste0("Ind ID values not recognised: ", i))
       }

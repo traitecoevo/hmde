@@ -218,8 +218,8 @@ Each represents an element of the list that gets passed to the model:
 - `obs_index` is a vector containing integer the $j$ index for individual $i$, and counts which observation $y_{ij}$ is in sequence
 - `time` is a vector that determines when an observation happened relative to the first observation for that individual. The first observation has time 0
 - `ind_id` is a vector the same length as `y_obs` that tracks which individual an observation comes from
-- `prior_pars_pop_log_beta_mu` is the vector of prior parameters for the log-beta mean hyper-parameter
-- `prior_pars_pop_log_beta_sigma` is the vector of prior parameters for the log-beta standard deviation hyper-parameter
+- `prior_pars_pop_log_beta_mean` is the vector of prior parameters for the log-beta mean hyper-parameter
+- `prior_pars_pop_log_beta_sd` is the vector of prior parameters for the log-beta standard deviation hyper-parameter
 - `prior_pars_global_error_sigma` is the vector of prior parameters for the global error standard deviation
 - `model` is the name of the model
 

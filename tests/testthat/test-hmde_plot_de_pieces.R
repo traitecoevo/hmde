@@ -10,9 +10,9 @@ test_that("Execution and output: plot_de_pieces function", {
                                    input_measurement_data = Trout_Size_Data)
 
   plot <- hmde_plot_de_pieces(output,
-                      xlab = "S(t)",
-                      ylab = "g",
-                      title = "Constant growth")
+                              xlab = "S(t)",
+                              ylab = "g",
+                              title = "Constant growth")
 
   expect_visible(plot)
 

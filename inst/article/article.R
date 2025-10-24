@@ -1,6 +1,6 @@
 #Code to replicate results in hmde paper
 # install.packages("remotes")
-#remotes::install_github("traitecoevo/hmde@a79baae6c2df22789cccc1fd96eb3a55da9628ec")
+#remotes::install_github("traitecoevo/hmde)
 
 {
   library(hmde)
@@ -283,8 +283,14 @@ trout_estimates
 cor(trout_estimates$measurement_data$y_obs, trout_estimates$measurement_data$y_hat)^2
 r_sq_est <- cor(trout_estimates$measurement_data$y_obs,
                 trout_estimates$measurement_data$y_hat)^2
+rmse_est <- sqrt((1/length(trout_estimates$measurement_data$y_obs))*
+                    sum((trout_estimates$measurement_data$y_obs -
+                        trout_estimates$measurement_data$y_hat)^2))
 r_sq <- paste0("R^2 = ",
                signif(r_sq_est,
+                      digits = 3),
+               "\n RMSE = ",
+               signif(rmse_est,
                       digits = 3))
 
 obs_est_size_plot <- ggplot(data = trout_estimates$measurement_data,
@@ -293,7 +299,7 @@ obs_est_size_plot <- ggplot(data = trout_estimates$measurement_data,
   xlab("Y obs.") +
   ylab("Y est.") +
   geom_abline(slope = 1, linetype = "dashed") +
-  annotate("text", x = 45, y = 80,
+  annotate("text", x = 45, y = 90,
            label = r_sq) +
   theme_classic()
 
@@ -362,8 +368,14 @@ set.seed(2025)
   #Quantitative R^2
   r_sq_est <- cor(lizard_estimates$measurement_data$y_obs,
                   lizard_estimates$measurement_data$y_hat)^2
+  rmse_est <- sqrt((1/length(lizard_estimates$measurement_data$y_obs))*
+                     sum((lizard_estimates$measurement_data$y_obs -
+                            lizard_estimates$measurement_data$y_hat)^2))
   r_sq <- paste0("R^2 = ",
                  signif(r_sq_est,
+                        digits = 3),
+                 "\n RMSE = ",
+                 signif(rmse_est,
                         digits = 3))
 
   obs_scatter <- ggplot(data = lizard_estimates$measurement_data,
@@ -465,8 +477,14 @@ set.seed(2025)
   #Quantitative R^2
   r_sq_est <- cor(Tree_Size_Ests$measurement_data$y_obs,
                   Tree_Size_Ests$measurement_data$y_hat)^2
+  rmse_est <- sqrt((1/length(Tree_Size_Ests$measurement_data$y_obs))*
+                     sum((Tree_Size_Ests$measurement_data$y_obs -
+                            Tree_Size_Ests$measurement_data$y_hat)^2))
   r_sq <- paste0("R^2 = ",
                  signif(r_sq_est,
+                        digits = 3),
+                 "\n RMSE = ",
+                 signif(rmse_est,
                         digits = 3))
 
   obs_est_scatter <- ggplot(data = Tree_Size_Ests$measurement_data,

@@ -45,7 +45,7 @@ hmde_const_single_ind_pars <- function(){
 hmde_const_multi_ind_pars <- function(){
   list(measurement_pars_names = c("y_hat"),
        individual_pars_names = c("ind_beta"),
-       population_pars_names = c("pop_log_beta_mu", "pop_log_beta_sigma"),
+       population_pars_names = c("pop_log_beta_mean", "pop_log_beta_sd"),
        error_pars_names = c("global_error_sigma"),
        model = "constant_multi_ind")
 }
