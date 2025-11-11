@@ -13,7 +13,7 @@ print.hmde_model_template <- function(x, ...){
   print(paste0("Model: ", x$model))
   print("Input data template:")
   for(i in 1:length(x)){
-    print(x[i])
+    print(x[i], ...)
   }
 }
 
@@ -25,7 +25,7 @@ print.hmde_model_template <- function(x, ...){
 #'
 #' @examples
 #' # basic usage of summary.hmde_model_template
-#' hmde_model("constant_single_ind") |> print.hmde_model_template()
+#' hmde_model("constant_single_ind") |> summary.hmde_model_template()
 #'
 #' @export
 
@@ -33,7 +33,7 @@ summary.hmde_model_template <- function(object, ...){
   print(paste0("Model: ", object$model))
   print("Input data template:")
   for(i in 1:length(object)){
-    print(object[i])
+    print(object[i], ...)
   }
 }
 
@@ -88,7 +88,8 @@ plot.hmde_model_template <- function(x, ...){
                         ylab = "Growth rate",
                         title = paste0("Example ODE for ", x$model),
                         colour = "#006600",
-                        alpha = 0.4)
+                        alpha = 0.4,
+                        ...)
 
   return(plot)
 }
