@@ -16,6 +16,6 @@ Summary function for hmde_model_template object
 }
 \examples{
 # basic usage of summary.hmde_model_template
-hmde_model("constant_single_ind") |> print.hmde_model_template()
+hmde_model("constant_single_ind") |> summary.hmde_model_template()
 
 }

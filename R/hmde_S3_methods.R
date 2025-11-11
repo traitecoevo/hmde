@@ -40,7 +40,6 @@ summary.hmde_model_template <- function(object, ...){
 #' Plot function for hmde_model_template object
 #'
 #' @param x hmde_model_template output from hmde_model
-#' @param ... other parameters used for plot
 #'
 #' @examples
 #' # basic usage of plot.hmde_model_template
@@ -48,7 +47,7 @@ summary.hmde_model_template <- function(object, ...){
 #'
 #' @export
 
-plot.hmde_model_template <- function(x, ...){
+plot.hmde_model_template <- function(x){
   model_pars_names <- hmde_model_pars(x$model)$individual_pars_names
 
   temp <- c()
@@ -88,8 +87,7 @@ plot.hmde_model_template <- function(x, ...){
                         ylab = "Growth rate",
                         title = paste0("Example ODE for ", x$model),
                         colour = "#006600",
-                        alpha = 0.4,
-                        ...)
+                        alpha = 0.4)
 
   return(plot)
 }
