@@ -15,7 +15,7 @@
 #' @export
 
 hmde_run <- function(model_template, ...) {
-  if(!class(model_template) == "hmde_model_template"){
+  if(!is(model_template) == "hmde_model_template"){
     stop("Model template not required class hmde_model_template.")
   }
 
