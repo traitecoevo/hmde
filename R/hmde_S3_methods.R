@@ -1,6 +1,7 @@
 #' Print function for hmde_model_template object
 #'
 #' @param x hmde_model_template output from hmde_model
+#' @param ... other parameters used for print
 #'
 #' @examples
 #' # basic usage of print.hmde_model_template
@@ -20,6 +21,7 @@ print.hmde_model_template <- function(x, ...){
 #' Summary function for hmde_model_template object
 #'
 #' @param object hmde_model_template output from hmde_model
+#' @param ... other parameters used for print
 #'
 #' @examples
 #' # basic usage of summary.hmde_model_template
@@ -38,6 +40,7 @@ summary.hmde_model_template <- function(object, ...){
 #' Plot function for hmde_model_template object
 #'
 #' @param x hmde_model_template output from hmde_model
+#' @param ... other parameters used for plot
 #'
 #' @examples
 #' # basic usage of plot.hmde_model_template

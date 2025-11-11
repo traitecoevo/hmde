@@ -8,6 +8,8 @@
 }
 \arguments{
 \item{x}{hmde_model_template output from hmde_model}
+
+\item{...}{other parameters used for plot}
 }
 \description{
 Plot function for hmde_model_template object

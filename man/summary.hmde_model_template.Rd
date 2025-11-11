@@ -8,6 +8,8 @@
 }
 \arguments{
 \item{object}{hmde_model_template output from hmde_model}
+
+\item{...}{other parameters used for print}
 }
 \description{
 Summary function for hmde_model_template object

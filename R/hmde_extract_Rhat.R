@@ -14,6 +14,7 @@
 #'
 #' @export
 #' @importFrom rstan Rhat
+#' @importFrom stats setNames
 #'
 
 hmde_extract_Rhat <- function(fit){
@@ -55,7 +56,7 @@ hmde_extract_Rhat <- function(fit){
                     sample_name_vec[sample_par_index[i]])
     temp_vals <- c(as.numeric(R_hat_vec),
                    rstan::Rhat(samples[,,sample_par_index[i]]))
-    R_hat_vec <- setNames(temp_vals,temp_names)
+    R_hat_vec <- stats::setNames(temp_vals,temp_names)
   }
 
   return(R_hat_vec)
