@@ -4,12 +4,10 @@
 \alias{plot.hmde_model_template}
 \title{Plot function for hmde_model_template object}
 \usage{
-\method{plot}{hmde_model_template}(x, ...)
+\method{plot}{hmde_model_template}(x)
 }
 \arguments{
 \item{x}{hmde_model_template output from hmde_model}
-
-\item{...}{other parameters used for plot}
 }
 \description{
 Plot function for hmde_model_template object
