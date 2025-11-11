@@ -30,7 +30,7 @@ print.hmde_model_template <- function(x, ...){
 summary.hmde_model_template <- function(object, ...){
   print(paste0("Model: ", object$model))
   print("Input data template:")
-  for(i in 1:length(x)){
+  for(i in 1:length(object)){
     print(object[i])
   }
 }
