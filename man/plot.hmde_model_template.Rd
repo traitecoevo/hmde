@@ -4,10 +4,12 @@
 \alias{plot.hmde_model_template}
 \title{Plot function for hmde_model_template object}
 \usage{
-\method{plot}{hmde_model_template}(x)
+\method{plot}{hmde_model_template}(x, ...)
 }
 \arguments{
 \item{x}{hmde_model_template output from hmde_model}
+
+\item{...}{Additional argument space to conform to S3 template.}
 }
 \description{
 Plot function for hmde_model_template object
