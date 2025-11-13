@@ -40,6 +40,7 @@ summary.hmde_model_template <- function(object, ...){
 #' Plot function for hmde_model_template object
 #'
 #' @param x hmde_model_template output from hmde_model
+#' @param ... Additional argument space to conform to S3 template.
 #'
 #' @examples
 #' # basic usage of plot.hmde_model_template
@@ -47,7 +48,7 @@ summary.hmde_model_template <- function(object, ...){
 #'
 #' @export
 
-plot.hmde_model_template <- function(x){
+plot.hmde_model_template <- function(x, ...){
   model_pars_names <- hmde_model_pars(x$model)$individual_pars_names
 
   temp <- c()
