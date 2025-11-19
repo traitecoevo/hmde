@@ -15,7 +15,7 @@
 Plot function for hmde_model_template object
 }
 \examples{
-# basic usage of plot.hmde_model_template
-hmde_model("constant_single_ind") |> plot.hmde_model_template()
+# basic usage of plot
+hmde_model("constant_single_ind") |> plot()
 
 }

@@ -4,7 +4,7 @@
 #' @param ... other parameters used for print
 #'
 #' @examples
-#' # basic usage of print.hmde_model_template
+#' # basic usage of print
 #' hmde_model("constant_single_ind") |> print()
 #'
 #' @export
@@ -24,7 +24,7 @@ print.hmde_model_template <- function(x, ...){
 #' @param ... other parameters used for print
 #'
 #' @examples
-#' # basic usage of summary.hmde_model_template
+#' # basic usage of summary
 #' hmde_model("constant_single_ind") |> summary()
 #'
 #' @export
@@ -43,7 +43,7 @@ summary.hmde_model_template <- function(object, ...){
 #' @param ... Additional argument space to conform to S3 template.
 #'
 #' @examples
-#' # basic usage of plot.hmde_model_template
+#' # basic usage of plot
 #' hmde_model("constant_single_ind") |> plot()
 #'
 #' @export

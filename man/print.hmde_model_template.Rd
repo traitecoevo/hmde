@@ -15,7 +15,7 @@
 Print function for hmde_model_template object
 }
 \examples{
-# basic usage of print.hmde_model_template
-hmde_model("constant_single_ind") |> print.hmde_model_template()
+# basic usage of print
+hmde_model("constant_single_ind") |> print()
 
 }
