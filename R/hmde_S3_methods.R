@@ -5,7 +5,7 @@
 #'
 #' @examples
 #' # basic usage of print.hmde_model_template
-#' hmde_model("constant_single_ind") |> print.hmde_model_template()
+#' hmde_model("constant_single_ind") |> print()
 #'
 #' @export
 
@@ -25,7 +25,7 @@ print.hmde_model_template <- function(x, ...){
 #'
 #' @examples
 #' # basic usage of summary.hmde_model_template
-#' hmde_model("constant_single_ind") |> summary.hmde_model_template()
+#' hmde_model("constant_single_ind") |> summary()
 #'
 #' @export
 
@@ -44,7 +44,7 @@ summary.hmde_model_template <- function(object, ...){
 #'
 #' @examples
 #' # basic usage of plot.hmde_model_template
-#' hmde_model("constant_single_ind") |> plot.hmde_model_template()
+#' hmde_model("constant_single_ind") |> plot()
 #'
 #' @export
 
