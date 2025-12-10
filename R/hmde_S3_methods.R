@@ -1,10 +1,11 @@
 #' Print function for hmde_model_template object
 #'
 #' @param x hmde_model_template output from hmde_model
+#' @param ... other parameters used for print
 #'
 #' @examples
-#' # basic usage of print.hmde_model_template
-#' hmde_model("constant_single_ind") |> print.hmde_model_template()
+#' # basic usage of print
+#' hmde_model("constant_single_ind") |> print()
 #'
 #' @export
 
@@ -12,7 +13,7 @@ print.hmde_model_template <- function(x, ...){
   print(paste0("Model: ", x$model))
   print("Input data template:")
   for(i in 1:length(x)){
-    print(x[i])
+    print(x[i], ...)
   }
 }
 
@@ -20,28 +21,30 @@ print.hmde_model_template <- function(x, ...){
 #' Summary function for hmde_model_template object
 #'
 #' @param object hmde_model_template output from hmde_model
+#' @param ... other parameters used for print
 #'
 #' @examples
-#' # basic usage of summary.hmde_model_template
-#' hmde_model("constant_single_ind") |> print.hmde_model_template()
+#' # basic usage of summary
+#' hmde_model("constant_single_ind") |> summary()
 #'
 #' @export
 
 summary.hmde_model_template <- function(object, ...){
   print(paste0("Model: ", object$model))
   print("Input data template:")
-  for(i in 1:length(x)){
-    print(object[i])
+  for(i in 1:length(object)){
+    print(object[i], ...)
   }
 }
 
 #' Plot function for hmde_model_template object
 #'
 #' @param x hmde_model_template output from hmde_model
+#' @param ... Additional argument space to conform to S3 template.
 #'
 #' @examples
-#' # basic usage of plot.hmde_model_template
-#' hmde_model("constant_single_ind") |> plot.hmde_model_template()
+#' # basic usage of plot
+#' hmde_model("constant_single_ind") |> plot()
 #'
 #' @export
 

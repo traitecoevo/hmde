@@ -13,7 +13,7 @@
 #' @export
 
 hmde_assign_data <- function(model_template, data = NULL,...){
-  if(!class(model_template) == "hmde_model_template"){
+  if(!is(model_template) == "hmde_model_template"){
     stop("Model template not required class hmde_model_template.")
   }
 

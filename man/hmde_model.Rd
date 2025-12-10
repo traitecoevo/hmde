@@ -10,7 +10,7 @@ hmde_model(model = NULL)
 \item{model}{model name character string}
 }
 \value{
-named list that matches Stan model parameters
+hmde_model_template class named list that matches Stan model parameters
 }
 \description{
 Select data configuration template for hmde supported model

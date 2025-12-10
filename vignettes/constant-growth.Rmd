@@ -204,14 +204,17 @@ The constant growth model assumes non-negative growth and uses a log-normal dist
 
 Now we will actually fit the model and extract the estimates.
 
-You can see what data structures are needed for the constant growth model by calling:
+You can see what data structures are needed for the constant growth model through the following methods:
 
 ```{r}
 hmde_model("constant_multi_ind") |> 
   names()
+
+print(hmde_model("constant_multi_ind"))
+summary(hmde_model("constant_multi_ind"))
 ```
 
-Each represents an element of the list that gets passed to the model: 
+Each name represents an element of the list that gets passed to the model: 
 - `n_obs` is the integer number of observations $y_{ij}$
 - `n_ind` is the integer number of individuals
 - `y_obs` is the vector of $y_{ij}$ observations and should have length `n_obs`
@@ -223,6 +226,8 @@ Each represents an element of the list that gets passed to the model:
 - `prior_pars_global_error_sigma` is the vector of prior parameters for the global error standard deviation
 - `model` is the name of the model
 
+The \texttt{print} and \texttt{summary} functions are generic S3 functions implemented for the \texttt{hmde_model_template} class output by \texttt{hmde_model}. There is also a generic \texttt{plot} function which plots the DE for a model with parameters taken from the priors
+
 Now we will actually fit the model and extract the estimates. As the provided trout data is already in the form required by the `hmde_assign_data` function we don't need to do any further re-naming and can pass it directly.
 
 ```{r}
@@ -230,6 +235,17 @@ trout_constant_fit <- hmde_model("constant_multi_ind") |>
   hmde_assign_data(data = Trout_Size_Data)  |>
   hmde_run(chains = 4, cores = 1, iter = 2000)
 ```
+
+We have included two specialist diagnostic tools in the package to give easy access to the $\hat{R}$ statistics of chain convergence and mixing.
+
+```{r}
+# Returns a list of R_hat values
+hmde_extract_Rhat(trout_constant_fit)
+
+# Returns a histogram of R_hat values
+hmde_plot_Rhat_hist(trout_constant_fit)
+```
+These functions exclude the $\hat{R}$ values associated with the \texttt{check_prior_pars_} generated quantites, as these have 0 variance and thus produce NAs. 
 
 ### Inspect estimates
 

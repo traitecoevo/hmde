@@ -32,3 +32,6 @@ hmde_plot_Rhat_hist <- function(fit){
 
   return(plot)
 }
+
+#Define an 'rhat' global variable
+globalVariables("rhat")
