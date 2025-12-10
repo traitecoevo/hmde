@@ -19,15 +19,20 @@
 <url><loc>https://traitecoevo.github.io/hmde/reference/hmde_assign_data.html</loc></url>
 <url><loc>https://traitecoevo.github.io/hmde/reference/hmde_canham_de.html</loc></url>
 <url><loc>https://traitecoevo.github.io/hmde/reference/hmde_const_de.html</loc></url>
+<url><loc>https://traitecoevo.github.io/hmde/reference/hmde_extract_Rhat.html</loc></url>
 <url><loc>https://traitecoevo.github.io/hmde/reference/hmde_extract_estimates.html</loc></url>
 <url><loc>https://traitecoevo.github.io/hmde/reference/hmde_model.html</loc></url>
 <url><loc>https://traitecoevo.github.io/hmde/reference/hmde_model_des.html</loc></url>
 <url><loc>https://traitecoevo.github.io/hmde/reference/hmde_model_names.html</loc></url>
 <url><loc>https://traitecoevo.github.io/hmde/reference/hmde_model_pars.html</loc></url>
+<url><loc>https://traitecoevo.github.io/hmde/reference/hmde_plot_Rhat_hist.html</loc></url>
 <url><loc>https://traitecoevo.github.io/hmde/reference/hmde_plot_de_pieces.html</loc></url>
 <url><loc>https://traitecoevo.github.io/hmde/reference/hmde_plot_obs_est_inds.html</loc></url>
 <url><loc>https://traitecoevo.github.io/hmde/reference/hmde_run.html</loc></url>
 <url><loc>https://traitecoevo.github.io/hmde/reference/hmde_vb_de.html</loc></url>
 <url><loc>https://traitecoevo.github.io/hmde/reference/index.html</loc></url>
+<url><loc>https://traitecoevo.github.io/hmde/reference/plot.hmde_model_template.html</loc></url>
+<url><loc>https://traitecoevo.github.io/hmde/reference/print.hmde_model_template.html</loc></url>
+<url><loc>https://traitecoevo.github.io/hmde/reference/summary.hmde_model_template.html</loc></url>
 </urlset>
 

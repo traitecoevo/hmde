@@ -20,7 +20,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">hmde</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.2.2</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.3</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -115,6 +115,8 @@ example in the following we want to change the prior for
 (<code>ind_beta</code>) in the individual model:</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/hmde_model.html">hmde_model</a></span><span class="op">(</span><span class="st">"constant_single_ind"</span><span class="op">)</span></span>
+<span><span class="co">#&gt; [1] "Model: constant_single_ind"</span></span>
+<span><span class="co">#&gt; [1] "Input data template:"</span></span>
 <span><span class="co">#&gt; $n_obs</span></span>
 <span><span class="co">#&gt; NULL</span></span>
 <span><span class="co">#&gt; </span></span>
@@ -135,9 +137,6 @@ example in the following we want to change the prior for
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; $model</span></span>
 <span><span class="co">#&gt; [1] "constant_single_ind"</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; attr(,"class")</span></span>
-<span><span class="co">#&gt; [1] "hmde_model_template"</span></span>
 <span><span class="co">#prior_pars_ind_beta is the argument name for the prior parameters</span></span></code></pre></div>
 <p>The mean passed to a log-normal distribution is the mean of the
 <strong>underlying normal distribution</strong>, so if you want to pass
@@ -179,7 +178,7 @@ function.</p>
 relates to sizes over time for a single individual. Feel free to play
 around with the parameter settings (<code>beta</code>, <code>y_0</code>)
 and see how the plot changes.</p>
-<p><img src="constant-growth_files/figure-html/unnamed-chunk-4-1.png" width="576" style="display: block; margin: auto;"></p>
+<p><img src="constant-growth_files/figure-html/unnamed-chunk-4-1.png" class="r-plt" width="576" style="display: block; margin: auto;"></p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co">#Plot of growth function</span></span>
 <span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
@@ -285,7 +284,7 @@ information, then plot it.</p>
 </h3>
 <p>Let’s create some histograms to investigate the distribution of size,
 growth interval and growth increments.</p>
-<p><img src="constant-growth_files/figure-html/unnamed-chunk-7-1.png" width="576" style="display: block; margin: auto;"></p>
+<p><img src="constant-growth_files/figure-html/unnamed-chunk-7-1.png" class="r-plt" width="576" style="display: block; margin: auto;"></p>
 <p>The growth histograms show that there’s a number of negative growth
 increments, some reasonably extreme, and when combined with some short
 observation periods we get very extreme estimates of growth rates. We
@@ -303,7 +302,7 @@ width might.</p>
 </h3>
 <p>Now we will actually fit the model and extract the estimates.</p>
 <p>You can see what data structures are needed for the constant growth
-model by calling:</p>
+model through the following methods:</p>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/hmde_model.html">hmde_model</a></span><span class="op">(</span><span class="st">"constant_multi_ind"</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
 <span>  <span class="fu"><a href="https://rdrr.io/r/base/names.html" class="external-link">names</a></span><span class="op">(</span><span class="op">)</span></span>
@@ -311,9 +310,74 @@ model by calling:</p>
 <span><span class="co">#&gt;  [3] "y_obs"                         "obs_index"                    </span></span>
 <span><span class="co">#&gt;  [5] "time"                          "ind_id"                       </span></span>
 <span><span class="co">#&gt;  [7] "prior_pars_pop_log_beta_mean"  "prior_pars_pop_log_beta_sd"   </span></span>
-<span><span class="co">#&gt;  [9] "prior_pars_global_error_sigma" "model"</span></span></code></pre></div>
-<p>Each represents an element of the list that gets passed to the model:
-- <code>n_obs</code> is the integer number of observations
+<span><span class="co">#&gt;  [9] "prior_pars_global_error_sigma" "model"</span></span>
+<span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="fu"><a href="../reference/hmde_model.html">hmde_model</a></span><span class="op">(</span><span class="st">"constant_multi_ind"</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="co">#&gt; [1] "Model: constant_multi_ind"</span></span>
+<span><span class="co">#&gt; [1] "Input data template:"</span></span>
+<span><span class="co">#&gt; $n_obs</span></span>
+<span><span class="co">#&gt; NULL</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; $n_ind</span></span>
+<span><span class="co">#&gt; NULL</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; $y_obs</span></span>
+<span><span class="co">#&gt; NULL</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; $obs_index</span></span>
+<span><span class="co">#&gt; NULL</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; $time</span></span>
+<span><span class="co">#&gt; NULL</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; $ind_id</span></span>
+<span><span class="co">#&gt; NULL</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; $prior_pars_pop_log_beta_mean</span></span>
+<span><span class="co">#&gt; [1] 0 2</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; $prior_pars_pop_log_beta_sd</span></span>
+<span><span class="co">#&gt; [1] 0 2</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; $prior_pars_global_error_sigma</span></span>
+<span><span class="co">#&gt; [1] 0 2</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; $model</span></span>
+<span><span class="co">#&gt; [1] "constant_multi_ind"</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="fu"><a href="../reference/hmde_model.html">hmde_model</a></span><span class="op">(</span><span class="st">"constant_multi_ind"</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="co">#&gt; [1] "Model: constant_multi_ind"</span></span>
+<span><span class="co">#&gt; [1] "Input data template:"</span></span>
+<span><span class="co">#&gt; $n_obs</span></span>
+<span><span class="co">#&gt; NULL</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; $n_ind</span></span>
+<span><span class="co">#&gt; NULL</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; $y_obs</span></span>
+<span><span class="co">#&gt; NULL</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; $obs_index</span></span>
+<span><span class="co">#&gt; NULL</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; $time</span></span>
+<span><span class="co">#&gt; NULL</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; $ind_id</span></span>
+<span><span class="co">#&gt; NULL</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; $prior_pars_pop_log_beta_mean</span></span>
+<span><span class="co">#&gt; [1] 0 2</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; $prior_pars_pop_log_beta_sd</span></span>
+<span><span class="co">#&gt; [1] 0 2</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; $prior_pars_global_error_sigma</span></span>
+<span><span class="co">#&gt; [1] 0 2</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; $model</span></span>
+<span><span class="co">#&gt; [1] "constant_multi_ind"</span></span></code></pre></div>
+<p>Each name represents an element of the list that gets passed to the
+model: - <code>n_obs</code> is the integer number of observations
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>y</mi><mrow><mi>i</mi><mi>j</mi></mrow></msub><annotation encoding="application/x-tex">y_{ij}</annotation></semantics></math>
 - <code>n_ind</code> is the integer number of individuals -
 <code>y_obs</code> is the vector of
@@ -337,6 +401,9 @@ parameters for the log-beta standard deviation hyper-parameter -
 <code>prior_pars_global_error_sigma</code> is the vector of prior
 parameters for the global error standard deviation - <code>model</code>
 is the name of the model</p>
+<p>The and functions are generic S3 functions implemented for the class
+output by . There is also a generic function which plots the DE for a
+model with parameters taken from the priors</p>
 <p>Now we will actually fit the model and extract the estimates. As the
 provided trout data is already in the form required by the
 <code>hmde_assign_data</code> function we don’t need to do any further
@@ -348,8 +415,8 @@ re-naming and can pass it directly.</p>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; SAMPLING FOR MODEL 'constant_multi_ind' NOW (CHAIN 1).</span></span>
 <span><span class="co">#&gt; Chain 1: </span></span>
-<span><span class="co">#&gt; Chain 1: Gradient evaluation took 3.6e-05 seconds</span></span>
-<span><span class="co">#&gt; Chain 1: 1000 transitions using 10 leapfrog steps per transition would take 0.36 seconds.</span></span>
+<span><span class="co">#&gt; Chain 1: Gradient evaluation took 3.9e-05 seconds</span></span>
+<span><span class="co">#&gt; Chain 1: 1000 transitions using 10 leapfrog steps per transition would take 0.39 seconds.</span></span>
 <span><span class="co">#&gt; Chain 1: Adjust your expectations accordingly!</span></span>
 <span><span class="co">#&gt; Chain 1: </span></span>
 <span><span class="co">#&gt; Chain 1: </span></span>
@@ -366,15 +433,15 @@ re-naming and can pass it directly.</p>
 <span><span class="co">#&gt; Chain 1: Iteration: 1800 / 2000 [ 90%]  (Sampling)</span></span>
 <span><span class="co">#&gt; Chain 1: Iteration: 2000 / 2000 [100%]  (Sampling)</span></span>
 <span><span class="co">#&gt; Chain 1: </span></span>
-<span><span class="co">#&gt; Chain 1:  Elapsed Time: 0.487 seconds (Warm-up)</span></span>
-<span><span class="co">#&gt; Chain 1:                0.409 seconds (Sampling)</span></span>
-<span><span class="co">#&gt; Chain 1:                0.896 seconds (Total)</span></span>
+<span><span class="co">#&gt; Chain 1:  Elapsed Time: 0.649 seconds (Warm-up)</span></span>
+<span><span class="co">#&gt; Chain 1:                0.541 seconds (Sampling)</span></span>
+<span><span class="co">#&gt; Chain 1:                1.19 seconds (Total)</span></span>
 <span><span class="co">#&gt; Chain 1: </span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; SAMPLING FOR MODEL 'constant_multi_ind' NOW (CHAIN 2).</span></span>
 <span><span class="co">#&gt; Chain 2: </span></span>
-<span><span class="co">#&gt; Chain 2: Gradient evaluation took 1.7e-05 seconds</span></span>
-<span><span class="co">#&gt; Chain 2: 1000 transitions using 10 leapfrog steps per transition would take 0.17 seconds.</span></span>
+<span><span class="co">#&gt; Chain 2: Gradient evaluation took 1.9e-05 seconds</span></span>
+<span><span class="co">#&gt; Chain 2: 1000 transitions using 10 leapfrog steps per transition would take 0.19 seconds.</span></span>
 <span><span class="co">#&gt; Chain 2: Adjust your expectations accordingly!</span></span>
 <span><span class="co">#&gt; Chain 2: </span></span>
 <span><span class="co">#&gt; Chain 2: </span></span>
@@ -391,15 +458,15 @@ re-naming and can pass it directly.</p>
 <span><span class="co">#&gt; Chain 2: Iteration: 1800 / 2000 [ 90%]  (Sampling)</span></span>
 <span><span class="co">#&gt; Chain 2: Iteration: 2000 / 2000 [100%]  (Sampling)</span></span>
 <span><span class="co">#&gt; Chain 2: </span></span>
-<span><span class="co">#&gt; Chain 2:  Elapsed Time: 0.466 seconds (Warm-up)</span></span>
-<span><span class="co">#&gt; Chain 2:                0.322 seconds (Sampling)</span></span>
-<span><span class="co">#&gt; Chain 2:                0.788 seconds (Total)</span></span>
+<span><span class="co">#&gt; Chain 2:  Elapsed Time: 0.612 seconds (Warm-up)</span></span>
+<span><span class="co">#&gt; Chain 2:                0.422 seconds (Sampling)</span></span>
+<span><span class="co">#&gt; Chain 2:                1.034 seconds (Total)</span></span>
 <span><span class="co">#&gt; Chain 2: </span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; SAMPLING FOR MODEL 'constant_multi_ind' NOW (CHAIN 3).</span></span>
 <span><span class="co">#&gt; Chain 3: </span></span>
-<span><span class="co">#&gt; Chain 3: Gradient evaluation took 1.7e-05 seconds</span></span>
-<span><span class="co">#&gt; Chain 3: 1000 transitions using 10 leapfrog steps per transition would take 0.17 seconds.</span></span>
+<span><span class="co">#&gt; Chain 3: Gradient evaluation took 2e-05 seconds</span></span>
+<span><span class="co">#&gt; Chain 3: 1000 transitions using 10 leapfrog steps per transition would take 0.2 seconds.</span></span>
 <span><span class="co">#&gt; Chain 3: Adjust your expectations accordingly!</span></span>
 <span><span class="co">#&gt; Chain 3: </span></span>
 <span><span class="co">#&gt; Chain 3: </span></span>
@@ -416,15 +483,15 @@ re-naming and can pass it directly.</p>
 <span><span class="co">#&gt; Chain 3: Iteration: 1800 / 2000 [ 90%]  (Sampling)</span></span>
 <span><span class="co">#&gt; Chain 3: Iteration: 2000 / 2000 [100%]  (Sampling)</span></span>
 <span><span class="co">#&gt; Chain 3: </span></span>
-<span><span class="co">#&gt; Chain 3:  Elapsed Time: 0.509 seconds (Warm-up)</span></span>
-<span><span class="co">#&gt; Chain 3:                0.334 seconds (Sampling)</span></span>
-<span><span class="co">#&gt; Chain 3:                0.843 seconds (Total)</span></span>
+<span><span class="co">#&gt; Chain 3:  Elapsed Time: 0.651 seconds (Warm-up)</span></span>
+<span><span class="co">#&gt; Chain 3:                0.431 seconds (Sampling)</span></span>
+<span><span class="co">#&gt; Chain 3:                1.082 seconds (Total)</span></span>
 <span><span class="co">#&gt; Chain 3: </span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; SAMPLING FOR MODEL 'constant_multi_ind' NOW (CHAIN 4).</span></span>
 <span><span class="co">#&gt; Chain 4: </span></span>
-<span><span class="co">#&gt; Chain 4: Gradient evaluation took 1.7e-05 seconds</span></span>
-<span><span class="co">#&gt; Chain 4: 1000 transitions using 10 leapfrog steps per transition would take 0.17 seconds.</span></span>
+<span><span class="co">#&gt; Chain 4: Gradient evaluation took 2e-05 seconds</span></span>
+<span><span class="co">#&gt; Chain 4: 1000 transitions using 10 leapfrog steps per transition would take 0.2 seconds.</span></span>
 <span><span class="co">#&gt; Chain 4: Adjust your expectations accordingly!</span></span>
 <span><span class="co">#&gt; Chain 4: </span></span>
 <span><span class="co">#&gt; Chain 4: </span></span>
@@ -441,10 +508,145 @@ re-naming and can pass it directly.</p>
 <span><span class="co">#&gt; Chain 4: Iteration: 1800 / 2000 [ 90%]  (Sampling)</span></span>
 <span><span class="co">#&gt; Chain 4: Iteration: 2000 / 2000 [100%]  (Sampling)</span></span>
 <span><span class="co">#&gt; Chain 4: </span></span>
-<span><span class="co">#&gt; Chain 4:  Elapsed Time: 0.471 seconds (Warm-up)</span></span>
-<span><span class="co">#&gt; Chain 4:                0.391 seconds (Sampling)</span></span>
-<span><span class="co">#&gt; Chain 4:                0.862 seconds (Total)</span></span>
+<span><span class="co">#&gt; Chain 4:  Elapsed Time: 0.624 seconds (Warm-up)</span></span>
+<span><span class="co">#&gt; Chain 4:                0.515 seconds (Sampling)</span></span>
+<span><span class="co">#&gt; Chain 4:                1.139 seconds (Total)</span></span>
 <span><span class="co">#&gt; Chain 4:</span></span></code></pre></div>
+<p>We have included two specialist diagnostic tools in the package to
+give easy access to the
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mover><mi>R</mi><mo accent="true">̂</mo></mover><annotation encoding="application/x-tex">\hat{R}</annotation></semantics></math>
+statistics of chain convergence and mixing.</p>
+<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># Returns a list of R_hat values</span></span>
+<span><span class="fu"><a href="../reference/hmde_extract_Rhat.html">hmde_extract_Rhat</a></span><span class="op">(</span><span class="va">trout_constant_fit</span><span class="op">)</span></span>
+<span><span class="co">#&gt;            ind_y_0            ind_y_0            ind_y_0            ind_y_0 </span></span>
+<span><span class="co">#&gt;          1.0004539          1.0005732          1.0012602          1.0000505 </span></span>
+<span><span class="co">#&gt;            ind_y_0            ind_y_0            ind_y_0            ind_y_0 </span></span>
+<span><span class="co">#&gt;          1.0012108          1.0010668          1.0006413          1.0005610 </span></span>
+<span><span class="co">#&gt;            ind_y_0            ind_y_0            ind_y_0            ind_y_0 </span></span>
+<span><span class="co">#&gt;          1.0016078          1.0015231          1.0003054          1.0004748 </span></span>
+<span><span class="co">#&gt;            ind_y_0            ind_y_0            ind_y_0            ind_y_0 </span></span>
+<span><span class="co">#&gt;          1.0015254          1.0019810          1.0008454          1.0007235 </span></span>
+<span><span class="co">#&gt;            ind_y_0            ind_y_0            ind_y_0            ind_y_0 </span></span>
+<span><span class="co">#&gt;          1.0002387          1.0003916          1.0006264          1.0004244 </span></span>
+<span><span class="co">#&gt;            ind_y_0            ind_y_0            ind_y_0            ind_y_0 </span></span>
+<span><span class="co">#&gt;          1.0015734          1.0014534          1.0014780          1.0021080 </span></span>
+<span><span class="co">#&gt;            ind_y_0            ind_y_0            ind_y_0            ind_y_0 </span></span>
+<span><span class="co">#&gt;          1.0003817          1.0000325          1.0023748          1.0018402 </span></span>
+<span><span class="co">#&gt;            ind_y_0            ind_y_0            ind_y_0            ind_y_0 </span></span>
+<span><span class="co">#&gt;          1.0006403          1.0002645          1.0004623          1.0006357 </span></span>
+<span><span class="co">#&gt;            ind_y_0            ind_y_0            ind_y_0            ind_y_0 </span></span>
+<span><span class="co">#&gt;          1.0011184          1.0006391          1.0001356          1.0012268 </span></span>
+<span><span class="co">#&gt;            ind_y_0            ind_y_0            ind_y_0            ind_y_0 </span></span>
+<span><span class="co">#&gt;          1.0001768          1.0006285          1.0004399          1.0004367 </span></span>
+<span><span class="co">#&gt;            ind_y_0            ind_y_0            ind_y_0            ind_y_0 </span></span>
+<span><span class="co">#&gt;          1.0005651          1.0008517          1.0010770          1.0009083 </span></span>
+<span><span class="co">#&gt;            ind_y_0            ind_y_0            ind_y_0            ind_y_0 </span></span>
+<span><span class="co">#&gt;          1.0032166          1.0017850          1.0019176          1.0014497 </span></span>
+<span><span class="co">#&gt;            ind_y_0            ind_y_0           ind_beta           ind_beta </span></span>
+<span><span class="co">#&gt;          1.0012765          1.0018513          1.0020047          1.0011155 </span></span>
+<span><span class="co">#&gt;           ind_beta           ind_beta           ind_beta           ind_beta </span></span>
+<span><span class="co">#&gt;          1.0015634          1.0010684          1.0012418          1.0007665 </span></span>
+<span><span class="co">#&gt;           ind_beta           ind_beta           ind_beta           ind_beta </span></span>
+<span><span class="co">#&gt;          1.0035289          1.0010125          1.0012686          1.0007850 </span></span>
+<span><span class="co">#&gt;           ind_beta           ind_beta           ind_beta           ind_beta </span></span>
+<span><span class="co">#&gt;          1.0013931          1.0000464          1.0013710          1.0005725 </span></span>
+<span><span class="co">#&gt;           ind_beta           ind_beta           ind_beta           ind_beta </span></span>
+<span><span class="co">#&gt;          1.0012888          1.0015173          1.0020138          1.0005129 </span></span>
+<span><span class="co">#&gt;           ind_beta           ind_beta           ind_beta           ind_beta </span></span>
+<span><span class="co">#&gt;          1.0007365          1.0014100          1.0016766          1.0024173 </span></span>
+<span><span class="co">#&gt;           ind_beta           ind_beta           ind_beta           ind_beta </span></span>
+<span><span class="co">#&gt;          1.0004251          1.0041030          1.0012892          1.0007529 </span></span>
+<span><span class="co">#&gt;           ind_beta           ind_beta           ind_beta           ind_beta </span></span>
+<span><span class="co">#&gt;          1.0010654          1.0008596          1.0024632          1.0016998 </span></span>
+<span><span class="co">#&gt;           ind_beta           ind_beta           ind_beta           ind_beta </span></span>
+<span><span class="co">#&gt;          1.0016082          1.0013550          1.0010371          1.0008213 </span></span>
+<span><span class="co">#&gt;           ind_beta           ind_beta           ind_beta           ind_beta </span></span>
+<span><span class="co">#&gt;          1.0003897          1.0007614          1.0015092          1.0015652 </span></span>
+<span><span class="co">#&gt;           ind_beta           ind_beta           ind_beta           ind_beta </span></span>
+<span><span class="co">#&gt;          1.0011976          1.0008448          1.0010730          0.9999155 </span></span>
+<span><span class="co">#&gt;           ind_beta           ind_beta           ind_beta           ind_beta </span></span>
+<span><span class="co">#&gt;          1.0010286          1.0015635          1.0023487          1.0025764 </span></span>
+<span><span class="co">#&gt;           ind_beta           ind_beta           ind_beta           ind_beta </span></span>
+<span><span class="co">#&gt;          1.0010962          1.0024324          1.0007661          1.0014566 </span></span>
+<span><span class="co">#&gt;  pop_log_beta_mean    pop_log_beta_sd global_error_sigma              y_hat </span></span>
+<span><span class="co">#&gt;          1.0019318          1.0073849          1.0015913          1.0004539 </span></span>
+<span><span class="co">#&gt;              y_hat              y_hat              y_hat              y_hat </span></span>
+<span><span class="co">#&gt;          1.0000235          1.0004717          1.0010557          1.0005732 </span></span>
+<span><span class="co">#&gt;              y_hat              y_hat              y_hat              y_hat </span></span>
+<span><span class="co">#&gt;          1.0000637          1.0008320          1.0013675          1.0012602 </span></span>
+<span><span class="co">#&gt;              y_hat              y_hat              y_hat              y_hat </span></span>
+<span><span class="co">#&gt;          1.0003900          1.0008886          1.0008939          1.0000505 </span></span>
+<span><span class="co">#&gt;              y_hat              y_hat              y_hat              y_hat </span></span>
+<span><span class="co">#&gt;          0.9998530          1.0012108          1.0004242          1.0008494 </span></span>
+<span><span class="co">#&gt;              y_hat              y_hat              y_hat              y_hat </span></span>
+<span><span class="co">#&gt;          1.0009089          1.0010668          1.0005948          1.0006413 </span></span>
+<span><span class="co">#&gt;              y_hat              y_hat              y_hat              y_hat </span></span>
+<span><span class="co">#&gt;          1.0006603          1.0005610          1.0004597          1.0016078 </span></span>
+<span><span class="co">#&gt;              y_hat              y_hat              y_hat              y_hat </span></span>
+<span><span class="co">#&gt;          1.0025263          1.0015231          1.0023732          1.0022525 </span></span>
+<span><span class="co">#&gt;              y_hat              y_hat              y_hat              y_hat </span></span>
+<span><span class="co">#&gt;          1.0003054          1.0001992          1.0004748          1.0004049 </span></span>
+<span><span class="co">#&gt;              y_hat              y_hat              y_hat              y_hat </span></span>
+<span><span class="co">#&gt;          1.0015254          1.0010280          1.0005446          1.0003908 </span></span>
+<span><span class="co">#&gt;              y_hat              y_hat              y_hat              y_hat </span></span>
+<span><span class="co">#&gt;          1.0019810          1.0007279          1.0008454          1.0018637 </span></span>
+<span><span class="co">#&gt;              y_hat              y_hat              y_hat              y_hat </span></span>
+<span><span class="co">#&gt;          1.0012440          1.0007235          1.0004590          1.0012320 </span></span>
+<span><span class="co">#&gt;              y_hat              y_hat              y_hat              y_hat </span></span>
+<span><span class="co">#&gt;          1.0002387          1.0007605          1.0016630          1.0003916 </span></span>
+<span><span class="co">#&gt;              y_hat              y_hat              y_hat              y_hat </span></span>
+<span><span class="co">#&gt;          1.0005344          1.0006264          1.0005825          1.0004124 </span></span>
+<span><span class="co">#&gt;              y_hat              y_hat              y_hat              y_hat </span></span>
+<span><span class="co">#&gt;          1.0004244          1.0017327          1.0016782          1.0015734 </span></span>
+<span><span class="co">#&gt;              y_hat              y_hat              y_hat              y_hat </span></span>
+<span><span class="co">#&gt;          1.0003822          1.0014534          1.0017536          1.0014780 </span></span>
+<span><span class="co">#&gt;              y_hat              y_hat              y_hat              y_hat </span></span>
+<span><span class="co">#&gt;          1.0006841          1.0021080          1.0020743          1.0003817 </span></span>
+<span><span class="co">#&gt;              y_hat              y_hat              y_hat              y_hat </span></span>
+<span><span class="co">#&gt;          1.0007061          1.0000325          1.0006070          1.0008725 </span></span>
+<span><span class="co">#&gt;              y_hat              y_hat              y_hat              y_hat </span></span>
+<span><span class="co">#&gt;          1.0010703          1.0023748          1.0018517          1.0024947 </span></span>
+<span><span class="co">#&gt;              y_hat              y_hat              y_hat              y_hat </span></span>
+<span><span class="co">#&gt;          1.0018402          1.0006799          1.0006403          1.0000556 </span></span>
+<span><span class="co">#&gt;              y_hat              y_hat              y_hat              y_hat </span></span>
+<span><span class="co">#&gt;          1.0002645          1.0003646          1.0004623          1.0003871 </span></span>
+<span><span class="co">#&gt;              y_hat              y_hat              y_hat              y_hat </span></span>
+<span><span class="co">#&gt;          1.0006357          1.0006344          1.0011184          1.0010273 </span></span>
+<span><span class="co">#&gt;              y_hat              y_hat              y_hat              y_hat </span></span>
+<span><span class="co">#&gt;          1.0006391          1.0000110          0.9998934          1.0003643 </span></span>
+<span><span class="co">#&gt;              y_hat              y_hat              y_hat              y_hat </span></span>
+<span><span class="co">#&gt;          1.0001356          1.0011353          1.0012268          1.0020884 </span></span>
+<span><span class="co">#&gt;              y_hat              y_hat              y_hat              y_hat </span></span>
+<span><span class="co">#&gt;          1.0001768          1.0014405          1.0006285          1.0008154 </span></span>
+<span><span class="co">#&gt;              y_hat              y_hat              y_hat              y_hat </span></span>
+<span><span class="co">#&gt;          1.0014945          1.0004399          1.0014642          1.0007587 </span></span>
+<span><span class="co">#&gt;              y_hat              y_hat              y_hat              y_hat </span></span>
+<span><span class="co">#&gt;          1.0004367          1.0007741          1.0008878          1.0007374 </span></span>
+<span><span class="co">#&gt;              y_hat              y_hat              y_hat              y_hat </span></span>
+<span><span class="co">#&gt;          1.0005651          1.0007379          1.0008517          1.0006263 </span></span>
+<span><span class="co">#&gt;              y_hat              y_hat              y_hat              y_hat </span></span>
+<span><span class="co">#&gt;          1.0006126          1.0010770          1.0016399          1.0013652 </span></span>
+<span><span class="co">#&gt;              y_hat              y_hat              y_hat              y_hat </span></span>
+<span><span class="co">#&gt;          1.0009083          1.0000006          1.0007810          1.0032166 </span></span>
+<span><span class="co">#&gt;              y_hat              y_hat              y_hat              y_hat </span></span>
+<span><span class="co">#&gt;          1.0032446          1.0017850          1.0006857          1.0005928 </span></span>
+<span><span class="co">#&gt;              y_hat              y_hat              y_hat              y_hat </span></span>
+<span><span class="co">#&gt;          1.0019176          1.0016698          1.0005177          1.0014497 </span></span>
+<span><span class="co">#&gt;              y_hat              y_hat              y_hat              y_hat </span></span>
+<span><span class="co">#&gt;          1.0015011          1.0017601          1.0018282          1.0012765 </span></span>
+<span><span class="co">#&gt;              y_hat              y_hat              y_hat              y_hat </span></span>
+<span><span class="co">#&gt;          1.0013616          1.0015882          1.0010607          1.0018513 </span></span>
+<span><span class="co">#&gt;              y_hat              y_hat               lp__ </span></span>
+<span><span class="co">#&gt;          1.0004130          1.0005609          1.0051033</span></span>
+<span></span>
+<span><span class="co"># Returns a histogram of R_hat values</span></span>
+<span><span class="fu"><a href="../reference/hmde_plot_Rhat_hist.html">hmde_plot_Rhat_hist</a></span><span class="op">(</span><span class="va">trout_constant_fit</span><span class="op">)</span></span></code></pre></div>
+<p><img src="constant-growth_files/figure-html/unnamed-chunk-10-1.png" class="r-plt" width="700" style="display: block; margin: auto;">
+These functions exclude the
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mover><mi>R</mi><mo accent="true">̂</mo></mover><annotation encoding="application/x-tex">\hat{R}</annotation></semantics></math>
+values associated with the generated quantites, as these have 0 variance
+and thus produce NAs.</p>
 </div>
 <div class="section level3">
 <h3 id="inspect-estimates">Inspect estimates<a class="anchor" aria-label="anchor" href="#inspect-estimates"></a>
@@ -453,13 +655,13 @@ re-naming and can pass it directly.</p>
 estimates and have a look at the distribution of estimated sizes,
 estimated growth increments, and annualised growth rates at the level of
 sizes over time.</p>
-<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">trout_constant_estimates</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/hmde_extract_estimates.html">hmde_extract_estimates</a></span><span class="op">(</span>                                 </span>
 <span>                                 fit <span class="op">=</span> <span class="va">trout_constant_fit</span>,</span>
 <span>                                 input_measurement_data <span class="op">=</span> <span class="va">Trout_Size_Data</span><span class="op">)</span></span></code></pre></div>
 <p>First, let’s do some quick data wrangling to calculate our parameters
 of interest.</p>
-<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">measurement_data_transformed</span> <span class="op">&lt;-</span> <span class="va">trout_constant_estimates</span><span class="op">$</span><span class="va">measurement_data</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html" class="external-link">group_by</a></span><span class="op">(</span><span class="va">ind_id</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span></span>
@@ -472,7 +674,7 @@ of interest.</p>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html" class="external-link">ungroup</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
 <p>Now we can have a look at the distribution of each of the estimated
 parameter by creating histograms</p>
-<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">est_hist_y_hat</span> <span class="op">&lt;-</span> <span class="fu">histogram_func</span><span class="op">(</span><span class="va">measurement_data_transformed</span>, <span class="va">y_hat</span>, </span>
 <span>               <span class="st">"Estimated size distribution"</span>,</span>
 <span>               xlab <span class="op">=</span> <span class="st">"Size (cm)"</span>,</span>
@@ -488,7 +690,7 @@ parameter by creating histograms</p>
 <span>               bins <span class="op">=</span> <span class="fl">5</span><span class="op">)</span></span>
 <span></span>
 <span><span class="op">(</span><span class="va">est_hist_y_hat</span> <span class="op">+</span> <span class="va">est_hist_delta_y_est</span><span class="op">)</span> <span class="op">/</span> <span class="va">est_hist_growth_rate</span> </span></code></pre></div>
-<p><img src="constant-growth_files/figure-html/unnamed-chunk-12-1.png" width="480" style="display: block; margin: auto;"></p>
+<p><img src="constant-growth_files/figure-html/unnamed-chunk-13-1.png" class="r-plt" width="480" style="display: block; margin: auto;"></p>
 <p>We can see that the negative growth increments are gone! Because we
 fit a positive growth function
 (<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>f</mi><mo>=</mo><mi>β</mi><mo>&gt;</mo><mn>0</mn></mrow><annotation encoding="application/x-tex">f = \beta &gt; 0</annotation></semantics></math>)
@@ -518,7 +720,7 @@ overall.</p>
 <p>In the next block, we are looking at 5 random individuals to start
 with because plotting every individuals’ sizes over time can get very
 messy.</p>
-<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co">#Quantitative R^2</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/stats/cor.html" class="external-link">cor</a></span><span class="op">(</span><span class="va">measurement_data_transformed</span><span class="op">$</span><span class="va">y_obs</span>, <span class="va">measurement_data_transformed</span><span class="op">$</span><span class="va">y_hat</span><span class="op">)</span><span class="op">^</span><span class="fl">2</span></span>
 <span><span class="co">#&gt; [1] 0.9540111</span></span>
@@ -538,14 +740,14 @@ messy.</p>
 <span>           label <span class="op">=</span> <span class="va">r_sq</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html" class="external-link">theme_classic</a></span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="va">obs_est_size_plot</span></span></code></pre></div>
-<p><img src="constant-growth_files/figure-html/unnamed-chunk-13-1.png" width="384" style="display: block; margin: auto;"></p>
-<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
+<p><img src="constant-growth_files/figure-html/unnamed-chunk-14-1.png" class="r-plt" width="384" style="display: block; margin: auto;"></p>
+<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span></span>
 <span><span class="co">#Plots of size over time for a sample of 5 individuals</span></span>
 <span><span class="va">size_over_time_plot</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/hmde_plot_obs_est_inds.html">hmde_plot_obs_est_inds</a></span><span class="op">(</span>n_ind_to_plot <span class="op">=</span> <span class="fl">5</span>,</span>
 <span>                       measurement_data <span class="op">=</span> <span class="va">trout_constant_estimates</span><span class="op">$</span><span class="va">measurement_data</span><span class="op">)</span></span>
 <span><span class="va">size_over_time_plot</span></span></code></pre></div>
-<p><img src="constant-growth_files/figure-html/unnamed-chunk-13-2.png" width="384" style="display: block; margin: auto;"></p>
+<p><img src="constant-growth_files/figure-html/unnamed-chunk-14-2.png" class="r-plt" width="384" style="display: block; margin: auto;"></p>
 </div>
 </div>
 <div class="section level3">
@@ -558,7 +760,7 @@ estimates, which will align with the estimated annualised growth rates
 as that’s precisely what they represent. Here is one way to visualise
 the fitted growth functions in order to see how they compare to the
 observed sizes.</p>
-<p><img src="constant-growth_files/figure-html/unnamed-chunk-14-1.png" width="624" style="display: block; margin: auto;"></p>
+<p><img src="constant-growth_files/figure-html/unnamed-chunk-15-1.png" class="r-plt" width="624" style="display: block; margin: auto;"></p>
 </div>
 <div class="section level3">
 <h3 id="population-hyper-parameters">Population hyper-parameters<a class="anchor" aria-label="anchor" href="#population-hyper-parameters"></a>
@@ -578,7 +780,7 @@ easily transfer to
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>σ</mi><annotation encoding="application/x-tex">\sigma</annotation></semantics></math>.
 The CIs in this output are posterior credible intervals taken as the
 central 95% quantiles of the posterior samples.</p>
-<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co">#Mean of normal distribution</span></span>
 <span><span class="va">trout_constant_estimates</span><span class="op">$</span><span class="va">population_data</span><span class="op">$</span><span class="va">mean</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span> <span class="co">#Raw value</span></span>
 <span><span class="co">#&gt; [1] 0.8812017</span></span>
@@ -637,7 +839,7 @@ and Evolution</em>.
 </div>
 
 <div class="pkgdown-footer-right">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.1.3.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.2.0.</p>
 </div>
 
     </footer>
