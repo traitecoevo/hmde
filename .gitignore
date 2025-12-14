@@ -22,7 +22,7 @@
 .Rproj.user/
 
 # produced vignettes
-# vignettes/*.html
+vignettes/*.html
 vignettes/*.pdf
 
 # OAuth2 token, see https://github.com/hadley/httr/releases/tag/v0.3
@@ -41,7 +41,7 @@ inst/doc/
 .Renviron
 
 # pkgdown site
-docs/
+#docs/
 
 # translation temp files
 po/*~
@@ -72,4 +72,4 @@ vBtesting.r
 
 # Output from vignettes
 figure/
-docs
+#docs
