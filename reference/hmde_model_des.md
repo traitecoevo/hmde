@@ -27,6 +27,6 @@ hmde_model_des("constant_single_ind")
 #> {
 #>     return(pars[[1]])
 #> }
-#> <bytecode: 0x55f3534fb0a0>
+#> <bytecode: 0x55c7064ff0d0>
 #> <environment: namespace:hmde>
 ```

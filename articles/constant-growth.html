@@ -20,7 +20,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">hmde</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.3</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.3.1</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -178,7 +178,7 @@ function.</p>
 relates to sizes over time for a single individual. Feel free to play
 around with the parameter settings (<code>beta</code>, <code>y_0</code>)
 and see how the plot changes.</p>
-<p><img src="constant-growth_files/figure-html/unnamed-chunk-4-1.png" class="r-plt" width="576" style="display: block; margin: auto;"></p>
+<p><img src="constant-growth_files/figure-html/unnamed-chunk-4-1.png" class="r-plt" alt="" width="576" style="display: block; margin: auto;"></p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co">#Plot of growth function</span></span>
 <span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
@@ -284,7 +284,7 @@ information, then plot it.</p>
 </h3>
 <p>Let’s create some histograms to investigate the distribution of size,
 growth interval and growth increments.</p>
-<p><img src="constant-growth_files/figure-html/unnamed-chunk-7-1.png" class="r-plt" width="576" style="display: block; margin: auto;"></p>
+<p><img src="constant-growth_files/figure-html/unnamed-chunk-7-1.png" class="r-plt" alt="" width="576" style="display: block; margin: auto;"></p>
 <p>The growth histograms show that there’s a number of negative growth
 increments, some reasonably extreme, and when combined with some short
 observation periods we get very extreme estimates of growth rates. We
@@ -415,8 +415,8 @@ re-naming and can pass it directly.</p>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; SAMPLING FOR MODEL 'constant_multi_ind' NOW (CHAIN 1).</span></span>
 <span><span class="co">#&gt; Chain 1: </span></span>
-<span><span class="co">#&gt; Chain 1: Gradient evaluation took 3.9e-05 seconds</span></span>
-<span><span class="co">#&gt; Chain 1: 1000 transitions using 10 leapfrog steps per transition would take 0.39 seconds.</span></span>
+<span><span class="co">#&gt; Chain 1: Gradient evaluation took 3.6e-05 seconds</span></span>
+<span><span class="co">#&gt; Chain 1: 1000 transitions using 10 leapfrog steps per transition would take 0.36 seconds.</span></span>
 <span><span class="co">#&gt; Chain 1: Adjust your expectations accordingly!</span></span>
 <span><span class="co">#&gt; Chain 1: </span></span>
 <span><span class="co">#&gt; Chain 1: </span></span>
@@ -433,15 +433,15 @@ re-naming and can pass it directly.</p>
 <span><span class="co">#&gt; Chain 1: Iteration: 1800 / 2000 [ 90%]  (Sampling)</span></span>
 <span><span class="co">#&gt; Chain 1: Iteration: 2000 / 2000 [100%]  (Sampling)</span></span>
 <span><span class="co">#&gt; Chain 1: </span></span>
-<span><span class="co">#&gt; Chain 1:  Elapsed Time: 0.649 seconds (Warm-up)</span></span>
-<span><span class="co">#&gt; Chain 1:                0.541 seconds (Sampling)</span></span>
-<span><span class="co">#&gt; Chain 1:                1.19 seconds (Total)</span></span>
+<span><span class="co">#&gt; Chain 1:  Elapsed Time: 0.5 seconds (Warm-up)</span></span>
+<span><span class="co">#&gt; Chain 1:                0.418 seconds (Sampling)</span></span>
+<span><span class="co">#&gt; Chain 1:                0.918 seconds (Total)</span></span>
 <span><span class="co">#&gt; Chain 1: </span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; SAMPLING FOR MODEL 'constant_multi_ind' NOW (CHAIN 2).</span></span>
 <span><span class="co">#&gt; Chain 2: </span></span>
-<span><span class="co">#&gt; Chain 2: Gradient evaluation took 1.9e-05 seconds</span></span>
-<span><span class="co">#&gt; Chain 2: 1000 transitions using 10 leapfrog steps per transition would take 0.19 seconds.</span></span>
+<span><span class="co">#&gt; Chain 2: Gradient evaluation took 2.1e-05 seconds</span></span>
+<span><span class="co">#&gt; Chain 2: 1000 transitions using 10 leapfrog steps per transition would take 0.21 seconds.</span></span>
 <span><span class="co">#&gt; Chain 2: Adjust your expectations accordingly!</span></span>
 <span><span class="co">#&gt; Chain 2: </span></span>
 <span><span class="co">#&gt; Chain 2: </span></span>
@@ -458,15 +458,15 @@ re-naming and can pass it directly.</p>
 <span><span class="co">#&gt; Chain 2: Iteration: 1800 / 2000 [ 90%]  (Sampling)</span></span>
 <span><span class="co">#&gt; Chain 2: Iteration: 2000 / 2000 [100%]  (Sampling)</span></span>
 <span><span class="co">#&gt; Chain 2: </span></span>
-<span><span class="co">#&gt; Chain 2:  Elapsed Time: 0.612 seconds (Warm-up)</span></span>
-<span><span class="co">#&gt; Chain 2:                0.422 seconds (Sampling)</span></span>
-<span><span class="co">#&gt; Chain 2:                1.034 seconds (Total)</span></span>
+<span><span class="co">#&gt; Chain 2:  Elapsed Time: 0.474 seconds (Warm-up)</span></span>
+<span><span class="co">#&gt; Chain 2:                0.327 seconds (Sampling)</span></span>
+<span><span class="co">#&gt; Chain 2:                0.801 seconds (Total)</span></span>
 <span><span class="co">#&gt; Chain 2: </span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; SAMPLING FOR MODEL 'constant_multi_ind' NOW (CHAIN 3).</span></span>
 <span><span class="co">#&gt; Chain 3: </span></span>
-<span><span class="co">#&gt; Chain 3: Gradient evaluation took 2e-05 seconds</span></span>
-<span><span class="co">#&gt; Chain 3: 1000 transitions using 10 leapfrog steps per transition would take 0.2 seconds.</span></span>
+<span><span class="co">#&gt; Chain 3: Gradient evaluation took 2.1e-05 seconds</span></span>
+<span><span class="co">#&gt; Chain 3: 1000 transitions using 10 leapfrog steps per transition would take 0.21 seconds.</span></span>
 <span><span class="co">#&gt; Chain 3: Adjust your expectations accordingly!</span></span>
 <span><span class="co">#&gt; Chain 3: </span></span>
 <span><span class="co">#&gt; Chain 3: </span></span>
@@ -483,9 +483,9 @@ re-naming and can pass it directly.</p>
 <span><span class="co">#&gt; Chain 3: Iteration: 1800 / 2000 [ 90%]  (Sampling)</span></span>
 <span><span class="co">#&gt; Chain 3: Iteration: 2000 / 2000 [100%]  (Sampling)</span></span>
 <span><span class="co">#&gt; Chain 3: </span></span>
-<span><span class="co">#&gt; Chain 3:  Elapsed Time: 0.651 seconds (Warm-up)</span></span>
-<span><span class="co">#&gt; Chain 3:                0.431 seconds (Sampling)</span></span>
-<span><span class="co">#&gt; Chain 3:                1.082 seconds (Total)</span></span>
+<span><span class="co">#&gt; Chain 3:  Elapsed Time: 0.506 seconds (Warm-up)</span></span>
+<span><span class="co">#&gt; Chain 3:                0.336 seconds (Sampling)</span></span>
+<span><span class="co">#&gt; Chain 3:                0.842 seconds (Total)</span></span>
 <span><span class="co">#&gt; Chain 3: </span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; SAMPLING FOR MODEL 'constant_multi_ind' NOW (CHAIN 4).</span></span>
@@ -508,9 +508,9 @@ re-naming and can pass it directly.</p>
 <span><span class="co">#&gt; Chain 4: Iteration: 1800 / 2000 [ 90%]  (Sampling)</span></span>
 <span><span class="co">#&gt; Chain 4: Iteration: 2000 / 2000 [100%]  (Sampling)</span></span>
 <span><span class="co">#&gt; Chain 4: </span></span>
-<span><span class="co">#&gt; Chain 4:  Elapsed Time: 0.624 seconds (Warm-up)</span></span>
-<span><span class="co">#&gt; Chain 4:                0.515 seconds (Sampling)</span></span>
-<span><span class="co">#&gt; Chain 4:                1.139 seconds (Total)</span></span>
+<span><span class="co">#&gt; Chain 4:  Elapsed Time: 0.483 seconds (Warm-up)</span></span>
+<span><span class="co">#&gt; Chain 4:                0.401 seconds (Sampling)</span></span>
+<span><span class="co">#&gt; Chain 4:                0.884 seconds (Total)</span></span>
 <span><span class="co">#&gt; Chain 4:</span></span></code></pre></div>
 <p>We have included two specialist diagnostic tools in the package to
 give easy access to the
@@ -642,7 +642,7 @@ statistics of chain convergence and mixing.</p>
 <span></span>
 <span><span class="co"># Returns a histogram of R_hat values</span></span>
 <span><span class="fu"><a href="../reference/hmde_plot_Rhat_hist.html">hmde_plot_Rhat_hist</a></span><span class="op">(</span><span class="va">trout_constant_fit</span><span class="op">)</span></span></code></pre></div>
-<p><img src="constant-growth_files/figure-html/unnamed-chunk-10-1.png" class="r-plt" width="700" style="display: block; margin: auto;">
+<p><img src="constant-growth_files/figure-html/unnamed-chunk-10-1.png" class="r-plt" alt="" width="700" style="display: block; margin: auto;">
 These functions exclude the
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mover><mi>R</mi><mo accent="true">̂</mo></mover><annotation encoding="application/x-tex">\hat{R}</annotation></semantics></math>
 values associated with the generated quantites, as these have 0 variance
@@ -690,7 +690,7 @@ parameter by creating histograms</p>
 <span>               bins <span class="op">=</span> <span class="fl">5</span><span class="op">)</span></span>
 <span></span>
 <span><span class="op">(</span><span class="va">est_hist_y_hat</span> <span class="op">+</span> <span class="va">est_hist_delta_y_est</span><span class="op">)</span> <span class="op">/</span> <span class="va">est_hist_growth_rate</span> </span></code></pre></div>
-<p><img src="constant-growth_files/figure-html/unnamed-chunk-13-1.png" class="r-plt" width="480" style="display: block; margin: auto;"></p>
+<p><img src="constant-growth_files/figure-html/unnamed-chunk-13-1.png" class="r-plt" alt="" width="480" style="display: block; margin: auto;"></p>
 <p>We can see that the negative growth increments are gone! Because we
 fit a positive growth function
 (<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>f</mi><mo>=</mo><mi>β</mi><mo>&gt;</mo><mn>0</mn></mrow><annotation encoding="application/x-tex">f = \beta &gt; 0</annotation></semantics></math>)
@@ -740,14 +740,14 @@ messy.</p>
 <span>           label <span class="op">=</span> <span class="va">r_sq</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html" class="external-link">theme_classic</a></span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="va">obs_est_size_plot</span></span></code></pre></div>
-<p><img src="constant-growth_files/figure-html/unnamed-chunk-14-1.png" class="r-plt" width="384" style="display: block; margin: auto;"></p>
+<p><img src="constant-growth_files/figure-html/unnamed-chunk-14-1.png" class="r-plt" alt="" width="384" style="display: block; margin: auto;"></p>
 <div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span></span>
 <span><span class="co">#Plots of size over time for a sample of 5 individuals</span></span>
 <span><span class="va">size_over_time_plot</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/hmde_plot_obs_est_inds.html">hmde_plot_obs_est_inds</a></span><span class="op">(</span>n_ind_to_plot <span class="op">=</span> <span class="fl">5</span>,</span>
 <span>                       measurement_data <span class="op">=</span> <span class="va">trout_constant_estimates</span><span class="op">$</span><span class="va">measurement_data</span><span class="op">)</span></span>
 <span><span class="va">size_over_time_plot</span></span></code></pre></div>
-<p><img src="constant-growth_files/figure-html/unnamed-chunk-14-2.png" class="r-plt" width="384" style="display: block; margin: auto;"></p>
+<p><img src="constant-growth_files/figure-html/unnamed-chunk-14-2.png" class="r-plt" alt="" width="384" style="display: block; margin: auto;"></p>
 </div>
 </div>
 <div class="section level3">
@@ -760,7 +760,7 @@ estimates, which will align with the estimated annualised growth rates
 as that’s precisely what they represent. Here is one way to visualise
 the fitted growth functions in order to see how they compare to the
 observed sizes.</p>
-<p><img src="constant-growth_files/figure-html/unnamed-chunk-15-1.png" class="r-plt" width="624" style="display: block; margin: auto;"></p>
+<p><img src="constant-growth_files/figure-html/unnamed-chunk-15-1.png" class="r-plt" alt="" width="624" style="display: block; margin: auto;"></p>
 </div>
 <div class="section level3">
 <h3 id="population-hyper-parameters">Population hyper-parameters<a class="anchor" aria-label="anchor" href="#population-hyper-parameters"></a>

@@ -33,8 +33,8 @@ hmde_model("constant_single_ind") |>
 #> 
 #> SAMPLING FOR MODEL 'constant_single_ind' NOW (CHAIN 1).
 #> Chain 1: 
-#> Chain 1: Gradient evaluation took 1.6e-05 seconds
-#> Chain 1: 1000 transitions using 10 leapfrog steps per transition would take 0.16 seconds.
+#> Chain 1: Gradient evaluation took 2.1e-05 seconds
+#> Chain 1: 1000 transitions using 10 leapfrog steps per transition would take 0.21 seconds.
 #> Chain 1: Adjust your expectations accordingly!
 #> Chain 1: 
 #> Chain 1: 
@@ -51,9 +51,9 @@ hmde_model("constant_single_ind") |>
 #> Chain 1: Iteration: 900 / 1000 [ 90%]  (Sampling)
 #> Chain 1: Iteration: 1000 / 1000 [100%]  (Sampling)
 #> Chain 1: 
-#> Chain 1:  Elapsed Time: 0.051 seconds (Warm-up)
-#> Chain 1:                0.038 seconds (Sampling)
-#> Chain 1:                0.089 seconds (Total)
+#> Chain 1:  Elapsed Time: 0.042 seconds (Warm-up)
+#> Chain 1:                0.032 seconds (Sampling)
+#> Chain 1:                0.074 seconds (Total)
 #> Chain 1: 
 #> Inference for Stan model: constant_single_ind.
 #> 1 chains, each with iter=1000; warmup=500; thin=1; 
@@ -348,7 +348,7 @@ hmde_model("constant_single_ind") |>
 #> check_prior_pars_global_error_sigma[2]    2.00    2.00    2.00   NaN  NaN
 #> lp__                                   -390.86 -390.25 -389.74   263 1.00
 #> 
-#> Samples were drawn using NUTS(diag_e) at Wed Dec 10 00:32:41 2025.
+#> Samples were drawn using NUTS(diag_e) at Wed Dec 24 00:25:27 2025.
 #> For each parameter, n_eff is a crude measure of effective sample size,
 #> and Rhat is the potential scale reduction factor on split chains (at 
 #> convergence, Rhat=1).
