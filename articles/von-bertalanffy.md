@@ -168,8 +168,8 @@ lizard_vb_fit <- hmde_model("vb_multi_ind") |>
 #> 
 #> SAMPLING FOR MODEL 'vb_multi_ind' NOW (CHAIN 1).
 #> Chain 1: 
-#> Chain 1: Gradient evaluation took 0.00012 seconds
-#> Chain 1: 1000 transitions using 10 leapfrog steps per transition would take 1.2 seconds.
+#> Chain 1: Gradient evaluation took 0.00019 seconds
+#> Chain 1: 1000 transitions using 10 leapfrog steps per transition would take 1.9 seconds.
 #> Chain 1: Adjust your expectations accordingly!
 #> Chain 1: 
 #> Chain 1: 
@@ -186,15 +186,15 @@ lizard_vb_fit <- hmde_model("vb_multi_ind") |>
 #> Chain 1: Iteration: 1800 / 2000 [ 90%]  (Sampling)
 #> Chain 1: Iteration: 2000 / 2000 [100%]  (Sampling)
 #> Chain 1: 
-#> Chain 1:  Elapsed Time: 5.474 seconds (Warm-up)
-#> Chain 1:                4.242 seconds (Sampling)
-#> Chain 1:                9.716 seconds (Total)
+#> Chain 1:  Elapsed Time: 10.384 seconds (Warm-up)
+#> Chain 1:                8.038 seconds (Sampling)
+#> Chain 1:                18.422 seconds (Total)
 #> Chain 1: 
 #> 
 #> SAMPLING FOR MODEL 'vb_multi_ind' NOW (CHAIN 2).
 #> Chain 2: 
-#> Chain 2: Gradient evaluation took 6.4e-05 seconds
-#> Chain 2: 1000 transitions using 10 leapfrog steps per transition would take 0.64 seconds.
+#> Chain 2: Gradient evaluation took 0.000101 seconds
+#> Chain 2: 1000 transitions using 10 leapfrog steps per transition would take 1.01 seconds.
 #> Chain 2: Adjust your expectations accordingly!
 #> Chain 2: 
 #> Chain 2: 
@@ -211,15 +211,15 @@ lizard_vb_fit <- hmde_model("vb_multi_ind") |>
 #> Chain 2: Iteration: 1800 / 2000 [ 90%]  (Sampling)
 #> Chain 2: Iteration: 2000 / 2000 [100%]  (Sampling)
 #> Chain 2: 
-#> Chain 2:  Elapsed Time: 3.002 seconds (Warm-up)
-#> Chain 2:                1.648 seconds (Sampling)
-#> Chain 2:                4.65 seconds (Total)
+#> Chain 2:  Elapsed Time: 5.675 seconds (Warm-up)
+#> Chain 2:                3.106 seconds (Sampling)
+#> Chain 2:                8.781 seconds (Total)
 #> Chain 2: 
 #> 
 #> SAMPLING FOR MODEL 'vb_multi_ind' NOW (CHAIN 3).
 #> Chain 3: 
-#> Chain 3: Gradient evaluation took 6e-05 seconds
-#> Chain 3: 1000 transitions using 10 leapfrog steps per transition would take 0.6 seconds.
+#> Chain 3: Gradient evaluation took 0.000101 seconds
+#> Chain 3: 1000 transitions using 10 leapfrog steps per transition would take 1.01 seconds.
 #> Chain 3: Adjust your expectations accordingly!
 #> Chain 3: 
 #> Chain 3: 
@@ -236,15 +236,15 @@ lizard_vb_fit <- hmde_model("vb_multi_ind") |>
 #> Chain 3: Iteration: 1800 / 2000 [ 90%]  (Sampling)
 #> Chain 3: Iteration: 2000 / 2000 [100%]  (Sampling)
 #> Chain 3: 
-#> Chain 3:  Elapsed Time: 5.524 seconds (Warm-up)
-#> Chain 3:                6.66 seconds (Sampling)
-#> Chain 3:                12.184 seconds (Total)
+#> Chain 3:  Elapsed Time: 10.456 seconds (Warm-up)
+#> Chain 3:                12.642 seconds (Sampling)
+#> Chain 3:                23.098 seconds (Total)
 #> Chain 3: 
 #> 
 #> SAMPLING FOR MODEL 'vb_multi_ind' NOW (CHAIN 4).
 #> Chain 4: 
-#> Chain 4: Gradient evaluation took 5.5e-05 seconds
-#> Chain 4: 1000 transitions using 10 leapfrog steps per transition would take 0.55 seconds.
+#> Chain 4: Gradient evaluation took 0.000101 seconds
+#> Chain 4: 1000 transitions using 10 leapfrog steps per transition would take 1.01 seconds.
 #> Chain 4: Adjust your expectations accordingly!
 #> Chain 4: 
 #> Chain 4: 
@@ -261,9 +261,9 @@ lizard_vb_fit <- hmde_model("vb_multi_ind") |>
 #> Chain 4: Iteration: 1800 / 2000 [ 90%]  (Sampling)
 #> Chain 4: Iteration: 2000 / 2000 [100%]  (Sampling)
 #> Chain 4: 
-#> Chain 4:  Elapsed Time: 10.255 seconds (Warm-up)
-#> Chain 4:                3.307 seconds (Sampling)
-#> Chain 4:                13.562 seconds (Total)
+#> Chain 4:  Elapsed Time: 19.362 seconds (Warm-up)
+#> Chain 4:                6.255 seconds (Sampling)
+#> Chain 4:                25.617 seconds (Total)
 #> Chain 4:
 #> Warning: There were 122 divergent transitions after warmup. See
 #> https://mc-stan.org/misc/warnings.html#divergent-transitions-after-warmup

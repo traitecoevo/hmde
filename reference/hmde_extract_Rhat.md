@@ -30,8 +30,8 @@ hmde_model("constant_single_ind") |>
 #> 
 #> SAMPLING FOR MODEL 'constant_single_ind' NOW (CHAIN 1).
 #> Chain 1: 
-#> Chain 1: Gradient evaluation took 2.4e-05 seconds
-#> Chain 1: 1000 transitions using 10 leapfrog steps per transition would take 0.24 seconds.
+#> Chain 1: Gradient evaluation took 2e-05 seconds
+#> Chain 1: 1000 transitions using 10 leapfrog steps per transition would take 0.2 seconds.
 #> Chain 1: Adjust your expectations accordingly!
 #> Chain 1: 
 #> Chain 1: 
@@ -48,15 +48,15 @@ hmde_model("constant_single_ind") |>
 #> Chain 1: Iteration: 900 / 1000 [ 90%]  (Sampling)
 #> Chain 1: Iteration: 1000 / 1000 [100%]  (Sampling)
 #> Chain 1: 
-#> Chain 1:  Elapsed Time: 0.047 seconds (Warm-up)
-#> Chain 1:                0.032 seconds (Sampling)
-#> Chain 1:                0.079 seconds (Total)
+#> Chain 1:  Elapsed Time: 0.054 seconds (Warm-up)
+#> Chain 1:                0.036 seconds (Sampling)
+#> Chain 1:                0.09 seconds (Total)
 #> Chain 1: 
 #> 
 #> SAMPLING FOR MODEL 'constant_single_ind' NOW (CHAIN 2).
 #> Chain 2: 
-#> Chain 2: Gradient evaluation took 1.7e-05 seconds
-#> Chain 2: 1000 transitions using 10 leapfrog steps per transition would take 0.17 seconds.
+#> Chain 2: Gradient evaluation took 1.2e-05 seconds
+#> Chain 2: 1000 transitions using 10 leapfrog steps per transition would take 0.12 seconds.
 #> Chain 2: Adjust your expectations accordingly!
 #> Chain 2: 
 #> Chain 2: 
@@ -73,9 +73,9 @@ hmde_model("constant_single_ind") |>
 #> Chain 2: Iteration: 900 / 1000 [ 90%]  (Sampling)
 #> Chain 2: Iteration: 1000 / 1000 [100%]  (Sampling)
 #> Chain 2: 
-#> Chain 2:  Elapsed Time: 0.05 seconds (Warm-up)
-#> Chain 2:                0.037 seconds (Sampling)
-#> Chain 2:                0.087 seconds (Total)
+#> Chain 2:  Elapsed Time: 0.057 seconds (Warm-up)
+#> Chain 2:                0.042 seconds (Sampling)
+#> Chain 2:                0.099 seconds (Total)
 #> Chain 2: 
 #>            ind_y_0           ind_beta global_error_sigma              y_hat 
 #>           1.017323           1.007018           1.002807           1.017323 
