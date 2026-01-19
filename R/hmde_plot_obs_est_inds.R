@@ -28,7 +28,6 @@ hmde_plot_obs_est_inds <- function(estimates = NULL,
                                    ylab = "Y(t)",
                                    title = NULL){
   if(!is.null(estimates)){ #Allows for passing of estimate object.
-    ind_id_vec <- estimates$individual_data$ind_id
     measurement_data <- estimates$measurement_data
   }
 
