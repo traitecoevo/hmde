@@ -201,7 +201,13 @@ summary.hmde_estimates <- function(x, ...){
 
 plot.hmde_estimates <- function(x, ...){
   plot_1 <- hmde_plot_de_pieces(x)
-  plot_2 <- hmde_plot_obs_est_inds(x)
+
+  if(grepl("multi", x$model_name)){
+    n_ind_plot <- min(5, nrow(x$individual_data))
+    plot_2 <- hmde_plot_obs_est_inds(x, n_ind_to_plot = n_ind_plot)
+  } else {
+    plot_2 <- hmde_plot_obs_est_inds(x, n_ind_to_plot = 1)
+  }
 
   return_plot <- plot_grid(plot_1, plot_2, nrow = 2, align = v)
   return(return_plot)
