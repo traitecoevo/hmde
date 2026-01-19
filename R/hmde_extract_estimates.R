@@ -1,9 +1,9 @@
-#' Extract samples and return measurement, individual, and population-level estimates
+#' Constructor function for hmde_estimates object. Extract samples and return measurement, individual, and population-level estimates
 #'
 #' @param fit fitted model Stan fit
 #' @param input_measurement_data data used to fit the model with ind_id, y_obs, time, obs_index tibble
 #'
-#' @return named list with data frames for measurement, individual, population-level, and error parameter estimates
+#' @return hmde_estimates object comprising a named list with model information, data frames for measurement, individual, population-level, and error parameter estimates
 #'
 #' @examples
 #' # basic usage of hmde_extract_estimates
@@ -44,6 +44,12 @@ hmde_extract_estimates <- function(fit = NULL,
 
   estimate_list <- list(model_name = model)
   par_names <- hmde_model_pars(model)
+  prior_names <-
+    paste0("check_",
+           names(hmde_model(model =
+                              model))[grep("prior_pars",
+                                           names(hmde_model(model = model)))]
+  )
 
   if(grepl("multi", model)){ #Get n_ind for multi-individual
     n_ind <- length(unique(input_measurement_data$ind_id))
@@ -77,11 +83,16 @@ hmde_extract_estimates <- function(fit = NULL,
 
   estimate_list$error_data <- hmde_extract_error_par_ests(samples, par_names$error_pars_names)
 
+  estimate_list$prior_data <- hmde_extract_prior_pars(samples, prior_names)
+
   #If model is multi-individual extract population-level estimates and add to list
   if(!is.null(par_names$population_pars_names)){
     estimate_list$population_data <- hmde_extract_pop_par_ests(samples,
-                                                               population_pars_names = par_names$population_pars_names)
+                                                               population_pars_names =
+                                                                 par_names$population_pars_names)
   }
+
+  class(estimate_list) <- "hmde_estimates"
 
   return(estimate_list)
 }
@@ -180,4 +191,25 @@ hmde_extract_error_par_ests <- function(samples = NULL,
   }
 
   return(error_data)
+}
+
+#' #' Prior parameter extraction
+#' @keywords internal
+#' @noRd
+hmde_extract_prior_pars <- function(samples = NULL,
+                                    prior_names = NULL){
+  prior_data <- list()
+
+  #Extract prior parameter value from the samples.
+  for(i in prior_names){
+    if(length(dim(samples[[i]])) > 1){
+      prior_data[[sub("check_", "", i)]] <- list(par_name = i,
+                              prior_vals = samples[[i]][1,])
+    } else {
+      prior_data[[sub("check_", "", i)]] <- list(par_name = i,
+                              prior_vals = samples[[i]][1])
+    }
+  }
+
+  return(prior_data)
 }
