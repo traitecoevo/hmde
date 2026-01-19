@@ -15,6 +15,7 @@
 #'
 #' @export
 #' @import dplyr
+#' @importFrom rstan get_elapsed_time
 #' @importFrom stats quantile
 
 hmde_extract_estimates <- function(fit = NULL,
@@ -42,7 +43,24 @@ hmde_extract_estimates <- function(fit = NULL,
     }
   }
 
-  estimate_list <- list(model_name = model)
+  #Extract info from fit object
+  method <- fit@stan_args[[1]][["method"]]
+  if(method == "sampling"){
+    summary <- paste0(
+      "Method: MCMC sampling with ",
+      fit@stan_args[[1]][["algorithm"]],
+      " algorithm",
+      "\nChains: ", fit@sim[["chains"]],
+      "\nIterations: ", fit@sim[["iter"]],
+      "\nWarmup: ", fit@sim[["warmup"]]
+    )
+  }
+
+  runtime <- rstan::get_elapsed_time(fit)
+
+  estimate_list <- list(model_name = model,
+                        summary = summary,
+                        runtime = runtime)
   par_names <- hmde_model_pars(model)
   prior_names <-
     paste0("check_",
@@ -72,6 +90,9 @@ hmde_extract_estimates <- function(fit = NULL,
     }
   }
 
+  #Prior parameters
+  estimate_list$prior_data <- hmde_extract_prior_pars(samples, prior_names)
+
   #Extract measurement, individual-level, and error parameter estimates and add to list
   estimate_list$measurement_data <- hmde_extract_measurement_ests(samples,
                                                                   par_names$measurement_pars_names,
@@ -82,8 +103,6 @@ hmde_extract_estimates <- function(fit = NULL,
                                                                     n_ind)
 
   estimate_list$error_data <- hmde_extract_error_par_ests(samples, par_names$error_pars_names)
-
-  estimate_list$prior_data <- hmde_extract_prior_pars(samples, prior_names)
 
   #If model is multi-individual extract population-level estimates and add to list
   if(!is.null(par_names$population_pars_names)){

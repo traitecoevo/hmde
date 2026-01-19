@@ -120,8 +120,11 @@ print.hmde_estimates <- function(x, ...){
       "Model name: ", x$model_name,
       "\nModel level: multi-individual",
       "\nTop level: population",
+      "\n", x$summary))
+
+    writeLines(
       "\nTop level parameter estimates:"
-    ))
+    )
     writeLines(knitr::kable(x$population_data,
                             format = "markdown", digits = 3))
 
@@ -130,11 +133,19 @@ print.hmde_estimates <- function(x, ...){
       "Model name: ", x$model_name,
       "\nModel level: single individual",
       "\nTop level: individual",
+      "\nTop level parameter estimates:",
+      "\n", x$summary))
+
+    writeLines(
       "\nTop level parameter estimates:"
-    ))
+    )
     writeLines(knitr::kable(x$individual_data,
                             format = "markdown", digits = 3))
   }
+
+  writeLines("\nRuntime information:")
+  writeLines(knitr::kable(x$runtime,
+                          format = "markdown", digits = 3))
 }
 
 
@@ -164,8 +175,11 @@ summary.hmde_estimates <- function(x, ...){
       "Model name: ", x$model_name,
       "\nModel level: multi-individual",
       "\nTop level: population",
+      "\n", x$summary))
+
+    writeLines(
       "\nTop level parameter estimates:"
-    ))
+    )
     writeLines(knitr::kable(x$population_data,
                             format = "markdown", digits = 3))
 
@@ -174,8 +188,12 @@ summary.hmde_estimates <- function(x, ...){
       "Model name: ", x$model_name,
       "\nModel level: single individual",
       "\nTop level: individual",
+      "\nTop level parameter estimates:",
+      "\n", x$summary))
+
+    writeLines(
       "\nTop level parameter estimates:"
-    ))
+    )
     writeLines(knitr::kable(x$individual_data,
                             format = "markdown", digits = 3))
   }
@@ -200,15 +218,18 @@ summary.hmde_estimates <- function(x, ...){
 #' @export
 
 plot.hmde_estimates <- function(x, ...){
-  plot_1 <- hmde_plot_de_pieces(x)
+  plot_1 <- hmde_plot_de_pieces(x) +
+    labs(title = "Plot of DE pieces fit to each individual")
 
   if(grepl("multi", x$model_name)){
     n_ind_plot <- min(5, nrow(x$individual_data))
-    plot_2 <- hmde_plot_obs_est_inds(x, n_ind_to_plot = n_ind_plot)
+    plot_2 <- hmde_plot_obs_est_inds(x, n_ind_to_plot = n_ind_plot) +
+      labs(title = "Plot of fit sizes over time")
   } else {
-    plot_2 <- hmde_plot_obs_est_inds(x, n_ind_to_plot = 1)
+    plot_2 <- hmde_plot_obs_est_inds(x, n_ind_to_plot = 1) +
+      labs(title = "Plot of fit sizes over time")
   }
 
-  return_plot <- plot_grid(plot_1, plot_2, nrow = 2, align = v)
+  return_plot <- plot_grid(plot_1, plot_2, nrow = 2, align = "v")
   return(return_plot)
 }
