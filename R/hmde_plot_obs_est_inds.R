@@ -2,7 +2,7 @@
 #' on posterior estimates. Structured to take in the measurement_data tibble constructed by
 #' the hmde_extract_estimates function.
 #'
-#' @param estimate_list list output of hmde_extract_estimates
+#' @param estimates hmde_estimates object output of hmde_extract_estimates
 #' @param measurement_data tibble with estimated measurements
 #' @param ind_id_vec vector with list of ind_id values
 #' @param n_ind_to_plot integer giving number of individuals to plot if not specified
@@ -12,7 +12,7 @@
 #'
 #' @examples
 #' # basic usage of hmde_plot_obs_est_inds
-#' hmde_plot_obs_est_inds(estimate_list = Tree_Size_Ests,
+#' hmde_plot_obs_est_inds(estimates = Tree_Size_Ests,
 #'                        n_ind_to_plot = 5)
 #'
 #' @return ggplot object
@@ -20,16 +20,23 @@
 #' @import ggplot2
 #' @import dplyr
 
-hmde_plot_obs_est_inds <- function(estimate_list = NULL,
+hmde_plot_obs_est_inds <- function(estimates = NULL,
                                    measurement_data = NULL,
                                    ind_id_vec = NULL,
                                    n_ind_to_plot = NULL,
                                    xlab = "Time",
                                    ylab = "Y(t)",
                                    title = NULL){
-  if(!is.null(estimate_list)){ #Allows for passing of estimate object.
-    ind_id_vec <- estimate_list$individual_data$ind_id
-    measurement_data <- estimate_list$measurement_data
+  if(!is.null(estimates)){ #Allows for passing of estimate object.
+    ind_id_vec <- estimates$individual_data$ind_id
+    measurement_data <- estimates$measurement_data
+  }
+
+  #Checks
+  if(!is.null(estimates)){
+    if(!inherits(estimates, "hmde_estimates")){
+      stop("Estimates not required hmde_estimates class.")
+    }
   }
 
   if(is.null(measurement_data)){

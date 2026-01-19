@@ -10,8 +10,8 @@
 #' @export
 
 print.hmde_model_template <- function(x, ...){
-  print(paste0("Model: ", x$model))
-  print("Input data template:")
+  writeLines(paste0("Model: ", x$model))
+  writeLines("Input data template:")
   for(i in 1:length(x)){
     print(x[i], ...)
   }
@@ -21,7 +21,7 @@ print.hmde_model_template <- function(x, ...){
 #' Summary function for hmde_model_template object
 #'
 #' @param object hmde_model_template output from hmde_model
-#' @param ... other parameters used for print
+#' @param ... other parameters used for summary
 #'
 #' @examples
 #' # basic usage of summary
@@ -30,8 +30,8 @@ print.hmde_model_template <- function(x, ...){
 #' @export
 
 summary.hmde_model_template <- function(object, ...){
-  print(paste0("Model: ", object$model))
-  print("Input data template:")
+  writeLines(paste0("Model: ", object$model))
+  writeLines("Input data template:")
   for(i in 1:length(object)){
     print(object[i], ...)
   }
@@ -91,4 +91,118 @@ plot.hmde_model_template <- function(x, ...){
                         alpha = 0.4)
 
   return(plot)
+}
+
+
+#' Print function for hmde_estimates object
+#'
+#' @param x hmde_estimates output from hmde_extract_estimates
+#' @param ... other parameters used for print
+#'
+#' @examples
+#' # basic usage of print
+#' hmde_model("constant_single_ind") |>
+#'   hmde_assign_data(Trout_Size_Data)|>
+#'   hmde_run(chains = 1, iter = 1000,
+#'            verbose = FALSE, show_messages = FALSE) |>
+#'   hmde_extract_estimates(Trout_Size_Data) |>
+#'   print()
+#'
+#' @importFrom knitr kable
+#'
+#' @export
+
+print.hmde_estimates <- function(x, ...){
+  #Outputs model info and top level parameter table
+
+  if(grepl("multi", x$model_name)){
+    writeLines(paste0(
+      "Model name: ", x$model_name,
+      "\nModel level: multi-individual",
+      "\nTop level: population",
+      "\nTop level parameter estimates:"
+    ))
+    writeLines(knitr::kable(x$population_data,
+                            format = "markdown", digits = 3))
+
+  } else if(grepl("single", x$model_name)){
+    writeLines(paste0(
+      "Model name: ", x$model_name,
+      "\nModel level: single individual",
+      "\nTop level: individual",
+      "\nTop level parameter estimates:"
+    ))
+    writeLines(knitr::kable(x$individual_data,
+                            format = "markdown", digits = 3))
+  }
+}
+
+
+#' Summary function for hmde_estimates object
+#'
+#' @param x hmde_estimates output from hmde_extract_estimates
+#' @param ... other parameters used for summary
+#'
+#' @examples
+#' # basic usage of summary
+#' hmde_model("constant_single_ind") |>
+#'   hmde_assign_data(Trout_Size_Data)|>
+#'   hmde_run(chains = 1, iter = 1000,
+#'            verbose = FALSE, show_messages = FALSE) |>
+#'   hmde_extract_estimates(Trout_Size_Data) |>
+#'   summary()
+#'
+#' @importFrom knitr kable
+#'
+#' @export
+
+summary.hmde_estimates <- function(x, ...){
+  #Outputs model info and top level parameter table
+
+  if(grepl("multi", x$model_name)){
+    writeLines(paste0(
+      "Model name: ", x$model_name,
+      "\nModel level: multi-individual",
+      "\nTop level: population",
+      "\nTop level parameter estimates:"
+    ))
+    writeLines(knitr::kable(x$population_data,
+                            format = "markdown", digits = 3))
+
+  } else if(grepl("single", x$model_name)){
+    writeLines(paste0(
+      "Model name: ", x$model_name,
+      "\nModel level: single individual",
+      "\nTop level: individual",
+      "\nTop level parameter estimates:"
+    ))
+    writeLines(knitr::kable(x$individual_data,
+                            format = "markdown", digits = 3))
+  }
+}
+
+#' Plot function for hmde_estimates object
+#'
+#' @param x hmde_estimates output from hmde_extract_estimates
+#' @param ... Additional argument space to conform to S3 template.
+#'
+#' @examples
+#' # basic usage of print
+#' hmde_model("constant_single_ind") |>
+#'   hmde_assign_data(Trout_Size_Data)|>
+#'   hmde_run(chains = 1, iter = 1000,
+#'            verbose = FALSE, show_messages = FALSE) |>
+#'   hmde_extract_estimates(Trout_Size_Data) |>
+#'   plot()
+#'
+#' @importFrom cowplot plot_grid
+#'
+#' @export
+
+plot.hmde_estimates <- function(x, ...){
+  plot_1 <- hmde_plot_de_pieces(x)
+  plot_2 <- hmde_plot_obs_est_inds(x)
+
+  return_plot <- plot_grid(plot_1, plot_2, nrow = 2, align = v)
+  return(return_plot)
 }

@@ -4,7 +4,7 @@
 #' Function piece will go from the first fitted size to the last.
 #' Accepted ggplot arguments will change the axis labels, title, line colour, alpha
 #'
-#' @param estimate_list list output from hmde_extract_estimates
+#' @param estimates hmde_estimates object output from hmde_extract_estimates
 #' @param xlab character string for replacement x axis label
 #' @param ylab character string for replacement y axis label
 #' @param title character string for replacement plot title
@@ -15,23 +15,27 @@
 #'
 #' @examples
 #' # basic usage of hmde_plot_de_pieces
-#' hmde_plot_de_pieces(estimate_list = Tree_Size_Ests)
+#' hmde_plot_de_pieces(estimates = Tree_Size_Ests)
 #'
 #' @export
 #' @import ggplot2
 #' @import dplyr
 
-hmde_plot_de_pieces <- function(estimate_list = NULL,
+hmde_plot_de_pieces <- function(estimates = NULL,
                                 xlab = "Y(t)",
                                 ylab = "f",
                                 title = NULL,
                                 colour = "#006600",
                                 alpha = 0.4){
-  model <- estimate_list$model
-  individual_data <- estimate_list$individual_data
-  measurement_data <- estimate_list$measurement_data
+  model <- estimates$model
+  individual_data <- estimates$individual_data
+  measurement_data <- estimates$measurement_data
 
-  #Check for model
+  #Checks
+  if(!inherits(estimates, "hmde_estimates")){
+    stop("Estimates not required hmde_estimates class.")
+  }
+
   if(!model %in% hmde_model_names()){
     stop("Model name not recognised. Run hmde_model_names() to see available models.")
   }
