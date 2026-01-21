@@ -7,7 +7,7 @@ on posterior estimates. Structured to take in the measurement_data tibble constr
 the hmde_extract_estimates function.}
 \usage{
 hmde_plot_obs_est_inds(
-  estimate_list = NULL,
+  estimates = NULL,
   measurement_data = NULL,
   ind_id_vec = NULL,
   n_ind_to_plot = NULL,
@@ -17,7 +17,7 @@ hmde_plot_obs_est_inds(
 )
 }
 \arguments{
-\item{estimate_list}{list output of hmde_extract_estimates}
+\item{estimates}{hmde_estimates object output of hmde_extract_estimates}
 
 \item{measurement_data}{tibble with estimated measurements}
 
@@ -41,7 +41,7 @@ the hmde_extract_estimates function.
 }
 \examples{
 # basic usage of hmde_plot_obs_est_inds
-hmde_plot_obs_est_inds(estimate_list = Tree_Size_Ests,
+hmde_plot_obs_est_inds(estimates = Tree_Size_Ests,
                        n_ind_to_plot = 5)
 
 }

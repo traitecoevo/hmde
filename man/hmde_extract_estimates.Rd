@@ -2,7 +2,7 @@
 % Please edit documentation in R/hmde_extract_estimates.R
 \name{hmde_extract_estimates}
 \alias{hmde_extract_estimates}
-\title{Extract samples and return measurement, individual, and population-level estimates}
+\title{Constructor function for hmde_estimates object. Extract samples and return measurement, individual, and population-level estimates}
 \usage{
 hmde_extract_estimates(fit = NULL, input_measurement_data = NULL)
 }
@@ -12,10 +12,10 @@ hmde_extract_estimates(fit = NULL, input_measurement_data = NULL)
 \item{input_measurement_data}{data used to fit the model with ind_id, y_obs, time, obs_index tibble}
 }
 \value{
-named list with data frames for measurement, individual, population-level, and error parameter estimates
+hmde_estimates object comprising a named list with model information, data frames for measurement, individual, population-level, and error parameter estimates
 }
 \description{
-Extract samples and return measurement, individual, and population-level estimates
+Constructor function for hmde_estimates object. Extract samples and return measurement, individual, and population-level estimates
 }
 \examples{
 # basic usage of hmde_extract_estimates

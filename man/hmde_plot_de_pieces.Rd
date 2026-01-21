@@ -9,7 +9,7 @@ Function piece will go from the first fitted size to the last.
 Accepted ggplot arguments will change the axis labels, title, line colour, alpha}
 \usage{
 hmde_plot_de_pieces(
-  estimate_list = NULL,
+  estimates = NULL,
   xlab = "Y(t)",
   ylab = "f",
   title = NULL,
@@ -18,7 +18,7 @@ hmde_plot_de_pieces(
 )
 }
 \arguments{
-\item{estimate_list}{list output from hmde_extract_estimates}
+\item{estimates}{hmde_estimates object output from hmde_extract_estimates}
 
 \item{xlab}{character string for replacement x axis label}
 
@@ -42,6 +42,6 @@ Accepted ggplot arguments will change the axis labels, title, line colour, alpha
 }
 \examples{
 # basic usage of hmde_plot_de_pieces
-hmde_plot_de_pieces(estimate_list = Tree_Size_Ests)
+hmde_plot_de_pieces(estimates = Tree_Size_Ests)
 
 }
