@@ -96,7 +96,7 @@ plot.hmde_model_template <- function(x, ...){
 
 #' Print function for hmde_estimates object
 #'
-#' @param x hmde_estimates output from hmde_extract_estimates
+#' @param x hmde_estimates class output from hmde_extract_estimates
 #' @param ... other parameters used for print
 #'
 #' @examples
@@ -151,7 +151,7 @@ print.hmde_estimates <- function(x, ...){
 
 #' Summary function for hmde_estimates object
 #'
-#' @param x hmde_estimates output from hmde_extract_estimates
+#' @param x hmde_estimates class output from hmde_extract_estimates
 #' @param ... other parameters used for summary
 #'
 #' @examples
@@ -201,7 +201,7 @@ summary.hmde_estimates <- function(x, ...){
 
 #' Plot function for hmde_estimates object
 #'
-#' @param x hmde_estimates output from hmde_extract_estimates
+#' @param x hmde_estimates class output from hmde_extract_estimates
 #' @param ... Additional argument space to conform to S3 template.
 #'
 #' @examples
