@@ -56,6 +56,10 @@ setGeneric("obs_data", function(x) standardGeneric("obs_data"))
 setGeneric("obs_data<-", function(x, value) standardGeneric("obs_data<-"))
 setMethod("obs_data", "hmde_data_template", function(x) x@obs_data)
 setMethod("obs_data<-", "hmde_data_template", function(x, value) {
+  if(names(value) != names(x@obs_data)){
+    stop("List names do not match obs_data template.")
+  }
+
   x@obs_data <- value
   x
 })
@@ -65,6 +69,10 @@ setGeneric("prior_pars", function(x) standardGeneric("prior_pars"))
 setGeneric("prior_pars<-", function(x, value) standardGeneric("prior_pars<-"))
 setMethod("prior_pars", "hmde_data_template", function(x) x@prior_pars)
 setMethod("prior_pars<-", "hmde_data_template", function(x, value) {
+  if(names(value) != names(x@prior_pars)){
+    stop("Prior names do not match prior_pars template.")
+  }
+
   x@prior_pars <- value
   x
 })
