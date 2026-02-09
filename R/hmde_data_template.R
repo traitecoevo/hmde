@@ -12,8 +12,8 @@ setClass(
   prototype = prototype(
     model_name = NA_character_,
     model_level = NA_character_,
-    obs_data = NA,
-    prior_pars = NA
+    obs_data = list(NA),
+    prior_pars = list(NA)
   )
 )
 

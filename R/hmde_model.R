@@ -1,4 +1,5 @@
-#' helper function for hmde_data_template that provides data structure for model
+#' helper function for hmde_data_template that provides data structure for model,
+#' Also used to guide the user on the required structure for the model they want.
 #'
 #' @param model model name character string
 #'
@@ -23,8 +24,6 @@ hmde_model <- function(model=NULL){
                    vb_single_ind = hmde_vb_single_ind(),
                    vb_multi_ind = hmde_vb_multi_ind(),
                    affine_single_ind = hmde_affine_single_ind())
-
-  class(output) <- "hmde_model_template"
 
   return(output)
 }
