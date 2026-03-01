@@ -74,6 +74,22 @@ setMethod("prior_pars<-", "hmde_data_template", function(x, value) {
 ## Helper Functions
 
 # Constructor
+#' Constructor function for hmde_data_template class, with data assignment ready for model fitting.
+#'
+#' @param model_name character string name of a hmde model
+#' @param model_level character string specifying whether single or multiple inds
+#' @param obs_data list containing observational data vectors
+#' @param prior_pars list containing prior parameters
+#' @param ... data-masking name-value pairs allowing specific input of elements
+#'
+#' @return hmde_data_template class object
+#'
+#' @examples
+#' # basic usage of hmde_data_template
+#' hmde_data_template("constant_single_ind")
+#'
+#' @export
+#'
 hmde_data_template <- function(model_name, #Mandatory
                                model_level = NA_character_, #Optional
                                obs_data = NULL, #Optional
@@ -118,11 +134,13 @@ hmde_data_template <- function(model_name, #Mandatory
     obs_data_temp_list <- obs_data(template)
     for(i in data_fields_obs){ # Iterate through required fields and fill them
       if(i %in% user_fields){ #Check if the user has supplied it in a tibble
-        obs_data_temp_list <- purrr::list_modify(obs_data_temp_list, !!!additional_data[i])
+        obs_data_temp_list <- purrr::list_modify(obs_data_temp_list,
+                                                 !!!additional_data[i])
       }
     }
 
-    for(i in intersect(data_fields_obs, c("n_obs", "n_ind", "y_bar"))){ # Check that fields are valid and filled.
+    # Check that fields are valid and filled.
+    for(i in intersect(data_fields_obs, c("n_obs", "n_ind", "y_bar"))){
       if(length(obs_data_temp_list[[i]]) == 1){
         if(is.na(obs_data_temp_list[[i]])){ #Catches default tibble transformations
 
