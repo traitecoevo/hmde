@@ -88,6 +88,24 @@ setMethod("prior_pars<-", "hmde_data_template", function(x, value) {
 #' # basic usage of hmde_data_template
 #' hmde_data_template("constant_single_ind")
 #'
+#' # basic usage of hmde_data_template with data input
+#' hmde_data_template("constant_single_ind",
+#'   obs_data = list(
+#'     n_obs = 3,
+#'     y_obs = c(1,1,1),
+#'     obs_index = 1:3,
+#'     time = 0:2
+#'   )
+#' )
+#'
+#' #basic usage of hmde_data_template with prior input
+#' hmde_data_template("constant_single_ind",
+#'   prior_pars = list(
+#'     prior_pars_ind_beta = c(1,2),
+#'     prior_pars_global_error_sigma = c(1,3)
+#'   )
+#' )
+#'
 #' @export
 #'
 hmde_data_template <- function(model_name, #Mandatory
