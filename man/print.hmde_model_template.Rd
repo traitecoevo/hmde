@@ -4,7 +4,7 @@
 \alias{print.hmde_model_template}
 \title{Print function for hmde_model_template object}
 \usage{
-\method{print}{hmde_model_template}(x, ...)
+print.hmde_model_template(x, ...)
 }
 \arguments{
 \item{x}{hmde_model_template output from hmde_model}

@@ -4,7 +4,7 @@
 \alias{summary.hmde_estimates}
 \title{Summary function for hmde_estimates object}
 \usage{
-\method{summary}{hmde_estimates}(x, ...)
+summary.hmde_estimates(x, ...)
 }
 \arguments{
 \item{x}{hmde_estimates class output from hmde_extract_estimates}

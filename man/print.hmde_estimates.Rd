@@ -4,7 +4,7 @@
 \alias{print.hmde_estimates}
 \title{Print function for hmde_estimates object}
 \usage{
-\method{print}{hmde_estimates}(x, ...)
+print.hmde_estimates(x, ...)
 }
 \arguments{
 \item{x}{hmde_estimates class output from hmde_extract_estimates}

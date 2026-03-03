@@ -4,7 +4,7 @@
 \alias{summary.hmde_model_template}
 \title{Summary function for hmde_model_template object}
 \usage{
-\method{summary}{hmde_model_template}(object, ...)
+summary.hmde_model_template(object, ...)
 }
 \arguments{
 \item{object}{hmde_model_template output from hmde_model}

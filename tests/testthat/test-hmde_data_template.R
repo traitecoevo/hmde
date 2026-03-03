@@ -1,5 +1,8 @@
 test_that("hmde_data_template: initialisaiton and validation", {
   # Default initialisation should not error
+  expect_no_error(new("hmde_data_template"))
+
+  #Check class
   test_object <- new("hmde_data_template")
   expect_true(is(test_object, "hmde_data_template"))
 
@@ -61,7 +64,7 @@ test_that("hmde_data_template: constructor", {
 
   # Testing different methods of data assignment
   # Filling obs_data
-  obs_data <-list(
+  obs_data <- list(
     n_obs = 3,
     y_obs = c(1,1,1),
     obs_index = 1:3,
@@ -144,4 +147,48 @@ test_that("hmde_data_template: constructor", {
                                     list(prior_pars_ind_beta = c(1,2),
                                          prior_pars_global_error_sigma = 1)))
 
+})
+
+
+test_that("hmde_data_template: show", {
+ test_object <- hmde_data_template("constant_single_ind")
+ expect_no_error(show(test_object))
+})
+
+test_that("hmde_data_template: print", {
+  test_object <- hmde_data_template("constant_single_ind")
+  expect_no_error(print(test_object))
+})
+
+test_that("hmde_data_template: summary", {
+  test_object <- hmde_data_template("constant_single_ind")
+  expect_no_error(summary(test_object))
+
+  #Test with observation data
+  obs_data <-list(
+    n_obs = 30,
+    y_obs = 1:30,
+    obs_index = 1:30,
+    time = 0:29
+  )
+  test_object <- hmde_data_template("constant_single_ind",
+                                    obs_data = obs_data)
+  expect_no_error(summary(test_object))
+
+  #Test multi-species model with observation data
+  obs_data <-list(
+    n_obs = 30,
+    y_obs = 1:30,
+    obs_index = 1:30,
+    time = 0:29,
+    ind_id = rep(1, times = 30)
+  )
+  test_object <- hmde_data_template("constant_multi_ind",
+                                    obs_data = obs_data)
+  expect_no_error(summary(test_object))
+})
+
+test_that("hmde_data_template: plot", {
+  test_object <- hmde_data_template("constant_single_ind")
+  expect_no_error(plot(test_object))
 })

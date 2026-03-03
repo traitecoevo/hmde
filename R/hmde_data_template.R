@@ -228,3 +228,162 @@ hmde_data_template <- function(model_name, #Mandatory
   return(template)
 }
 
+#----------------------------------------------------------------------------#
+## Generic functions for show, print, summary, plot
+
+#' Show function for hmde_data_template object
+#'
+#' @param x hmde_data_template class object
+#'
+#' @examples
+#' # basic usage of show
+#' hmde_data_template("constant_single_ind") |> show()
+#'
+#' @export
+
+setMethod("show", "hmde_data_template", function(object) {
+  cat(is(object)[[1]], "\n",
+      "  Model name: ", object@model_name, "\n",
+      "  Model level:  ", object@model_level, "\n",
+      "  Input data names:  ", paste(names(object@obs_data),
+                                     collapse = ", "), "\n",
+      "  Prior names:  ", paste(names(object@prior_pars),
+                                collapse = ", "), "\n",
+      sep = ""
+  )
+})
+
+
+#' Print function for hmde_data_template object
+#'
+#' @param x hmde_data_template class object
+#'
+#' @examples
+#' # basic usage of print
+#' hmde_data_template("constant_single_ind") |> print()
+#'
+#' @export
+
+setMethod("print", "hmde_data_template", function(x) {
+  cat(is(x)[[1]], "\n",
+      "  Model name: ", x@model_name, "\n",
+      "  Model level:  ", x@model_level, "\n",
+      "  Input data names:  ", paste(names(x@obs_data),
+                                     collapse = ", "), "\n",
+      "  Prior names:  ", paste(names(x@prior_pars),
+                                collapse = ", "), "\n",
+      sep = ""
+  )
+})
+
+
+#' Summary function for hmde_data_template object
+#'
+#' @param object hmde_data_template class object
+#'
+#' @examples
+#' # basic usage of summary
+#' hmde_data_template("constant_single_ind") |> summary()
+#'
+#' @export
+
+setMethod("summary", "hmde_data_template", function(object) {
+  if(!is.na(object@obs_data[[1]])){
+    if(!is.null(object@obs_data[["ind_id"]])){
+      summary_input_data <- head(tibble(
+        obs_index = object@obs_data[["obs_index"]],
+        ind_id = object@obs_data[["ind_id"]],
+        y_obs = object@obs_data[["y_obs"]],
+        time = object@obs_data[["time"]]
+      ))
+
+    } else {
+      summary_input_data <- head(tibble(
+        obs_index = object@obs_data[["obs_index"]],
+        y_obs = object@obs_data[["y_obs"]],
+        time = object@obs_data[["time"]]
+      ))
+    }
+
+    # Output to console
+    cat(is(object)[[1]], "\n",
+        "  Model name: ", object@model_name, "\n",
+        "  Model level:  ", object@model_level, "\n",
+        "  Prior names:  ", paste(names(object@prior_pars),
+                                  collapse = ", "), "\n",
+        "  Observation data:  ", "\n",
+        sep = ""
+    )
+    print(summary_input_data)
+
+  } else {
+    summary_input_data <- paste("  Input data names:  ",
+                                paste(names(object@obs_data),
+                                      collapse = ", "), "\n",
+                                collapse = "")
+
+    cat(is(object)[[1]], "\n",
+        "  Model name: ", object@model_name, "\n",
+        "  Model level:  ", object@model_level, "\n",
+        summary_input_data,
+        "  Prior names:  ", paste(names(object@prior_pars),
+                                  collapse = ", "), "\n",
+        sep = ""
+    )
+  }
+})
+
+#' Plot function for hmde_data_template object
+#'
+#' @param x hmde_data_template class object
+#'
+#' @examples
+#' # basic usage of plot
+#' hmde_model("constant_single_ind") |> plot()
+#'
+#' @export
+
+setMethod("plot", "hmde_data_template", function(x) {
+  model_pars_names <- hmde_model_pars(x@model_name)$individual_pars_names
+
+  temp <- c()
+  #Get parameter estimates from mean of prior distribution
+  for(i in 1:length(model_pars_names)){
+    #Get prior name
+    if(grepl("multi", x@model_name, fixed = TRUE)){ #If multi-ind model
+      prior_name <- paste0("prior_pars_pop_log_",
+                           gsub("ind_", "", model_pars_names[i]), "_mean")
+    } else { #Single individual model
+      prior_name <- paste0("prior_pars_", model_pars_names[i])
+    }
+
+    #Cover von Bertalanffy prior centering at provided data max
+    if(grepl("vb", x@model_name, fixed = TRUE) &&
+       grepl("max_size", model_pars_names[i], fixed = TRUE)){
+      temp[i+1] <- 10
+    } else {
+      temp[i+1] <- exp(x@prior_pars[[prior_name]][1])
+    }
+  }
+  plot_pars <- rbind(temp)
+
+  #Get final size for plot
+  if(grepl("vb", x@model_name, fixed = TRUE)){
+    y_final <- plot_pars[1,2]
+  } else {
+    y_final <- 20
+  }
+
+  #Plot ODE using parameter estimates
+  plot <- hmde_ggplot_de_pieces(pars_data = plot_pars,
+                                y_0 = 0,
+                                y_final = y_final,
+                                DE_function = hmde_model_des(x@model_name),
+                                xlab = "Size",
+                                ylab = "Growth rate",
+                                title = paste0("Example ODE for ", x@model_name),
+                                colour = "#006600",
+                                alpha = 0.4)
+
+  return(plot)
+})

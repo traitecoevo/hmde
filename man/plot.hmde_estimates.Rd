@@ -4,7 +4,7 @@
 \alias{plot.hmde_estimates}
 \title{Plot function for hmde_estimates object}
 \usage{
-\method{plot}{hmde_estimates}(x, ...)
+plot.hmde_estimates(x, ...)
 }
 \arguments{
 \item{x}{hmde_estimates class output from hmde_extract_estimates}
