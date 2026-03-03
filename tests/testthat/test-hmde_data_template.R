@@ -63,7 +63,7 @@ test_that("hmde_data_template: constructor", {
   expect_error(hmde_data_template(model_name = "wrong_name"))
 
   # Testing different methods of data assignment
-  # Filling obs_data
+  # Filling obs_data from list
   obs_data <- list(
     n_obs = 3,
     y_obs = c(1,1,1),
@@ -74,6 +74,18 @@ test_that("hmde_data_template: constructor", {
                                     obs_data = obs_data)
   expect_equal(obs_data(test_object), obs_data)
 
+  # Filling obs_data from tibble
+  test_object <- hmde_data_template(model_name = "constant_single_ind",
+                                    obs_data = Trout_Size_Data)
+  expect_equal(obs_data(test_object),
+               list(
+                 n_obs = nrow(Trout_Size_Data),
+                 y_obs = Trout_Size_Data[["y_obs"]],
+                 obs_index = Trout_Size_Data[["obs_index"]],
+                 time = Trout_Size_Data[["time"]])
+               )
+
+  # Fill obs_data elements individually
   test_object <- hmde_data_template(model_name = "constant_single_ind",
                                     n_obs = 3,
                                     y_obs = c(1,1,1),
@@ -147,6 +159,23 @@ test_that("hmde_data_template: constructor", {
                                     list(prior_pars_ind_beta = c(1,2),
                                          prior_pars_global_error_sigma = 1)))
 
+  # Fill both obs_data and priors
+  obs_data <- list(
+    n_obs = 3,
+    y_obs = c(1,1,1),
+    obs_index = 1:3,
+    time = 0:2
+  )
+  prior_pars <- list(
+    prior_pars_ind_beta = c(1,2),
+    prior_pars_global_error_sigma = c(1,3)
+  )
+
+  test_object <- hmde_data_template(model_name = "constant_single_ind",
+                                    obs_data = obs_data,
+                                    prior_pars = prior_pars)
+  expect_equal(prior_pars(test_object), prior_pars)
+  expect_equal(obs_data(test_object), obs_data)
 })
 
 

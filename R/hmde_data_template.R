@@ -78,7 +78,7 @@ setMethod("prior_pars<-", "hmde_data_template", function(x, value) {
 #'
 #' @param model_name character string name of a hmde model
 #' @param model_level character string specifying whether single or multiple inds
-#' @param obs_data list containing observational data vectors
+#' @param obs_data list or tibble containing observational data vectors
 #' @param prior_pars list containing prior parameters
 #' @param ... data-masking name-value pairs allowing specific input of elements
 #'
@@ -137,14 +137,29 @@ hmde_data_template <- function(model_name, #Mandatory
   data_fields_obs <- names(obs_data(template))
   data_fields_priors <- names(prior_pars(template))
 
+  # Fill obs_data
   #If obs_data is provided, check it has required names
   if(!is.null(obs_data)){
-    #Check for name structure
-    if(!identical(names(obs_data), data_fields_obs)){
-      stop("Input observation data do not have correct names.")
+    if(is(obs_data, "list")){ # Handling for list input
+      #Check for name structure
+      if(!identical(names(obs_data), data_fields_obs)){
+        stop("Input observation data list does not have correct names.")
+      }
+
+      obs_data_temp_list <- obs_data
+
+    } else if(is(obs_data, "tbl") || is(obs_data, "data.frame")){# Tibble or data frame iput
+      obs_data_temp_list <- obs_data(template)
+      obs_data <- as_tibble(obs_data) #Ensure tibble for ease of use
+
+      # Iterate through required fields and fill them
+      for(i in data_fields_obs){
+        if(i %in% names(obs_data)){
+          obs_data_temp_list[[i]] <- obs_data[[i]]
+        }
+      }
     }
 
-    obs_data(template) <- obs_data
   } else if(length(user_code) != 0
             && length(intersect(data_fields_obs, user_fields)) > 0
             ){ #Check if relevant user fields are provided
@@ -156,51 +171,52 @@ hmde_data_template <- function(model_name, #Mandatory
                                                  !!!additional_data[i])
       }
     }
+  }
 
-    # Check that fields are valid and filled.
-    for(i in intersect(data_fields_obs, c("n_obs", "n_ind", "y_bar"))){
-      if(length(obs_data_temp_list[[i]]) == 1){
-        if(is.na(obs_data_temp_list[[i]])){ #Catches default tibble transformations
+  # Check that fields are valid and filled.
+  for(i in intersect(data_fields_obs, c("n_obs", "n_ind", "y_bar"))){
+    if(length(obs_data_temp_list[[i]]) == 1){
+      if(is.na(obs_data_temp_list[[i]])){ #Catches default tibble transformations
 
-          obs_data_temp_list[[i]] <- switch(
-            i,
-            n_obs = length(obs_data_temp_list$y_obs),
-            n_ind = length(unique(obs_data_temp_list$ind_id)),
-            y_bar = mean(obs_data_temp_list$y_obs)
-          )
-        }
+        obs_data_temp_list[[i]] <- switch(
+          i,
+          n_obs = length(obs_data_temp_list$y_obs),
+          n_ind = length(unique(obs_data_temp_list$ind_id)),
+          y_bar = mean(obs_data_temp_list$y_obs)
+        )
+      }
 
-        if(is.na(obs_data_temp_list[[i]])){ #Report missing data
-          stop(paste("Improper data structure: Data missing:", i))
-        }
+      if(is.na(obs_data_temp_list[[i]])){ #Report missing data
+        stop(paste("Improper data structure: Data missing:", i))
       }
     }
+  }
 
-    #Validate that vectors have content
-    for(i in names(obs_data_temp_list)){
-      if((i != "n_obs") && length(obs_data_temp_list[[i]]) == 1){
-        if(is.na(obs_data_temp_list[[i]])){
-          stop(paste("Data missing:", i))
-        }
+  #Validate that vectors have content
+  for(i in names(obs_data_temp_list)){
+    if((i != "n_obs") && length(obs_data_temp_list[[i]]) == 1){
+      if(is.na(obs_data_temp_list[[i]])){
+        stop(paste("Data missing:", i))
       }
     }
+  }
 
-    #Validate lengths of vectors
-    check_length <- obs_data_temp_list[["n_obs"]]
-    for(i in names(obs_data_temp_list)){
-      if(i != "n_obs"){
-        if(length(obs_data_temp_list[[i]]) != check_length){
-          stop(paste("Mismatch in length between n_obs = ",
-                     check_length,  "and", i,
-                     "with length",
-                     length(obs_data_temp_list[[i]])))
-        }
+  #Validate lengths of vectors
+  check_length <- obs_data_temp_list[["n_obs"]]
+  for(i in names(obs_data_temp_list)){
+    if(i != "n_obs"){
+      if(length(obs_data_temp_list[[i]]) != check_length){
+        stop(paste("Mismatch in length between n_obs = ",
+                   check_length,  "and", i,
+                   "with length",
+                   length(obs_data_temp_list[[i]])))
       }
     }
 
     obs_data(template) <- obs_data_temp_list
   }
 
+  #Fill prior_pars
   if(!is.null(prior_pars)){
     #Check for name structure
     if(!identical(names(prior_pars), data_fields_priors)){
