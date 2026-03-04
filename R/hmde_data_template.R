@@ -137,6 +137,7 @@ hmde_data_template <- function(model_name, #Mandatory
   data_fields_obs <- names(obs_data(template))
   data_fields_priors <- names(prior_pars(template))
 
+  obs_data_temp_list <- NULL
   # Fill obs_data
   #If obs_data is provided, check it has required names
   if(!is.null(obs_data)){
@@ -212,9 +213,21 @@ hmde_data_template <- function(model_name, #Mandatory
                    length(obs_data_temp_list[[i]])))
       }
     }
+  }
 
+  if(!is.null(obs_data_temp_list)){
+    #Check that obs_index is unique for single_ind models
+    if(model_level(template) == "single_ind"){
+      if(length(unique(obs_data_temp_list[["obs_index"]])) !=
+         length(obs_data_temp_list[["obs_index"]])){
+        stop("Non-unique values in obs_index for single individual model.")
+      }
+    }
+
+    #if all validation passes, fill template.
     obs_data(template) <- obs_data_temp_list
   }
+
 
   #Fill prior_pars
   if(!is.null(prior_pars)){

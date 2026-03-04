@@ -76,13 +76,13 @@ test_that("hmde_data_template: constructor", {
 
   # Filling obs_data from tibble
   test_object <- hmde_data_template(model_name = "constant_single_ind",
-                                    obs_data = Trout_Size_Data)
+                                    obs_data = Trout_Size_Data[1:4,])
   expect_equal(obs_data(test_object),
                list(
-                 n_obs = nrow(Trout_Size_Data),
-                 y_obs = Trout_Size_Data[["y_obs"]],
-                 obs_index = Trout_Size_Data[["obs_index"]],
-                 time = Trout_Size_Data[["time"]])
+                 n_obs = 4,
+                 y_obs = Trout_Size_Data[["y_obs"]][1:4],
+                 obs_index = Trout_Size_Data[["obs_index"]][1:4],
+                 time = Trout_Size_Data[["time"]][1:4])
                )
 
   # Fill obs_data elements individually
@@ -123,6 +123,10 @@ test_that("hmde_data_template: constructor", {
   expect_error(hmde_data_template(model_name = "constant_single_ind",
                                   y_obs = c(1,1,1),
                                   obs_index = 1:3))
+
+  #Attempt to make single-ind model with multiple individuals
+  expect_error(hmde_data_template(model_name = "constant_single_ind",
+                                  obs_data = Trout_Size_Data))
 
   #Filling prior_pars
   prior_pars <- list(
