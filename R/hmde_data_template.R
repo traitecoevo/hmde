@@ -77,9 +77,9 @@ setMethod("prior_pars<-", "hmde_data_template", function(x, value) {
 #' Constructor function for hmde_data_template class, with data assignment ready for model fitting.
 #'
 #' @param model_name character string name of a hmde model
-#' @param model_level character string specifying whether single or multiple inds
 #' @param obs_data list or tibble containing observational data vectors
 #' @param prior_pars list containing prior parameters
+#' @param model_level character string specifying whether single or multiple inds
 #' @param ... data-masking name-value pairs allowing specific input of elements
 #'
 #' @return hmde_data_template class object
@@ -109,9 +109,9 @@ setMethod("prior_pars<-", "hmde_data_template", function(x, value) {
 #' @export
 #'
 hmde_data_template <- function(model_name, #Mandatory
-                               model_level = NA_character_, #Optional
                                obs_data = NULL, #Optional
                                prior_pars = NULL, #Optional
+                               model_level = NA_character_, #Optional
                                ...){  #Optional additional user input
   #Validation
   if(!model_name %in% hmde_model_names()){
