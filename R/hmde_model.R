@@ -59,6 +59,7 @@ hmde_const_multi_ind <- function(){
     model_level = "multi_ind",
     obs_data = list(
       n_obs = NA_integer_,
+      n_ind = NA_integer_,
       y_obs = NA_real_,
       obs_index = NA_integer_,
       time = NA_real_,
@@ -105,6 +106,7 @@ hmde_canham_multi_ind <- function(){
     model_level = "multi_ind",
     obs_data = list(
       n_obs = NA_integer_,
+      n_ind = NA_integer_,
       y_obs = NA_real_,
       obs_index = NA_integer_,
       time = NA_real_,
@@ -156,6 +158,7 @@ hmde_vb_multi_ind <- function(){
     model_level = "multi_ind",
     obs_data = list(
       n_obs = NA_integer_,
+      n_ind = NA_integer_,
       y_obs = NA_real_,
       obs_index = NA_integer_,
       time = NA_real_,

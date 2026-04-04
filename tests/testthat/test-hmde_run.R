@@ -13,6 +13,75 @@ test_that("Execution and output: hmde_run", {
   expect_visible(fit)
 })
 
+test_that("Each model: hmde_run", {
+  #Constant multi ind
+  data <- hmde_data_template("constant_multi_ind",
+                             obs_data = Trout_Size_Data)
+  expect_no_error(
+    suppressWarnings(
+      hmde_run(data, chains = 1, iter = 1,
+               verbose = FALSE,
+               show_messages = FALSE)
+     )
+  )
+
+  #Canham multi ind
+  data <- hmde_data_template("canham_multi_ind",
+                             obs_data = Trout_Size_Data)
+  expect_no_error(
+    suppressWarnings(
+      hmde_run(data, chains = 1, iter = 1,
+               verbose = FALSE,
+               show_messages = FALSE)
+    )
+  )
+
+  #VB multi ind
+  data <- hmde_data_template("vb_multi_ind",
+                             obs_data = Trout_Size_Data)
+  expect_no_error(
+    suppressWarnings(
+      hmde_run(data, chains = 1, iter = 1,
+               verbose = FALSE,
+               show_messages = FALSE)
+    )
+  )
+
+  #Single ind models
+  #Constant single ind
+  data <- hmde_data_template("constant_single_ind",
+                     obs_data = Trout_Size_Data[1:4,])
+  expect_no_error(
+    suppressWarnings(
+      hmde_run(data, chains = 1, iter = 1,
+               verbose = FALSE,
+               show_messages = FALSE)
+    )
+  )
+
+  #Canham single ind
+  data <- hmde_data_template("canham_single_ind",
+                             obs_data = Trout_Size_Data[1:4,])
+  expect_no_error(
+    suppressWarnings(
+      hmde_run(data, chains = 1, iter = 1,
+               verbose = FALSE,
+               show_messages = FALSE)
+    )
+  )
+
+  #VB single ind
+  data <- hmde_data_template("vb_single_ind",
+                             obs_data = Trout_Size_Data[1:4,])
+  expect_no_error(
+    suppressWarnings(
+      hmde_run(data, chains = 1, iter = 1,
+               verbose = FALSE,
+               show_messages = FALSE)
+    )
+  )
+})
+
 test_that("Error handling: hmde_run", {
   #Incorrect model name
   data <- hmde_data_template("constant_single_ind",

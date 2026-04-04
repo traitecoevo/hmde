@@ -205,7 +205,7 @@ hmde_data_template <- function(model_name, #Mandatory
   #Validate lengths of vectors
   check_length <- obs_data_temp_list[["n_obs"]]
   for(i in names(obs_data_temp_list)){
-    if(i != "n_obs"){
+    if(!i %in% c("n_obs", "n_ind", "y_bar")){
       if(length(obs_data_temp_list[[i]]) != check_length){
         stop(paste("Mismatch in length between n_obs = ",
                    check_length,  "and", i,
