@@ -130,7 +130,7 @@ setMethod("prior_pars<-", "hmde_data_template", function(x, value) {
 #' @importFrom rstan get_elapsed_time
 #' @importFrom stats quantile
 
-hmde_data_template <- function(fit, #Mandatory
+hmde_estimates <- function(fit, #Mandatory
                                obs_data){ #Mandatory
   #Check fit class
   if(!inherits(fit, "stanfit")){
@@ -174,19 +174,21 @@ hmde_data_template <- function(fit, #Mandatory
 
   runtime <- rstan::get_elapsed_time(fit)
 
-  estimate_list <- list(model_name = model,
-                        summary = summary,
-                        runtime = runtime)
+  estimate_object <- new("hmde_estimates",
+             model_name = model,
+             summary = summary,
+             runtime = runtime)
+
   par_names <- hmde_model_pars(model)
   prior_names <-
     paste0("check_",
-           names(hmde_model(model =
-                              model))[grep("prior_pars",
-                                           names(hmde_model(model = model)))]
+           names(hmde_model(
+             model = model))[grep("prior_pars",
+                                  names(hmde_model(model = model)))]
     )
 
   if(grepl("multi", model)){ #Get n_ind for multi-individual
-    n_ind <- length(unique(input_measurement_data$ind_id))
+    n_ind <- length(unique(obs_data$ind_id))
   } else {
     n_ind <- 1
   }
@@ -207,29 +209,33 @@ hmde_data_template <- function(fit, #Mandatory
   }
 
   #Prior parameters
-  prior_data <- hmde_extract_prior_pars(samples, prior_names)
+  prior_pars(estimate_object) <- hmde_extract_prior_pars(samples, prior_names)
 
   #Extract measurement, individual-level, and error parameter estimates
-  measurement_data <- hmde_extract_measurement_ests(
+  measurement_ests(estimate_object) <- hmde_extract_measurement_ests(
     samples,
     par_names$measurement_pars_names,
-    input_measurement_data)
+    obs_data)
 
-  individual_data <- hmde_extract_individual_par_ests(
+  individual_ests(estimate_object) <- hmde_extract_individual_par_ests(
     samples,
     par_names$individual_pars_names,
     n_ind)
 
-  error_data <- hmde_extract_error_par_ests(
+  error_ests(estimate_object) <- hmde_extract_error_par_ests(
     samples,
     par_names$error_pars_names)
 
   #If model is multi-individual extract population-level estimates and add to list
   if(!is.null(par_names$population_pars_names)){
-    population_data <- hmde_extract_pop_par_ests(samples,
-                                                               population_pars_names =
-                                                                 par_names$population_pars_names)
+    population_ests(estimate_object) <- hmde_extract_pop_par_ests(samples,
+                                                 population_pars_names =
+                                                   par_names$population_pars_names)
   }
+
+  #Validation
+
+  #Return
 }
 
 
@@ -238,8 +244,8 @@ hmde_data_template <- function(fit, #Mandatory
 #' @noRd
 hmde_extract_measurement_ests <- function(samples = NULL,
                                           measurement_pars_names = NULL,
-                                          input_measurement_data = NULL){
-  measurement_data <- input_measurement_data
+                                          obs_data = NULL){
+  measurement_data <- obs_data
 
   for(i in measurement_pars_names){
     measurement_data[[i]] <- apply(samples[[i]], 2, mean)
