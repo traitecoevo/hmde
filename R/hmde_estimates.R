@@ -7,7 +7,7 @@ setClass(
     model_level = "character", # Single or multi-individual
     method = "character", # Estimation method eg. sampling
     runtime = "matrix", # Runtime matrix
-    summary = "character", # Summary of fit
+    fit_summary = "character", # Summary of fit
     measurement_ests = "tbl_df", # Tibble of measurement-level estimates
     individual_ests = "tbl_df", # Tibble of individual-level parameters
     population_ests = "tbl_df", # Tibble of species-level estimates, empty if single ind
@@ -17,6 +17,9 @@ setClass(
   prototype = prototype(
     model_name = NA_character_,
     model_level = NA_character_,
+    method = NA_character_,
+    runtime = matrix(NA),
+    fit_summary = NA_character_,
     measurement_ests = tibble(NA),
     individual_ests = tibble(NA),
     population_ests = tibble(NA),
@@ -26,7 +29,7 @@ setClass(
 )
 
 # Validation
-setValidity("hmde_data_template",
+setValidity("hmde_estimates",
   function(object){
     if(length(object@model_name) != 1)
       return("'model_name' slot must be of length 1.")
@@ -43,20 +46,45 @@ setValidity("hmde_data_template",
 # Setters and getters for slots
 
 #Model name
-setGeneric("model_name", function(x) standardGeneric("model_name"))
-setGeneric("model_name<-", function(x, value) standardGeneric("model_name<-"))
-setMethod("model_name", "hmde_data_template", function(x) x@model_name)
-setMethod("model_name<-", "hmde_data_template", function(x, value) {
+#Generics set by hmde_model_template
+setMethod("model_name", "hmde_estimates", function(x) x@model_name)
+setMethod("model_name<-", "hmde_estimates", function(x, value) {
   x@model_name <- value
   x
 })
 
 #Model level
-setGeneric("model_level", function(x) standardGeneric("model_level"))
-setGeneric("model_level<-", function(x, value) standardGeneric("model_level<-"))
-setMethod("model_level", "hmde_data_template", function(x) x@model_level)
-setMethod("model_level<-", "hmde_data_template", function(x, value) {
+#Generics set by hmde_model_template
+setMethod("model_level", "hmde_estimates", function(x) x@model_level)
+setMethod("model_level<-", "hmde_estimates", function(x, value) {
   x@model_level <- value
+  x
+})
+
+#Method
+setGeneric("method", function(x) standardGeneric("method"))
+setGeneric("method<-", function(x, value) standardGeneric("method<-"))
+setMethod("method", "hmde_estimates", function(x) x@method)
+setMethod("method<-", "hmde_estimates", function(x, value) {
+  x@method <- value
+  x
+})
+
+#Runtime
+setGeneric("runtime", function(x) standardGeneric("runtime"))
+setGeneric("runtime<-", function(x, value) standardGeneric("runtime<-"))
+setMethod("runtime", "hmde_estimates", function(x) x@runtime)
+setMethod("runtime<-", "hmde_estimates", function(x, value) {
+  x@runtime <- value
+  x
+})
+
+#Fit summary
+setGeneric("fit_summary", function(x) standardGeneric("fit_summary"))
+setGeneric("fit_summary<-", function(x, value) standardGeneric("fit_summary<-"))
+setMethod("fit_summary", "hmde_estimates", function(x) x@fit_summary)
+setMethod("fit_summary<-", "hmde_estimates", function(x, value) {
+  x@fit_summary <- value
   x
 })
 
@@ -92,15 +120,14 @@ setGeneric("error_ests", function(x) standardGeneric("error_ests"))
 setGeneric("error_ests<-", function(x, value) standardGeneric("error_ests<-"))
 setMethod("error_ests", "hmde_estimates", function(x) x@error_ests)
 setMethod("error_ests<-", "hmde_estimates", function(x, value) {
-  x@population_ests <- value
+  x@error_ests <- value
   x
 })
 
 #Prior paramerters
-setGeneric("prior_pars", function(x) standardGeneric("prior_pars"))
-setGeneric("prior_pars<-", function(x, value) standardGeneric("prior_pars<-"))
-setMethod("prior_pars", "hmde_data_template", function(x) x@prior_pars)
-setMethod("prior_pars<-", "hmde_data_template", function(x, value) {
+#Generics set by hmde_model_template
+setMethod("prior_pars", "hmde_estimates", function(x) x@prior_pars)
+setMethod("prior_pars<-", "hmde_estimates", function(x, value) {
   x@prior_pars <- value
   x
 })
@@ -118,8 +145,8 @@ setMethod("prior_pars<-", "hmde_data_template", function(x, value) {
 #' @return hmde_estimates class object
 #'
 #' @examples
-#' # basic usage of hmde_data_template
-#' hmde_data_template("constant_single_ind",
+#' # basic usage of hmde_estimates
+#' hmde_estimates("constant_single_ind",
 #'                    obs_data = Trout_Size_Data[1:4,]) |>
 #'   hmde_run(chains = 1, iter = 1000,
 #'            verbose = FALSE, show_messages = FALSE) |>
@@ -127,11 +154,12 @@ setMethod("prior_pars<-", "hmde_data_template", function(x, value) {
 #'
 #' @export
 #' @import dplyr
+#' @import tibble
 #' @importFrom rstan get_elapsed_time
 #' @importFrom stats quantile
 
 hmde_estimates <- function(fit, #Mandatory
-                               obs_data){ #Mandatory
+                           obs_data){ #Mandatory
   #Check fit class
   if(!inherits(fit, "stanfit")){
     stop("Fit object must be of class stanfit.")
@@ -155,14 +183,23 @@ hmde_estimates <- function(fit, #Mandatory
     obs_data <- obs_data %>%
       group_by(ind_id) %>%
       arrange(time) %>%
-      rownames_to_column(var = "obs_index") %>%
+      mutate(obs_index = rank(time)) %>%
       ungroup()
+  }
+
+  #Get model level
+  if(grepl("multi_ind", model)){
+    model_level <- "multi_ind"
+  } else if (grepl("single_ind", model)){
+    model_level <- "single_ind"
+  } else {
+    stop("Model level not identified.")
   }
 
   #Extract info from fit object
   method <- fit@stan_args[[1]][["method"]]
   if(method == "sampling"){
-    summary <- paste0(
+    fit_summary <- paste0(
       "Method: MCMC sampling with ",
       fit@stan_args[[1]][["algorithm"]],
       " algorithm",
@@ -176,15 +213,15 @@ hmde_estimates <- function(fit, #Mandatory
 
   estimate_object <- new("hmde_estimates",
              model_name = model,
-             summary = summary,
+             model_level = model_level,
+             method = method,
+             fit_summary = fit_summary,
              runtime = runtime)
 
   par_names <- hmde_model_pars(model)
   prior_names <-
     paste0("check_",
-           names(hmde_model(
-             model = model))[grep("prior_pars",
-                                  names(hmde_model(model = model)))]
+           names(prior_pars(hmde_model(model)))
     )
 
   if(grepl("multi", model)){ #Get n_ind for multi-individual
@@ -209,33 +246,41 @@ hmde_estimates <- function(fit, #Mandatory
   }
 
   #Prior parameters
-  prior_pars(estimate_object) <- hmde_extract_prior_pars(samples, prior_names)
+  prior_pars(estimate_object) <-
+    hmde_extract_prior_pars(samples, prior_names)
 
   #Extract measurement, individual-level, and error parameter estimates
-  measurement_ests(estimate_object) <- hmde_extract_measurement_ests(
-    samples,
-    par_names$measurement_pars_names,
-    obs_data)
+  measurement_ests(estimate_object) <-
+    hmde_extract_measurement_ests(
+      samples,
+      par_names$measurement_pars_names,
+      obs_data)
 
-  individual_ests(estimate_object) <- hmde_extract_individual_par_ests(
-    samples,
-    par_names$individual_pars_names,
-    n_ind)
+  individual_ests(estimate_object) <-
+    hmde_extract_individual_par_ests(
+      samples,
+      par_names$individual_pars_names,
+      n_ind)
 
-  error_ests(estimate_object) <- hmde_extract_error_par_ests(
-    samples,
-    par_names$error_pars_names)
+  error_ests(estimate_object) <-
+    hmde_extract_error_par_ests(
+      samples,
+      par_names$error_pars_names)
 
   #If model is multi-individual extract population-level estimates and add to list
   if(!is.null(par_names$population_pars_names)){
-    population_ests(estimate_object) <- hmde_extract_pop_par_ests(samples,
-                                                 population_pars_names =
-                                                   par_names$population_pars_names)
+    population_ests(estimate_object) <-
+      hmde_extract_pop_par_ests(samples,
+                                population_pars_names =
+                                  par_names$population_pars_names)
   }
 
-  #Validation
+  #Validate
+  if(!validObject(estimate_object)){
+    stop("Invalid estimates object")
+  }
 
-  #Return
+  return(estimate_object)
 }
 
 
@@ -354,3 +399,200 @@ hmde_extract_prior_pars <- function(samples = NULL,
 
   return(prior_data)
 }
+
+#----------------------------------------------------------------------
+## Generic functions for show, print, summary, plot
+
+#' Show function for hmde_estimates object
+#' @param x hmde_estimates class output
+#' @param ... other parameters used for show
+#'
+#' @examples
+#' # basic usage of show
+#' hmde_data_template("constant_single_ind",
+#'   obs_data = Trout_Size_Data) |>
+#'   hmde_run(chains = 1, iter = 1000,
+#'            verbose = FALSE, show_messages = FALSE) |>
+#'   hmde_estimates(Trout_Size_Data) |>
+#'   show()
+#'
+#' @importFrom knitr kable
+#'
+#' @export
+
+setMethod("show", "hmde_estimates", function(object) {
+  #Outputs model info and top level parameter table
+
+  if(grepl("multi", model_name(object))){
+    writeLines(paste0(
+      "Model name: ", model_name(object),
+      "\nModel level: multi-individual",
+      "\nTop level: population",
+      "\n", fit_summary(object)))
+
+    writeLines(
+      "\nTop level parameter estimates:"
+    )
+    writeLines(knitr::kable(population_ests(object),
+                            format = "markdown", digits = 3))
+
+  } else if(grepl("single", model_name(object))){
+    writeLines(paste0(
+      "Model name: ", model_name(object),
+      "\nModel level: single individual",
+      "\nTop level: individual",
+      "\nTop level parameter estimates:",
+      "\n", fit_summary(object)))
+
+    writeLines(
+      "\nTop level parameter estimates:"
+    )
+    writeLines(knitr::kable(individual_ests(object),
+                            format = "markdown", digits = 3))
+  }
+
+  writeLines("\nRuntime information:")
+  writeLines(knitr::kable(runtime(object),
+                          format = "markdown", digits = 3))
+})
+
+
+#' Print function for hmde_estimates object
+#'
+#' @param x hmde_estimates class output
+#' @param ... other parameters used for print
+#'
+#' @examples
+#' # basic usage of print
+#' hmde_data_template("constant_single_ind",
+#'   obs_data = Trout_Size_Data) |>
+#'   hmde_run(chains = 1, iter = 1000,
+#'            verbose = FALSE, show_messages = FALSE) |>
+#'   hmde_estimates(Trout_Size_Data) |>
+#'   print()
+#'
+#' @importFrom knitr kable
+#'
+#' @export
+
+setMethod("print", "hmde_estimates", function(x) {
+  #Outputs model info and top level parameter table
+
+  if(grepl("multi", model_name(x))){
+    writeLines(paste0(
+      "Model name: ", model_name(x),
+      "\nModel level: multi-individual",
+      "\nTop level: population",
+      "\n", fit_summary(x)))
+
+    writeLines(
+      "\nTop level parameter estimates:"
+    )
+    writeLines(knitr::kable(population_ests(x),
+                            format = "markdown", digits = 3))
+
+  } else if(grepl("single", model_name(x))){
+    writeLines(paste0(
+      "Model name: ", model_name(x),
+      "\nModel level: single individual",
+      "\nTop level: individual",
+      "\nTop level parameter estimates:",
+      "\n", fit_summary(x)))
+
+    writeLines(
+      "\nTop level parameter estimates:"
+    )
+    writeLines(knitr::kable(individual_ests(x),
+                            format = "markdown", digits = 3))
+  }
+
+  writeLines("\nRuntime information:")
+  writeLines(knitr::kable(runtime(x),
+                          format = "markdown", digits = 3))
+})
+
+
+#' Summary function for hmde_estimates object
+#'
+#' @param x hmde_estimates class object
+#' @param ... other parameters used for summary
+#'
+#' @examples
+#' # basic usage of summary
+#' hmde_data_template("constant_single_ind",
+#'   obs_data = Trout_Size_Data) |>
+#'   hmde_run(chains = 1, iter = 1000,
+#'            verbose = FALSE, show_messages = FALSE) |>
+#'   hmde_estimates(Trout_Size_Data) |>
+#'   summary()
+#'
+#' @importFrom knitr kable
+#'
+#' @export
+
+setMethod("summary", "hmde_estimates", function(object) {
+  #Outputs model info and top level parameter table
+
+  if(grepl("multi", model_name(x))){
+    writeLines(paste0(
+      "Model name: ", model_name(x),
+      "\nModel level: multi-individual",
+      "\nTop level: population",
+      "\n", fit_summary(x)))
+
+    writeLines(
+      "\nTop level parameter estimates:"
+    )
+    writeLines(knitr::kable(population_ests(x),
+                            format = "markdown", digits = 3))
+
+  } else if(grepl("single", model_name(x))){
+    writeLines(paste0(
+      "Model name: ", model_name(x),
+      "\nModel level: single individual",
+      "\nTop level: individual",
+      "\nTop level parameter estimates:",
+      "\n", fit_summary(x)))
+
+    writeLines(
+      "\nTop level parameter estimates:"
+    )
+    writeLines(knitr::kable(individual_ests(x),
+                            format = "markdown", digits = 3))
+  }
+})
+
+#' Plot function for hmde_estimates object
+#'
+#' @param x hmde_estimates class object
+#' @param ... Additional argument space to conform to S3 template.
+#'
+#' @examples
+#' # basic usage of print
+#' hmde_data_template("constant_single_ind",
+#'   obs_data = Trout_Size_Data) |>
+#'   hmde_run(chains = 1, iter = 1000,
+#'            verbose = FALSE, show_messages = FALSE) |>
+#'   hmde_estimates(Trout_Size_Data) |>
+#'   plot()
+#'
+#' @importFrom cowplot plot_grid
+#'
+#' @export
+
+setMethod("plot", "hmde_estimates", function(x) {
+  plot_1 <- hmde_plot_de_pieces(x) +
+    labs(title = "Plot of DE pieces fit to each individual")
+
+  if(grepl("multi", model_name(x))){
+    n_ind_plot <- min(5, nrow(individual_ests(x)))
+    plot_2 <- hmde_plot_obs_est_inds(x, n_ind_to_plot = n_ind_plot) +
+      labs(title = "Plot of fit sizes over time")
+  } else {
+    plot_2 <- hmde_plot_obs_est_inds(x, n_ind_to_plot = 1) +
+      labs(title = "Plot of fit sizes over time")
+  }
+
+  return_plot <- plot_grid(plot_1, plot_2, nrow = 2, align = "v")
+  return(return_plot)
+})

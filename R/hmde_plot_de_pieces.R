@@ -1,10 +1,10 @@
 #' Plot pieces of chosen differential equation model for each individual.
 #' Structured to take the individual data tibble that is built by the
-#' hmde_extract_estimates function using the ind_par_name_mean estimates.
+#' hmde_estimates function using the ind_par_name_mean estimates.
 #' Function piece will go from the first fitted size to the last.
 #' Accepted ggplot arguments will change the axis labels, title, line colour, alpha
 #'
-#' @param estimates hmde_estimates object output from hmde_extract_estimates
+#' @param estimates hmde_estimates object
 #' @param xlab character string for replacement x axis label
 #' @param ylab character string for replacement y axis label
 #' @param title character string for replacement plot title
@@ -27,14 +27,14 @@ hmde_plot_de_pieces <- function(estimates = NULL,
                                 title = NULL,
                                 colour = "#006600",
                                 alpha = 0.4){
-  model <- estimates$model
-  individual_data <- estimates$individual_data
-  measurement_data <- estimates$measurement_data
-
   #Checks
   if(!inherits(estimates, "hmde_estimates")){
     stop("Estimates not required hmde_estimates class.")
   }
+
+  model <- model_name(estimates)
+  individual_data <- individual_ests(estimates)
+  measurement_data <- measurement_ests(estimates)
 
   if(!model %in% hmde_model_names()){
     stop("Model name not recognised. Run hmde_model_names() to see available models.")
@@ -112,9 +112,3 @@ hmde_ggplot_de_pieces <- function(pars_data,
 
   return(plot)
 }
-
-#' Set variable names to be regarded as globally defined
-#' @noRd
-globalVariables(c("obs_index", "y_0", "y_final"),
-                "hmde",
-                add = TRUE)

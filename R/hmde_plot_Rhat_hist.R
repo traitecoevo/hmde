@@ -6,8 +6,8 @@
 #'
 #' @examples
 #' # basic usage of hmde_plot_Rhat_hist
-#' hmde_model("constant_single_ind") |>
-#'   hmde_assign_data(Trout_Size_Data)|>
+#' hmde_data_template("constant_single_ind",
+#'   Trout_Size_Data) |>
 #'   hmde_run(chains = 2, iter = 1000,
 #'            verbose = FALSE, show_messages = FALSE) |>
 #'   hmde_plot_Rhat_hist()
@@ -32,6 +32,3 @@ hmde_plot_Rhat_hist <- function(fit){
 
   return(plot)
 }
-
-#Define an 'rhat' global variable
-globalVariables("rhat")

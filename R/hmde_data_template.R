@@ -270,7 +270,9 @@ hmde_data_template <- function(model_name, #Mandatory
   }
 
   #Check validity
-  validObject(template)
+  if(!validObject(template)){
+    stop("Invalid template object.")
+  }
 
   return(template)
 }
@@ -280,7 +282,7 @@ hmde_data_template <- function(model_name, #Mandatory
 
 #' Show function for hmde_data_template object
 #'
-#' @param x hmde_data_template class object
+#' @param object hmde_data_template class object
 #'
 #' @examples
 #' # basic usage of show

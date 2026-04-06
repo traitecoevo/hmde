@@ -4,7 +4,7 @@
 \alias{hmde_plot_de_pieces}
 \title{Plot pieces of chosen differential equation model for each individual.
 Structured to take the individual data tibble that is built by the
-hmde_extract_estimates function using the ind_par_name_mean estimates.
+hmde_estimates function using the ind_par_name_mean estimates.
 Function piece will go from the first fitted size to the last.
 Accepted ggplot arguments will change the axis labels, title, line colour, alpha}
 \usage{
@@ -18,7 +18,7 @@ hmde_plot_de_pieces(
 )
 }
 \arguments{
-\item{estimates}{hmde_estimates object output from hmde_extract_estimates}
+\item{estimates}{hmde_estimates object}
 
 \item{xlab}{character string for replacement x axis label}
 
@@ -36,7 +36,7 @@ ggplot object
 \description{
 Plot pieces of chosen differential equation model for each individual.
 Structured to take the individual data tibble that is built by the
-hmde_extract_estimates function using the ind_par_name_mean estimates.
+hmde_estimates function using the ind_par_name_mean estimates.
 Function piece will go from the first fitted size to the last.
 Accepted ggplot arguments will change the axis labels, title, line colour, alpha
 }

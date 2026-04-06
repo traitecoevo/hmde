@@ -7,7 +7,7 @@
 \S4method{show}{hmde_data_template}(object)
 }
 \arguments{
-\item{x}{hmde_data_template class object}
+\item{object}{hmde_data_template class object}
 }
 \description{
 Show function for hmde_data_template object

@@ -6,20 +6,20 @@
 \usage{
 hmde_data_template(
   model_name,
-  model_level = NA_character_,
   obs_data = NULL,
   prior_pars = NULL,
+  model_level = NA_character_,
   ...
 )
 }
 \arguments{
 \item{model_name}{character string name of a hmde model}
 
-\item{model_level}{character string specifying whether single or multiple inds}
-
-\item{obs_data}{list containing observational data vectors}
+\item{obs_data}{list or tibble containing observational data vectors}
 
 \item{prior_pars}{list containing prior parameters}
+
+\item{model_level}{character string specifying whether single or multiple inds}
 
 \item{...}{data-masking name-value pairs allowing specific input of elements}
 }

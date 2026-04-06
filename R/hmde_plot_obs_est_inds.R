@@ -2,7 +2,7 @@
 #' on posterior estimates. Structured to take in the measurement_data tibble constructed by
 #' the hmde_extract_estimates function.
 #'
-#' @param estimates hmde_estimates object output of hmde_extract_estimates
+#' @param estimates hmde_estimates class object
 #' @param measurement_data tibble with estimated measurements
 #' @param ind_id_vec vector with list of ind_id values
 #' @param n_ind_to_plot integer giving number of individuals to plot if not specified
@@ -27,15 +27,15 @@ hmde_plot_obs_est_inds <- function(estimates = NULL,
                                    xlab = "Time",
                                    ylab = "Y(t)",
                                    title = NULL){
-  if(!is.null(estimates)){ #Allows for passing of estimate object.
-    measurement_data <- estimates$measurement_data
-  }
-
   #Checks
   if(!is.null(estimates)){
     if(!inherits(estimates, "hmde_estimates")){
       stop("Estimates not required hmde_estimates class.")
     }
+  }
+
+  if(!is.null(estimates)){ #Allows for passing of estimate object.
+    measurement_data <- measurement_ests(estimates)
   }
 
   if(is.null(measurement_data)){
@@ -94,9 +94,3 @@ hmde_ggplot_obs_est_inds <- function(plot_data,
 
   return(plot)
 }
-
-#' Set variable names to be regarded as globally defined
-#' @noRd
-globalVariables(c("ind_id", "time", "y_obs", "y_hat"),
-                "hmde",
-                add = TRUE)

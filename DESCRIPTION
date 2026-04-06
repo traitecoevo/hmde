@@ -26,6 +26,7 @@ Imports:
     rlang,
     rstan (>= 2.18.1),
     rstantools (>= 2.3.1.1),
+    tibble,
     cowplot,
     knitr
 LinkingTo: 

@@ -17,7 +17,7 @@ hmde_plot_obs_est_inds(
 )
 }
 \arguments{
-\item{estimates}{hmde_estimates object output of hmde_extract_estimates}
+\item{estimates}{hmde_estimates class object}
 
 \item{measurement_data}{tibble with estimated measurements}
 

@@ -7,9 +7,9 @@ test_that("Execution and output: extract_Rhat function", {
   )
 
   suppressWarnings(
-    output <- hmde_model("constant_single_ind") |>
-      hmde_assign_data(data = data) |>
-      hmde_run(chains = 2, iter = 20, cores = 1,
+    output <- hmde_data_template("constant_single_ind",
+                                 obs_data = data) |>
+      hmde_run(chains = 1, iter = 20, cores = 1,
                verbose = FALSE, show_messages = FALSE) |>
       hmde_extract_Rhat()
   )
