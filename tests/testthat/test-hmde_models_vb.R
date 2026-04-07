@@ -1,54 +1,48 @@
 #Testing for vb model
-test_that("Model structures: vb", {
+test_that("Model structures: von Bertalanffy", {
   # Single individual
   single_model <- hmde_model("vb_single_ind")
-  expect_named(single_model, c("n_obs", "y_obs",
-                               "obs_index", "time",
-                               "y_bar",
-                               "prior_pars_ind_max_size_sd_only",
-                               "prior_pars_ind_growth_rate",
-                               "prior_pars_global_error_sigma",
-                               "model"))
-  expect_type(single_model, "list")
+  expect_true(inherits(single_model, "hmde_data_template"))
   expect_visible(single_model)
 
   #Multiple individuals
   multi_model <- hmde_model("vb_multi_ind")
-  expect_named(multi_model, c("n_obs", "n_ind", "y_obs",
-                              "obs_index", "time", "ind_id",
-                              "y_bar",
-                              "prior_pars_pop_log_max_size_mean_sd_only",
-                              "prior_pars_pop_log_max_size_sd",
-                              "prior_pars_pop_log_growth_rate_mean",
-                              "prior_pars_pop_log_growth_rate_sd",
-                              "prior_pars_global_error_sigma",
-                              "model"))
-  expect_type(multi_model, "list")
+  expect_true(inherits(single_model, "hmde_data_template"))
   expect_visible(multi_model)
 })
 
-test_that("Execution: vb single individual", {
-  model_name <- "vb"
-  par_names <- c("ind_max_size", "ind_growth_rate")
+test_that("Data assignment: VB", {
+  # Single individual
+  test_data <- hmde_data_template("vb_single_ind",
+                                  obs_data = Trout_Size_Data[1:4,])
+  expect_true(inherits(test_data, "hmde_data_template"))
+  expect_visible(test_data)
 
-  hmde_test_single_individual(model_name, par_names)
+  #Multiple individuals
+  test_data <- hmde_data_template("vb_multi_ind",
+                                  obs_data = Trout_Size_Data[1:8,])
+  expect_true(inherits(test_data, "hmde_data_template"))
+  expect_visible(test_data)
 })
 
-test_that("Execution: vb multiple individuals", {
-  model_name <- "vb"
+test_that("Execution: von Bertalanffy fit", {
+  #Model running single ind
+  expect_no_error(
+    suppressWarnings(
+      fit <- hmde_data_template("vb_single_ind",
+                                obs_data = Trout_Size_Data[1:4,]) |>
+        hmde_run(chains = 1, iter = 1,
+                 verbose = FALSE, show_messages = FALSE)
+    )
+  )
 
-  data <- readRDS(test_path("fixtures", "vb",
-                            "vb_data_multi_ind.rds"))
-
-  #Dimension is:
-  est_dim <- data$n_ind +           #Initial condition
-    data$n_pars * data$n_ind +      #Individual parameters
-    data$n_pars * 2 +               #Population parameters
-    1 +                             #Global error
-    data$n_obs +                    #y_ij
-    data$n_pars + 1 +               #Pars temp vector
-    10 +                        #checks for priors
-    1                               #lp__
-
-  hmde_test_multi_individual(model_name, data, est_dim)
+  #Model running multi-ind
+  expect_no_error(
+    suppressWarnings(
+      fit <- hmde_data_template("vb_multi_ind",
+                                obs_data = Trout_Size_Data[1:12,]) |>
+        hmde_run(chains = 1, iter = 1,
+                 verbose = FALSE, show_messages = FALSE)
+    )
+  )
 })

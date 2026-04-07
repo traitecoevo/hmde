@@ -130,7 +130,8 @@ hmde_data_template <- function(model_name, #Mandatory
     user_fields <- names(user_code)
     # Evaluate the RHS of expressions (the values)
     additional_data <- purrr::map(user_code,
-                                  ~rlang::eval_tidy(.x, env = rlang::caller_env())
+                                  ~rlang::eval_tidy(.x,
+                                                    env = rlang::caller_env())
     )
   }
 
@@ -142,14 +143,21 @@ hmde_data_template <- function(model_name, #Mandatory
   #If obs_data is provided, check it has required names
   if(!is.null(obs_data)){
     if(is(obs_data, "list")){ # Handling for list input
+      if(("n_ind" %in% data_fields_obs) && #Calculate n_ind if required
+         (!"n_ind" %in% names(obs_data)) &&
+         ("ind_id" %in% names(obs_data))){
+        obs_data[["n_ind"]] <- length(unique(obs_data[["ind_id"]]))
+      }
+
       #Check for name structure
-      if(!identical(names(obs_data), data_fields_obs)){
+      if(!identical(sort(names(obs_data)),
+                    sort(data_fields_obs))){
         stop("Input observation data list does not have correct names.")
       }
 
       obs_data_temp_list <- obs_data
 
-    } else if(is(obs_data, "tbl") || is(obs_data, "data.frame")){# Tibble or data frame iput
+    } else if(is(obs_data, "tbl") || is(obs_data, "data.frame")){# Tibble or data frame input
       obs_data_temp_list <- obs_data(template)
       obs_data <- as_tibble(obs_data) #Ensure tibble for ease of use
 
@@ -157,7 +165,13 @@ hmde_data_template <- function(model_name, #Mandatory
       for(i in data_fields_obs){
         if(i %in% names(obs_data)){
           obs_data_temp_list[[i]] <- obs_data[[i]]
+        } else if(length(user_code) != 0
+                  && length(intersect(data_fields_obs, user_fields)) > 0){
+          if(i %in% user_fields){ #Check if the user has supplied it in a tibble
+            obs_data_temp_list[[i]] <- additional_data[[i]]
+          }
         }
+
       }
     }
 
@@ -205,7 +219,8 @@ hmde_data_template <- function(model_name, #Mandatory
   #Validate lengths of vectors
   check_length <- obs_data_temp_list[["n_obs"]]
   for(i in names(obs_data_temp_list)){
-    if(!i %in% c("n_obs", "n_ind", "y_bar")){
+    if(!i %in% c("n_obs", "n_ind", "y_bar", #Exclude single number values
+                 "step_size", "int_method")){
       if(length(obs_data_temp_list[[i]]) != check_length){
         stop(paste("Mismatch in length between n_obs = ",
                    check_length,  "and", i,

@@ -44,11 +44,11 @@ hmde_plot_de_pieces <- function(estimates = NULL,
     stop("Model not provided.")
   }
 
-  if(is.null(individual_data)){
+  if(is.na(individual_data[1,1])){
     stop("Individual parameter data not provided.")
   }
 
-  if(is.null(measurement_data)){
+  if(is.na(measurement_data[1,1])){
     stop("Measurement data not provided.")
   }
 

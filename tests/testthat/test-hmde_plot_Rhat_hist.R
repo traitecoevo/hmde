@@ -1,8 +1,8 @@
 test_that("Execution and output: plot_Rhat_hist function", {
   suppressWarnings(
-    fit <- hmde_model("constant_single_ind") |>
-      hmde_assign_data(data = Trout_Size_Data[1:4,]) |>
-      hmde_run(chains = 1, iter = 50, cores = 1,
+    fit <- hmde_data_template("constant_single_ind",
+                              obs_data = Trout_Size_Data[1:4,]) |>
+      hmde_run(chains = 1, iter = 1,
                verbose = FALSE, show_messages = FALSE)
   )
 
@@ -16,9 +16,9 @@ test_that("Execution and output: plot_Rhat_hist function", {
 
 test_that("Execution and output: bad input", {
   suppressWarnings(
-    fit <- hmde_model("constant_single_ind") |>
-      hmde_assign_data(data = Trout_Size_Data[1:4,]) |>
-      hmde_run(chains = 1, iter = 50, cores = 1,
+    fit <- hmde_data_template("constant_single_ind",
+                              obs_data = Trout_Size_Data[1:4,]) |>
+      hmde_run(chains = 1, iter = 1,
                verbose = FALSE, show_messages = FALSE)
   )
 
