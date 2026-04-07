@@ -54,7 +54,7 @@ $$0 < \sigma_{\beta} \sim Cauchy(0, 2),$$
 $$0 < \sigma_{e} \sim Cauchy(0, 2).$$
 The max size parameter priors are always centred at the (transformed) maximum observed size. This is not changeable, but the standard deviation is. To see the name for the prior parameter run `hmde_model`. For example in the following we want to change the prior for $S_{max}$ standard deviation (`ind_max_size`) in the individual model:
 ```{r}
-hmde_model("vb_single_ind")
+prior_pars(hmde_model("vb_single_ind"))
 #prior_pars_ind_max_size_sd_only is the argument name for the prior parameter
 ```
 
@@ -99,7 +99,7 @@ ggplot() +
                 xlim=c(time)) +
   xlim(time) +
   ylim(0, y_final*1.05) +
-  labs(x = "Time", y = "Y(t)", title = "von Bertalanffy growth") +
+  labs(x = "Time", y = "Y(t)", title = "von Bertalanffy size") +
   theme_classic() +
   theme(axis.text=element_text(size=16),
         axis.title=element_text(size=18,face="bold"))
@@ -116,17 +116,17 @@ We took a simple random sample without replacement of 50 individuals with at lea
 ## Implementation
 The workflow for the second example is the same as the first, with the change in model name and data object.
 ```{r}
-lizard_vb_fit <- hmde_model("vb_multi_ind") |>
-  hmde_assign_data(data = Lizard_Size_Data)  |>
+set.seed("hmde")
+lizard_vb_fit <- hmde_data_template("vb_multi_ind",
+                                    obs_data = Lizard_Size_Data ) |>
   hmde_run(chains = 4, cores = 1, iter = 2000)
 
-lizard_estimates <- hmde_extract_estimates(fit = lizard_vb_fit,
-                                           input_measurement_data = Lizard_Size_Data)
+lizard_estimates <- hmde_estimates(fit = lizard_vb_fit,                                           obs_data = Lizard_Size_Data)
 ```
 
 As before, we can compare the observed sizes over time to those predicted by the model.
 ```{r}
-measurement_data_transformed <- lizard_estimates$measurement_data %>%
+measurement_data_transformed <- measurement_ests(lizard_estimates) %>%
   group_by(ind_id) %>%
   mutate(
     delta_y_obs = y_obs - lag(y_obs),
@@ -151,13 +151,13 @@ hist(measurement_data_transformed$est_growth_rate,
 
 #Quantitative R^2
 cor(measurement_data_transformed$y_obs, measurement_data_transformed$y_hat)^2
-r_sq_est <- cor(lizard_estimates$measurement_data$y_obs,
-                lizard_estimates$measurement_data$y_hat)^2
+r_sq_est <- cor(measurement_data_transformed$y_obs,
+                measurement_data_transformed$y_hat)^2
 r_sq <- paste0("R^2 = ", 
                signif(r_sq_est,
                       digits = 3))
 
-obs_scatter <- ggplot(data = lizard_estimates$measurement_data, 
+obs_scatter <- ggplot(data = measurement_data_transformed,
        aes(x = y_obs, y = y_hat)) +
   geom_point(shape = 16, size = 1, colour = "green4") +
   xlab("Y obs.") +
@@ -168,8 +168,8 @@ obs_scatter <- ggplot(data = lizard_estimates$measurement_data,
   theme_classic()
 
 #Plots of size over time for a sample of 5 individuals
-obs_est_ind <- hmde_plot_obs_est_inds(n_ind_to_plot = 5,
-                       measurement_data = lizard_estimates$measurement_data) +
+obs_est_ind <- hmde_plot_obs_est_inds(estimates = lizard_estimates,
+                                      n_ind_to_plot = 5) +
   theme(legend.position = "inside",
         legend.position.inside = c(0.8, 0.2))
 ```
@@ -177,7 +177,7 @@ obs_est_ind <- hmde_plot_obs_est_inds(n_ind_to_plot = 5,
 We have two parameters at the individual level and are interested in both their separate distributions, and if we see evidence of a relationship between them. We can also use the individual parameter estimates and estimated sizes to plot the growth function pieces.
 ```{r}
 #1-dimensional parameter distributions
-s_max_hist <- ggplot(lizard_estimates$individual_data, 
+s_max_hist <- ggplot(individual_ests(lizard_estimates), 
        aes(ind_max_size_mean)) +
   geom_histogram(bins = 10,
                  colour = "black",
@@ -185,7 +185,7 @@ s_max_hist <- ggplot(lizard_estimates$individual_data,
   labs(x="S_max estimate") +
   theme_classic()
 
-beta_hist <- ggplot(lizard_estimates$individual_data, 
+beta_hist <- ggplot(individual_ests(lizard_estimates), 
        aes(ind_growth_rate_mean)) +
   geom_histogram(bins = 10,
                  colour = "black",
@@ -194,7 +194,7 @@ beta_hist <- ggplot(lizard_estimates$individual_data,
   theme_classic()
 
 #2-dimensional parameter distribution
-par_scatter <- ggplot(data = lizard_estimates$individual_data, 
+par_scatter <- ggplot(data = individual_ests(lizard_estimates), 
        aes(x = ind_max_size_mean, y = ind_growth_rate_mean)) +
   geom_point(shape = 16, size = 1, colour = "green4") +
   xlab("Individual max sizes (mm)") +
@@ -202,8 +202,8 @@ par_scatter <- ggplot(data = lizard_estimates$individual_data,
   theme_classic()
 
 #Correlation of parameters
-cor(lizard_estimates$individual_data$ind_max_size_mean,
-    lizard_estimates$individual_data$ind_growth_rate_mean,
+cor(individual_ests(lizard_estimates)$ind_max_size_mean,
+    individual_ests(lizard_estimates)$ind_growth_rate_mean,
     method = "spearman")
 
 #Plot function pieces over estimated sizes.
@@ -226,24 +226,24 @@ exp_vec <- c(FALSE, TRUE, FALSE,
              FALSE, TRUE, FALSE)
 
 #Print mean estimates and CIs
-for(i in 1:nrow(lizard_estimates$population_data)){
+for(i in 1:nrow(population_ests(lizard_estimates))){
   if(!exp_vec[i]){
-    lizard_estimates$population_data$mean[i] 
+    population_ests(lizard_estimates)$mean[i] 
     print(paste0("95% CI for ", 
                  pars_CI_names[i],
                  ": (",
-                 lizard_estimates$population_data$CI_lower[i],
+                 population_ests(lizard_estimates)$CI_lower[i],
                  ", ",
-                 lizard_estimates$population_data$CI_upper[i],
+                 population_ests(lizard_estimates)$CI_upper[i],
                  ")"))
   } else {
-    exp(lizard_estimates$population_data$mean[i])
+    exp(population_ests(lizard_estimates)$mean[i])
     print(paste0("95% CI for ",
                  pars_CI_names[i], 
                  ": (",
-                 exp(lizard_estimates$population_data$CI_lower[i]),
+                 exp(population_ests(lizard_estimates)$CI_lower[i]),
                  ", ",
-                 exp(lizard_estimates$population_data$CI_upper[i]),
+                 exp(population_ests(lizard_estimates)$CI_upper[i]),
                  ")"))
   }
 }
