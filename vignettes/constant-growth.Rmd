@@ -52,9 +52,9 @@ For the multi-individual model the prior structure and default parameters are
 $$\mu_{\beta} \sim \mathcal{N}(0, 2),$$
 $$0 < \sigma_{\beta} \sim Cauchy(0, 2),$$
 $$0 < \sigma_{e} \sim Cauchy(0, 2).$$
-To change the prior parameter values (the distributions are fixed) optional arguments can be passed to `hmde_assign_data` with names corresponding to the `prior_pars` argument for the associated parameter as output by `hmde_models()`. For example in the following we want to change the prior for $\beta$ (`ind_beta`) in the individual model:
+To change the prior parameter values (the distributions are fixed) optional arguments can be passed to `hmde_data template` with names corresponding to the `prior_pars` argument for the associated parameter as output by `hmde_models()`. For example in the following we want to change the prior for $\beta$ (`ind_beta`) in the individual model:
 ```{r}
-hmde_model("constant_single_ind")
+prior_pars(hmde_model("constant_single_ind"))
 #prior_pars_ind_beta is the argument name for the prior parameters
 ```
 The mean passed to a log-normal distribution is the mean of the **underlying normal distribution**, so if you want to pass a value based on raw observations you need to log-transform it first.
@@ -204,12 +204,13 @@ The constant growth model assumes non-negative growth and uses a log-normal dist
 
 Now we will actually fit the model and extract the estimates.
 
-You can see what data structures are needed for the constant growth model through the following methods:
+The {hmde} workflow uses S4 class objects, starting with a data template structure that encodes the observation data and priors. You can see what data structures are needed for the constant growth model through the following methods:
 
 ```{r}
 hmde_model("constant_multi_ind") |> 
   names()
 
+show(hmde_model("constant_multi_ind"))
 print(hmde_model("constant_multi_ind"))
 summary(hmde_model("constant_multi_ind"))
 ```
@@ -226,13 +227,14 @@ Each name represents an element of the list that gets passed to the model:
 - `prior_pars_global_error_sigma` is the vector of prior parameters for the global error standard deviation
 - `model` is the name of the model
 
-The \texttt{print} and \texttt{summary} functions are generic S3 functions implemented for the \texttt{hmde_model_template} class output by \texttt{hmde_model}. There is also a generic \texttt{plot} function which plots the DE for a model with parameters taken from the priors
+The \texttt{show}, \texttt{print} and \texttt{summary} functions are generic S4 functions implemented for the \texttt{hmde_data_template} class. There is also a generic \texttt{plot} function which plots the DE for a model with parameters taken from the priors
 
-Now we will actually fit the model and extract the estimates. As the provided trout data is already in the form required by the `hmde_assign_data` function we don't need to do any further re-naming and can pass it directly.
+Now we will actually fit the model and extract the estimates. As the provided trout data is already in the form required by the `hmde_data_template` constructor function we don't need to do any further re-naming and can pass it directly.
 
 ```{r}
-trout_constant_fit <- hmde_model("constant_multi_ind") |>
-  hmde_assign_data(data = Trout_Size_Data)  |>
+set.seed("hmde") #For replicable results
+trout_constant_fit <- hmde_data_template("constant_multi_ind",
+                                         obs_data = Trout_Size_Data) |>
   hmde_run(chains = 4, cores = 1, iter = 2000)
 ```
 
@@ -249,18 +251,32 @@ These functions exclude the $\hat{R}$ values associated with the \texttt{check_p
 
 ### Inspect estimates
 
-Once the model has finished running, we can extract the model estimates and have a look at the distribution of estimated sizes, estimated growth increments, and annualised growth rates at the level of sizes over time.
+Once the model has finished running, we can extract the model estimates and have a look at the distribution of estimated sizes, estimated growth increments, and annualised growth rates at the level of sizes over time. The \texttt{hmde_estimates} function is the constructor for the \texttt{hmde_estimtes} class. Access to estimates at a specific level use generic getters for that slot.
 
 ```{r}
-trout_constant_estimates <- hmde_extract_estimates(                                 
+trout_constant_estimates <- hmde_estimates(                              
                                  fit = trout_constant_fit,
-                                 input_measurement_data = Trout_Size_Data)
+                                 obs_data = Trout_Size_Data)
+
+#Measurement-level estimates
+head(measurement_ests(trout_constant_estimates))
+
+#Individual-level
+head(individual_ests(trout_constant_estimates))
+
+#Population-level
+head(population_ests(trout_constant_estimates))
+
+#Error terms
+error_ests(trout_constant_estimates)
 ```
 
-First, let's do some quick data wrangling to calculate our parameters of interest.
+The \texttt{hmde_estimates} class also retains information on prior parameters, accessed with \texttt{prior_pars()}. 
+
+To start our analysis, let's do some quick data wrangling to calculate our parameters of interest.
 
 ```{r}
-measurement_data_transformed <- trout_constant_estimates$measurement_data %>%
+measurement_data_transformed <- measurement_ests(trout_constant_estimates) %>%
   group_by(ind_id) %>%
   mutate(
     delta_y_obs = y_obs - lag(y_obs),
@@ -304,13 +320,13 @@ In the next block, we are looking at 5 random individuals to start with because 
 ```{r, fig.width=4, fig.height=4}
 #Quantitative R^2
 cor(measurement_data_transformed$y_obs, measurement_data_transformed$y_hat)^2
-r_sq_est <- cor(trout_constant_estimates$measurement_data$y_obs,
-                          trout_constant_estimates$measurement_data$y_hat)^2
+r_sq_est <- cor(measurement_ests(trout_constant_estimates)$y_obs,
+                          measurement_ests(trout_constant_estimates)$y_hat)^2
 r_sq <- paste0("R^2 = ", 
                signif(r_sq_est,
                       digits = 3))
 
-obs_est_size_plot <- ggplot(data = trout_constant_estimates$measurement_data, 
+obs_est_size_plot <- ggplot(data = measurement_ests(trout_constant_estimates), 
        aes(x = y_obs, y = y_hat)) +
   geom_point(shape = 16, size = 1, colour = "green4") +
   xlab("Y obs.") +
@@ -322,8 +338,8 @@ obs_est_size_plot <- ggplot(data = trout_constant_estimates$measurement_data,
 obs_est_size_plot
 
 #Plots of size over time for a sample of 5 individuals
-size_over_time_plot <- hmde_plot_obs_est_inds(n_ind_to_plot = 5,
-                       measurement_data = trout_constant_estimates$measurement_data)
+size_over_time_plot <- hmde_plot_obs_est_inds(trout_constant_estimates,
+                                              n_ind_to_plot = 5)
 size_over_time_plot
 
 ```
@@ -333,7 +349,7 @@ size_over_time_plot
 At the level of individuals we are interested in the distribution of $\beta$ estimates, which will align with the estimated annualised growth rates as that's precisely what they represent. Here is one way to visualise  the fitted growth functions in order to see how they compare to the observed sizes.
 
 ```{r, echo=FALSE, fig.width=6.5, fig.height=5}
-ind_hist_beta <- histogram_func(trout_constant_estimates$individual_data,
+ind_hist_beta <- histogram_func(individual_ests(trout_constant_estimates),
                ind_beta_mean,
                main = "Individual beta parameters", 
                xlab = "beta estimate")
@@ -350,21 +366,21 @@ We also get estimates of the population-level hyper-parameters that govern the d
 
 ```{r}
 #Mean of normal distribution
-trout_constant_estimates$population_data$mean[1] #Raw value
+population_ests(trout_constant_estimates)$mean[1] #Raw value
 print(paste0("95% CI for mean log growth: (", 
-             trout_constant_estimates$population_data$CI_lower[1], " , ",
-             trout_constant_estimates$population_data$CI_upper[1], ")")) #Raw CI
+             population_ests(trout_constant_estimates)$CI_lower[1], " , ",
+             population_ests(trout_constant_estimates)$CI_upper[1], ")")) #Raw CI
 
-exp(trout_constant_estimates$population_data$mean[1]) #In cm/yr units
+exp(population_ests(trout_constant_estimates)$mean[1]) #In cm/yr units
 print(paste0("95% CI for mean growth in cm/yr: (", 
-             exp(trout_constant_estimates$population_data$CI_lower[1]), " , ",
-             exp(trout_constant_estimates$population_data$CI_upper[1]), ")"))
+             exp(population_ests(trout_constant_estimates)$CI_lower[1]), " , ",
+             exp(population_ests(trout_constant_estimates)$CI_upper[1]), ")"))
 
 #Standard deviation of underlying normal distribution
-trout_constant_estimates$population_data$mean[2]
+population_ests(trout_constant_estimates)$mean[2]
 print(paste0("95% CI for log growth standard deviation: (", 
-             trout_constant_estimates$population_data$CI_lower[2], " , ",
-             trout_constant_estimates$population_data$CI_upper[2], ")")) #Raw CI
+             population_ests(trout_constant_estimates)$CI_lower[2], " , ",
+             population_ests(trout_constant_estimates)$CI_upper[2], ")")) #Raw CI
 ```
 From the species-level data we can say that the average annual growth rate for the species is estimated to be 2.4cm/yr, with a 95% posterior CI of (1.83, 3.04). As we fit a constant growth model there's only so much we can say about the growth behaviour. 
 

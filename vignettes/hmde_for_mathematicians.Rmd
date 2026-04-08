@@ -87,14 +87,14 @@ and typically use the following priors:
 $$
 \mu_k \sim\mathcal{N}(0,2), \quad 0 < \sigma_k\sim Cauchy(0, 2).
 $$
-For details on the prior distributions see the vignette for a specific model or check the Stan file. To see the default values run `hmde_model` on the model name as a string and look at the `prior_pars` argument for the parameter name:
+For details on the prior distributions see the vignette for a specific model or check the Stan file. To see the default values run we look at the prior parameters for a given model:
 ```{r}
-hmde_model("canham_multi_ind")
+prior_pars(hmde_model("canham_multi_ind"))
 ```
 
 The error parameter $\sigma_e >0$ is assumed to operate at a global level independent of individual and typically has a Cauchy prior with location 0, spread parameter 2.
 
-Estimation is done using MCMC through Stan. 
+Estimation is currently done using MCMC through Stan. A deterministic method such as joint max posterior likelihood is intended as an option in the future.
 
 ## Integration of time series
 Numerical methods are required for the Canham model as it has no analytic solution, and the inbuilt Stan Runge-Kutta 4-5 solver is used.
@@ -106,12 +106,13 @@ For the von Bertalanffy model an analytic solution is used in order to avoid num
 The provided tree data for 50 individuals takes a few hours to run. As such, the following block does not run by default, and instead we leverage the provided estimates data file: `Tree_Size_Ests`. The estimates are posterior mean, median, and 95\% central credible intervals for parameters, and mean posterior estimates of sizes over time based on the longitudinal model.
 ```{r, eval=FALSE}
 # Build fit and extract estimates
-canham_multi_ind_fit <- hmde_model("canham_multi_ind") |>
-  hmde_assign_data(data = Tree_Size_Data)  |>
+set.seed("hmde")
+canham_multi_ind_fit <- hmde_data_template("canham_multi_ind",
+                                           obs_data = Tree_Size_Data) |>
   hmde_run(chains = 1, cores = 1, iter = 1000)
 
-Tree_Size_Ests <- hmde_extract_estimates(fit = canham_multi_ind_fit,
-                                 input_measurement_data = Tree_Size_Data)
+Tree_Size_Ests <- hmde_estimates(fit = canham_multi_ind_fit,
+                                 obs_data = Tree_Size_Data)
 ```
 
 The following code produces plots of the Canham function for each individual between the first and last estimated size. The purpose of the plot is to look at how different individual growth functions behave.
@@ -119,52 +120,12 @@ The following code produces plots of the Canham function for each individual bet
 summary(Tree_Size_Ests)
 
 # Plot fitted growth function pieces
-plot_par_individual_data <- Tree_Size_Ests$individual_data[,c(1, 2, 6, 10)] #Pull out estimates only
 hmde_plot_de_pieces(Tree_Size_Ests)
 ```
 Each line represents 25 years of growth for the specific individual. Lines that sit lower on the $y$-axis are shorter horizontally because they are traversed more slowly, as $f$ is the rate of change in $Y$. 
 
-To understand the error model, the following code plots a number of individual sizes over time, then super-imposes those growth curves in black on the individual growth function plots. To view a specific individual, use the `ind_id` value to select them.
+We have provided a function to plot observed and estimated sizes for a selected number of individuals:
 ```{r}
 #Plots of size over time for a sample of 5 individuals
-sample_ids <- sample(1:nrow(Tree_Size_Ests$individual_data), size=5) %>%
-  sort()
-plot_data <- Tree_Size_Ests$measurement_data %>%
-  filter(ind_id %in% sample_ids)
-
-ind_size_lims <- Tree_Size_Ests$measurement_data %>%
-  filter(ind_id %in% sample_ids)%>%
-  group_by(ind_id) %>%
-  summarise(y_0 = min(y_hat),
-         y_final = max(y_hat))
-
-ggplot(data=plot_data, aes(group = ind_id)) +
-  geom_point(aes(x = time, y=y_obs, colour = as.factor(ind_id)),
-             shape = 1) +
-  geom_line(aes(x = time, y=y_obs, colour = as.factor(ind_id)),
-            linetype = "dashed") +
-  geom_point(aes(x = time, y=y_hat, colour = as.factor(ind_id)),
-             shape = 2) +
-  geom_line(aes(x = time, y=y_hat, colour = as.factor(ind_id)),
-            linetype = "solid") +
-  labs(x="Time (years)", y="DBH (cm)", colour="Ind. ID") +
-  theme_classic()
-
-#Load DE for Canham
-DE_function = hmde_model_des("canham_multi_ind")
-
-#Produce plot with focus inds
-function_plot <- hmde_plot_de_pieces(Tree_Size_Ests,
-                    alpha = 0.2) 
-for(i in 1:length(sample_ids)){
-  args_list <- list(pars=Tree_Size_Ests$individual_data[sample_ids[i],c(2, 6, 10)])
-  
-  function_plot <- function_plot +
-      geom_function(fun=DE_function, args=args_list,
-                    colour="black", linewidth=1, alpha = 1,
-                    xlim=c(ind_size_lims$y_0[i], ind_size_lims$y_final[i]))
-    
-}
-
-function_plot
+hmde_plot_obs_est_inds(Tree_Size_Ests, n_ind_to_plot = 5)
 ```
