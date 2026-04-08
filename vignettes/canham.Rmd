@@ -98,7 +98,7 @@ hist(Tree_Size_Data_Transformed$Delta_y_obs,
 Due to the complexity of the Canham model the sampling can take up to 3 hours. If you decide to run your own samples we recommend saving the model outputs using `saveRDS()` so you don't need to rerun your model every time. We provide a data set of estimates with the package in the `Tree_Size_Ests` data file which can be accessed directly.
 
 ```{r, eval=FALSE}
-set.seed("hmde")
+set.seed(2026)
 tree_canham_fit <- hmde_data_template("canham_multi_ind",
                                       obs_data = Tree_Size_Data) |>
   hmde_run(chains = 4, cores = 4, iter = 2000)
@@ -106,7 +106,7 @@ tree_canham_fit <- hmde_data_template("canham_multi_ind",
 tree_canham_estimates <- hmde_estimates(fit = tree_canham_fit,
                                  obs_data = Tree_Size_Data)
 
-#saveRDS(tree_canham_fit, "tree_canham_fit.rds")
+saveRDS(tree_canham_fit, "tree_canham_fit.rds")
 #saveRDS(tree_canham_estimates, "tree_canham_estimates.rds")
 ```
 

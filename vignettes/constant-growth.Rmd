@@ -232,7 +232,7 @@ The \texttt{show}, \texttt{print} and \texttt{summary} functions are generic S4 
 Now we will actually fit the model and extract the estimates. As the provided trout data is already in the form required by the `hmde_data_template` constructor function we don't need to do any further re-naming and can pass it directly.
 
 ```{r}
-set.seed("hmde") #For replicable results
+set.seed(2026) #For replicable results
 trout_constant_fit <- hmde_data_template("constant_multi_ind",
                                          obs_data = Trout_Size_Data) |>
   hmde_run(chains = 4, cores = 1, iter = 2000)

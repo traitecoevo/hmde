@@ -106,7 +106,7 @@ For the von Bertalanffy model an analytic solution is used in order to avoid num
 The provided tree data for 50 individuals takes a few hours to run. As such, the following block does not run by default, and instead we leverage the provided estimates data file: `Tree_Size_Ests`. The estimates are posterior mean, median, and 95\% central credible intervals for parameters, and mean posterior estimates of sizes over time based on the longitudinal model.
 ```{r, eval=FALSE}
 # Build fit and extract estimates
-set.seed("hmde")
+set.seed(2026)
 canham_multi_ind_fit <- hmde_data_template("canham_multi_ind",
                                            obs_data = Tree_Size_Data) |>
   hmde_run(chains = 1, cores = 1, iter = 1000)

@@ -150,7 +150,7 @@ We're going to run 100 fits with a step size of 1 using the custom RK4 solver an
 
 Each fit takes a few seconds to run, so allow several minutes for the following block. There are likely to be diagnostic problems but that is part of what we are here to explore so we will be ignoring them. Divergent transitions in particular are to be expected when we have the very different parameter estimates we see. Results are hidden for this block.
 ```{r, results='hide'}
-set.seed("hmde") #For replicable results
+set.seed(2026) #For replicable results
 runs <- 100
 step_size = 0.5
 par_est_tibble <- tibble(run = c(),
