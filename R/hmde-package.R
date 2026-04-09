@@ -7,13 +7,27 @@
 #' @aliases hmde
 #' @useDynLib hmde, .registration = TRUE
 #' @import methods
-#' @import Rcpp
 #' @import dplyr
+#' @import ggplot2
+#' @import purrr
+#' @import Rcpp
+#' @import RcppParallel
+#' @import rlang
+#' @import rstan
+#' @import rstantools
+#' @import tibble
+#' @import cowplot
+#' @import knitr
+#' @importFrom cowplot plot_grid
 #' @importFrom rstan sampling
 #' @importFrom rstan Rhat
+#' @importFrom rstan get_elapsed_time
+#' @importFrom knitr kable
 #' @importFrom rstantools rstan_config
 #' @importFrom RcppParallel RcppParallelLibs
 #' @importFrom stats median
+#' @importFrom stats quantile
+#' @importFrom stats setNames
 #' @importFrom cowplot plot_grid
 #'
 #' @references
