@@ -1,6 +1,5 @@
 test_that("Execution and output: plot_obs_est_inds function", {
-  plot <- hmde_plot_obs_est_inds(n_ind_to_plot = 2,
-                                 measurement_data = Tree_Size_Ests$measurement_data)
+  plot <- hmde_plot_obs_est_inds(Tree_Size_Ests, n_ind_to_plot = 2)
   expect_visible(plot)
 
   expect_true(is_ggplot(plot))
@@ -9,7 +8,7 @@ test_that("Execution and output: plot_obs_est_inds function", {
 
 test_that("Execution and output: bad input", {
   expect_error(
-    hmde_plot_obs_est_inds(measurement_data = Tree_Size_Ests$measurement_data)
+    hmde_plot_obs_est_inds(Tree_Size_Ests)
   )
 
   expect_error(
@@ -17,11 +16,10 @@ test_that("Execution and output: bad input", {
   )
 
   expect_error(
-    hmde_plot_obs_est_inds(individual_data = Tree_Size_Ests$measurement_data)
+    hmde_plot_obs_est_inds(individual_data = measurement_ests(Tree_Size_Ests))
   )
 
   expect_error(
-    hmde_plot_obs_est_inds(n_ind_to_plot = 10^3,
-      measurement_data = Tree_Size_Ests$measurement_data)
+    hmde_plot_obs_est_inds(Tree_Size_Ests, n_ind_to_plot = 10^3)
   )
 })

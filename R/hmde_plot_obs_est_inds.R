@@ -3,7 +3,6 @@
 #' the hmde_extract_estimates function.
 #'
 #' @param estimates hmde_estimates class object
-#' @param measurement_data tibble with estimated measurements
 #' @param ind_id_vec vector with list of ind_id values
 #' @param n_ind_to_plot integer giving number of individuals to plot if not specified
 #' @param xlab character string for replacement x axis label
@@ -21,7 +20,6 @@
 #' @import dplyr
 
 hmde_plot_obs_est_inds <- function(estimates = NULL,
-                                   measurement_data = NULL,
                                    ind_id_vec = NULL,
                                    n_ind_to_plot = NULL,
                                    xlab = "Time",
@@ -36,10 +34,6 @@ hmde_plot_obs_est_inds <- function(estimates = NULL,
 
   if(!is.null(estimates)){ #Allows for passing of estimate object.
     measurement_data <- measurement_ests(estimates)
-  }
-
-  if(is.null(measurement_data)){
-    stop("Measurement data not provided.")
   }
 
   if(!is.null(ind_id_vec)){
