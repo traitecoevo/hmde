@@ -3,7 +3,7 @@
 ``` r
 #Code to replicate results in hmde paper
 # install.packages("remotes")
-#remotes::install_github("traitecoevo/hmde@a79baae6c2df22789cccc1fd96eb3a55da9628ec")
+#remotes::install_github("traitecoevo/hmde")
 
 {
   library(hmde)

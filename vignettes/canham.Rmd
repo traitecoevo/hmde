@@ -3,9 +3,11 @@ title: "Case study 3: Canham function growth with tree data from Barro Colorado 
 output: rmarkdown::html_vignette
 vignette: >
   %\VignetteIndexEntry{canham}
-  %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
+  %\VignetteEngine{knitr::rmarkdown}
 bibliography: vignette.bib
+editor_options: 
+  chunk_output_type: console
 ---
 
 ```{r, include = FALSE}
@@ -267,24 +269,37 @@ for(i in 1:nrow(population_ests(Tree_Size_Ests))){
   if(!exp_vec[i]){
     print(paste0(pars_CI_names[i],
                  " estimate: ",
-                 population_ests(Tree_Size_Ests)$mean[i] ))
+                 round(population_ests(Tree_Size_Ests)$mean[i],
+                       digits = 3
+                  ) ))
     print(paste0("95% CI for ", 
                  pars_CI_names[i],
                  ": (",
-                 population_ests(Tree_Size_Ests)$CI_lower[i],
+                 round(population_ests(Tree_Size_Ests)$CI_lower[i],
+                  digits = 3),
                  ", ",
-                 population_ests(Tree_Size_Ests)$CI_upper[i],
+                 round(population_ests(Tree_Size_Ests)$CI_upper[i],
+                  digits = 3),
                  ")"))
   } else {
     print(paste0(pars_CI_names[i],
                  " estimate: ",
-                 exp(population_ests(Tree_Size_Ests)$mean[i])))
+                 round(
+                   exp(population_ests(Tree_Size_Ests)$mean[i]),
+                   digits = 3
+                   )))
     print(paste0("95% CI for ",
                  pars_CI_names[i], 
                  ": (",
-                 exp(population_ests(Tree_Size_Ests)$CI_lower[i]),
+                 round(
+                   exp(population_ests(Tree_Size_Ests)$CI_lower[i]),
+                   digits = 3
+                   ),
                  ", ",
-                 exp(population_ests(Tree_Size_Ests)$CI_upper[i]),
+                 round(
+                   exp(population_ests(Tree_Size_Ests)$CI_upper[i]),
+                   digits = 3
+                  ),
                  ")"))
   }
 }

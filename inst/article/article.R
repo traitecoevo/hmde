@@ -60,8 +60,9 @@ obs_plot <-
   geom_line(aes(x = time, y=y_obs, colour = as.factor(ind_id)),
             linetype = "dashed", alpha = 0.5) +
   scale_shape_manual(values = c(1,3)) +
-  labs(title = "Repeat observations over time", x="Time", y="Observed size", colour="Individual",
-       shape = "Individual", linetype = "Individual") +
+  labs(title = "Repeat observations over time", x="Time",
+       y="Observed size", colour="Individual",
+       shape = "Individual") +
   theme_classic() +
   theme(legend.position = "inside",
         legend.position.inside = c(0.8, 0.2),
@@ -77,8 +78,8 @@ data <- tibble(
 )
 
 fit <-
-  hmde_model("vb_multi_ind") |>
-  hmde_assign_data(data) |>
+  hmde_data_template("vb_multi_ind",
+                     obs_data = data) |>
   hmde_run(chains = 4,
            cores = 4,
            iter = 2000)
@@ -88,10 +89,10 @@ diag_plot <- traceplot(fit, pars=c("ind_max_size", "ind_growth_rate"), inc_warmu
 diag_plot
 
 #plots of sizes over time
-ests <- hmde_extract_estimates(fit, data)
+ests <- hmde_estimates(fit, data)
 
 fit_plot <-
-  ggplot(data=ests$measurement_data, aes(group = ind_id)) +
+  ggplot(data=measurement_ests(ests), aes(group = ind_id)) +
   geom_point(aes(x = time, y=y_obs,
                  colour = as.factor(ind_id),
                  shape = as.factor(ind_id)),
@@ -106,7 +107,7 @@ fit_plot <-
              shape = 2, size = 2, stroke = 1, alpha = 0.8) +
   scale_shape_manual(values = c(1,3)) +
   labs(x="Time", y="Observed size", colour="Individual",
-       shape = "Individual", linetype = "Individual",
+       shape = "Individual",
        title = "Observed and estimated sizes over time") +
   theme_classic() +
   theme(legend.position = "inside",
@@ -115,7 +116,7 @@ fit_plot <-
         axis.text = element_blank())
 fit_plot
 
-fitted_function_plot <- hmde_plot_de_pieces(estimate_list = ests,
+fitted_function_plot <- hmde_plot_de_pieces(ests,
                                             xlab = "Size",
                                             ylab = "Growth rate",
                                             title = "Fitted growth functions",
@@ -263,8 +264,8 @@ set.seed(2025)
   }
 
 trout_constant_fit <-
-  hmde_model("constant_multi_ind") |>
-  hmde_assign_data(data = Trout_Size_Data)  |>
+  hmde_data_template("constant_multi_ind",
+             obs_data = Trout_Size_Data) |>
   hmde_run(chains = 4, cores = 4, iter = 2000)
 
 #Diag plots, requires large image size to see properly
@@ -274,18 +275,18 @@ diag_plot_growth_rate <- traceplot(trout_constant_fit,
 print(diag_plot_growth_rate)
 
 trout_estimates <-
-  hmde_extract_estimates(trout_constant_fit,
-                         input_measurement_data = Trout_Size_Data)
+  hmde_estimates(trout_constant_fit,
+                 obs_data = Trout_Size_Data)
 
 trout_estimates
 
 #relationship between estimate and observed sizes
-cor(trout_estimates$measurement_data$y_obs, trout_estimates$measurement_data$y_hat)^2
-r_sq_est <- cor(trout_estimates$measurement_data$y_obs,
-                trout_estimates$measurement_data$y_hat)^2
-rmse_est <- sqrt((1/length(trout_estimates$measurement_data$y_obs))*
-                    sum((trout_estimates$measurement_data$y_obs -
-                        trout_estimates$measurement_data$y_hat)^2))
+cor(measurement_ests(trout_estimates)$y_obs, measurement_ests(trout_estimates)$y_hat)^2
+r_sq_est <- cor(measurement_ests(trout_estimates)$y_obs,
+                measurement_ests(trout_estimates)$y_hat)^2
+rmse_est <- sqrt((1/length(measurement_ests(trout_estimates)$y_obs))*
+                    sum((measurement_ests(trout_estimates)$y_obs -
+                        measurement_ests(trout_estimates)$y_hat)^2))
 r_sq <- paste0("R^2 = ",
                signif(r_sq_est,
                       digits = 3),
@@ -293,7 +294,7 @@ r_sq <- paste0("R^2 = ",
                signif(rmse_est,
                       digits = 3))
 
-obs_est_size_plot <- ggplot(data = trout_estimates$measurement_data,
+obs_est_size_plot <- ggplot(data = measurement_ests(trout_estimates),
                             aes(x = y_obs, y = y_hat)) +
   geom_point(shape = 16, size = 1, colour = "green4") +
   xlab("Y obs.") +
@@ -306,12 +307,12 @@ obs_est_size_plot <- ggplot(data = trout_estimates$measurement_data,
 #Plots of size over time for a sample of 5 individuals
 size_over_time_plot <- hmde_plot_obs_est_inds(n_ind_to_plot = 5,
                                               measurement_data =
-                                                trout_estimates$measurement_data) +
+                                                measurement_ests(trout_estimates)) +
   theme(legend.position = "inside",
         legend.position.inside = c(0.8,0.3)) +
   guides(colour=guide_legend(ncol=2))
 
-ind_hist_beta <- histogram_func(trout_estimates$individual_data,
+ind_hist_beta <- histogram_func(individual_ests(trout_estimates),
                                ind_beta_mean,
                                main = "Individual beta parameters",
                                xlab = "beta estimate")
@@ -333,12 +334,12 @@ fig_2 <- plot_grid(
 print(fig_2)
 
 #Table 1: species-level hyper parameters
-exp_mean <- trout_estimates$population_data[1,c(1,2,4,5)] %>%
+exp_mean <- population_ests(trout_estimates)[1,c(1,2,4,5)] %>%
   mutate(mean = exp(mean),
          CI_lower = exp(CI_lower),
          CI_upper = exp(CI_upper),
          par_name = "pop_beta_mu")
-sp_ests <- rbind(trout_estimates$population_data[,c(1,2,4,5)],
+sp_ests <- rbind(population_ests(trout_estimates)[,c(1,2,4,5)],
       exp_mean)
 
 print(sp_ests)
@@ -348,8 +349,8 @@ print(sp_ests)
 # von Bertalanffy function demonstration
 set.seed(2025)
 {
-  lizard_vb_fit <- hmde_model("vb_multi_ind") |>
-    hmde_assign_data(data = Lizard_Size_Data)  |>
+  lizard_vb_fit <- hmde_data_template("vb_multi_ind",
+                                      obs_data = Lizard_Size_Data)  |>
     hmde_run(chains = 4, cores = 4, iter = 2000)
 
   diag_max_size <- traceplot(lizard_vb_fit,
@@ -361,16 +362,16 @@ set.seed(2025)
   print(diag_max_size)
   print(diag_growth_rate)
 
-  lizard_estimates <- hmde_extract_estimates(fit = lizard_vb_fit,
-                                             input_measurement_data = Lizard_Size_Data)
+  lizard_estimates <- hmde_estimates(fit = lizard_vb_fit,
+                                     obs_data = Lizard_Size_Data)
 
 
   #Quantitative R^2
-  r_sq_est <- cor(lizard_estimates$measurement_data$y_obs,
-                  lizard_estimates$measurement_data$y_hat)^2
-  rmse_est <- sqrt((1/length(lizard_estimates$measurement_data$y_obs))*
-                     sum((lizard_estimates$measurement_data$y_obs -
-                            lizard_estimates$measurement_data$y_hat)^2))
+  r_sq_est <- cor(measurement_ests(lizard_estimates)$y_obs,
+                  measurement_ests(lizard_estimates)$y_hat)^2
+  rmse_est <- sqrt((1/length(measurement_ests(lizard_estimates)$y_obs))*
+                     sum((measurement_ests(lizard_estimates)$y_obs -
+                            measurement_ests(lizard_estimates)$y_hat)^2))
   r_sq <- paste0("R^2 = ",
                  signif(r_sq_est,
                         digits = 3),
@@ -378,7 +379,7 @@ set.seed(2025)
                  signif(rmse_est,
                         digits = 3))
 
-  obs_scatter <- ggplot(data = lizard_estimates$measurement_data,
+  obs_scatter <- ggplot(data = measurement_ests(lizard_estimates),
                         aes(x = y_obs, y = y_hat)) +
     geom_point(shape = 16, size = 1, colour = "green4") +
     xlab("Y obs.") +
@@ -391,12 +392,12 @@ set.seed(2025)
   #Plots of size over time for a sample of 5 individuals
   obs_est_ind <- hmde_plot_obs_est_inds(n_ind_to_plot = 5,
                                         measurement_data =
-                                          lizard_estimates$measurement_data) +
+                                          measurement_ests(lizard_estimates)) +
     theme(legend.position = "inside",
           legend.position.inside = c(0.8, 0.2))
 
   #1-dimensional parameter distributions
-  s_max_hist <- ggplot(lizard_estimates$individual_data,
+  s_max_hist <- ggplot(individual_ests(lizard_estimates),
                        aes(ind_max_size_mean)) +
     geom_histogram(bins = 10,
                    colour = "black",
@@ -404,7 +405,7 @@ set.seed(2025)
     labs(x="S_max estimate") +
     theme_classic()
 
-  beta_hist <- ggplot(lizard_estimates$individual_data,
+  beta_hist <- ggplot(individual_ests(lizard_estimates),
                       aes(ind_growth_rate_mean)) +
     geom_histogram(bins = 10,
                    colour = "black",
@@ -413,7 +414,7 @@ set.seed(2025)
     theme_classic()
 
   #2-dimensional parameter distribution
-  par_scatter <- ggplot(data = lizard_estimates$individual_data,
+  par_scatter <- ggplot(data = individual_ests(lizard_estimates),
                         aes(x = ind_max_size_mean, y = ind_growth_rate_mean)) +
     geom_point(shape = 16, size = 1, colour = "green4") +
     xlab("Individual max sizes (mm)") +
@@ -421,8 +422,8 @@ set.seed(2025)
     theme_classic()
 
   #Correlation of parameters
-  cor(lizard_estimates$individual_data$ind_max_size_mean,
-      lizard_estimates$individual_data$ind_growth_rate_mean,
+  cor(individual_ests(lizard_estimates)$ind_max_size_mean,
+      individual_ests(lizard_estimates)$ind_growth_rate_mean,
       method = "spearman")
 
   #Plot function pieces over estimated sizes.
@@ -444,12 +445,12 @@ set.seed(2025)
   )
   print(fig_3)
 
-  exp_mean <- lizard_estimates$population_data[c(1,3),c(1,2,4,5)] %>%
+  exp_mean <- population_ests(lizard_estimates)[c(1,3),c(1,2,4,5)] %>%
     mutate(mean = exp(mean),
            CI_lower = exp(CI_lower),
            CI_upper = exp(CI_upper))
   exp_mean$par_name <- c("pop_max_size_mean", "pop_growth_rate_mean")
-  sp_pars <- rbind(lizard_estimates$population_data[,c(1,2,4,5)],
+  sp_pars <- rbind(population_ests(lizard_estimates)[,c(1,2,4,5)],
         exp_mean)
 
   print(sp_pars)
@@ -462,24 +463,24 @@ set.seed(2025)
 if(FALSE){ #Re-run model to reproduce Tree_Size_Ests results
   set.seed(2025)
   tree_fit <-
-    hmde_model("canham_multi_ind") |>
-    hmde_assign_data(data = Tree_Size_Data)  |>
+    hmde_data_template("canham_multi_ind",
+                       obs_data = Tree_Size_Data)  |>
     hmde_run(chains = 4, cores = 4, iter = 2000)
 
   Tree_Size_Ests <-
-    hmde_extract_estimates(
+    hmde_estimates(
       fit = tree_fit,
-      input_measurement_data = Tree_Size_Data)
+      obs_data = Tree_Size_Data)
 }
 
 set.seed(2025)
 {
   #Quantitative R^2
-  r_sq_est <- cor(Tree_Size_Ests$measurement_data$y_obs,
-                  Tree_Size_Ests$measurement_data$y_hat)^2
-  rmse_est <- sqrt((1/length(Tree_Size_Ests$measurement_data$y_obs))*
-                     sum((Tree_Size_Ests$measurement_data$y_obs -
-                            Tree_Size_Ests$measurement_data$y_hat)^2))
+  r_sq_est <- cor(measurement_ests(Tree_Size_Ests)$y_obs,
+                  measurement_ests(Tree_Size_Ests)$y_hat)^2
+  rmse_est <- sqrt((1/length(measurement_ests(Tree_Size_Ests)$y_obs))*
+                     sum((measurement_ests(Tree_Size_Ests)$y_obs -
+                            measurement_ests(Tree_Size_Ests)$y_hat)^2))
   r_sq <- paste0("R^2 = ",
                  signif(r_sq_est,
                         digits = 3),
@@ -487,7 +488,7 @@ set.seed(2025)
                  signif(rmse_est,
                         digits = 3))
 
-  obs_est_scatter <- ggplot(data = Tree_Size_Ests$measurement_data,
+  obs_est_scatter <- ggplot(data = measurement_ests(Tree_Size_Ests),
                             aes(x = y_obs, y = y_hat)) +
     geom_point(shape = 16, size = 1, colour = "green4") +
     xlab("Y obs.") +
@@ -499,12 +500,12 @@ set.seed(2025)
 
   #Plots of size over time for a sample of 5 individuals
   obs_est_size_plot <- hmde_plot_obs_est_inds(n_ind_to_plot = 5,
-                                              measurement_data = Tree_Size_Ests$measurement_data) +
+                                              measurement_data = measurement_ests(Tree_Size_Ests)) +
     theme(legend.position = "top") +
     guides(colour=guide_legend(nrow=2,byrow=TRUE))
 
   #1-dimensional parameter distributions
-  gmax_hist <- ggplot(Tree_Size_Ests$individual_data,
+  gmax_hist <- ggplot(individual_ests(Tree_Size_Ests),
          aes(ind_max_growth_mean)) +
     geom_histogram(bins = 10,
                    colour = "black",
@@ -512,7 +513,7 @@ set.seed(2025)
     labs(x="g_max estimate") +
     theme_classic()
 
-  Smax_hist <- ggplot(Tree_Size_Ests$individual_data,
+  Smax_hist <- ggplot(individual_ests(Tree_Size_Ests),
          aes(ind_size_at_max_growth_mean)) +
     geom_histogram(bins = 10,
                    colour = "black",
@@ -520,7 +521,7 @@ set.seed(2025)
     labs(x="S_max estimate") +
     theme_classic()
 
-  k_hist <- ggplot(Tree_Size_Ests$individual_data,
+  k_hist <- ggplot(individual_ests(Tree_Size_Ests),
          aes(ind_k_mean)) +
     geom_histogram(bins = 10,
                    colour = "black",
@@ -529,21 +530,21 @@ set.seed(2025)
     theme_classic()
 
   #2-dimensional parameter distributions
-  pairplot1 <- ggplot(data = Tree_Size_Ests$individual_data,
+  pairplot1 <- ggplot(data = individual_ests(Tree_Size_Ests),
                       aes(x = ind_max_growth_mean, y = ind_size_at_max_growth_mean)) +
     geom_point(shape = 16, size = 1, colour = "green4") +
     xlab("Ind. max growth (cm/yr)") +
     ylab("Ind. size at max growth (cm)") +
     theme_classic()
 
-  pairplot2 <- ggplot(data = Tree_Size_Ests$individual_data,
+  pairplot2 <- ggplot(data = individual_ests(Tree_Size_Ests),
                       aes(x = ind_k_mean, y = ind_max_growth_mean)) +
     geom_point(shape = 16, size = 1, colour = "green4") +
     ylab("Ind. max growth (cm/yr)") +
     xlab("Ind. spread par.") +
     theme_classic()
 
-  pairplot3 <- ggplot(data = Tree_Size_Ests$individual_data,
+  pairplot3 <- ggplot(data = individual_ests(Tree_Size_Ests),
                       aes(x = ind_size_at_max_growth_mean, y = ind_k_mean)) +
     geom_point(shape = 16, size = 1, colour = "green4") +
     ylab("Ind. spread par.") +
@@ -583,14 +584,14 @@ set.seed(2025)
             rel_heights = c(1/3,2/3))
   print(fig_4)
 
-  exp_mean <- Tree_Size_Ests$population_data[c(1,3,5),c(1,2,4,5)] %>%
+  exp_mean <- population_ests(Tree_Size_Ests)[c(1,3,5),c(1,2,4,5)] %>%
     mutate(mean = exp(mean),
            CI_lower = exp(CI_lower),
            CI_upper = exp(CI_upper))
   exp_mean$par_name <- c("pop_max_growth_mean",
                          "pop_size_at_max_growth_mean",
                          "pop_k_mean")
-  canham_sp_data <- rbind(Tree_Size_Ests$population_data[,c(1,2,4,5)],
+  canham_sp_data <- rbind(population_ests(Tree_Size_Ests)[,c(1,2,4,5)],
         exp_mean)
 
   print(canham_sp_data)
