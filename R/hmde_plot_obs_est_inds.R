@@ -16,9 +16,11 @@
 #'                        n_ind_to_plot = 5)
 #'
 #' @return ggplot object
-#' @export
+#'
 #' @import ggplot2
 #' @import dplyr
+#'
+#' @export
 
 hmde_plot_obs_est_inds <- function(estimates = NULL,
                                    measurement_data = NULL,
