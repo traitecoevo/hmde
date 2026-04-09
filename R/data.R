@@ -67,17 +67,24 @@
 
 #' Garcinia recondita model estimates - Barro Colorado Island data
 #'
-#' Estimated sizes, individual growth parameters, and population-level hyper-parameters
+#' Estimates object of class hmde_estimates for Canham fit. Contains estimated
+#' sizes, individual growth parameters, and population-level hyper-parameters
 #' for Garcinia recondita fit with a Canham growth function hierarchical model.
 #' The data used to fit the model is the Tree_Size_Data object.
 #'
 #' @format ## `Tree_Size_Ests`
-#' A list with 5 elements:
+#' A hmde_estimates object:
 #' \describe{
-#'   \item{model}{A character string giving the model name - Canham with multiple individuals.}
-#'   \item{measurement_data}{A tibble with 5 columns that gives information on size observations and estimates.}
-#'   \item{individual_data}{A tibble with 13 columns that gives posterior estimates for individual growth parameters.}
-#'   \item{error_data}{A tibble with 5 columns that gives posterior estimates of the error parameter.}
-#'   \item{population_data}{A tibble with 5 columns that gives posterior estimates for population-level hyper-parameters.}
+#'   \item{model_name}{A character string giving the model name - Canham with multiple individuals.}
+#'   \item{model_level}{A character string stating that the model is fit to multiple individuals.}
+#'   \item{method}{A character string stating that the model was fit with MCMC sampling.}
+#'   \item{runtime}{A matrix giving the runtime of each chain.}
+#'   \item{fit_summary}{A character string summarising the model fitting.}
+#'   \item{measurement_ests}{A tibble with 5 columns that gives information on size observations and estimates.}
+#'   \item{individual_ests}{A tibble with 13 columns that gives posterior estimates for individual growth parameters.}
+#'   \item{population_ests}{A tibble with 5 columns that gives posterior estimates for population-level hyper-parameters.}
+#'   \item{error_ests}{A tibble with 5 columns that gives posterior estimates of the error parameter.}
+#'   \item{prior_pars}{A list contianing details of the prior parameters used for the model fit.}
+#'   \item{par_names}{A list containing the names of estimated parameters at each level of the hierarchical model.}
 #' }
 "Tree_Size_Ests"

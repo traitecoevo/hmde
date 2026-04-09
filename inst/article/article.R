@@ -268,6 +268,19 @@ trout_constant_fit <-
              obs_data = Trout_Size_Data) |>
   hmde_run(chains = 4, cores = 4, iter = 2000)
 
+#Changing the prior parameters
+#Look at the default prior values
+prior_pars(hmde_data_template("constant_multi_ind"))$prior_pars_pop_log_beta_mean
+
+#Assign new value
+new_priors <- prior_pars(hmde_data_template("constant_multi_ind"))
+new_priors$prior_pars_pop_log_beta_mean <- c(1, 3)
+
+data <- hmde_data_template("constant_multi_ind",
+                           data = Trout_Size_Data,
+                           prior_pars = new_priors)
+prior_pars(data)
+
 #Diag plots, requires large image size to see properly
 diag_plot_growth_rate <- traceplot(trout_constant_fit,
                                     pars="ind_beta",
@@ -278,7 +291,10 @@ trout_estimates <-
   hmde_estimates(trout_constant_fit,
                  obs_data = Trout_Size_Data)
 
-trout_estimates
+measurement_ests(trout_estimates)
+individual_ests(trout_estimates)
+population_ests(trout_estimates)
+error_ests(trout_estimates)
 
 #relationship between estimate and observed sizes
 cor(measurement_ests(trout_estimates)$y_obs, measurement_ests(trout_estimates)$y_hat)^2
@@ -535,6 +551,7 @@ set.seed(2025)
     geom_point(shape = 16, size = 1, colour = "green4") +
     xlab("Ind. max growth (cm/yr)") +
     ylab("Ind. size at max growth (cm)") +
+    scale_y_log10() +# Scale S_max
     theme_classic()
 
   pairplot2 <- ggplot(data = individual_ests(Tree_Size_Ests),
@@ -549,6 +566,7 @@ set.seed(2025)
     geom_point(shape = 16, size = 1, colour = "green4") +
     ylab("Ind. spread par.") +
     xlab("Ind. size at max growth (cm)") +
+    scale_x_log10() + #Scale S_max
     theme_classic()
 
   est_de_plot <- hmde_plot_de_pieces(Tree_Size_Ests)
