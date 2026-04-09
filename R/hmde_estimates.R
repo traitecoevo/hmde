@@ -12,7 +12,8 @@ setClass(
     individual_ests = "tbl_df", # Tibble of individual-level parameters
     population_ests = "tbl_df", # Tibble of species-level estimates, empty if single ind
     error_ests = "tbl_df", # Tibble of error terms
-    prior_pars = "list" # List of prior parameters for model
+    prior_pars = "list", # List of prior parameters for model
+    par_names = "list" # List of model parameter names
   ),
   prototype = prototype(
     model_name = NA_character_,
@@ -24,7 +25,8 @@ setClass(
     individual_ests = tibble(NA),
     population_ests = tibble(NA),
     error_ests = tibble(NA),
-    prior_pars = list(NA)
+    prior_pars = list(NA),
+    par_names = list(NA)
   )
 )
 
@@ -132,6 +134,14 @@ setMethod("prior_pars<-", "hmde_estimates", function(x, value) {
   x
 })
 
+#Parameter names
+#Generics set by hmde_model_template
+setMethod("par_names", "hmde_estimates", function(x) x@par_names)
+setMethod("par_names<-", "hmde_estimates", function(x, value) {
+  x@par_names <- value
+  x
+})
+
 
 #-----------------------------------------------------------------------------#
 ## Helper Functions
@@ -146,7 +156,7 @@ setMethod("prior_pars<-", "hmde_estimates", function(x, value) {
 #'
 #' @examples
 #' # basic usage of hmde_estimates
-#' hmde_estimates("constant_single_ind",
+#' hmde_data_template("constant_single_ind",
 #'                    obs_data = Trout_Size_Data[1:4,]) |>
 #'   hmde_run(chains = 1, iter = 1000,
 #'            verbose = FALSE, show_messages = FALSE) |>
@@ -216,9 +226,10 @@ hmde_estimates <- function(fit, #Mandatory
              model_level = model_level,
              method = method,
              fit_summary = fit_summary,
-             runtime = runtime)
+             runtime = runtime,
+             par_names = hmde_model_pars(model))
 
-  par_names <- hmde_model_pars(model)
+  par_names <- par_names(estimate_object)
   prior_names <-
     paste0("check_",
            names(prior_pars(hmde_model(model)))

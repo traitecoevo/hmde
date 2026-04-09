@@ -45,7 +45,8 @@ hmde_const_single_ind <- function(){
     prior_pars = list(
       prior_pars_ind_beta = c(0, 2),
       prior_pars_global_error_sigma = c(0, 2)
-    )
+    ),
+    par_names = hmde_model_pars("constant_single_ind")
   )
 }
 
@@ -69,7 +70,8 @@ hmde_const_multi_ind <- function(){
       prior_pars_pop_log_beta_mean = c(0,2),
       prior_pars_pop_log_beta_sd = c(0,2),
       prior_pars_global_error_sigma = c(0,2)
-    )
+    ),
+    par_names = hmde_model_pars("constant_multi_ind")
   )
 }
 
@@ -92,7 +94,8 @@ hmde_canham_single_ind <- function(){
       prior_pars_ind_size_at_max_growth = c(0,2),
       prior_pars_ind_k = c(0,2),
       prior_pars_global_error_sigma = c(0,2)
-    )
+    ),
+    par_names = hmde_model_pars("canham_single_ind")
   )
 }
 
@@ -120,7 +123,8 @@ hmde_canham_multi_ind <- function(){
       prior_pars_pop_log_k_mean = c(0,2),
       prior_pars_pop_log_k_sd = c(0,2),
       prior_pars_global_error_sigma = c(0,2)
-    )
+    ),
+    par_names = hmde_model_pars("canham_multi_ind")
   )
 }
 
@@ -144,7 +148,8 @@ hmde_vb_single_ind <- function(){
       prior_pars_ind_max_size_sd_only = 2,
       prior_pars_ind_growth_rate = c(0,2),
       prior_pars_global_error_sigma = c(0,2)
-    )
+    ),
+    par_names = hmde_model_pars("vb_single_ind")
   )
 }
 
@@ -171,7 +176,8 @@ hmde_vb_multi_ind <- function(){
       prior_pars_pop_log_growth_rate_mean = c(0,2),
       prior_pars_pop_log_growth_rate_sd = c(0,2),
       prior_pars_global_error_sigma = c(0,2)
-    )
+    ),
+    par_names = hmde_model_pars("vb_multi_ind")
   )
 }
 
@@ -195,6 +201,7 @@ hmde_affine_single_ind <- function(){
     prior_pars = list(
       prior_pars_ind_const = c(1,2),
       prior_pars_ind_beta_1 = c(0,2)
-    )
+    ),
+    par_names = hmde_model_pars("affine_single_ind")
   )
 }

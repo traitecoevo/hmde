@@ -7,13 +7,15 @@ setClass(
     model_name = "character", # Name of model DE
     model_level = "character", # Single or multi-individual
     obs_data = "list", # List of input data for model
-    prior_pars = "list" # List of prior parameters for model
+    prior_pars = "list", # List of prior parameters for model
+    par_names = "list" # List of model parameter names
   ),
   prototype = prototype(
     model_name = NA_character_,
     model_level = NA_character_,
     obs_data = list(NA),
-    prior_pars = list(NA)
+    prior_pars = list(NA),
+    par_names = list(NA)
   )
 )
 
@@ -66,6 +68,15 @@ setGeneric("prior_pars<-", function(x, value) standardGeneric("prior_pars<-"))
 setMethod("prior_pars", "hmde_data_template", function(x) x@prior_pars)
 setMethod("prior_pars<-", "hmde_data_template", function(x, value) {
   x@prior_pars <- value
+  x
+})
+
+#Model paramerters
+setGeneric("par_names", function(x) standardGeneric("par_names"))
+setGeneric("par_names<-", function(x, value) standardGeneric("par_names<-"))
+setMethod("par_names", "hmde_data_template", function(x) x@par_names)
+setMethod("par_names<-", "hmde_data_template", function(x, value) {
+  x@par_names <- value
   x
 })
 
@@ -408,7 +419,7 @@ setMethod("summary", "hmde_data_template", function(object) {
 #' @export
 
 setMethod("plot", "hmde_data_template", function(x) {
-  model_pars_names <- hmde_model_pars(x@model_name)$individual_pars_names
+  model_pars_names <- par_names(x)$individual_pars_names
 
   temp <- c()
   #Get parameter estimates from mean of prior distribution

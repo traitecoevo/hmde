@@ -53,7 +53,7 @@ hmde_plot_de_pieces <- function(estimates = NULL,
   }
 
   #Get individual parameter estimates
-  model_par_names <- hmde_model_pars(model)
+  model_par_names <- par_names(estimates)
   pars_data <- tibble(ind_id = individual_data$ind_id)
   for(i in model_par_names$individual_pars_names){
     pars_data[[i]] <- individual_data[[paste0(i, "_mean")]]
