@@ -534,7 +534,8 @@ set.seed(2025)
     geom_histogram(bins = 10,
                    colour = "black",
                    fill = "lightblue") +
-    labs(x="S_max estimate") +
+    labs(x="Y_max estimate") +
+    scale_x_log10() + #Re-scale distribution
     theme_classic()
 
   k_hist <- ggplot(individual_ests(Tree_Size_Ests),
@@ -613,6 +614,14 @@ set.seed(2025)
         exp_mean)
 
   print(canham_sp_data)
+
+  #Individual-level parameter rank correlations
+  cor(individual_ests(Tree_Size_Ests)$ind_max_growth_mean,
+      individual_ests(Tree_Size_Ests)$ind_k_mean)
+  cor(individual_ests(Tree_Size_Ests)$ind_max_growth_mean,
+      individual_ests(Tree_Size_Ests)$ind_size_at_max_growth_mean)
+  cor(individual_ests(Tree_Size_Ests)$ind_size_at_max_growth_mean,
+      individual_ests(Tree_Size_Ests)$ind_k_mean)
 }
 
 sessionInfo()
