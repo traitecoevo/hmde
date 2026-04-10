@@ -38,8 +38,8 @@ setValidity("hmde_data_template",
 #Model name
 setGeneric("model_name", function(x) standardGeneric("model_name"))
 setGeneric("model_name<-", function(x, value) standardGeneric("model_name<-"))
-setMethod("model_name", "hmde_data_template", function(x) x@model_name)
-setMethod("model_name<-", "hmde_data_template", function(x, value) {
+setMethod("model_name", signature = "hmde_data_template", function(x) x@model_name)
+setMethod("model_name<-", signature = "hmde_data_template", function(x, value) {
   x@model_name <- value
   x
 })
@@ -47,8 +47,8 @@ setMethod("model_name<-", "hmde_data_template", function(x, value) {
 #Model level
 setGeneric("model_level", function(x) standardGeneric("model_level"))
 setGeneric("model_level<-", function(x, value) standardGeneric("model_level<-"))
-setMethod("model_level", "hmde_data_template", function(x) x@model_level)
-setMethod("model_level<-", "hmde_data_template", function(x, value) {
+setMethod("model_level", signature = "hmde_data_template", function(x) x@model_level)
+setMethod("model_level<-", signature = "hmde_data_template", function(x, value) {
   x@model_level <- value
   x
 })
@@ -56,8 +56,8 @@ setMethod("model_level<-", "hmde_data_template", function(x, value) {
 #Observation data
 setGeneric("obs_data", function(x) standardGeneric("obs_data"))
 setGeneric("obs_data<-", function(x, value) standardGeneric("obs_data<-"))
-setMethod("obs_data", "hmde_data_template", function(x) x@obs_data)
-setMethod("obs_data<-", "hmde_data_template", function(x, value) {
+setMethod("obs_data", signature = "hmde_data_template", function(x) x@obs_data)
+setMethod("obs_data<-", signature = "hmde_data_template", function(x, value) {
   x@obs_data <- value
   x
 })
@@ -65,8 +65,8 @@ setMethod("obs_data<-", "hmde_data_template", function(x, value) {
 #Prior paramerters
 setGeneric("prior_pars", function(x) standardGeneric("prior_pars"))
 setGeneric("prior_pars<-", function(x, value) standardGeneric("prior_pars<-"))
-setMethod("prior_pars", "hmde_data_template", function(x) x@prior_pars)
-setMethod("prior_pars<-", "hmde_data_template", function(x, value) {
+setMethod("prior_pars", signature = "hmde_data_template", function(x) x@prior_pars)
+setMethod("prior_pars<-", signature = "hmde_data_template", function(x, value) {
   x@prior_pars <- value
   x
 })
@@ -74,8 +74,8 @@ setMethod("prior_pars<-", "hmde_data_template", function(x, value) {
 #Model paramerters
 setGeneric("par_names", function(x) standardGeneric("par_names"))
 setGeneric("par_names<-", function(x, value) standardGeneric("par_names<-"))
-setMethod("par_names", "hmde_data_template", function(x) x@par_names)
-setMethod("par_names<-", "hmde_data_template", function(x, value) {
+setMethod("par_names", signature = "hmde_data_template", function(x) x@par_names)
+setMethod("par_names<-", signature = "hmde_data_template", function(x, value) {
   x@par_names <- value
   x
 })
@@ -316,7 +316,7 @@ hmde_data_template <- function(model_name, #Mandatory
 #'
 #' @export
 
-setMethod("show", "hmde_data_template", function(object) {
+setMethod("show", signature = "hmde_data_template", function(object) {
   cat(is(object)[[1]], "\n",
       "  Model name: ", object@model_name, "\n",
       "  Model level:  ", object@model_level, "\n",
@@ -339,7 +339,7 @@ setMethod("show", "hmde_data_template", function(object) {
 #'
 #' @export
 
-setMethod("print", "hmde_data_template", function(x) {
+setMethod("print", signature = "hmde_data_template", function(x) {
   cat(is(x)[[1]], "\n",
       "  Model name: ", x@model_name, "\n",
       "  Model level:  ", x@model_level, "\n",
@@ -362,7 +362,7 @@ setMethod("print", "hmde_data_template", function(x) {
 #'
 #' @export
 
-setMethod("summary", "hmde_data_template", function(object) {
+setMethod("summary", signature = "hmde_data_template", function(object) {
   if(!is.na(object@obs_data[[1]])){
     if(!is.null(object@obs_data[["ind_id"]])){
       summary_input_data <- head(tibble(
@@ -418,7 +418,7 @@ setMethod("summary", "hmde_data_template", function(object) {
 #'
 #' @export
 
-setMethod("plot", "hmde_data_template", function(x) {
+setMethod("plot", signature = "hmde_data_template", function(x) {
   model_pars_names <- par_names(x)$individual_pars_names
 
   temp <- c()
