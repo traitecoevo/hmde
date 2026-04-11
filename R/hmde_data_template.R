@@ -38,7 +38,12 @@ setValidity("hmde_data_template",
 #Model name
 setGeneric("model_name", function(x) standardGeneric("model_name"))
 setGeneric("model_name<-", function(x, value) standardGeneric("model_name<-"))
+
+#' Getter for model_name in hmde_data_template object
+#' @export
 setMethod("model_name", signature = "hmde_data_template", function(x) x@model_name)
+#' Setter for model_name in hmde_data_template object
+#' @export
 setMethod("model_name<-", signature = "hmde_data_template", function(x, value) {
   x@model_name <- value
   x
@@ -47,7 +52,11 @@ setMethod("model_name<-", signature = "hmde_data_template", function(x, value) {
 #Model level
 setGeneric("model_level", function(x) standardGeneric("model_level"))
 setGeneric("model_level<-", function(x, value) standardGeneric("model_level<-"))
+#' Getter for model_level in hmde_data_template object
+#' @export
 setMethod("model_level", signature = "hmde_data_template", function(x) x@model_level)
+#' Setter for model_level in hmde_data_template object
+#' @export
 setMethod("model_level<-", signature = "hmde_data_template", function(x, value) {
   x@model_level <- value
   x
@@ -56,7 +65,13 @@ setMethod("model_level<-", signature = "hmde_data_template", function(x, value) 
 #Observation data
 setGeneric("obs_data", function(x) standardGeneric("obs_data"))
 setGeneric("obs_data<-", function(x, value) standardGeneric("obs_data<-"))
+
+#' Getter for obs_data in hmde_data_template object
+#' @export
 setMethod("obs_data", signature = "hmde_data_template", function(x) x@obs_data)
+
+#' Setter for obs_data in hmde_data_template object
+#' @export
 setMethod("obs_data<-", signature = "hmde_data_template", function(x, value) {
   x@obs_data <- value
   x
@@ -65,7 +80,13 @@ setMethod("obs_data<-", signature = "hmde_data_template", function(x, value) {
 #Prior paramerters
 setGeneric("prior_pars", function(x) standardGeneric("prior_pars"))
 setGeneric("prior_pars<-", function(x, value) standardGeneric("prior_pars<-"))
+
+# ' Getter for prior_pars in hmde_data_template object
+#' @export
 setMethod("prior_pars", signature = "hmde_data_template", function(x) x@prior_pars)
+
+#' Setter for prior_pars in hmde_data_template object
+#' @export
 setMethod("prior_pars<-", signature = "hmde_data_template", function(x, value) {
   x@prior_pars <- value
   x
@@ -74,7 +95,11 @@ setMethod("prior_pars<-", signature = "hmde_data_template", function(x, value) {
 #Model paramerters
 setGeneric("par_names", function(x) standardGeneric("par_names"))
 setGeneric("par_names<-", function(x, value) standardGeneric("par_names<-"))
+#' Getter for par_names in hmde_data_template object
+#' @export
 setMethod("par_names", signature = "hmde_data_template", function(x) x@par_names)
+#' Setter for par_names in hmde_data_template object
+#' @export
 setMethod("par_names<-", signature = "hmde_data_template", function(x, value) {
   x@par_names <- value
   x
