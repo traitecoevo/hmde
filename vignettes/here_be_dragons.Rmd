@@ -102,6 +102,7 @@ y_obs <- round(y_true + rnorm(length(y_true), 0, 0.1), digits = 1)
 
 #Observed data frame
 obs_data_frame <- tibble(
+  ind_id = 1,
   time = time,
   y_obs = y_obs,
   obs_index = 1:length(y_obs)
