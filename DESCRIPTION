@@ -20,8 +20,6 @@ Imports:
     methods,
     dplyr,
     ggplot2,
-    purrr,
-    Rcpp (>= 0.12.0),
     RcppParallel (>= 5.0.1),
     rlang,
     rstan (>= 2.18.1),
@@ -31,7 +29,7 @@ Imports:
     knitr
 LinkingTo: 
     BH (>= 1.66.0),
-    Rcpp (>= 0.12.0),
+    Rcpp (>= 0.12.19),
     RcppEigen (>= 0.3.3.3.0),
     RcppParallel (>= 5.0.1),
     rstan (>= 2.18.1),

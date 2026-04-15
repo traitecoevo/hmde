@@ -9,8 +9,6 @@
 #' @import methods
 #' @import dplyr
 #' @import ggplot2
-#' @import purrr
-#' @import Rcpp
 #' @import RcppParallel
 #' @import rlang
 #' @import rstan
@@ -18,6 +16,8 @@
 #' @import tibble
 #' @import cowplot
 #' @import knitr
+#' @importFrom purrr map
+#' @importFrom purrr list_modify
 #' @importFrom cowplot plot_grid
 #' @importFrom rstan sampling
 #' @importFrom rstan Rhat
