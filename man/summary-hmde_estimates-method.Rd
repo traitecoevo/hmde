@@ -7,7 +7,7 @@
 \S4method{summary}{hmde_estimates}(object)
 }
 \arguments{
-\item{x}{hmde_estimates class object}
+\item{object}{hmde_estimates class object}
 
 \item{...}{other parameters used for summary}
 }
