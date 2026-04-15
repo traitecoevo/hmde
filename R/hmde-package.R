@@ -29,6 +29,7 @@
 #' @importFrom stats quantile
 #' @importFrom stats setNames
 #' @importFrom cowplot plot_grid
+#' @importFrom utils head
 #'
 #' @references
 #' Stan Development Team (NA). RStan: the R interface to Stan. R package version 2.26.23. https://mc-stan.org

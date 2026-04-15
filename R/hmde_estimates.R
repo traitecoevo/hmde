@@ -50,9 +50,11 @@ setValidity("hmde_estimates",
 #Model name
 #Generics set by hmde_model_template
 #' Getter for model_name in hmde_estimates object
+#' @noRd
 #' @export
 setMethod("model_name", signature = "hmde_estimates", function(x) x@model_name)
 #' Setter for model_name in hmde_estimates object
+#' @noRd
 #' @export
 setMethod("model_name<-", signature = "hmde_estimates", function(x, value) {
   x@model_name <- value
@@ -62,9 +64,11 @@ setMethod("model_name<-", signature = "hmde_estimates", function(x, value) {
 #Model level
 #Generics set by hmde_model_template
 #' Getter for model_level in hmde_estimates object
+#' @noRd
 #' @export
 setMethod("model_level", signature = "hmde_estimates", function(x) x@model_level)
 #' Setter for model_level in hmde_estimates object
+#' @noRd
 #' @export
 setMethod("model_level<-", signature = "hmde_estimates", function(x, value) {
   x@model_level <- value
@@ -75,9 +79,11 @@ setMethod("model_level<-", signature = "hmde_estimates", function(x, value) {
 setGeneric("method", function(x) standardGeneric("method"))
 setGeneric("method<-", function(x, value) standardGeneric("method<-"))
 #' Getter for method in hmde_estimates object
+#' @noRd
 #' @export
 setMethod("method", signature = "hmde_estimates", function(x) x@method)
 #' Setter for method in hmde_estimates object
+#' @noRd
 #' @export
 setMethod("method<-", signature = "hmde_estimates", function(x, value) {
   x@method <- value
@@ -88,9 +94,11 @@ setMethod("method<-", signature = "hmde_estimates", function(x, value) {
 setGeneric("runtime", function(x) standardGeneric("runtime"))
 setGeneric("runtime<-", function(x, value) standardGeneric("runtime<-"))
 #' Getter for runtime in hmde_estimates object
+#' @noRd
 #' @export
 setMethod("runtime", signature = "hmde_estimates", function(x) x@runtime)
 #' Setter for runtime in hmde_estimates object
+#' @noRd
 #' @export
 setMethod("runtime<-", signature = "hmde_estimates", function(x, value) {
   x@runtime <- value
@@ -101,9 +109,11 @@ setMethod("runtime<-", signature = "hmde_estimates", function(x, value) {
 setGeneric("fit_summary", function(x) standardGeneric("fit_summary"))
 setGeneric("fit_summary<-", function(x, value) standardGeneric("fit_summary<-"))
 #' Getter for fit_summary in hmde_estimates object
+#' @noRd
 #' @export
 setMethod("fit_summary", signature = "hmde_estimates", function(x) x@fit_summary)
 #' Setter for fit_summary in hmde_estimates object
+#' @noRd
 #' @export
 setMethod("fit_summary<-", signature = "hmde_estimates", function(x, value) {
   x@fit_summary <- value
@@ -114,9 +124,11 @@ setMethod("fit_summary<-", signature = "hmde_estimates", function(x, value) {
 setGeneric("measurement_ests", function(x) standardGeneric("measurement_ests"))
 setGeneric("measurement_ests<-", function(x, value) standardGeneric("measurement_ests<-"))
 #' Getter for measurement_ests in hmde_estimates object
+#' @noRd
 #' @export
 setMethod("measurement_ests", signature = "hmde_estimates", function(x) x@measurement_ests)
 #' Setter for measurement_ests in hmde_estimates object
+#' @noRd
 #' @export
 setMethod("measurement_ests<-", signature = "hmde_estimates", function(x, value) {
   x@measurement_ests <- value
@@ -127,9 +139,11 @@ setMethod("measurement_ests<-", signature = "hmde_estimates", function(x, value)
 setGeneric("individual_ests", function(x) standardGeneric("individual_ests"))
 setGeneric("individual_ests<-", function(x, value) standardGeneric("individual_ests<-"))
 #' Getter for individual_ests in hmde_estimates object
+#' @noRd
 #' @export
 setMethod("individual_ests", signature = "hmde_estimates", function(x) x@individual_ests)
 #' Setter for individual_ests in hmde_estimates object
+#' @noRd
 #' @export
 setMethod("individual_ests<-", signature = "hmde_estimates", function(x, value) {
   x@individual_ests <- value
@@ -140,9 +154,11 @@ setMethod("individual_ests<-", signature = "hmde_estimates", function(x, value) 
 setGeneric("population_ests", function(x) standardGeneric("population_ests"))
 setGeneric("population_ests<-", function(x, value) standardGeneric("population_ests<-"))
 #' Getter for population_ests in hmde_estimates object
+#' @noRd
 #' @export
 setMethod("population_ests", signature = "hmde_estimates", function(x) x@population_ests)
 #' Setter for population_ests in hmde_estimates object
+#' @noRd
 #' @export
 setMethod("population_ests<-", signature = "hmde_estimates", function(x, value) {
   x@population_ests <- value
@@ -153,9 +169,11 @@ setMethod("population_ests<-", signature = "hmde_estimates", function(x, value) 
 setGeneric("error_ests", function(x) standardGeneric("error_ests"))
 setGeneric("error_ests<-", function(x, value) standardGeneric("error_ests<-"))
 #' Getter for error_ests in hmde_estimates object
+#' @noRd
 #' @export
 setMethod("error_ests", signature = "hmde_estimates", function(x) x@error_ests)
 #' Setter for error_ests in hmde_estimates object
+#' @noRd
 #' @export
 setMethod("error_ests<-", signature = "hmde_estimates", function(x, value) {
   x@error_ests <- value
@@ -165,9 +183,11 @@ setMethod("error_ests<-", signature = "hmde_estimates", function(x, value) {
 #Prior paramerters
 #Generics set by hmde_model_template
 #' Getter for prior_pars in hmde_estimates object
+#' @noRd
 #' @export
 setMethod("prior_pars", signature = "hmde_estimates", function(x) x@prior_pars)
 #' Setter for prior_pars in hmde_estimates object
+#' @noRd
 #' @export
 setMethod("prior_pars<-", signature = "hmde_estimates", function(x, value) {
   x@prior_pars <- value
@@ -177,9 +197,11 @@ setMethod("prior_pars<-", signature = "hmde_estimates", function(x, value) {
 #Parameter names
 #Generics set by hmde_model_template
 #' Getter for par_names in hmde_estimates object
+#' @noRd
 #' @export
 setMethod("par_names", signature = "hmde_estimates", function(x) x@par_names)
 #' Setter for par_names in hmde_estimates object
+#' @noRd
 #' @export
 setMethod("par_names<-", signature = "hmde_estimates", function(x, value) {
   x@par_names <- value
@@ -459,7 +481,7 @@ hmde_extract_prior_pars <- function(samples = NULL,
 ## Generic functions for show, print, summary, plot
 
 #' Show function for hmde_estimates object
-#' @param x hmde_estimates class output
+#' @param object hmde_estimates class output
 #' @param ... other parameters used for show
 #'
 #' @examples

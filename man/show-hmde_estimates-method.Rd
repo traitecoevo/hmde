@@ -7,7 +7,7 @@
 \S4method{show}{hmde_estimates}(object)
 }
 \arguments{
-\item{x}{hmde_estimates class output}
+\item{object}{hmde_estimates class output}
 
 \item{...}{other parameters used for show}
 }
