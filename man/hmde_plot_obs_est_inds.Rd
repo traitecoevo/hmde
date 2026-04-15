@@ -8,7 +8,6 @@ the hmde_extract_estimates function.}
 \usage{
 hmde_plot_obs_est_inds(
   estimates = NULL,
-  measurement_data = NULL,
   ind_id_vec = NULL,
   n_ind_to_plot = NULL,
   xlab = "Time",
@@ -18,8 +17,6 @@ hmde_plot_obs_est_inds(
 }
 \arguments{
 \item{estimates}{hmde_estimates class object}
-
-\item{measurement_data}{tibble with estimated measurements}
 
 \item{ind_id_vec}{vector with list of ind_id values}
 
