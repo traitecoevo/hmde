@@ -27,6 +27,35 @@ test_that("Execution and output: hmde_estimates", {
   expect_true(inherits(output, "hmde_estimates"))
 })
 
+test_that("hmde_estimates: setters and getters", {
+  #Getters
+  testing_data <- Tree_Size_Ests
+  expect_no_error(model_name(testing_data))
+  expect_no_error(model_level(testing_data))
+  expect_no_error(method(testing_data))
+  expect_no_error(runtime(testing_data))
+  expect_no_error(fit_summary(testing_data))
+  expect_no_error(measurement_ests(testing_data))
+  expect_no_error(individual_ests(testing_data))
+  expect_no_error(population_ests(testing_data))
+  expect_no_error(error_ests(testing_data))
+  expect_no_error(prior_pars(testing_data))
+  expect_no_error(par_names(testing_data))
+
+  #Setters
+  expect_no_error(model_name(testing_data) <- "canham_multi_ind")
+  expect_no_error(model_level(testing_data) <- "multi_ind")
+  expect_no_error(method(testing_data) <- "sampling")
+  expect_no_error(runtime(testing_data) <- Tree_Size_Ests@runtime)
+  expect_no_error(fit_summary(testing_data) <- Tree_Size_Ests@fit_summary)
+  expect_no_error(measurement_ests(testing_data) <- Tree_Size_Ests@measurement_ests)
+  expect_no_error(individual_ests(testing_data) <- Tree_Size_Ests@individual_ests)
+  expect_no_error(population_ests(testing_data) <- Tree_Size_Ests@population_ests)
+  expect_no_error(error_ests(testing_data) <- Tree_Size_Ests@error_ests)
+  expect_no_error(prior_pars(testing_data) <- Tree_Size_Ests@prior_pars)
+  expect_no_error(par_names(testing_data) <- Tree_Size_Ests@par_names)
+})
+
 test_that("Failure conditions: hmde_estimates constructor function", {
   data <- tibble(
     y_obs = c(1.1, 2.0, 2.9),
