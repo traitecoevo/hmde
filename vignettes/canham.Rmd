@@ -7,7 +7,7 @@ vignette: >
   %\VignetteEngine{knitr::rmarkdown}
 bibliography: vignette.bib
 editor_options: 
-  chunk_output_type: console
+  chunk_output_type: inline
 ---
 
 ```{r, include = FALSE}
@@ -175,8 +175,8 @@ obs_est_scatter <- ggplot(data = measurement_ests(Tree_Size_Ests),
 obs_est_scatter
 
 #Plots of size over time for a sample of 5 individuals
-obs_est_size_plot <- hmde_plot_obs_est_inds(n_ind_to_plot = 5,
-                       measurement_data = measurement_ests(Tree_Size_Ests)) +
+obs_est_size_plot <- hmde_plot_obs_est_inds(estimates = Tree_Size_Ests,
+                                            n_ind_to_plot = 5) +
   theme(legend.position = "inside",
         legend.position.inside = c(0.1, 0.85)) +
   guides(colour=guide_legend(nrow=2,byrow=TRUE))

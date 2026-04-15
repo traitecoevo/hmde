@@ -569,7 +569,7 @@ setMethod("print", signature = "hmde_estimates", function(x) {
 
 #' Summary function for hmde_estimates object
 #'
-#' @param x hmde_estimates class object
+#' @param object hmde_estimates class object
 #' @param ... other parameters used for summary
 #'
 #' @examples
@@ -588,31 +588,31 @@ setMethod("print", signature = "hmde_estimates", function(x) {
 setMethod("summary", signature = "hmde_estimates", function(object) {
   #Outputs model info and top level parameter table
 
-  if(grepl("multi", model_name(x))){
+  if(grepl("multi", model_name(object))){
     writeLines(paste0(
-      "Model name: ", model_name(x),
+      "Model name: ", model_name(object),
       "\nModel level: multi-individual",
       "\nTop level: population",
-      "\n", fit_summary(x)))
+      "\n", fit_summary(object)))
 
     writeLines(
       "\nTop level parameter estimates:"
     )
-    writeLines(knitr::kable(population_ests(x),
+    writeLines(knitr::kable(population_ests(object),
                             format = "markdown", digits = 3))
 
-  } else if(grepl("single", model_name(x))){
+  } else if(grepl("single", model_name(object))){
     writeLines(paste0(
-      "Model name: ", model_name(x),
+      "Model name: ", model_name(object),
       "\nModel level: single individual",
       "\nTop level: individual",
       "\nTop level parameter estimates:",
-      "\n", fit_summary(x)))
+      "\n", fit_summary(object)))
 
     writeLines(
       "\nTop level parameter estimates:"
     )
-    writeLines(knitr::kable(individual_ests(x),
+    writeLines(knitr::kable(individual_ests(object),
                             format = "markdown", digits = 3))
   }
 })

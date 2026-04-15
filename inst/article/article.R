@@ -321,9 +321,8 @@ obs_est_size_plot <- ggplot(data = measurement_ests(trout_estimates),
   theme_classic()
 
 #Plots of size over time for a sample of 5 individuals
-size_over_time_plot <- hmde_plot_obs_est_inds(n_ind_to_plot = 5,
-                                              measurement_data =
-                                                measurement_ests(trout_estimates)) +
+size_over_time_plot <- hmde_plot_obs_est_inds(trout_estimates,
+                                              n_ind_to_plot = 5) +
   theme(legend.position = "inside",
         legend.position.inside = c(0.8,0.3)) +
   guides(colour=guide_legend(ncol=2))
@@ -406,9 +405,8 @@ set.seed(2025)
     theme_classic()
 
   #Plots of size over time for a sample of 5 individuals
-  obs_est_ind <- hmde_plot_obs_est_inds(n_ind_to_plot = 5,
-                                        measurement_data =
-                                          measurement_ests(lizard_estimates)) +
+  obs_est_ind <- hmde_plot_obs_est_inds(lizard_estimates,
+                                        n_ind_to_plot = 5) +
     theme(legend.position = "inside",
           legend.position.inside = c(0.8, 0.2))
 
@@ -515,8 +513,8 @@ set.seed(2025)
     theme_classic()
 
   #Plots of size over time for a sample of 5 individuals
-  obs_est_size_plot <- hmde_plot_obs_est_inds(n_ind_to_plot = 5,
-                                              measurement_data = measurement_ests(Tree_Size_Ests)) +
+  obs_est_size_plot <- hmde_plot_obs_est_inds(Tree_Size_Ests,
+                                              n_ind_to_plot = 5) +
     theme(legend.position = "top") +
     guides(colour=guide_legend(nrow=2,byrow=TRUE))
 
