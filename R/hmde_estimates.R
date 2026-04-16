@@ -149,13 +149,13 @@ setGeneric("measurement_ests<-", function(x, value) standardGeneric("measurement
 
 #' Getter for measurement_ests in hmde_estimates object
 #' @param x hmde_estimates class object
-#' @return tibble of estimates
+#' @return tbl_df of estimates
 #' @export
 setMethod("measurement_ests", signature = "hmde_estimates", function(x) x@measurement_ests)
 
 #' Setter for measurement_ests in hmde_estimates object
 #' @param x hmde_estimates class object
-#' @param value tibble of estimates
+#' @param value tbl_df of estimates
 #' @return hmde_estimates class object
 #' @export
 setMethod("measurement_ests<-", signature = "hmde_estimates", function(x, value) {
@@ -169,13 +169,13 @@ setGeneric("individual_ests<-", function(x, value) standardGeneric("individual_e
 
 #' Getter for individual_ests in hmde_estimates object
 #' @param x hmde_estimates class object
-#' @return tibble of estimates
+#' @return tbl_df of estimates
 #' @export
 setMethod("individual_ests", signature = "hmde_estimates", function(x) x@individual_ests)
 
 #' Setter for individual_ests in hmde_estimates object
 #' @param x hmde_estimates class object
-#' @param value tibble of estimates
+#' @param value tbl_df of estimates
 #' @return hmde_estimates class object
 #' @export
 setMethod("individual_ests<-", signature = "hmde_estimates", function(x, value) {
@@ -189,13 +189,13 @@ setGeneric("population_ests<-", function(x, value) standardGeneric("population_e
 
 #' Getter for population_ests in hmde_estimates object
 #' @param x hmde_estimates class object
-#' @return tibble of estimates
+#' @return tbl_df of estimates
 #' @export
 setMethod("population_ests", signature = "hmde_estimates", function(x) x@population_ests)
 
 #' Setter for population_ests in hmde_estimates object
 #' @param x hmde_estimates class object
-#' @param value tibble of estimates
+#' @param value tbl_df of estimates
 #' @return hmde_estimates class object
 #' @export
 setMethod("population_ests<-", signature = "hmde_estimates", function(x, value) {
@@ -209,13 +209,13 @@ setGeneric("error_ests<-", function(x, value) standardGeneric("error_ests<-"))
 
 #' Getter for error_ests in hmde_estimates object
 #' @param x hmde_estimates class object
-#' @return tibble of estimates
+#' @return tbl_df of estimates
 #' @export
 setMethod("error_ests", signature = "hmde_estimates", function(x) x@error_ests)
 
 #' Setter for error_ests in hmde_estimates object
 #' @param x hmde_estimates class object
-#' @param value tibble of estimates
+#' @param value tbl_df of estimates
 #' @return hmde_estimates class object
 #' @export
 setMethod("error_ests<-", signature = "hmde_estimates", function(x, value) {

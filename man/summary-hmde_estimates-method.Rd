@@ -18,7 +18,7 @@ hmde_data_template("constant_single_ind",
   obs_data = Trout_Size_Data[1:4,]) |>
   hmde_run(chains = 1, iter = 1000,
            verbose = FALSE, show_messages = FALSE) |>
-  hmde_estimates(Trout_Size_Data) |>
+  hmde_estimates(Trout_Size_Data[1:4,]) |>
   summary()
 
 }
