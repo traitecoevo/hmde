@@ -40,15 +40,12 @@ setGeneric("model_name", function(x) standardGeneric("model_name"))
 setGeneric("model_name<-", function(x, value) standardGeneric("model_name<-"))
 
 #' Getter for model_name in hmde_data_template object
-#' @param x hmde_data_template class object
-#' @return character string
+#' @noRd
 #' @export
 setMethod("model_name", signature = "hmde_data_template", function(x) x@model_name)
 
 #' Setter for model_name in hmde_data_template object
-#' @param x hmde_data_template class object
-#' @param value character string
-#' @return hmde_data_template class object
+#' @noRd
 #' @export
 setMethod("model_name<-", signature = "hmde_data_template", function(x, value) {
   x@model_name <- value
@@ -60,15 +57,12 @@ setGeneric("model_level", function(x) standardGeneric("model_level"))
 setGeneric("model_level<-", function(x, value) standardGeneric("model_level<-"))
 
 #' Getter for model_level in hmde_data_template object
-#' @param x hmde_data_template class object
-#' @return character string
+#' @noRd
 #' @export
 setMethod("model_level", signature = "hmde_data_template", function(x) x@model_level)
 
 #' Setter for model_level in hmde_data_template object
-#' @param x hmde_data_template class object
-#' @param value character string
-#' @return hmde_data_template class object
+#' @noRd
 #' @export
 setMethod("model_level<-", signature = "hmde_data_template", function(x, value) {
   x@model_level <- value
@@ -80,15 +74,12 @@ setGeneric("obs_data", function(x) standardGeneric("obs_data"))
 setGeneric("obs_data<-", function(x, value) standardGeneric("obs_data<-"))
 
 #' Getter for obs_data in hmde_data_template object
-#' @param x hmde_data_template class object
-#' @return tibble of observation data
+#' @noRd
 #' @export
 setMethod("obs_data", signature = "hmde_data_template", function(x) x@obs_data)
 
 #' Setter for obs_data in hmde_data_template object
-#' @param x hmde_data_template class object
-#' @param value tibble of observation data
-#' @return hmde_data_template class object
+#' @noRd
 #' @export
 setMethod("obs_data<-", signature = "hmde_data_template", function(x, value) {
   x@obs_data <- value
@@ -100,15 +91,12 @@ setGeneric("prior_pars", function(x) standardGeneric("prior_pars"))
 setGeneric("prior_pars<-", function(x, value) standardGeneric("prior_pars<-"))
 
 #' Getter for prior_pars in hmde_data_template object
-#' @param x hmde_data_template class object
-#' @return list of named vectors
+#' @noRd
 #' @export
 setMethod("prior_pars", signature = "hmde_data_template", function(x) x@prior_pars)
 
 #' Setter for prior_pars in hmde_data_template object
-#' @param x hmde_data_template class object
-#' @param value list of named vectors with parameter values
-#' @return hmde_data_template class object
+#' @noRd
 #' @export
 setMethod("prior_pars<-", signature = "hmde_data_template", function(x, value) {
   x@prior_pars <- value
@@ -120,15 +108,12 @@ setGeneric("par_names", function(x) standardGeneric("par_names"))
 setGeneric("par_names<-", function(x, value) standardGeneric("par_names<-"))
 
 #' Getter for par_names in hmde_data_template object
-#' @param x hmde_data_template class object
-#' @return vector of character strings
+#' @noRd
 #' @export
 setMethod("par_names", signature = "hmde_data_template", function(x) x@par_names)
 
 #' Setter for par_names in hmde_data_template object.
-#' @param x hmde_data_template class object
-#' @param value vector of character strings
-#' @return hmde_data_template class object
+#' @noRd
 #' @export
 setMethod("par_names<-", signature = "hmde_data_template", function(x, value) {
   x@par_names <- value
@@ -362,12 +347,7 @@ hmde_data_template <- function(model_name, #Mandatory
 ## Generic functions for show, print, summary, plot
 
 #' Show function for hmde_data_template object
-#'
-#' @param object hmde_data_template class object
-#'
-#' @examples
-#' # basic usage of show
-#' hmde_data_template("constant_single_ind") |> show()
+#' @noRd
 #'
 #' @export
 
@@ -385,12 +365,7 @@ setMethod("show", signature = "hmde_data_template", function(object) {
 
 
 #' Print function for hmde_data_template object
-#'
-#' @param x hmde_data_template class object
-#'
-#' @examples
-#' # basic usage of print
-#' hmde_data_template("constant_single_ind") |> print()
+#' @noRd
 #'
 #' @export
 
@@ -408,12 +383,7 @@ setMethod("print", signature = "hmde_data_template", function(x) {
 
 
 #' Summary function for hmde_data_template object
-#'
-#' @param object hmde_data_template class object
-#'
-#' @examples
-#' # basic usage of summary
-#' hmde_data_template("constant_single_ind") |> summary()
+#' @noRd
 #'
 #' @export
 
@@ -464,12 +434,7 @@ setMethod("summary", signature = "hmde_data_template", function(object) {
 })
 
 #' Plot function for hmde_data_template object
-#'
-#' @param x hmde_data_template class object
-#'
-#' @examples
-#' # basic usage of plot
-#' hmde_model("constant_single_ind") |> plot()
+#' @noRd
 #'
 #' @export
 
