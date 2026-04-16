@@ -18,7 +18,7 @@ Calculate Rhat statistics for a hmde_fit object
 \examples{
 # basic usage of hmde_extract_Rhat
 hmde_data_template("constant_single_ind",
-                   obs_data = Trout_Size_Data)|>
+                   obs_data = Trout_Size_Data[1:4,])|>
   hmde_run(chains = 2, iter = 1000,
            verbose = FALSE, show_messages = FALSE) |>
   hmde_extract_Rhat()
