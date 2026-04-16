@@ -9,7 +9,7 @@
 \arguments{
 \item{x}{hmde_data_template class object}
 
-\item{tibble}{of observation data}
+\item{value}{tibble of observation data}
 }
 \value{
 hmde_data_template class object

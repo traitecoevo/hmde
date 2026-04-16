@@ -18,7 +18,7 @@ Plot histogram of R_hat values for hmde_fit object.
 \examples{
 # basic usage of hmde_plot_Rhat_hist
 hmde_data_template("constant_single_ind",
-  Trout_Size_Data) |>
+  Trout_Size_Data[1:4,]) |>
   hmde_run(chains = 2, iter = 1000,
            verbose = FALSE, show_messages = FALSE) |>
   hmde_plot_Rhat_hist()

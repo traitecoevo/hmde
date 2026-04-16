@@ -87,7 +87,7 @@ setMethod("obs_data", signature = "hmde_data_template", function(x) x@obs_data)
 
 #' Setter for obs_data in hmde_data_template object
 #' @param x hmde_data_template class object
-#' @param tibble of observation data
+#' @param value tibble of observation data
 #' @return hmde_data_template class object
 #' @export
 setMethod("obs_data<-", signature = "hmde_data_template", function(x, value) {
