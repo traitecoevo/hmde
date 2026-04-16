@@ -16,6 +16,7 @@
 #' @import tibble
 #' @import cowplot
 #' @import knitr
+#' @importFrom Rcpp loadModule
 #' @importFrom purrr map
 #' @importFrom purrr list_modify
 #' @importFrom cowplot plot_grid
