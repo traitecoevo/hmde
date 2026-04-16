@@ -8,8 +8,6 @@
 }
 \arguments{
 \item{object}{hmde_estimates class object}
-
-\item{...}{other parameters used for summary}
 }
 \description{
 Summary function for hmde_estimates object

@@ -8,8 +8,6 @@
 }
 \arguments{
 \item{x}{hmde_estimates class object}
-
-\item{...}{Additional argument space to conform to S3 template.}
 }
 \description{
 Plot function for hmde_estimates object

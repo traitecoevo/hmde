@@ -533,7 +533,6 @@ hmde_extract_prior_pars <- function(samples = NULL,
 
 #' Show function for hmde_estimates object
 #' @param object hmde_estimates class output
-#' @param ... Additional argument space to conform to template
 #'
 #' @examples
 #' # basic usage of show
@@ -548,7 +547,7 @@ hmde_extract_prior_pars <- function(samples = NULL,
 #'
 #' @export
 
-setMethod("show", signature = "hmde_estimates", function(object, ...) {
+setMethod("show", signature = "hmde_estimates", function(object) {
   #Outputs model info and top level parameter table
 
   if(grepl("multi", model_name(object))){
@@ -588,7 +587,7 @@ setMethod("show", signature = "hmde_estimates", function(object, ...) {
 #' Print function for hmde_estimates object
 #'
 #' @param x hmde_estimates class output
-#' @param ... Additional argument space to conform to template
+#'
 #' @examples
 #' # basic usage of print
 #' hmde_data_template("constant_single_ind",
@@ -602,7 +601,7 @@ setMethod("show", signature = "hmde_estimates", function(object, ...) {
 #'
 #' @export
 
-setMethod("print", signature = "hmde_estimates", function(x, ...) {
+setMethod("print", signature = "hmde_estimates", function(x) {
   #Outputs model info and top level parameter table
 
   if(grepl("multi", model_name(x))){
@@ -642,7 +641,6 @@ setMethod("print", signature = "hmde_estimates", function(x, ...) {
 #' Summary function for hmde_estimates object
 #'
 #' @param object hmde_estimates class object
-#' @param ... Additional argument space to conform to template
 #'
 #' @examples
 #' # basic usage of summary
@@ -657,7 +655,7 @@ setMethod("print", signature = "hmde_estimates", function(x, ...) {
 #'
 #' @export
 
-setMethod("summary", signature = "hmde_estimates", function(object, ...) {
+setMethod("summary", signature = "hmde_estimates", function(object) {
   #Outputs model info and top level parameter table
 
   if(grepl("multi", model_name(object))){
@@ -692,7 +690,6 @@ setMethod("summary", signature = "hmde_estimates", function(object, ...) {
 #' Plot function for hmde_estimates object
 #'
 #' @param x hmde_estimates class object
-#' @param ... Additional argument space to conform to template.
 #'
 #' @examples
 #' # basic usage of print
@@ -707,7 +704,7 @@ setMethod("summary", signature = "hmde_estimates", function(object, ...) {
 #'
 #' @export
 
-setMethod("plot", signature = "hmde_estimates", function(x, ...) {
+setMethod("plot", signature = "hmde_estimates", function(x) {
   plot_1 <- hmde_plot_de_pieces(x) +
     labs(title = "Plot of DE pieces fit to each individual")
 

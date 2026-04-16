@@ -8,8 +8,6 @@
 }
 \arguments{
 \item{object}{hmde_estimates class output}
-
-\item{...}{other parameters used for show}
 }
 \description{
 Show function for hmde_estimates object

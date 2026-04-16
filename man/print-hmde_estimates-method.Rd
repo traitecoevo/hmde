@@ -8,8 +8,6 @@
 }
 \arguments{
 \item{x}{hmde_estimates class output}
-
-\item{...}{other parameters used for print}
 }
 \description{
 Print function for hmde_estimates object
