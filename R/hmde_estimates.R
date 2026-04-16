@@ -537,7 +537,7 @@ hmde_extract_prior_pars <- function(samples = NULL,
 #' @examples
 #' # basic usage of show
 #' hmde_data_template("constant_single_ind",
-#'   obs_data = Trout_Size_Data) |>
+#'   obs_data = Trout_Size_Data[1:4,]) |>
 #'   hmde_run(chains = 1, iter = 1000,
 #'            verbose = FALSE, show_messages = FALSE) |>
 #'   hmde_estimates(Trout_Size_Data) |>
@@ -591,7 +591,7 @@ setMethod("show", signature = "hmde_estimates", function(object) {
 #' @examples
 #' # basic usage of print
 #' hmde_data_template("constant_single_ind",
-#'   obs_data = Trout_Size_Data) |>
+#'   obs_data = Trout_Size_Data[1:4,]) |>
 #'   hmde_run(chains = 1, iter = 1000,
 #'            verbose = FALSE, show_messages = FALSE) |>
 #'   hmde_estimates(Trout_Size_Data) |>
@@ -645,7 +645,7 @@ setMethod("print", signature = "hmde_estimates", function(x) {
 #' @examples
 #' # basic usage of summary
 #' hmde_data_template("constant_single_ind",
-#'   obs_data = Trout_Size_Data) |>
+#'   obs_data = Trout_Size_Data[1:4,]) |>
 #'   hmde_run(chains = 1, iter = 1000,
 #'            verbose = FALSE, show_messages = FALSE) |>
 #'   hmde_estimates(Trout_Size_Data) |>
@@ -694,7 +694,7 @@ setMethod("summary", signature = "hmde_estimates", function(object) {
 #' @examples
 #' # basic usage of print
 #' hmde_data_template("constant_single_ind",
-#'   obs_data = Trout_Size_Data) |>
+#'   obs_data = Trout_Size_Data[1:4,]) |>
 #'   hmde_run(chains = 1, iter = 1000,
 #'            verbose = FALSE, show_messages = FALSE) |>
 #'   hmde_estimates(Trout_Size_Data) |>
