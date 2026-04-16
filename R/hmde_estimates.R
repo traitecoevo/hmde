@@ -540,7 +540,7 @@ hmde_extract_prior_pars <- function(samples = NULL,
 #'   obs_data = Trout_Size_Data[1:4,]) |>
 #'   hmde_run(chains = 1, iter = 1000,
 #'            verbose = FALSE, show_messages = FALSE) |>
-#'   hmde_estimates(Trout_Size_Data) |>
+#'   hmde_estimates(Trout_Size_Data[1:4,]) |>
 #'   show()
 #'
 #' @importFrom knitr kable
@@ -594,7 +594,7 @@ setMethod("show", signature = "hmde_estimates", function(object) {
 #'   obs_data = Trout_Size_Data[1:4,]) |>
 #'   hmde_run(chains = 1, iter = 1000,
 #'            verbose = FALSE, show_messages = FALSE) |>
-#'   hmde_estimates(Trout_Size_Data) |>
+#'   hmde_estimates(Trout_Size_Data[1:4,]) |>
 #'   print()
 #'
 #' @importFrom knitr kable
@@ -648,7 +648,7 @@ setMethod("print", signature = "hmde_estimates", function(x) {
 #'   obs_data = Trout_Size_Data[1:4,]) |>
 #'   hmde_run(chains = 1, iter = 1000,
 #'            verbose = FALSE, show_messages = FALSE) |>
-#'   hmde_estimates(Trout_Size_Data) |>
+#'   hmde_estimates(Trout_Size_Data[1:4,]) |>
 #'   summary()
 #'
 #' @importFrom knitr kable
@@ -697,7 +697,7 @@ setMethod("summary", signature = "hmde_estimates", function(object) {
 #'   obs_data = Trout_Size_Data[1:4,]) |>
 #'   hmde_run(chains = 1, iter = 1000,
 #'            verbose = FALSE, show_messages = FALSE) |>
-#'   hmde_estimates(Trout_Size_Data) |>
+#'   hmde_estimates(Trout_Size_Data[1:4,]) |>
 #'   plot()
 #'
 #' @importFrom cowplot plot_grid
