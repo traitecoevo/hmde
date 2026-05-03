@@ -52,7 +52,18 @@ setValidity("hmde_data_template",
 # Setters and getters for slots
 
 #Model name
+#' generic model_name getter
+#' @param x hmde special class object
+#' @rdname model_name-generic
+#' @aliases model_name
+#' @export
 setGeneric("model_name", function(x) standardGeneric("model_name"))
+#' generic model_name setter
+#' @param x hmde special class object
+#' @param value character string
+#' @rdname model_name-generic
+#' @aliases model_name<-
+#' @export
 setGeneric("model_name<-", function(x, value) standardGeneric("model_name<-"))
 
 #' model_name getter
@@ -76,7 +87,18 @@ setMethod("model_name<-", signature = "hmde_data_template", function(x, value) {
 })
 
 #Model level
+#' generic model_level setter
+#' @param x hmde special class object
+#' @rdname model_level-generic
+#' @aliases model_level
+#' @export
 setGeneric("model_level", function(x) standardGeneric("model_level"))
+#' generic model_level setter
+#' @param x hmde special class object
+#' @param value character string
+#' @rdname model_level-generic
+#' @aliases model_level<-
+#' @export
 setGeneric("model_level<-", function(x, value) standardGeneric("model_level<-"))
 
 #' model_level getter
@@ -100,7 +122,18 @@ setMethod("model_level<-", signature = "hmde_data_template", function(x, value) 
 })
 
 #Observation data
+#' generic obs_data setter
+#' @param x hmde hmde_data_template
+#' @rdname model_level-generic
+#' @aliases model_level
+#' @export
 setGeneric("obs_data", function(x) standardGeneric("obs_data"))
+#' generic obs_data setter
+#' @param x hmde hmde_data_template
+#' @param value character string
+#' @rdname model_level-generic
+#' @aliases model_level<-
+#' @export
 setGeneric("obs_data<-", function(x, value) standardGeneric("obs_data<-"))
 
 #' obs_data getter
@@ -124,7 +157,18 @@ setMethod("obs_data<-", signature = "hmde_data_template", function(x, value) {
 })
 
 #Prior paramerters
+#' generic prior_pars getter
+#' @param x hmde special class object
+#' @rdname prior_pars-generic
+#' @aliases prior_pars
+#' @export
 setGeneric("prior_pars", function(x) standardGeneric("prior_pars"))
+#' generic prior_pars setter
+#' @param x hmde special class object
+#' @param value list of prior parameters
+#' @rdname prior_pars-generic
+#' @aliases prior_pars<-
+#' @export
 setGeneric("prior_pars<-", function(x, value) standardGeneric("prior_pars<-"))
 
 #' prior_pars getter
@@ -148,7 +192,18 @@ setMethod("prior_pars<-", signature = "hmde_data_template", function(x, value) {
 })
 
 #Model paramerters
+#' generic par_names getter
+#' @param x hmde special class object
+#' @rdname par_names-generic
+#' @aliases par_names
+#' @export
 setGeneric("par_names", function(x) standardGeneric("par_names"))
+#' generic par_names setter
+#' @param x hmde special class object
+#' @param value vector of parameter names
+#' @rdname par_names-generic
+#' @aliases par_names<-
+#' @export
 setGeneric("par_names<-", function(x, value) standardGeneric("par_names<-"))
 
 #' par_names getter

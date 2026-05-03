@@ -114,7 +114,18 @@ setMethod("model_level<-", signature = "hmde_estimates", function(x, value) {
 })
 
 #Method
+#' generic method getter
+#' @param x hmde_estimates class object
+#' @rdname method-generic
+#' @aliases method
+#' @export
 setGeneric("method", function(x) standardGeneric("method"))
+#' generic method setter
+#' @param x hmde_estimates class object
+#' @param value character string name of object
+#' @rdname method-generic
+#' @aliases method<-
+#' @export
 setGeneric("method<-", function(x, value) standardGeneric("method<-"))
 
 #' method getter
@@ -138,7 +149,18 @@ setMethod("method<-", signature = "hmde_estimates", function(x, value) {
 })
 
 #Runtime
+#' generic runtime getter
+#' @param x hmde_estimates class object
+#' @rdname runtime-generic
+#' @aliases runtime
+#' @export
 setGeneric("runtime", function(x) standardGeneric("runtime"))
+#' generic runtime setter
+#' @param x hmde_estimates class object
+#' @param value matrix of chains for runtimes
+#' @rdname runtime-generic
+#' @aliases runtime<-
+#' @export
 setGeneric("runtime<-", function(x, value) standardGeneric("runtime<-"))
 
 #' runtime getter
@@ -162,7 +184,18 @@ setMethod("runtime<-", signature = "hmde_estimates", function(x, value) {
 })
 
 #Fit summary
+#' generic fit_summary getter
+#' @param x hmde_estimates class object
+#' @rdname fit_summary-generic
+#' @aliases fit_summary
+#' @export
 setGeneric("fit_summary", function(x) standardGeneric("fit_summary"))
+#' generic fit_summary setter
+#' @param x hmde_estimates class object
+#' @param value character string description of fit
+#' @rdname fit_summary-generic
+#' @aliases fit_summary<-
+#' @export
 setGeneric("fit_summary<-", function(x, value) standardGeneric("fit_summary<-"))
 
 #' fit_summary getter
@@ -186,7 +219,18 @@ setMethod("fit_summary<-", signature = "hmde_estimates", function(x, value) {
 })
 
 #Measurement estimates
+#' generic measurement_ests getter
+#' @param x hmde_estimates class object
+#' @rdname measurement_ests-generic
+#' @aliases measurement_ests
+#' @export
 setGeneric("measurement_ests", function(x) standardGeneric("measurement_ests"))
+#' generic measurement_ests setter
+#' @param x hmde_estimates class object
+#' @param value tibble of measurement-level estimates
+#' @rdname measurement_ests-generic
+#' @aliases measurement_ests<-
+#' @export
 setGeneric("measurement_ests<-", function(x, value) standardGeneric("measurement_ests<-"))
 
 #' measurement_ests getter
@@ -210,7 +254,18 @@ setMethod("measurement_ests<-", signature = "hmde_estimates", function(x, value)
 })
 
 #Individual estimates
+#' generic individual_ests getter
+#' @param x hmde_estimates class object
+#' @rdname individual_ests-generic
+#' @aliases individual_ests
+#' @export
 setGeneric("individual_ests", function(x) standardGeneric("individual_ests"))
+#' generic individual-ests setter
+#' @param x hmde_estimates class object
+#' @param value tibble of individaul-level parameter estimates
+#' @rdname individual_ests-generic
+#' @aliases individual_ests<-
+#' @export
 setGeneric("individual_ests<-", function(x, value) standardGeneric("individual_ests<-"))
 
 #' individual_ests getter
@@ -233,7 +288,18 @@ setMethod("individual_ests<-", signature = "hmde_estimates", function(x, value) 
 })
 
 #Population estimates
+#' generic population_ests setter
+#' @param x hmde_estimates class object
+#' @rdname population_ests-generic
+#' @aliases population_ests
+#' @export
 setGeneric("population_ests", function(x) standardGeneric("population_ests"))
+#' generic population_ests setter
+#' @param x hmde_estimates class object
+#' @param value tibble of population-level estimates
+#' @rdname population_ests-generic
+#' @aliases population_ests<-
+#' @export
 setGeneric("population_ests<-", function(x, value) standardGeneric("population_ests<-"))
 
 #' population_ests getter
@@ -257,7 +323,18 @@ setMethod("population_ests<-", signature = "hmde_estimates", function(x, value) 
 })
 
 #Error estimates
+#' generic error_ests getter
+#' @param x hmde_estimates class object
+#' @rdname error_ests-generic
+#' @aliases error_ests
+#' @export
 setGeneric("error_ests", function(x) standardGeneric("error_ests"))
+#' generic error_ests setter
+#' @param x hmde_estimates class object
+#' @param value tibble of error parameter estimates
+#' @rdname error_ests-generic
+#' @aliases error_ests<-
+#' @export
 setGeneric("error_ests<-", function(x, value) standardGeneric("error_ests<-"))
 
 #' Getter for error_ests in hmde_estimates object
@@ -300,7 +377,6 @@ setMethod("prior_pars<-", signature = "hmde_estimates", function(x, value) {
 #Parameter names
 #Generics set by hmde_model_template
 #' par_names getter
-#'
 #' Getter for par_names in hmde_estimates object
 #' @param x hmde_estimates class object
 #' @rdname hmde_estimates-class
