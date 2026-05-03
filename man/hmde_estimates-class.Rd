@@ -3,6 +3,9 @@
 \docType{class}
 \name{hmde_estimates-class}
 \alias{hmde_estimates-class}
+\alias{validator
+Validator function for hmde_estimates class objects.}
+\alias{hmde_estimates}
 \alias{model_name,hmde_estimates-method}
 \alias{model_name<-,hmde_estimates-method}
 \alias{model_level,hmde_estimates-method}
@@ -25,7 +28,6 @@
 \alias{prior_pars<-,hmde_estimates-method}
 \alias{par_names,hmde_estimates-method}
 \alias{par_names<-,hmde_estimates-method}
-\alias{hmde_estimates}
 \alias{show,hmde_estimates-method}
 \alias{print,hmde_estimates-method}
 \alias{summary,hmde_estimates-method}
@@ -95,6 +97,8 @@ hmde_estimates(fit, obs_data)
 \item{fit}{stanfit class object}
 
 \item{obs_data}{tbl_df class object with variables for ind_id, time, y_obs}
+
+\item{object}{hmde_estimates object to be validated}
 }
 \value{
 hmde_estimates class object
@@ -210,3 +214,4 @@ hmde_data_template("constant_single_ind",
   hmde_estimates(obs_data = Trout_Size_Data[1:4,])
 
 }
+\keyword{internal}

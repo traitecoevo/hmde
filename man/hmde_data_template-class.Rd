@@ -4,6 +4,8 @@
 \name{hmde_data_template-class}
 \alias{hmde_data_template-class}
 \alias{hmde_data_template}
+\alias{validator
+Validation function for hmde_data_template class.}
 \alias{model_name,hmde_data_template-method}
 \alias{model_name<-,hmde_data_template-method}
 \alias{model_level,hmde_data_template-method}
@@ -71,6 +73,8 @@ hmde_data_template(
 \item{model_level}{character string specifying whether single or multiple inds}
 
 \item{...}{data-masking name-value pairs allowing specific input of elements}
+
+\item{object}{hmde_data_template class object}
 }
 \value{
 hmde_data_template class object
@@ -157,3 +161,4 @@ hmde_data_template("constant_single_ind",
 )
 
 }
+\keyword{internal}
