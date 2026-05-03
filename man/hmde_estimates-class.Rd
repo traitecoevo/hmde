@@ -3,8 +3,6 @@
 \docType{class}
 \name{hmde_estimates-class}
 \alias{hmde_estimates-class}
-\alias{Validation
-Validation function for hmde_estimates class.}
 \alias{model_name,hmde_estimates-method}
 \alias{model_name<-,hmde_estimates-method}
 \alias{model_level,hmde_estimates-method}
@@ -32,7 +30,8 @@ Validation function for hmde_estimates class.}
 \alias{print,hmde_estimates-method}
 \alias{summary,hmde_estimates-method}
 \alias{plot,hmde_estimates,ANY-method}
-\title{An S4 class to contain model information and parameter estimates for a hmde model.}
+\title{hmde_estimates class object
+An S4 class to contain model information and parameter estimates for a hmde model.}
 \usage{
 \S4method{model_name}{hmde_estimates}(x)
 
@@ -96,81 +95,25 @@ hmde_estimates(fit, obs_data)
 \item{fit}{stanfit class object}
 
 \item{obs_data}{tbl_df class object with variables for ind_id, time, y_obs}
-
-\item{object}{hmde_estimates class object}
 }
 \value{
 hmde_estimates class object
 }
 \description{
-An S4 class to contain model information and parameter estimates for a hmde model.
-
-Getter for model_name in hmde_estimates object
-
-Setter for model_name in hmde_estimates object
-
-Getter for model_level in hmde_estimates object
-
-Setter for model_level in hmde_estimates object
-
-Getter for method in hmde_estimates object
-
-Setter for method in hmde_estimates object
-
-Getter for runtime in hmde_estimates object
-
-Setter for runtime in hmde_estimates object
-
-Getter for fit_summary in hmde_estimates object
-
-Setter for fit_summary in hmde_estimates object
-
-Getter for measurement_ests in hmde_estimates object
-
-Setter for measurement_ests in hmde_estimates object
-
-Getter for individual_ests in hmde_estimates object
-
-Setter for individual_ests in hmde_estimates object
-
-Getter for population_ests in hmde_estimates object
-
-Setter for population_ests in hmde_estimates object
-
-Getter for error_ests in hmde_estimates object
-
-Setter for error_ests in hmde_estimates object
-
-Getter for prior_pars in hmde_estimates object
-
-Setter for prior_pars in hmde_estimates object
-
 Getter for par_names in hmde_estimates object
-
-Setter for par_names in hmde_estimates object
-
-Constructor function for hmde_estimates class.
-
-Show function for hmde_estimates object
-
-Print function for hmde_estimates object
-
-Summary function for hmde_estimates object
-
-Plot function for hmde_estimates object
 }
 \section{Slots}{
 
 \describe{
-\item{\code{model_name}}{character string}
+\item{\code{model_name}}{name of the hmde model}
 
-\item{\code{model_level}}{character string}
+\item{\code{model_level}}{whether the model functions at the single or multi-ind level}
 
-\item{\code{method}}{character string}
+\item{\code{method}}{sampling method eg. MCMC}
 
 \item{\code{runtime}}{matrix of chain runtime}
 
-\item{\code{fit}}{summary character string}
+\item{\code{fit_summary}}{description of the fit}
 
 \item{\code{measurement_ests}}{tibble of measurement-level estimates}
 
