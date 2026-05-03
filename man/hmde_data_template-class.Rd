@@ -4,8 +4,6 @@
 \name{hmde_data_template-class}
 \alias{hmde_data_template-class}
 \alias{hmde_data_template}
-\alias{validator for hmde_data_template
-Validation function for hmde_data_template class.}
 \alias{model_name,hmde_data_template-method}
 \alias{model_name<-,hmde_data_template-method}
 \alias{model_level,hmde_data_template-method}
@@ -20,7 +18,8 @@ Validation function for hmde_data_template class.}
 \alias{print,hmde_data_template-method}
 \alias{summary,hmde_data_template-method}
 \alias{plot,hmde_data_template,ANY-method}
-\title{An S4 class to prepare input data for a hmde model.}
+\title{hmde_data_template class
+An S4 class to prepare input data for a hmde model.}
 \usage{
 \S4method{model_name}{hmde_data_template}(x)
 
@@ -72,13 +71,12 @@ hmde_data_template(
 \item{model_level}{character string specifying whether single or multiple inds}
 
 \item{...}{data-masking name-value pairs allowing specific input of elements}
-
-\item{object}{hmde_data_template class object}
 }
 \value{
 hmde_data_template class object
 }
 \description{
+hmde_data_template class
 An S4 class to prepare input data for a hmde model.
 
 model_name getter

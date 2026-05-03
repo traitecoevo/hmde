@@ -1,4 +1,5 @@
 #S4 methods for hmde_data_template
+#' hmde_data_template class
 #' An S4 class to prepare input data for a hmde model.
 #' @slot model_name character string
 #' @slot model_level character string
@@ -8,6 +9,7 @@
 #' @name hmde_data_template-class
 #' @aliases hmde_data_template
 #' @rdname hmde_data_template-class
+#' @export
 # Class definition
 setClass(
   Class = "hmde_data_template",
@@ -27,11 +29,13 @@ setClass(
   )
 )
 
-#' @name validator for hmde_data_template
+#' validator
 #' Validation function for hmde_data_template class.
 #' @param object hmde_data_template class object
 #' @rdname hmde_data_template-class
 #' @aliases hmde_data_template-class
+#' @keywords internal
+#' @noRd
 setValidity("hmde_data_template",
   function(object){
     if(length(object@model_name) != 1)
@@ -56,6 +60,7 @@ setGeneric("model_name<-", function(x, value) standardGeneric("model_name<-"))
 #' @param x hmde_data_template class object
 #' @rdname hmde_data_template-class
 #' @aliases hmde_data_template-class
+#' @export
 setMethod("model_name", signature = "hmde_data_template", function(x) x@model_name)
 
 #' model_name setter
@@ -64,6 +69,7 @@ setMethod("model_name", signature = "hmde_data_template", function(x) x@model_na
 #' @param value character string
 #' @rdname hmde_data_template-class
 #' @aliases hmde_data_template-class
+#' @export
 setMethod("model_name<-", signature = "hmde_data_template", function(x, value) {
   x@model_name <- value
   x
@@ -78,6 +84,7 @@ setGeneric("model_level<-", function(x, value) standardGeneric("model_level<-"))
 #' @param x hmde_data_template class object
 #' @rdname hmde_data_template-class
 #' @aliases hmde_data_template-class
+#' @export
 setMethod("model_level", signature = "hmde_data_template", function(x) x@model_level)
 
 #' model_level setter
@@ -86,6 +93,7 @@ setMethod("model_level", signature = "hmde_data_template", function(x) x@model_l
 #' @param value character string
 #' @rdname hmde_data_template-class
 #' @aliases hmde_data_template-class
+#' @export
 setMethod("model_level<-", signature = "hmde_data_template", function(x, value) {
   x@model_level <- value
   x
@@ -100,6 +108,7 @@ setGeneric("obs_data<-", function(x, value) standardGeneric("obs_data<-"))
 #' @param x hmde_data_template class object
 #' @rdname hmde_data_template-class
 #' @aliases hmde_data_template-class
+#' @export
 setMethod("obs_data", signature = "hmde_data_template", function(x) x@obs_data)
 
 #' obs_data setter
@@ -108,6 +117,7 @@ setMethod("obs_data", signature = "hmde_data_template", function(x) x@obs_data)
 #' @param value list
 #' @rdname hmde_data_template-class
 #' @aliases hmde_data_template-class
+#' @export
 setMethod("obs_data<-", signature = "hmde_data_template", function(x, value) {
   x@obs_data <- value
   x
@@ -122,6 +132,7 @@ setGeneric("prior_pars<-", function(x, value) standardGeneric("prior_pars<-"))
 #' @param x hmde_data_template class object
 #' @rdname hmde_data_template-class
 #' @aliases hmde_data_template-class
+#' @export
 setMethod("prior_pars", signature = "hmde_data_template", function(x) x@prior_pars)
 
 #' prior_pars setter
@@ -130,6 +141,7 @@ setMethod("prior_pars", signature = "hmde_data_template", function(x) x@prior_pa
 #' @param value list
 #' @rdname hmde_data_template-class
 #' @aliases hmde_data_template-class
+#' @export
 setMethod("prior_pars<-", signature = "hmde_data_template", function(x, value) {
   x@prior_pars <- value
   x
@@ -144,6 +156,7 @@ setGeneric("par_names<-", function(x, value) standardGeneric("par_names<-"))
 #' @param x hmde_data_template class object
 #' @rdname hmde_data_template-class
 #' @aliases hmde_data_template-class
+#' @export
 setMethod("par_names", signature = "hmde_data_template", function(x) x@par_names)
 
 #' par_names setter
@@ -152,6 +165,7 @@ setMethod("par_names", signature = "hmde_data_template", function(x) x@par_names
 #' @param value list
 #' @rdname hmde_data_template-class
 #' @aliases hmde_data_template-class
+#' @export
 setMethod("par_names<-", signature = "hmde_data_template", function(x, value) {
   x@par_names <- value
   x

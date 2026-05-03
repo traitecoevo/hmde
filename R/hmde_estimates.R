@@ -1,5 +1,5 @@
 #S4 methods for hmde_estimates object
-#' hmde_estimates class object
+#' hmde_estimates class
 #' An S4 class to contain model information and parameter estimates for a hmde model.
 #' @slot model_name name of the hmde model
 #' @slot model_level whether the model functions at the single or multi-ind level
@@ -14,7 +14,7 @@
 #' @slot par_names list of model paramter names at each level
 #' @name hmde_estimates-class
 #' @rdname hmde_estimates-class
-#'
+#' @export
 # Class definition
 setClass(
   Class = "hmde_estimates",
@@ -46,11 +46,13 @@ setClass(
   )
 )
 
-#' @name validator for hmde_estimates
+#' validator
 #' Validator function for hmde_estimates class objects.
 #' @param object hmde_estimates object to be validated
 #' @rdname hmde_estimates-class
 #' @aliases hmde_estimates-class
+#' @keywords internal
+#' @noRd
 setValidity("hmde_estimates",
   function(object){
     if(length(object@model_name) != 1)
@@ -74,6 +76,7 @@ setValidity("hmde_estimates",
 #' @param x hmde_estimates class object
 #' @rdname hmde_estimates-class
 #' @aliases hmde_estimates-class
+#' @export
 setMethod("model_name", signature = "hmde_estimates", function(x) x@model_name)
 
 #' model_name setter
@@ -82,6 +85,7 @@ setMethod("model_name", signature = "hmde_estimates", function(x) x@model_name)
 #' @param value character string
 #' @rdname hmde_estimates-class
 #' @aliases hmde_estimates-class
+#' @export
 setMethod("model_name<-", signature = "hmde_estimates", function(x, value) {
   x@model_name <- value
   x
@@ -94,6 +98,7 @@ setMethod("model_name<-", signature = "hmde_estimates", function(x, value) {
 #' @param x hmde_estimates class object
 #' @rdname hmde_estimates-class
 #' @aliases hmde_estimates-class
+#' @export
 setMethod("model_level", signature = "hmde_estimates", function(x) x@model_level)
 
 #' model_level settter
@@ -102,6 +107,7 @@ setMethod("model_level", signature = "hmde_estimates", function(x) x@model_level
 #' @param value character string
 #' @rdname hmde_estimates-class
 #' @aliases hmde_estimates-class
+#' @export
 setMethod("model_level<-", signature = "hmde_estimates", function(x, value) {
   x@model_level <- value
   x
@@ -116,6 +122,7 @@ setGeneric("method<-", function(x, value) standardGeneric("method<-"))
 #' @param x hmde_estimates class object
 #' @rdname hmde_estimates-class
 #' @aliases hmde_estimates-class
+#' @export
 setMethod("method", signature = "hmde_estimates", function(x) x@method)
 
 #' method setter
@@ -124,6 +131,7 @@ setMethod("method", signature = "hmde_estimates", function(x) x@method)
 #' @param value character string
 #' @rdname hmde_estimates-class
 #' @aliases hmde_estimates-class
+#' @export
 setMethod("method<-", signature = "hmde_estimates", function(x, value) {
   x@method <- value
   x
@@ -138,6 +146,7 @@ setGeneric("runtime<-", function(x, value) standardGeneric("runtime<-"))
 #' @param x hmde_estimates class object
 #' @rdname hmde_estimates-class
 #' @aliases hmde_estimates-class
+#' @export
 setMethod("runtime", signature = "hmde_estimates", function(x) x@runtime)
 
 #' runtime setter
@@ -146,6 +155,7 @@ setMethod("runtime", signature = "hmde_estimates", function(x) x@runtime)
 #' @param value character string
 #' @rdname hmde_estimates-class
 #' @aliases hmde_estimates-class
+#' @export
 setMethod("runtime<-", signature = "hmde_estimates", function(x, value) {
   x@runtime <- value
   x
@@ -160,6 +170,7 @@ setGeneric("fit_summary<-", function(x, value) standardGeneric("fit_summary<-"))
 #' @param x hmde_estimates class object
 #' @rdname hmde_estimates-class
 #' @aliases hmde_estimates-class
+#' @export
 setMethod("fit_summary", signature = "hmde_estimates", function(x) x@fit_summary)
 
 #' fit_summary setter
@@ -168,6 +179,7 @@ setMethod("fit_summary", signature = "hmde_estimates", function(x) x@fit_summary
 #' @param value character string
 #' @rdname hmde_estimates-class
 #' @aliases hmde_estimates-class
+#' @export
 setMethod("fit_summary<-", signature = "hmde_estimates", function(x, value) {
   x@fit_summary <- value
   x
@@ -182,6 +194,7 @@ setGeneric("measurement_ests<-", function(x, value) standardGeneric("measurement
 #' @param x hmde_estimates class object
 #' @rdname hmde_estimates-class
 #' @aliases hmde_estimates-class
+#' @export
 setMethod("measurement_ests", signature = "hmde_estimates", function(x) x@measurement_ests)
 
 #' measurement_ests setter
@@ -190,6 +203,7 @@ setMethod("measurement_ests", signature = "hmde_estimates", function(x) x@measur
 #' @param value tibble
 #' @rdname hmde_estimates-class
 #' @aliases hmde_estimates-class
+#' @export
 setMethod("measurement_ests<-", signature = "hmde_estimates", function(x, value) {
   x@measurement_ests <- value
   x
@@ -204,6 +218,7 @@ setGeneric("individual_ests<-", function(x, value) standardGeneric("individual_e
 #' @param x hmde_estimates class object
 #' @rdname hmde_estimates-class
 #' @aliases hmde_estimates-class
+#' @export
 setMethod("individual_ests", signature = "hmde_estimates", function(x) x@individual_ests)
 
 #' individual_ests setter
@@ -226,6 +241,7 @@ setGeneric("population_ests<-", function(x, value) standardGeneric("population_e
 #' @param x hmde_estimates class object
 #' @rdname hmde_estimates-class
 #' @aliases hmde_estimates-class
+#' @export
 setMethod("population_ests", signature = "hmde_estimates", function(x) x@population_ests)
 
 #' population_ests setter
@@ -234,6 +250,7 @@ setMethod("population_ests", signature = "hmde_estimates", function(x) x@populat
 #' @param value tibble
 #' @rdname hmde_estimates-class
 #' @aliases hmde_estimates-class
+#' @export
 setMethod("population_ests<-", signature = "hmde_estimates", function(x, value) {
   x@population_ests <- value
   x
@@ -246,7 +263,7 @@ setGeneric("error_ests<-", function(x, value) standardGeneric("error_ests<-"))
 #' Getter for error_ests in hmde_estimates object
 #' @param x hmde_estimates class object
 #' @rdname hmde_estimates-class
-#'
+#' @export
 setMethod("error_ests", signature = "hmde_estimates", function(x) x@error_ests)
 
 #' Setter for error_ests in hmde_estimates object
@@ -254,6 +271,7 @@ setMethod("error_ests", signature = "hmde_estimates", function(x) x@error_ests)
 #' @param value tibble
 #' @rdname hmde_estimates-class
 #' @aliases hmde_estimates-class
+#' @export
 setMethod("error_ests<-", signature = "hmde_estimates", function(x, value) {
   x@error_ests <- value
   x
@@ -265,6 +283,7 @@ setMethod("error_ests<-", signature = "hmde_estimates", function(x, value) {
 #' @param x hmde_estimates class object
 #' @rdname hmde_estimates-class
 #' @aliases hmde_estimates-class
+#' @export
 setMethod("prior_pars", signature = "hmde_estimates", function(x) x@prior_pars)
 
 #' Setter for prior_pars in hmde_estimates object
@@ -272,6 +291,7 @@ setMethod("prior_pars", signature = "hmde_estimates", function(x) x@prior_pars)
 #' @param value list
 #' @rdname hmde_estimates-class
 #' @aliases hmde_estimates-class
+#' @export
 setMethod("prior_pars<-", signature = "hmde_estimates", function(x, value) {
   x@prior_pars <- value
   x
@@ -285,6 +305,7 @@ setMethod("prior_pars<-", signature = "hmde_estimates", function(x, value) {
 #' @param x hmde_estimates class object
 #' @rdname hmde_estimates-class
 #' @aliases hmde_estimates-class
+#' @export
 setMethod("par_names", signature = "hmde_estimates", function(x) x@par_names)
 
 #' par_names setter
@@ -293,6 +314,7 @@ setMethod("par_names", signature = "hmde_estimates", function(x) x@par_names)
 #' @param value vector
 #' @rdname hmde_estimates-class
 #' @aliases hmde_estimates-class
+#' @export
 setMethod("par_names<-", signature = "hmde_estimates", function(x, value) {
   x@par_names <- value
   x
