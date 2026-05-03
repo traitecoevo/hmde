@@ -14,6 +14,7 @@
 #' @slot par_names list of model paramter names at each level
 #' @name hmde_estimates-class
 #' @rdname hmde_estimates-class
+#'
 # Class definition
 setClass(
   Class = "hmde_estimates",
@@ -45,6 +46,11 @@ setClass(
   )
 )
 
+#' @name validator for hmde_estimates
+#' Validator function for hmde_estimates class objects.
+#' @param object hmde_estimates object to be validated
+#' @rdname hmde_estimates-class
+#' @aliases hmde_estimates-class
 setValidity("hmde_estimates",
   function(object){
     if(length(object@model_name) != 1)
@@ -319,6 +325,7 @@ setMethod("par_names<-", signature = "hmde_estimates", function(x, value) {
 #' @import tibble
 #' @importFrom rstan get_elapsed_time
 #' @importFrom stats quantile
+#' @export
 
 hmde_estimates <- function(fit, #Mandatory
                            obs_data){ #Mandatory

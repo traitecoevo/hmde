@@ -3,6 +3,8 @@
 \docType{class}
 \name{hmde_estimates-class}
 \alias{hmde_estimates-class}
+\alias{validator for hmde_estimates
+Validator function for hmde_estimates class objects.}
 \alias{model_name,hmde_estimates-method}
 \alias{model_name<-,hmde_estimates-method}
 \alias{model_level,hmde_estimates-method}
@@ -95,6 +97,8 @@ hmde_estimates(fit, obs_data)
 \item{fit}{stanfit class object}
 
 \item{obs_data}{tbl_df class object with variables for ind_id, time, y_obs}
+
+\item{object}{hmde_estimates object to be validated}
 }
 \value{
 hmde_estimates class object

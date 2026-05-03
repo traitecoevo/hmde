@@ -27,10 +27,11 @@ setClass(
   )
 )
 
-#' @name Validation
+#' @name validator for hmde_data_template
 #' Validation function for hmde_data_template class.
 #' @param object hmde_data_template class object
 #' @rdname hmde_data_template-class
+#' @aliases hmde_data_template-class
 setValidity("hmde_data_template",
   function(object){
     if(length(object@model_name) != 1)
@@ -50,17 +51,19 @@ setValidity("hmde_data_template",
 setGeneric("model_name", function(x) standardGeneric("model_name"))
 setGeneric("model_name<-", function(x, value) standardGeneric("model_name<-"))
 
+#' model_name getter
 #' Getter for model_name in hmde_data_template object
 #' @param x hmde_data_template class object
 #' @rdname hmde_data_template-class
-#' @export
+#' @aliases hmde_data_template-class
 setMethod("model_name", signature = "hmde_data_template", function(x) x@model_name)
 
+#' model_name setter
 #' Setter for model_name in hmde_data_template object
 #' @param x hmde_data_template class object
 #' @param value character string
 #' @rdname hmde_data_template-class
-#' @export
+#' @aliases hmde_data_template-class
 setMethod("model_name<-", signature = "hmde_data_template", function(x, value) {
   x@model_name <- value
   x
@@ -70,17 +73,19 @@ setMethod("model_name<-", signature = "hmde_data_template", function(x, value) {
 setGeneric("model_level", function(x) standardGeneric("model_level"))
 setGeneric("model_level<-", function(x, value) standardGeneric("model_level<-"))
 
+#' model_level getter
 #' Getter for model_level in hmde_data_template object
 #' @param x hmde_data_template class object
 #' @rdname hmde_data_template-class
-#' @export
+#' @aliases hmde_data_template-class
 setMethod("model_level", signature = "hmde_data_template", function(x) x@model_level)
 
+#' model_level setter
 #' Setter for model_level in hmde_data_template object
 #' @param x hmde_data_template class object
 #' @param value character string
 #' @rdname hmde_data_template-class
-#' @export
+#' @aliases hmde_data_template-class
 setMethod("model_level<-", signature = "hmde_data_template", function(x, value) {
   x@model_level <- value
   x
@@ -90,17 +95,19 @@ setMethod("model_level<-", signature = "hmde_data_template", function(x, value) 
 setGeneric("obs_data", function(x) standardGeneric("obs_data"))
 setGeneric("obs_data<-", function(x, value) standardGeneric("obs_data<-"))
 
+#' obs_data getter
 #' Getter for obs_data in hmde_data_template object
 #' @param x hmde_data_template class object
 #' @rdname hmde_data_template-class
-#' @export
+#' @aliases hmde_data_template-class
 setMethod("obs_data", signature = "hmde_data_template", function(x) x@obs_data)
 
+#' obs_data setter
 #' Setter for obs_data in hmde_data_template object
 #' @param x hmde_data_template class object
 #' @param value list
 #' @rdname hmde_data_template-class
-#' @export
+#' @aliases hmde_data_template-class
 setMethod("obs_data<-", signature = "hmde_data_template", function(x, value) {
   x@obs_data <- value
   x
@@ -110,17 +117,19 @@ setMethod("obs_data<-", signature = "hmde_data_template", function(x, value) {
 setGeneric("prior_pars", function(x) standardGeneric("prior_pars"))
 setGeneric("prior_pars<-", function(x, value) standardGeneric("prior_pars<-"))
 
+#' prior_pars getter
 #' Getter for prior_pars in hmde_data_template object
 #' @param x hmde_data_template class object
 #' @rdname hmde_data_template-class
-#' @export
+#' @aliases hmde_data_template-class
 setMethod("prior_pars", signature = "hmde_data_template", function(x) x@prior_pars)
 
+#' prior_pars setter
 #' Setter for prior_pars in hmde_data_template object
 #' @param x hmde_data_template class object
 #' @param value list
 #' @rdname hmde_data_template-class
-#' @export
+#' @aliases hmde_data_template-class
 setMethod("prior_pars<-", signature = "hmde_data_template", function(x, value) {
   x@prior_pars <- value
   x
@@ -130,17 +139,19 @@ setMethod("prior_pars<-", signature = "hmde_data_template", function(x, value) {
 setGeneric("par_names", function(x) standardGeneric("par_names"))
 setGeneric("par_names<-", function(x, value) standardGeneric("par_names<-"))
 
+#' par_names getter
 #' Getter for par_names in hmde_data_template object
 #' @param x hmde_data_template class object
 #' @rdname hmde_data_template-class
-#' @export
+#' @aliases hmde_data_template-class
 setMethod("par_names", signature = "hmde_data_template", function(x) x@par_names)
 
+#' par_names setter
 #' Setter for par_names in hmde_data_template object.
 #' @param x hmde_data_template class object
 #' @param value list
 #' @rdname hmde_data_template-class
-#' @export
+#' @aliases hmde_data_template-class
 setMethod("par_names<-", signature = "hmde_data_template", function(x, value) {
   x@par_names <- value
   x
@@ -150,7 +161,7 @@ setMethod("par_names<-", signature = "hmde_data_template", function(x, value) {
 #-----------------------------------------------------------------------------#
 ## Helper Functions
 
-# Constructor
+#' Constructor
 #' Constructor function for hmde_data_template class, with data assignment ready for model fitting.
 #'
 #' @param model_name character string name of a hmde model
@@ -184,8 +195,8 @@ setMethod("par_names<-", signature = "hmde_data_template", function(x, value) {
 #' )
 #'
 #' @rdname hmde_data_template-class
+#' @aliases hmde_data_template-class
 #' @export
-#'
 hmde_data_template <- function(model_name, #Mandatory
                                obs_data = NULL, #Optional
                                prior_pars = NULL, #Optional
@@ -375,7 +386,7 @@ hmde_data_template <- function(model_name, #Mandatory
 
 #' Show function for hmde_data_template object
 #' @rdname hmde_data_template-class
-#'
+#' @aliases hmde_data_template-class
 #' @export
 
 setMethod("show", signature = "hmde_data_template", function(object) {
@@ -393,7 +404,7 @@ setMethod("show", signature = "hmde_data_template", function(object) {
 
 #' Print function for hmde_data_template object
 #' @rdname hmde_data_template-class
-#'
+#' @aliases hmde_data_template-class
 #' @export
 
 setMethod("print", signature = "hmde_data_template", function(x) {
@@ -411,7 +422,7 @@ setMethod("print", signature = "hmde_data_template", function(x) {
 
 #' Summary function for hmde_data_template object
 #' @rdname hmde_data_template-class
-#'
+#' @aliases hmde_data_template-class
 #' @export
 
 setMethod("summary", signature = "hmde_data_template", function(object) {
@@ -462,7 +473,7 @@ setMethod("summary", signature = "hmde_data_template", function(object) {
 
 #' Plot function for hmde_data_template object
 #' @rdname hmde_data_template-class
-#'
+#' @aliases hmde_data_template-class
 #' @export
 
 setMethod("plot", signature = "hmde_data_template", function(x) {
