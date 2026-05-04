@@ -4,8 +4,7 @@
 \name{hmde_data_template-class}
 \alias{hmde_data_template-class}
 \alias{hmde_data_template}
-\alias{validator
-Validation function for hmde_data_template class.}
+\alias{data_template-validator}
 \alias{model_name,hmde_data_template-method}
 \alias{model_name<-,hmde_data_template-method}
 \alias{model_level,hmde_data_template-method}
@@ -80,49 +79,7 @@ hmde_data_template(
 hmde_data_template class object
 }
 \description{
-hmde_data_template class
-An S4 class to prepare input data for a hmde model.
-
-model_name getter
-Getter for model_name in hmde_data_template object
-
-model_name setter
-Setter for model_name in hmde_data_template object
-
-model_level getter
-Getter for model_level in hmde_data_template object
-
-model_level setter
-Setter for model_level in hmde_data_template object
-
-obs_data getter
-Getter for obs_data in hmde_data_template object
-
-obs_data setter
-Setter for obs_data in hmde_data_template object
-
-prior_pars getter
-Getter for prior_pars in hmde_data_template object
-
-prior_pars setter
-Setter for prior_pars in hmde_data_template object
-
-par_names getter
-Getter for par_names in hmde_data_template object
-
-par_names setter
-Setter for par_names in hmde_data_template object.
-
-Constructor
-Constructor function for hmde_data_template class, with data assignment ready for model fitting.
-
-Show function for hmde_data_template object
-
-Print function for hmde_data_template object
-
-Summary function for hmde_data_template object
-
-Plot function for hmde_data_template object
+Validation function for hmde_data_template class.
 }
 \section{Slots}{
 

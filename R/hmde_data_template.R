@@ -29,11 +29,10 @@ setClass(
   )
 )
 
-#' @name validator
-#' Validation function for hmde_data_template class.
+#' @name data_template-validator
+#' @description Validation function for hmde_data_template class.
 #' @param object hmde_data_template class object
 #' @rdname hmde_data_template-class
-#' @aliases hmde_data_template-class
 #' @aliases hmde_data_template
 #' @keywords internal
 setValidity("hmde_data_template",

@@ -46,11 +46,10 @@ setClass(
   )
 )
 
-#' @name validator
-#' Validator function for hmde_estimates class objects.
+#' @name estimates-validator
+#' @description Validator function for hmde_estimates class objects.
 #' @param object hmde_estimates object to be validated
 #' @rdname hmde_estimates-class
-#' @aliases hmde_estimates-class
 #' @aliases hmde_estimates
 #' @keywords internal
 setValidity("hmde_estimates",
