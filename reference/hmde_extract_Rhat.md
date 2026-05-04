@@ -30,8 +30,8 @@ hmde_data_template("constant_single_ind",
 #> 
 #> SAMPLING FOR MODEL 'constant_single_ind' NOW (CHAIN 1).
 #> Chain 1: 
-#> Chain 1: Gradient evaluation took 8e-06 seconds
-#> Chain 1: 1000 transitions using 10 leapfrog steps per transition would take 0.08 seconds.
+#> Chain 1: Gradient evaluation took 1e-05 seconds
+#> Chain 1: 1000 transitions using 10 leapfrog steps per transition would take 0.1 seconds.
 #> Chain 1: Adjust your expectations accordingly!
 #> Chain 1: 
 #> Chain 1: 
@@ -48,15 +48,15 @@ hmde_data_template("constant_single_ind",
 #> Chain 1: Iteration: 900 / 1000 [ 90%]  (Sampling)
 #> Chain 1: Iteration: 1000 / 1000 [100%]  (Sampling)
 #> Chain 1: 
-#> Chain 1:  Elapsed Time: 0.01 seconds (Warm-up)
+#> Chain 1:  Elapsed Time: 0.011 seconds (Warm-up)
 #> Chain 1:                0.008 seconds (Sampling)
-#> Chain 1:                0.018 seconds (Total)
+#> Chain 1:                0.019 seconds (Total)
 #> Chain 1: 
 #> 
 #> SAMPLING FOR MODEL 'constant_single_ind' NOW (CHAIN 2).
 #> Chain 2: 
-#> Chain 2: Gradient evaluation took 5e-06 seconds
-#> Chain 2: 1000 transitions using 10 leapfrog steps per transition would take 0.05 seconds.
+#> Chain 2: Gradient evaluation took 6e-06 seconds
+#> Chain 2: 1000 transitions using 10 leapfrog steps per transition would take 0.06 seconds.
 #> Chain 2: Adjust your expectations accordingly!
 #> Chain 2: 
 #> Chain 2: 
@@ -73,8 +73,8 @@ hmde_data_template("constant_single_ind",
 #> Chain 2: Iteration: 900 / 1000 [ 90%]  (Sampling)
 #> Chain 2: Iteration: 1000 / 1000 [100%]  (Sampling)
 #> Chain 2: 
-#> Chain 2:  Elapsed Time: 0.012 seconds (Warm-up)
-#> Chain 2:                0.012 seconds (Sampling)
+#> Chain 2:  Elapsed Time: 0.013 seconds (Warm-up)
+#> Chain 2:                0.011 seconds (Sampling)
 #> Chain 2:                0.024 seconds (Total)
 #> Chain 2: 
 #> Warning: There were 2 divergent transitions after warmup. See

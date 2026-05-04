@@ -1,67 +1,6 @@
 # hmde_estimates class An S4 class to contain model information and parameter estimates for a hmde model.
 
-hmde_estimates class An S4 class to contain model information and
-parameter estimates for a hmde model.
-
-model_name getter Getter for model_name in hmde_estimates object
-
-model_name setter Setter for model_name in hmde_estimates object
-
-model_level getter Getter for model_level in hmde_estimates object
-
-model_level settter Setter for model_level in hmde_estimates object
-
-method getter Getter for method in hmde_estimates object
-
-method setter Setter for method in hmde_estimates object
-
-runtime getter Getter for runtime in hmde_estimates object
-
-runtime setter Setter for runtime in hmde_estimates object
-
-fit_summary getter Getter for fit_summary in hmde_estimates object
-
-fit_summary setter Setter for fit_summary in hmde_estimates object
-
-measurement_ests getter Getter for measurement_ests in hmde_estimates
-object
-
-measurement_ests setter Setter for measurement_ests in hmde_estimates
-object
-
-individual_ests getter Getter for individual_ests in hmde_estimates
-object
-
-individual_ests setter Setter for individual_ests in hmde_estimates
-object
-
-population_ests getter Getter for population_ests in hmde_estimates
-object
-
-population_ests setter Setter for population_ests in hmde_estimates
-object
-
-Getter for error_ests in hmde_estimates object
-
-Setter for error_ests in hmde_estimates object
-
-Getter for prior_pars in hmde_estimates object
-
-Setter for prior_pars in hmde_estimates object
-
-par_names getter Getter for par_names in hmde_estimates object
-
-par_names setter Setter for par_names in hmde_estimates object
-
-Constructor function for hmde_estimates class.
-
-Show function for hmde_estimates object
-
-Print function for hmde_estimates object
-
-Summary function for hmde_estimates object
-
-Plot function for hmde_estimates object
+Validator function for hmde_estimates class objects.
 
 ## Usage
 
@@ -231,8 +170,8 @@ hmde_data_template("constant_single_ind",
 #> 
 #> SAMPLING FOR MODEL 'constant_single_ind' NOW (CHAIN 1).
 #> Chain 1: 
-#> Chain 1: Gradient evaluation took 2.3e-05 seconds
-#> Chain 1: 1000 transitions using 10 leapfrog steps per transition would take 0.23 seconds.
+#> Chain 1: Gradient evaluation took 1.1e-05 seconds
+#> Chain 1: 1000 transitions using 10 leapfrog steps per transition would take 0.11 seconds.
 #> Chain 1: Adjust your expectations accordingly!
 #> Chain 1: 
 #> Chain 1: 
