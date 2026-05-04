@@ -4,12 +4,12 @@
 \alias{hmde_plot_de_pieces}
 \title{Plot pieces of chosen differential equation model for each individual.
 Structured to take the individual data tibble that is built by the
-hmde_extract_estimates function using the ind_par_name_mean estimates.
+hmde_estimates function using the ind_par_name_mean estimates.
 Function piece will go from the first fitted size to the last.
 Accepted ggplot arguments will change the axis labels, title, line colour, alpha}
 \usage{
 hmde_plot_de_pieces(
-  estimate_list = NULL,
+  estimates = NULL,
   xlab = "Y(t)",
   ylab = "f",
   title = NULL,
@@ -18,7 +18,7 @@ hmde_plot_de_pieces(
 )
 }
 \arguments{
-\item{estimate_list}{list output from hmde_extract_estimates}
+\item{estimates}{hmde_estimates object}
 
 \item{xlab}{character string for replacement x axis label}
 
@@ -36,12 +36,12 @@ ggplot object
 \description{
 Plot pieces of chosen differential equation model for each individual.
 Structured to take the individual data tibble that is built by the
-hmde_extract_estimates function using the ind_par_name_mean estimates.
+hmde_estimates function using the ind_par_name_mean estimates.
 Function piece will go from the first fitted size to the last.
 Accepted ggplot arguments will change the axis labels, title, line colour, alpha
 }
 \examples{
 # basic usage of hmde_plot_de_pieces
-hmde_plot_de_pieces(estimate_list = Tree_Size_Ests)
+hmde_plot_de_pieces(estimates = Tree_Size_Ests)
 
 }

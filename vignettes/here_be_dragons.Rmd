@@ -102,6 +102,7 @@ y_obs <- round(y_true + rnorm(length(y_true), 0, 0.1), digits = 1)
 
 #Observed data frame
 obs_data_frame <- tibble(
+  ind_id = 1,
   time = time,
   y_obs = y_obs,
   obs_index = 1:length(y_obs)
@@ -150,6 +151,7 @@ We're going to run 100 fits with a step size of 1 using the custom RK4 solver an
 
 Each fit takes a few seconds to run, so allow several minutes for the following block. There are likely to be diagnostic problems but that is part of what we are here to explore so we will be ignoring them. Divergent transitions in particular are to be expected when we have the very different parameter estimates we see. Results are hidden for this block.
 ```{r, results='hide'}
+set.seed(2026) #For replicable results
 runs <- 100
 step_size = 0.5
 par_est_tibble <- tibble(run = c(),
@@ -160,26 +162,26 @@ par_est_tibble <- tibble(run = c(),
 for(i in 1:runs){
   #Run the model
   suppressWarnings(
-    fit <- hmde_model("affine_single_ind") |>
-    hmde_assign_data(n_obs = nrow(obs_data_frame),
-                     y_obs = obs_data_frame$y_obs,
-                     obs_index = obs_data_frame$obs_index,
-                     time = obs_data_frame$time,
-                     y_bar = mean(obs_data_frame$y_obs),
-                     step_size = step_size,
-                     int_method = 1)  |>  #RK4
+    fit <- hmde_data_template("affine_single_ind",
+                              n_obs = nrow(obs_data_frame),
+                              y_obs = obs_data_frame$y_obs,
+                              obs_index = obs_data_frame$obs_index,
+                              time = obs_data_frame$time,
+                              y_bar = mean(obs_data_frame$y_obs),
+                              step_size = step_size,
+                              int_method = 1)  |>  #RK4
     hmde_run(chains = 1, cores = 1, iter = 2000)
   )
   
   #Extract parameter estimates
-  ests <- hmde_extract_estimates(fit = fit,
-                                 input_measurement_data = obs_data_frame)
+  ests <- hmde_estimates(fit = fit,
+                         obs_data = obs_data_frame)
   
   temp <- tibble(
     run = i,
     step_size = step_size,
-    beta_0 = ests$individual_data$ind_beta_0_mean,
-    beta_1 = ests$individual_data$ind_beta_1_mean
+    beta_0 = individual_ests(ests)[["ind_beta_0_mean"]],
+    beta_1 = individual_ests(ests)[["ind_beta_1_mean"]]
   )
   
   par_est_tibble <- rbind(par_est_tibble, temp)

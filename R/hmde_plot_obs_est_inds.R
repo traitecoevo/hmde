@@ -2,8 +2,7 @@
 #' on posterior estimates. Structured to take in the measurement_data tibble constructed by
 #' the hmde_extract_estimates function.
 #'
-#' @param estimate_list list output of hmde_extract_estimates
-#' @param measurement_data tibble with estimated measurements
+#' @param estimates hmde_estimates class object
 #' @param ind_id_vec vector with list of ind_id values
 #' @param n_ind_to_plot integer giving number of individuals to plot if not specified
 #' @param xlab character string for replacement x axis label
@@ -12,28 +11,31 @@
 #'
 #' @examples
 #' # basic usage of hmde_plot_obs_est_inds
-#' hmde_plot_obs_est_inds(estimate_list = Tree_Size_Ests,
+#' hmde_plot_obs_est_inds(estimates = Tree_Size_Ests,
 #'                        n_ind_to_plot = 5)
 #'
 #' @return ggplot object
-#' @export
+#'
 #' @import ggplot2
 #' @import dplyr
+#'
+#' @export
 
-hmde_plot_obs_est_inds <- function(estimate_list = NULL,
-                                   measurement_data = NULL,
+hmde_plot_obs_est_inds <- function(estimates = NULL,
                                    ind_id_vec = NULL,
                                    n_ind_to_plot = NULL,
                                    xlab = "Time",
                                    ylab = "Y(t)",
                                    title = NULL){
-  if(!is.null(estimate_list)){ #Allows for passing of estimate object.
-    ind_id_vec <- estimate_list$individual_data$ind_id
-    measurement_data <- estimate_list$measurement_data
+  #Checks
+  if(!is.null(estimates)){
+    if(!inherits(estimates, "hmde_estimates")){
+      stop("Estimates not required hmde_estimates class.")
+    }
   }
 
-  if(is.null(measurement_data)){
-    stop("Measurement data not provided.")
+  if(!is.null(estimates)){ #Allows for passing of estimate object.
+    measurement_data <- measurement_ests(estimates)
   }
 
   if(!is.null(ind_id_vec)){
@@ -88,9 +90,3 @@ hmde_ggplot_obs_est_inds <- function(plot_data,
 
   return(plot)
 }
-
-#' Set variable names to be regarded as globally defined
-#' @noRd
-globalVariables(c("ind_id", "time", "y_obs", "y_hat"),
-                "hmde",
-                add = TRUE)

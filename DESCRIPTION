@@ -1,6 +1,6 @@
 Package: hmde
 Title: Hierarchical Methods for Differential Equations
-Version: 1.3.1
+Version: 1.4.0
 Authors@R: 
     c(
   person(given = "Daniel", family = "Falster", role = c("aut", "ctb"), email = "daniel.falster@unsw.edu.au", comment = c(ORCID = "0000-0002-9814-092X")),
@@ -12,7 +12,7 @@ Description: Wrapper for 'Stan' that offers a number of in-built models to imple
 License: GPL (>= 3)
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)
-RoxygenNote: 7.3.2
+RoxygenNote: 7.3.3
 Biarch: true
 Depends: 
     R (>= 4.1.0)
@@ -20,23 +20,24 @@ Imports:
     methods,
     dplyr,
     ggplot2,
-    purrr,
-    Rcpp (>= 0.12.0),
+    Rcpp (>= 0.12.19),
     RcppParallel (>= 5.0.1),
     rlang,
     rstan (>= 2.18.1),
     rstantools (>= 2.3.1.1),
-    cowplot
+    tibble,
+    cowplot,
+    knitr,
+    purrr (>= 1.2.0)
 LinkingTo: 
     BH (>= 1.66.0),
-    Rcpp (>= 0.12.0),
+    Rcpp (>= 0.12.19),
     RcppEigen (>= 0.3.3.3.0),
     RcppParallel (>= 5.0.1),
     rstan (>= 2.18.1),
     StanHeaders (>= 2.18.0)
 SystemRequirements: GNU make
 Suggests: 
-    knitr,
     rmarkdown,
     testthat (>= 3.0.0),
     withr,

@@ -16,6 +16,5 @@ test_that("Datasets: size", {
   expect_equal(object = c(nrow(Tree_Size_Data),
                           ncol(Tree_Size_Data)),
                expected = c(300, 4))
-  expect_equal(object = length(Tree_Size_Ests),
-               expected = 5)
+  expect_true(inherits(Tree_Size_Ests, "hmde_estimates"))
 })

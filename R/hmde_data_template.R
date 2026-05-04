@@ -1,0 +1,591 @@
+#S4 methods for hmde_data_template
+#' hmde_data_template class
+#' An S4 class to prepare input data for a hmde model.
+#' @slot model_name character string
+#' @slot model_level character string
+#' @slot obs_data list of input data
+#' @slot prior_pars list of prior parameters
+#' @slot par_names list of model paramter names at each level
+#' @name hmde_data_template-class
+#' @aliases hmde_data_template
+#' @rdname hmde_data_template-class
+#' @export
+# Class definition
+setClass(
+  Class = "hmde_data_template",
+  representation = representation(
+    model_name = "character", # Name of model DE
+    model_level = "character", # Single or multi-individual
+    obs_data = "list", # List of input data for model
+    prior_pars = "list", # List of prior parameters for model
+    par_names = "list" # List of model parameter names
+  ),
+  prototype = prototype(
+    model_name = NA_character_,
+    model_level = NA_character_,
+    obs_data = list(NA),
+    prior_pars = list(NA),
+    par_names = list(NA)
+  )
+)
+
+#' @name validator
+#' Validation function for hmde_data_template class.
+#' @param object hmde_data_template class object
+#' @rdname hmde_data_template-class
+#' @aliases hmde_data_template-class
+#' @aliases hmde_data_template
+#' @keywords internal
+setValidity("hmde_data_template",
+  function(object){
+    if(length(object@model_name) != 1)
+      return("'model_name' slot must be of length 1.")
+
+    if(length(object@model_level) != 1)
+      return("'model_level' slot must be of length 1.")
+
+    TRUE
+  }
+)
+
+#-----------------------------------------------------------------------------#
+# Setters and getters for slots
+
+#Model name
+#' generic model_name getter
+#' @param x hmde special class object
+#' @rdname model_name-generic
+#' @aliases model_name
+#' @export
+setGeneric("model_name", function(x) standardGeneric("model_name"))
+#' generic model_name setter
+#' @param x hmde special class object
+#' @param value character string
+#' @rdname model_name-generic
+#' @aliases model_name<-
+#' @export
+setGeneric("model_name<-", function(x, value) standardGeneric("model_name<-"))
+
+#' model_name getter
+#' Getter for model_name in hmde_data_template object
+#' @param x hmde_data_template class object
+#' @rdname hmde_data_template-class
+#' @aliases hmde_data_template-class
+#' @export
+setMethod("model_name", signature = "hmde_data_template", function(x) x@model_name)
+
+#' model_name setter
+#' Setter for model_name in hmde_data_template object
+#' @param x hmde_data_template class object
+#' @param value character string
+#' @rdname hmde_data_template-class
+#' @aliases hmde_data_template-class
+#' @export
+setMethod("model_name<-", signature = "hmde_data_template", function(x, value) {
+  x@model_name <- value
+  x
+})
+
+#Model level
+#' generic model_level setter
+#' @param x hmde special class object
+#' @rdname model_level-generic
+#' @aliases model_level
+#' @export
+setGeneric("model_level", function(x) standardGeneric("model_level"))
+#' generic model_level setter
+#' @param x hmde special class object
+#' @param value character string
+#' @rdname model_level-generic
+#' @aliases model_level<-
+#' @export
+setGeneric("model_level<-", function(x, value) standardGeneric("model_level<-"))
+
+#' model_level getter
+#' Getter for model_level in hmde_data_template object
+#' @param x hmde_data_template class object
+#' @rdname hmde_data_template-class
+#' @aliases hmde_data_template-class
+#' @export
+setMethod("model_level", signature = "hmde_data_template", function(x) x@model_level)
+
+#' model_level setter
+#' Setter for model_level in hmde_data_template object
+#' @param x hmde_data_template class object
+#' @param value character string
+#' @rdname hmde_data_template-class
+#' @aliases hmde_data_template-class
+#' @export
+setMethod("model_level<-", signature = "hmde_data_template", function(x, value) {
+  x@model_level <- value
+  x
+})
+
+#Observation data
+#' generic obs_data setter
+#' @param x hmde hmde_data_template
+#' @rdname model_level-generic
+#' @aliases model_level
+#' @export
+setGeneric("obs_data", function(x) standardGeneric("obs_data"))
+#' generic obs_data setter
+#' @param x hmde hmde_data_template
+#' @param value character string
+#' @rdname model_level-generic
+#' @aliases model_level<-
+#' @export
+setGeneric("obs_data<-", function(x, value) standardGeneric("obs_data<-"))
+
+#' obs_data getter
+#' Getter for obs_data in hmde_data_template object
+#' @param x hmde_data_template class object
+#' @rdname hmde_data_template-class
+#' @aliases hmde_data_template-class
+#' @export
+setMethod("obs_data", signature = "hmde_data_template", function(x) x@obs_data)
+
+#' obs_data setter
+#' Setter for obs_data in hmde_data_template object
+#' @param x hmde_data_template class object
+#' @param value list
+#' @rdname hmde_data_template-class
+#' @aliases hmde_data_template-class
+#' @export
+setMethod("obs_data<-", signature = "hmde_data_template", function(x, value) {
+  x@obs_data <- value
+  x
+})
+
+#Prior paramerters
+#' generic prior_pars getter
+#' @param x hmde special class object
+#' @rdname prior_pars-generic
+#' @aliases prior_pars
+#' @export
+setGeneric("prior_pars", function(x) standardGeneric("prior_pars"))
+#' generic prior_pars setter
+#' @param x hmde special class object
+#' @param value list of prior parameters
+#' @rdname prior_pars-generic
+#' @aliases prior_pars<-
+#' @export
+setGeneric("prior_pars<-", function(x, value) standardGeneric("prior_pars<-"))
+
+#' prior_pars getter
+#' Getter for prior_pars in hmde_data_template object
+#' @param x hmde_data_template class object
+#' @rdname hmde_data_template-class
+#' @aliases hmde_data_template-class
+#' @export
+setMethod("prior_pars", signature = "hmde_data_template", function(x) x@prior_pars)
+
+#' prior_pars setter
+#' Setter for prior_pars in hmde_data_template object
+#' @param x hmde_data_template class object
+#' @param value list
+#' @rdname hmde_data_template-class
+#' @aliases hmde_data_template-class
+#' @export
+setMethod("prior_pars<-", signature = "hmde_data_template", function(x, value) {
+  x@prior_pars <- value
+  x
+})
+
+#Model paramerters
+#' generic par_names getter
+#' @param x hmde special class object
+#' @rdname par_names-generic
+#' @aliases par_names
+#' @export
+setGeneric("par_names", function(x) standardGeneric("par_names"))
+#' generic par_names setter
+#' @param x hmde special class object
+#' @param value vector of parameter names
+#' @rdname par_names-generic
+#' @aliases par_names<-
+#' @export
+setGeneric("par_names<-", function(x, value) standardGeneric("par_names<-"))
+
+#' par_names getter
+#' Getter for par_names in hmde_data_template object
+#' @param x hmde_data_template class object
+#' @rdname hmde_data_template-class
+#' @aliases hmde_data_template-class
+#' @export
+setMethod("par_names", signature = "hmde_data_template", function(x) x@par_names)
+
+#' par_names setter
+#' Setter for par_names in hmde_data_template object.
+#' @param x hmde_data_template class object
+#' @param value list
+#' @rdname hmde_data_template-class
+#' @aliases hmde_data_template-class
+#' @export
+setMethod("par_names<-", signature = "hmde_data_template", function(x, value) {
+  x@par_names <- value
+  x
+})
+
+
+#-----------------------------------------------------------------------------#
+## Helper Functions
+
+#' Constructor
+#' Constructor function for hmde_data_template class, with data assignment ready for model fitting.
+#'
+#' @param model_name character string name of a hmde model
+#' @param obs_data list or tibble containing observational data vectors
+#' @param prior_pars list containing prior parameters
+#' @param model_level character string specifying whether single or multiple inds
+#' @param ... data-masking name-value pairs allowing specific input of elements
+#'
+#' @return hmde_data_template class object
+#'
+#' @examples
+#' # basic usage of hmde_data_template
+#' hmde_data_template("constant_single_ind")
+#'
+#' # basic usage of hmde_data_template with data input
+#' hmde_data_template("constant_single_ind",
+#'   obs_data = list(
+#'     n_obs = 3,
+#'     y_obs = c(1,1,1),
+#'     obs_index = 1:3,
+#'     time = 0:2
+#'   )
+#' )
+#'
+#' #basic usage of hmde_data_template with prior input
+#' hmde_data_template("constant_single_ind",
+#'   prior_pars = list(
+#'     prior_pars_ind_beta = c(1,2),
+#'     prior_pars_global_error_sigma = c(1,3)
+#'   )
+#' )
+#'
+#' @rdname hmde_data_template-class
+#' @aliases hmde_data_template-class
+#' @export
+hmde_data_template <- function(model_name, #Mandatory
+                               obs_data = NULL, #Optional
+                               prior_pars = NULL, #Optional
+                               model_level = NA_character_, #Optional
+                               ...){  #Optional additional user input
+  #Validation
+  if(!model_name %in% hmde_model_names()){
+    stop("Model name not recognised. Run hmde_model_names() to see available models.")
+  }
+
+  template <- hmde_model(model_name) #Construct new object with defaults for model
+
+  if(!is.na(model_level) && (model_level(template) != model_level)){
+    stop("Provided model level does not agree with model name.")
+  }
+
+  #Get additional user input
+  user_code <- rlang::enquos(..., .check_assign = TRUE)
+  if(length(user_code) != 0){
+    user_fields <- names(user_code)
+    # Evaluate the RHS of expressions (the values)
+    additional_data <- purrr::map(user_code,
+                                  ~rlang::eval_tidy(.x,
+                                                    env = rlang::caller_env())
+    )
+  }
+
+  data_fields_obs <- names(obs_data(template))
+  data_fields_priors <- names(prior_pars(template))
+
+  obs_data_temp_list <- NULL
+  # Fill obs_data
+  #If obs_data is provided, check it has required names
+  if(!is.null(obs_data)){
+    if(is(obs_data, "list")){ # Handling for list input
+      if(("n_ind" %in% data_fields_obs) && #Calculate n_ind if required
+         (!"n_ind" %in% names(obs_data)) &&
+         ("ind_id" %in% names(obs_data))){
+        obs_data[["n_ind"]] <- length(unique(obs_data[["ind_id"]]))
+      }
+
+      #Check for name structure
+      if(!identical(sort(names(obs_data)),
+                    sort(data_fields_obs))){
+        stop("Input observation data list does not have correct names.")
+      }
+
+      obs_data_temp_list <- obs_data
+
+    } else if(is(obs_data, "tbl") || is(obs_data, "data.frame")){# Tibble or data frame input
+      obs_data_temp_list <- obs_data(template)
+      obs_data <- as_tibble(obs_data) #Ensure tibble for ease of use
+
+      # Iterate through required fields and fill them
+      for(i in data_fields_obs){
+        if(i %in% names(obs_data)){
+          obs_data_temp_list[[i]] <- obs_data[[i]]
+        } else if(length(user_code) != 0
+                  && length(intersect(data_fields_obs, user_fields)) > 0){
+          if(i %in% user_fields){ #Check if the user has supplied it in a tibble
+            obs_data_temp_list[[i]] <- additional_data[[i]]
+          }
+        }
+
+      }
+    }
+
+  } else if(length(user_code) != 0
+            && length(intersect(data_fields_obs, user_fields)) > 0
+            ){ #Check if relevant user fields are provided
+    #Construct list formation
+    obs_data_temp_list <- obs_data(template)
+    for(i in data_fields_obs){ # Iterate through required fields and fill them
+      if(i %in% user_fields){ #Check if the user has supplied it in a tibble
+        obs_data_temp_list <- purrr::list_modify(obs_data_temp_list,
+                                                 !!!additional_data[i])
+      }
+    }
+  }
+
+  # Check that fields are valid and filled.
+  for(i in intersect(data_fields_obs, c("n_obs", "n_ind", "y_bar"))){
+    if(length(obs_data_temp_list[[i]]) == 1){
+      if(is.na(obs_data_temp_list[[i]])){ #Catches default tibble transformations
+
+        obs_data_temp_list[[i]] <- switch(
+          i,
+          n_obs = length(obs_data_temp_list$y_obs),
+          n_ind = length(unique(obs_data_temp_list$ind_id)),
+          y_bar = mean(obs_data_temp_list$y_obs)
+        )
+      }
+
+      if(is.na(obs_data_temp_list[[i]])){ #Report missing data
+        stop(paste("Improper data structure: Data missing:", i))
+      }
+    }
+  }
+
+  #Validate that vectors have content
+  for(i in names(obs_data_temp_list)){
+    if((i != "n_obs") && length(obs_data_temp_list[[i]]) == 1){
+      if(is.na(obs_data_temp_list[[i]])){
+        stop(paste("Data missing:", i))
+      }
+    }
+  }
+
+  #Validate lengths of vectors
+  check_length <- obs_data_temp_list[["n_obs"]]
+  for(i in names(obs_data_temp_list)){
+    if(!i %in% c("n_obs", "n_ind", "y_bar", #Exclude single number values
+                 "step_size", "int_method")){
+      if(length(obs_data_temp_list[[i]]) != check_length){
+        stop(paste("Mismatch in length between n_obs = ",
+                   check_length,  "and", i,
+                   "with length",
+                   length(obs_data_temp_list[[i]])))
+      }
+    }
+  }
+
+  if(!is.null(obs_data_temp_list)){
+    #Check that obs_index is unique for single_ind models
+    if(model_level(template) == "single_ind"){
+      if(length(unique(obs_data_temp_list[["obs_index"]])) !=
+         length(obs_data_temp_list[["obs_index"]])){
+        stop("Non-unique values in obs_index for single individual model.")
+      }
+    }
+
+    #if all validation passes, fill template.
+    obs_data(template) <- obs_data_temp_list
+  }
+
+
+  #Fill prior_pars
+  if(!is.null(prior_pars)){
+    #Check for name structure
+    if(!identical(names(prior_pars), data_fields_priors)){
+      stop("Input prior parameters do not have correct names.")
+    }
+
+    #Check for vector lengths
+    for(i in data_fields_priors){
+      if(length(prior_pars[[i]]) != length(prior_pars(template)[[i]])){
+        stop(paste("Input priors do not have correct lengths:", i))
+      }
+    }
+
+    prior_pars(template) <- prior_pars
+
+  #Check if non-default user fields are provided
+  } else if(length(user_code) != 0
+            && length(intersect(data_fields_priors, user_fields)) > 0){
+    if(length(intersect(user_fields, data_fields_priors)) > 0){
+      #Construct list formation
+      prior_par_temp_list <- prior_pars(template) #Take default priors as base structure
+
+      for(i in data_fields_priors){ # Iterate through required fields and update them
+        if(i %in% user_fields){ #Check if the user has supplied values
+          prior_par_temp_list <- purrr::list_modify(prior_par_temp_list, !!!additional_data[i])
+
+          #Validate prior parameter length
+          if(length(prior_par_temp_list[[i]]) != length(template@prior_pars[[i]])){
+            stop(paste0("Length of parameters for ", i,
+                        " incorrect. Should be ", length(template@prior_pars[[i]]),
+                        "."))
+          }
+        }
+      }
+
+      prior_pars(template) <- prior_par_temp_list
+    }
+  }
+
+  #Check validity
+  if(!validObject(template)){
+    stop("Invalid template object.")
+  }
+
+  return(template)
+}
+
+#----------------------------------------------------------------------------#
+## Generic functions for show, print, summary, plot
+
+#' Show function for hmde_data_template object
+#' @rdname hmde_data_template-class
+#' @aliases hmde_data_template-class
+#' @export
+
+setMethod("show", signature = "hmde_data_template", function(object) {
+  cat(is(object)[[1]], "\n",
+      "  Model name: ", object@model_name, "\n",
+      "  Model level:  ", object@model_level, "\n",
+      "  Input data names:  ", paste(names(object@obs_data),
+                                     collapse = ", "), "\n",
+      "  Prior names:  ", paste(names(object@prior_pars),
+                                collapse = ", "), "\n",
+      sep = ""
+  )
+})
+
+
+#' Print function for hmde_data_template object
+#' @rdname hmde_data_template-class
+#' @aliases hmde_data_template-class
+#' @export
+
+setMethod("print", signature = "hmde_data_template", function(x) {
+  cat(is(x)[[1]], "\n",
+      "  Model name: ", x@model_name, "\n",
+      "  Model level:  ", x@model_level, "\n",
+      "  Input data names:  ", paste(names(x@obs_data),
+                                     collapse = ", "), "\n",
+      "  Prior names:  ", paste(names(x@prior_pars),
+                                collapse = ", "), "\n",
+      sep = ""
+  )
+})
+
+
+#' Summary function for hmde_data_template object
+#' @rdname hmde_data_template-class
+#' @aliases hmde_data_template-class
+#' @export
+
+setMethod("summary", signature = "hmde_data_template", function(object) {
+  if(!is.na(object@obs_data[[1]])){
+    if(!is.null(object@obs_data[["ind_id"]])){
+      summary_input_data <- head(tibble(
+        obs_index = object@obs_data[["obs_index"]],
+        ind_id = object@obs_data[["ind_id"]],
+        y_obs = object@obs_data[["y_obs"]],
+        time = object@obs_data[["time"]]
+      ))
+
+    } else {
+      summary_input_data <- head(tibble(
+        obs_index = object@obs_data[["obs_index"]],
+        y_obs = object@obs_data[["y_obs"]],
+        time = object@obs_data[["time"]]
+      ))
+    }
+
+    # Output to console
+    cat(is(object)[[1]], "\n",
+        "  Model name: ", object@model_name, "\n",
+        "  Model level:  ", object@model_level, "\n",
+        "  Prior names:  ", paste(names(object@prior_pars),
+                                  collapse = ", "), "\n",
+        "  Observation data:  ", "\n",
+        sep = ""
+    )
+    print(summary_input_data)
+
+  } else {
+    summary_input_data <- paste("  Input data names:  ",
+                                paste(names(object@obs_data),
+                                      collapse = ", "), "\n",
+                                collapse = "")
+
+    cat(is(object)[[1]], "\n",
+        "  Model name: ", object@model_name, "\n",
+        "  Model level:  ", object@model_level, "\n",
+        summary_input_data,
+        "  Prior names:  ", paste(names(object@prior_pars),
+                                  collapse = ", "), "\n",
+        sep = ""
+    )
+  }
+})
+
+#' Plot function for hmde_data_template object
+#' @rdname hmde_data_template-class
+#' @aliases hmde_data_template-class
+#' @export
+
+setMethod("plot", signature = "hmde_data_template", function(x) {
+  model_pars_names <- par_names(x)$individual_pars_names
+
+  temp <- c()
+  #Get parameter estimates from mean of prior distribution
+  for(i in 1:length(model_pars_names)){
+    #Get prior name
+    if(grepl("multi", x@model_name, fixed = TRUE)){ #If multi-ind model
+      prior_name <- paste0("prior_pars_pop_log_",
+                           gsub("ind_", "", model_pars_names[i]), "_mean")
+    } else { #Single individual model
+      prior_name <- paste0("prior_pars_", model_pars_names[i])
+    }
+
+    #Cover von Bertalanffy prior centering at provided data max
+    if(grepl("vb", x@model_name, fixed = TRUE) &&
+       grepl("max_size", model_pars_names[i], fixed = TRUE)){
+      temp[i+1] <- 10
+    } else {
+      temp[i+1] <- exp(x@prior_pars[[prior_name]][1])
+    }
+  }
+  plot_pars <- rbind(temp)
+
+  #Get final size for plot
+  if(grepl("vb", x@model_name, fixed = TRUE)){
+    y_final <- plot_pars[1,2]
+  } else {
+    y_final <- 20
+  }
+
+  #Plot ODE using parameter estimates
+  plot <- hmde_ggplot_de_pieces(pars_data = plot_pars,
+                                y_0 = 0,
+                                y_final = y_final,
+                                DE_function = hmde_model_des(x@model_name),
+                                xlab = "Size",
+                                ylab = "Growth rate",
+                                title = paste0("Example ODE for ", x@model_name),
+                                colour = "#006600",
+                                alpha = 0.4)
+
+  return(plot)
+})

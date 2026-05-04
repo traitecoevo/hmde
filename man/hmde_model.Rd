@@ -2,7 +2,8 @@
 % Please edit documentation in R/hmde_model.R
 \name{hmde_model}
 \alias{hmde_model}
-\title{Select data configuration template for hmde supported model}
+\title{helper function for hmde_data_template that provides data structure for model,
+Also used to guide the user on the required structure for the model they want.}
 \usage{
 hmde_model(model = NULL)
 }
@@ -10,10 +11,11 @@ hmde_model(model = NULL)
 \item{model}{model name character string}
 }
 \value{
-hmde_model_template class named list that matches Stan model parameters
+hmde_data_template class that suits Stan model input
 }
 \description{
-Select data configuration template for hmde supported model
+helper function for hmde_data_template that provides data structure for model,
+Also used to guide the user on the required structure for the model they want.
 }
 \examples{
 # basic usage of hmde_model
