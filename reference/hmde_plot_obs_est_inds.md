@@ -9,8 +9,7 @@ function.
 
 ``` r
 hmde_plot_obs_est_inds(
-  estimate_list = NULL,
-  measurement_data = NULL,
+  estimates = NULL,
   ind_id_vec = NULL,
   n_ind_to_plot = NULL,
   xlab = "Time",
@@ -21,13 +20,9 @@ hmde_plot_obs_est_inds(
 
 ## Arguments
 
-- estimate_list:
+- estimates:
 
-  list output of hmde_extract_estimates
-
-- measurement_data:
-
-  tibble with estimated measurements
+  hmde_estimates class object
 
 - ind_id_vec:
 
@@ -57,7 +52,7 @@ ggplot object
 
 ``` r
 # basic usage of hmde_plot_obs_est_inds
-hmde_plot_obs_est_inds(estimate_list = Tree_Size_Ests,
+hmde_plot_obs_est_inds(estimates = Tree_Size_Ests,
                        n_ind_to_plot = 5)
 
 ```

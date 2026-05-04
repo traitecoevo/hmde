@@ -20,7 +20,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">hmde</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.3.1</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.4.0</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -62,7 +62,7 @@
       <h1>hmde</h1>
             
       
-      <small class="dont-index">Source: <a href="https://github.com/traitecoevo/hmde/blob/1.3.1/vignettes/hmde.Rmd" class="external-link"><code>vignettes/hmde.Rmd</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/traitecoevo/hmde/blob/master/vignettes/hmde.Rmd" class="external-link"><code>vignettes/hmde.Rmd</code></a></small>
       <div class="d-none name"><code>hmde.Rmd</code></div>
     </div>
 
@@ -89,7 +89,7 @@ stable, development version of <code>hmde</code> from <a href="https://github.co
 size-dependent growth functions. The repeat survey data requires
 multiple measurements from the same individuals over time that can be
 connected up as
-<math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>s</mi><mi>i</mi><mi>z</mi><mi>e</mi><mrow><mo stretchy="true" form="prefix">(</mo><msub><mi>t</mi><mrow><mi>j</mi><mo>+</mo><mn>1</mn></mrow></msub><mo stretchy="true" form="postfix">)</mo></mrow><mo>=</mo><mi>s</mi><mi>i</mi><mi>z</mi><mi>e</mi><mrow><mo stretchy="true" form="prefix">(</mo><msub><mi>t</mi><mi>j</mi></msub><mo stretchy="true" form="postfix">)</mo></mrow><mo>+</mo><mi>g</mi><mi>r</mi><mi>o</mi><mi>w</mi><mi>t</mi><mi>h</mi><mrow><mo stretchy="true" form="prefix">(</mo><mrow><mtext mathvariant="normal">from </mtext><mspace width="0.333em"></mspace></mrow><msub><mi>t</mi><mi>j</mi></msub><mrow><mspace width="0.333em"></mspace><mtext mathvariant="normal"> to </mtext><mspace width="0.333em"></mspace></mrow><msub><mi>t</mi><mrow><mi>j</mi><mo>+</mo><mn>1</mn></mrow></msub><mo stretchy="true" form="postfix">)</mo></mrow><mi>.</mi></mrow><annotation encoding="application/x-tex">\begin{equation}\tag{1}\label{eqn_1}
+<math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>s</mi><mi>i</mi><mi>z</mi><mi>e</mi><mo stretchy="false" form="prefix">(</mo><msub><mi>t</mi><mrow><mi>j</mi><mo>+</mo><mn>1</mn></mrow></msub><mo stretchy="false" form="postfix">)</mo><mo>=</mo><mi>s</mi><mi>i</mi><mi>z</mi><mi>e</mi><mo stretchy="false" form="prefix">(</mo><msub><mi>t</mi><mi>j</mi></msub><mo stretchy="false" form="postfix">)</mo><mo>+</mo><mi>g</mi><mi>r</mi><mi>o</mi><mi>w</mi><mi>t</mi><mi>h</mi><mo stretchy="false" form="prefix">(</mo><mrow><mtext mathvariant="normal">from </mtext><mspace width="0.333em"></mspace></mrow><msub><mi>t</mi><mi>j</mi></msub><mrow><mspace width="0.333em"></mspace><mtext mathvariant="normal"> to </mtext><mspace width="0.333em"></mspace></mrow><msub><mi>t</mi><mrow><mi>j</mi><mo>+</mo><mn>1</mn></mrow></msub><mo stretchy="false" form="postfix">)</mo><mi>.</mi></mrow><annotation encoding="application/x-tex">\begin{equation}\tag{1}\label{eqn_1}
 size(t_{j+1}) = size(t_{j}) + growth(\text{from }t_j\text{ to }t_{j+1}).
 \end{equation}</annotation></semantics></math></p>
 <p>We assume that different individuals will have variation in the
@@ -104,7 +104,7 @@ function description.</p>
 at time
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>t</mi><mi>j</mi></msub><annotation encoding="application/x-tex">t_j</annotation></semantics></math>
 as
-<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>Y</mi><mi>i</mi></msub><mrow><mo stretchy="true" form="prefix">(</mo><msub><mi>t</mi><mi>j</mi></msub><mo stretchy="true" form="postfix">)</mo></mrow></mrow><annotation encoding="application/x-tex">Y_i(t_j)</annotation></semantics></math>,
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>Y</mi><mi>i</mi></msub><mo stretchy="false" form="prefix">(</mo><msub><mi>t</mi><mi>j</mi></msub><mo stretchy="false" form="postfix">)</mo></mrow><annotation encoding="application/x-tex">Y_i(t_j)</annotation></semantics></math>,
 the growth function as
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>f</mi><annotation encoding="application/x-tex">f</annotation></semantics></math>,
 and a parameter of individual
@@ -112,25 +112,25 @@ and a parameter of individual
 as
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>β</mi><mi>i</mi></msub><annotation encoding="application/x-tex">\beta_i</annotation></semantics></math>.
 So Equation can be expressed as
-<math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>Y</mi><mi>i</mi></msub><mrow><mo stretchy="true" form="prefix">(</mo><msub><mi>t</mi><mrow><mi>j</mi><mo>+</mo><mn>1</mn></mrow></msub><mo stretchy="true" form="postfix">)</mo></mrow><mo>=</mo><msub><mi>Y</mi><mi>i</mi></msub><mrow><mo stretchy="true" form="prefix">(</mo><msub><mi>t</mi><mi>j</mi></msub><mo stretchy="true" form="postfix">)</mo></mrow><mo>+</mo><msubsup><mo>∫</mo><msub><mi>t</mi><mi>j</mi></msub><msub><mi>t</mi><mrow><mi>j</mi><mo>+</mo><mn>1</mn></mrow></msub></msubsup><mi>f</mi><mrow><mo stretchy="true" form="prefix">(</mo><mi>Y</mi><mrow><mo stretchy="true" form="prefix">(</mo><mi>t</mi><mo stretchy="true" form="postfix">)</mo></mrow><mo>,</mo><msub><mi>β</mi><mi>i</mi></msub><mo stretchy="true" form="postfix">)</mo></mrow><mspace width="0.167em"></mspace><mi>d</mi><mi>t</mi></mrow><annotation encoding="application/x-tex">\begin{equation}\tag{2}\label{eqn_2_longitudinal}
+<math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>Y</mi><mi>i</mi></msub><mo stretchy="false" form="prefix">(</mo><msub><mi>t</mi><mrow><mi>j</mi><mo>+</mo><mn>1</mn></mrow></msub><mo stretchy="false" form="postfix">)</mo><mo>=</mo><msub><mi>Y</mi><mi>i</mi></msub><mo stretchy="false" form="prefix">(</mo><msub><mi>t</mi><mi>j</mi></msub><mo stretchy="false" form="postfix">)</mo><mo>+</mo><msubsup><mo>∫</mo><msub><mi>t</mi><mi>j</mi></msub><msub><mi>t</mi><mrow><mi>j</mi><mo>+</mo><mn>1</mn></mrow></msub></msubsup><mi>f</mi><mo stretchy="false" form="prefix">(</mo><mi>Y</mi><mo stretchy="false" form="prefix">(</mo><mi>t</mi><mo stretchy="false" form="postfix">)</mo><mo>,</mo><msub><mi>β</mi><mi>i</mi></msub><mo stretchy="false" form="postfix">)</mo><mspace width="0.167em"></mspace><mi>d</mi><mi>t</mi></mrow><annotation encoding="application/x-tex">\begin{equation}\tag{2}\label{eqn_2_longitudinal}
 Y_i(t_{j+1}) = Y_i(t_j) + \int_{t_j}^{t_{j+1}} f(Y(t), \beta_i)\,dt
 \end{equation}</annotation></semantics></math> where the integral adds
 up all the growth over the intervening time. Each model we use will
 comes with its specific growth parameters that we will describe. Some
 are more biologically interpretable than others. We don’t assume that we
 see the true sizes, and instead have observed size
-<math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>y</mi><mrow><mi>i</mi><mi>j</mi></mrow></msub><mo>=</mo><msub><mi>Y</mi><mi>i</mi></msub><mrow><mo stretchy="true" form="prefix">(</mo><msub><mi>t</mi><mi>j</mi></msub><mo stretchy="true" form="postfix">)</mo></mrow><mo>+</mo><mrow><mspace width="0.333em"></mspace><mtext mathvariant="normal"> error</mtext></mrow><mi>.</mi></mrow><annotation encoding="application/x-tex">y_{ij} = Y_i(t_j) + \text{ error}.</annotation></semantics></math>
+<math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>y</mi><mrow><mi>i</mi><mi>j</mi></mrow></msub><mo>=</mo><msub><mi>Y</mi><mi>i</mi></msub><mo stretchy="false" form="prefix">(</mo><msub><mi>t</mi><mi>j</mi></msub><mo stretchy="false" form="postfix">)</mo><mo>+</mo><mrow><mspace width="0.333em"></mspace><mtext mathvariant="normal"> error</mtext></mrow><mi>.</mi></mrow><annotation encoding="application/x-tex">y_{ij} = Y_i(t_j) + \text{ error}.</annotation></semantics></math>
 We have assumed normally distributed error in <code>hmde</code>,this has
 proven reasonably robust in simulation for a more general size-dependent
-error model. For details see <span class="citation">O’Brien, Warton, and
-Falster (2024)</span>.</p>
+error model. For details see <span class="citation">O’Brien et al.
+(2024)</span>.</p>
 <p>Due to the hierarchical structure of the statistical model, we have
 distributions that govern the behaviour of growth parameters. If we are
 modeling only a single individual, we don’t worry about the underlying
 distribution so much. If we have multiple individuals then we have a
 distribution with hyper-parameters that acts as a population-level
 feature, so
-<math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>β</mi><mi>i</mi></msub><mo>∼</mo><mo>log</mo><mi>𝒩</mi><mrow><mo stretchy="true" form="prefix">(</mo><mi>μ</mi><mo>,</mo><mi>σ</mi><mo stretchy="true" form="postfix">)</mo></mrow></mrow><annotation encoding="application/x-tex">\beta_i \sim \log\mathcal{N}(\mu, \sigma)</annotation></semantics></math>
+<math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>β</mi><mi>i</mi></msub><mo>∼</mo><mrow><mi mathvariant="normal">log</mi><mo>⁡</mo></mrow><mi>𝒩</mi><mo stretchy="false" form="prefix">(</mo><mi>μ</mi><mo>,</mo><mi>σ</mi><mo stretchy="false" form="postfix">)</mo></mrow><annotation encoding="application/x-tex">\beta_i \sim \log\mathcal{N}(\mu, \sigma)</annotation></semantics></math>
 for example, and we can examine the behaviour of the mean and standard
 deviation as population-level features.</p>
 </div>
@@ -169,13 +169,13 @@ chosen in the context of the survey process as data availability is a
 key factor in determining which functions can be used. We will not
 discuss the mathematical and statistical theory in depth, if that is of
 interest, check out the vignette ‘hmde for Mathematicians’ or check out
-the methodology paper <span class="citation">O’Brien, Warton, and
-Falster (2024)</span>.</p>
+the methodology paper <span class="citation">O’Brien et al.
+(2024)</span>.</p>
 </div>
 <div class="section level2 unnumbered">
 <h2 class="unnumbered" id="references">References<a class="anchor" aria-label="anchor" href="#references"></a>
 </h2>
-<div id="refs" class="references csl-bib-body hanging-indent" entry-spacing="0">
+<div id="refs" class="references csl-bib-body hanging-indent">
 <div id="ref-obrien2024allindividuals" class="csl-entry">
 O’Brien, Tess, David Warton, and Daniel Falster. 2024. <span>“Yes,
 They’re All Individuals: Hierarchical Models for Repeat Survey Data

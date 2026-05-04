@@ -7,7 +7,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">hmde</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.3.1</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.4.0</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -36,7 +36,7 @@
   <main id="main" class="col-md-9"><div class="page-header">
 
       <h1>Calculate Rhat statistics for a hmde_fit object</h1>
-      <small class="dont-index">Source: <a href="https://github.com/traitecoevo/hmde/blob/1.3.1/R/hmde_extract_Rhat.R" class="external-link"><code>R/hmde_extract_Rhat.R</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/traitecoevo/hmde/blob/master/R/hmde_extract_Rhat.R" class="external-link"><code>R/hmde_extract_Rhat.R</code></a></small>
       <div class="d-none name"><code>hmde_extract_Rhat.Rd</code></div>
     </div>
 
@@ -65,16 +65,16 @@
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="co"># basic usage of hmde_extract_Rhat</span></span></span>
-<span class="r-in"><span><span class="fu"><a href="hmde_model.html">hmde_model</a></span><span class="op">(</span><span class="st">"constant_single_ind"</span><span class="op">)</span> <span class="op">|&gt;</span></span></span>
-<span class="r-in"><span>  <span class="fu"><a href="hmde_assign_data.html">hmde_assign_data</a></span><span class="op">(</span><span class="va">Trout_Size_Data</span><span class="op">)</span><span class="op">|&gt;</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="hmde_data_template-class.html">hmde_data_template</a></span><span class="op">(</span><span class="st">"constant_single_ind"</span>,</span></span>
+<span class="r-in"><span>                   obs_data <span class="op">=</span> <span class="va">Trout_Size_Data</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">4</span>,<span class="op">]</span><span class="op">)</span><span class="op">|&gt;</span></span></span>
 <span class="r-in"><span>  <span class="fu"><a href="hmde_run.html">hmde_run</a></span><span class="op">(</span>chains <span class="op">=</span> <span class="fl">2</span>, iter <span class="op">=</span> <span class="fl">1000</span>,</span></span>
 <span class="r-in"><span>           verbose <span class="op">=</span> <span class="cn">FALSE</span>, show_messages <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span> <span class="op">|&gt;</span></span></span>
 <span class="r-in"><span>  <span class="fu">hmde_extract_Rhat</span><span class="op">(</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> SAMPLING FOR MODEL 'constant_single_ind' NOW (CHAIN 1).</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Chain 1: </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Chain 1: Gradient evaluation took 2e-05 seconds</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Chain 1: 1000 transitions using 10 leapfrog steps per transition would take 0.2 seconds.</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Chain 1: Gradient evaluation took 9e-06 seconds</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Chain 1: 1000 transitions using 10 leapfrog steps per transition would take 0.09 seconds.</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Chain 1: Adjust your expectations accordingly!</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Chain 1: </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Chain 1: </span>
@@ -91,15 +91,15 @@
 <span class="r-out co"><span class="r-pr">#&gt;</span> Chain 1: Iteration: 900 / 1000 [ 90%]  (Sampling)</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Chain 1: Iteration: 1000 / 1000 [100%]  (Sampling)</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Chain 1: </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Chain 1:  Elapsed Time: 0.054 seconds (Warm-up)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Chain 1:                0.036 seconds (Sampling)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Chain 1:                0.09 seconds (Total)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Chain 1:  Elapsed Time: 0.01 seconds (Warm-up)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Chain 1:                0.008 seconds (Sampling)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Chain 1:                0.018 seconds (Total)</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Chain 1: </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> SAMPLING FOR MODEL 'constant_single_ind' NOW (CHAIN 2).</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Chain 2: </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Chain 2: Gradient evaluation took 1.2e-05 seconds</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Chain 2: 1000 transitions using 10 leapfrog steps per transition would take 0.12 seconds.</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Chain 2: Gradient evaluation took 5e-06 seconds</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Chain 2: 1000 transitions using 10 leapfrog steps per transition would take 0.05 seconds.</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Chain 2: Adjust your expectations accordingly!</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Chain 2: </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Chain 2: </span>
@@ -116,80 +116,27 @@
 <span class="r-out co"><span class="r-pr">#&gt;</span> Chain 2: Iteration: 900 / 1000 [ 90%]  (Sampling)</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Chain 2: Iteration: 1000 / 1000 [100%]  (Sampling)</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Chain 2: </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Chain 2:  Elapsed Time: 0.057 seconds (Warm-up)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Chain 2:                0.042 seconds (Sampling)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Chain 2:                0.099 seconds (Total)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Chain 2:  Elapsed Time: 0.012 seconds (Warm-up)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Chain 2:                0.011 seconds (Sampling)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Chain 2:                0.023 seconds (Total)</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Chain 2: </span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>There were 2 divergent transitions after warmup. See</span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> https://mc-stan.org/misc/warnings.html#divergent-transitions-after-warmup</span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> to find out why this is a problem and how to eliminate them.</span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>Examine the pairs() plot to diagnose sampling problems</span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>The largest R-hat is NA, indicating chains have not mixed.</span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> Running the chains for more iterations may help. See</span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> https://mc-stan.org/misc/warnings.html#r-hat</span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>Bulk Effective Samples Size (ESS) is too low, indicating posterior means and medians may be unreliable.</span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> Running the chains for more iterations may help. See</span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> https://mc-stan.org/misc/warnings.html#bulk-ess</span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>Tail Effective Samples Size (ESS) is too low, indicating posterior variances and tail quantiles may be unreliable.</span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> Running the chains for more iterations may help. See</span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> https://mc-stan.org/misc/warnings.html#tail-ess</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>            ind_y_0           ind_beta global_error_sigma              y_hat </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>           1.017323           1.007018           1.002807           1.017323 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>              y_hat              y_hat              y_hat              y_hat </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>           1.005895           1.008050           1.007499           1.017323 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>              y_hat              y_hat              y_hat              y_hat </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>           1.005859           1.008361           1.007821           1.017323 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>              y_hat              y_hat              y_hat              y_hat </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>           1.006209           1.009006           1.007800           1.017323 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>              y_hat              y_hat              y_hat              y_hat </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>           1.009745           1.017323           1.006080           1.008257 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>              y_hat              y_hat              y_hat              y_hat </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>           1.007691           1.017323           1.008494           1.017323 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>              y_hat              y_hat              y_hat              y_hat </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>           1.017322           1.017323           1.005382           1.017323 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>              y_hat              y_hat              y_hat              y_hat </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>           1.005514           1.017323           1.005836           1.007864 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>              y_hat              y_hat              y_hat              y_hat </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>           1.017323           1.010454           1.017323           1.006283 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>              y_hat              y_hat              y_hat              y_hat </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>           1.017323           1.006221           1.008183           1.007821 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>              y_hat              y_hat              y_hat              y_hat </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>           1.017323           1.006346           1.017323           1.006637 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>              y_hat              y_hat              y_hat              y_hat </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>           1.008102           1.017323           1.005823           1.008282 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>              y_hat              y_hat              y_hat              y_hat </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>           1.017323           1.006167           1.008432           1.017323 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>              y_hat              y_hat              y_hat              y_hat </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>           1.006441           1.017323           1.006158           1.008318 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>              y_hat              y_hat              y_hat              y_hat </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>           1.017323           1.006189           1.006197           1.017323 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>              y_hat              y_hat              y_hat              y_hat </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>           1.008092           1.017323           1.006283           1.017323 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>              y_hat              y_hat              y_hat              y_hat </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>           1.004826           1.017323           1.006085           1.017323 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>              y_hat              y_hat              y_hat              y_hat </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>           1.006621           1.017323           1.005699           1.008221 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>              y_hat              y_hat              y_hat              y_hat </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>           1.008558           1.017323           1.006580           1.008335 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>              y_hat              y_hat              y_hat              y_hat </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>           1.017323           1.005990           1.017323           1.007652 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>              y_hat              y_hat              y_hat              y_hat </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>           1.017323           1.007452           1.017323           1.008625 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>              y_hat              y_hat              y_hat              y_hat </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>           1.017323           1.008276           1.017323           1.008025 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>              y_hat              y_hat              y_hat              y_hat </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>           1.017323           1.006189           1.008227           1.007931 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>              y_hat              y_hat              y_hat              y_hat </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>           1.017323           1.005109           1.017323           1.009341 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>              y_hat              y_hat              y_hat              y_hat </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>           1.017323           1.008482           1.017323           1.006025 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>              y_hat              y_hat              y_hat              y_hat </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>           1.008462           1.017323           1.006010           1.008573 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>              y_hat              y_hat              y_hat              y_hat </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>           1.017323           1.005401           1.008257           1.008516 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>              y_hat              y_hat              y_hat              y_hat </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>           1.017323           1.004876           1.017323           1.005573 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>              y_hat              y_hat              y_hat              y_hat </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>           1.006154           1.017323           1.006827           1.008469 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>              y_hat              y_hat              y_hat              y_hat </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>           1.017323           1.006200           1.007897           1.017323 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>              y_hat              y_hat              y_hat              y_hat </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>           1.014513           1.017323           1.005901           1.008204 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>              y_hat              y_hat              y_hat              y_hat </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>           1.017323           1.005791           1.008367           1.017323 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>              y_hat              y_hat              y_hat              y_hat </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>           1.005295           1.008354           1.006391           1.017323 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>              y_hat              y_hat              y_hat              y_hat </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>           1.005934           1.008175           1.007081           1.017323 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>              y_hat              y_hat               lp__ </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>           1.008183           1.007190           1.007485 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>           1.051978           1.054871           1.124265           1.051978 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>              y_hat              y_hat              y_hat               lp__ </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>           1.056248           1.058747           1.054932           1.091036 </span>
 <span class="r-in"><span></span></span>
 </code></pre></div>
     </div>

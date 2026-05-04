@@ -20,7 +20,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">hmde</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.3.1</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.4.0</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -62,7 +62,7 @@
       <h1>Here be dragons</h1>
             
       
-      <small class="dont-index">Source: <a href="https://github.com/traitecoevo/hmde/blob/1.3.1/vignettes/here_be_dragons.Rmd" class="external-link"><code>vignettes/here_be_dragons.Rmd</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/traitecoevo/hmde/blob/master/vignettes/here_be_dragons.Rmd" class="external-link"><code>vignettes/here_be_dragons.Rmd</code></a></small>
       <div class="d-none name"><code>here_be_dragons.Rmd</code></div>
     </div>
 
@@ -85,7 +85,7 @@
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt;     intersect, setdiff, setequal, union</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://ggplot2.tidyverse.org" class="external-link">ggplot2</a></span><span class="op">)</span></span>
-<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="http://desolve.r-forge.r-project.org/" class="external-link">deSolve</a></span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/tpetzoldt/deSolve/" class="external-link">deSolve</a></span><span class="op">)</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/dsy109/mixtools" class="external-link">mixtools</a></span><span class="op">)</span></span>
 <span><span class="co">#&gt; mixtools package, version 2.0.0.1, Released 2022-12-04</span></span>
 <span><span class="co">#&gt; This package is based upon work supported by the National Science Foundation under Grant No. SES-0518772 and the Chan Zuckerberg Initiative: Essential Open Source Software for Science (Grant No. 2020-255193).</span></span>
@@ -106,12 +106,12 @@ available.</p>
 integration method, two sets of parameters for a differential equation
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>f</mi><annotation encoding="application/x-tex">f</annotation></semantics></math>
 give “the same” (more in a second) output for
-<math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>Y</mi><mrow><mo stretchy="true" form="prefix">(</mo><msub><mi>t</mi><mrow><mi>j</mi><mo>+</mo><mn>1</mn></mrow></msub><mo stretchy="true" form="postfix">)</mo></mrow><mo>=</mo><mi>Y</mi><mrow><mo stretchy="true" form="prefix">(</mo><msub><mi>t</mi><mi>j</mi></msub><mo stretchy="true" form="postfix">)</mo></mrow><mo>+</mo><msubsup><mo>∫</mo><msub><mi>t</mi><mi>j</mi></msub><msub><mi>t</mi><mrow><mi>j</mi><mo>+</mo><mn>1</mn></mrow></msub></msubsup><mi>f</mi><mrow><mo stretchy="true" form="prefix">(</mo><mi>Y</mi><mrow><mo stretchy="true" form="prefix">(</mo><mi>t</mi><mo stretchy="true" form="postfix">)</mo></mrow><mo>,</mo><mi>𝛉</mi><mo stretchy="true" form="postfix">)</mo></mrow><mspace width="0.167em"></mspace><mi>d</mi><mi>t</mi><mspace width="2.0em"></mspace><mrow><mo stretchy="true" form="prefix">(</mo><mn>1</mn><mo stretchy="true" form="postfix">)</mo></mrow></mrow><annotation encoding="application/x-tex">Y(t_{j+1}) = Y(t_j) + \int_{t_j}^{t_{j+1}} f(Y(t), \boldsymbol{\theta})\,dt\qquad (1)</annotation></semantics></math>
+<math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>Y</mi><mo stretchy="false" form="prefix">(</mo><msub><mi>t</mi><mrow><mi>j</mi><mo>+</mo><mn>1</mn></mrow></msub><mo stretchy="false" form="postfix">)</mo><mo>=</mo><mi>Y</mi><mo stretchy="false" form="prefix">(</mo><msub><mi>t</mi><mi>j</mi></msub><mo stretchy="false" form="postfix">)</mo><mo>+</mo><msubsup><mo>∫</mo><msub><mi>t</mi><mi>j</mi></msub><msub><mi>t</mi><mrow><mi>j</mi><mo>+</mo><mn>1</mn></mrow></msub></msubsup><mi>f</mi><mo stretchy="false" form="prefix">(</mo><mi>Y</mi><mo stretchy="false" form="prefix">(</mo><mi>t</mi><mo stretchy="false" form="postfix">)</mo><mo>,</mo><mi>𝛉</mi><mo stretchy="false" form="postfix">)</mo><mspace width="0.167em"></mspace><mi>d</mi><mi>t</mi><mspace width="2.0em"></mspace><mo stretchy="false" form="prefix">(</mo><mn>1</mn><mo stretchy="false" form="postfix">)</mo></mrow><annotation encoding="application/x-tex">Y(t_{j+1}) = Y(t_j) + \int_{t_j}^{t_{j+1}} f(Y(t), \boldsymbol{\theta})\,dt\qquad (1)</annotation></semantics></math>
 the MCMC sampler will be unable to meaningfully distinguish the
 parameter combinations. What you see in practice is chains converging to
 extremely different parameter combinations, one of which is the `true’
 combination, the other of which is wrong but produces the same
-<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mover><mi>Y</mi><mo accent="true">̂</mo></mover><mrow><mo stretchy="true" form="prefix">(</mo><msub><mi>t</mi><mi>j</mi></msub><mo stretchy="true" form="postfix">)</mo></mrow></mrow><annotation encoding="application/x-tex">\hat{Y}(t_j)</annotation></semantics></math>
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mover><mi>Y</mi><mo accent="true">̂</mo></mover><mo stretchy="false" form="prefix">(</mo><msub><mi>t</mi><mi>j</mi></msub><mo stretchy="false" form="postfix">)</mo></mrow><annotation encoding="application/x-tex">\hat{Y}(t_j)</annotation></semantics></math>
 values due to the numerical error. Thus, there is a form of
 non-identifiability that arises from numerical errors in a longitudinal
 model based on Equation (1) that are separate to other issues of
@@ -120,17 +120,17 @@ this demonstration we use a Runge-Kutta 4th order numerical method ()
 with different step sizes to show that even ‘small’ step sizes can give
 problems.</p>
 <p>It is important to state that “the same”
-<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>Y</mi><mrow><mo stretchy="true" form="prefix">(</mo><mi>t</mi><mo stretchy="true" form="postfix">)</mo></mrow></mrow><annotation encoding="application/x-tex">Y(t)</annotation></semantics></math>
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>Y</mi><mo stretchy="false" form="prefix">(</mo><mi>t</mi><mo stretchy="false" form="postfix">)</mo></mrow><annotation encoding="application/x-tex">Y(t)</annotation></semantics></math>
 values in this context means within statistical error of each other. We
 assume that our data consists of observations of the form
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>y</mi><mi>j</mi></msub><annotation encoding="application/x-tex">y_{j}</annotation></semantics></math>
 at time
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>t</mi><mi>j</mi></msub><annotation encoding="application/x-tex">t_j</annotation></semantics></math>
 that look like
-<math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>y</mi><mi>j</mi></msub><mo>=</mo><mi>Y</mi><mrow><mo stretchy="true" form="prefix">(</mo><msub><mi>t</mi><mi>j</mi></msub><mo stretchy="true" form="postfix">)</mo></mrow><mo>+</mo><mtext mathvariant="normal">error</mtext><mo>,</mo></mrow><annotation encoding="application/x-tex">y_j = Y(t_j) + \text{error},</annotation></semantics></math>
+<math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>y</mi><mi>j</mi></msub><mo>=</mo><mi>Y</mi><mo stretchy="false" form="prefix">(</mo><msub><mi>t</mi><mi>j</mi></msub><mo stretchy="false" form="postfix">)</mo><mo>+</mo><mtext mathvariant="normal">error</mtext><mo>,</mo></mrow><annotation encoding="application/x-tex">y_j = Y(t_j) + \text{error},</annotation></semantics></math>
 and have some finite level of precision. The numerical method may
 produce estimated values
-<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mover><mi>Y</mi><mo accent="true">̂</mo></mover><mrow><mo stretchy="true" form="prefix">(</mo><msub><mi>t</mi><mi>j</mi></msub><mo stretchy="true" form="postfix">)</mo></mrow></mrow><annotation encoding="application/x-tex">\hat{Y}(t_j)</annotation></semantics></math>
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mover><mi>Y</mi><mo accent="true">̂</mo></mover><mo stretchy="false" form="prefix">(</mo><msub><mi>t</mi><mi>j</mi></msub><mo stretchy="false" form="postfix">)</mo></mrow><annotation encoding="application/x-tex">\hat{Y}(t_j)</annotation></semantics></math>
 that differ by some amount that is much smaller than the level of
 precision or observation error for the different parameter combinations,
 but due to the imprecision of the measurement process the MCMC sampler
@@ -138,22 +138,22 @@ cannot meaningfully distinguish the estimates.</p>
 <p>For this demonstration we will simulate data as though it is measured
 in centimetres. We use rounding to produce simulated data with
 measurement precision of 0.1cm, and error of
-<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>𝒩</mi><mrow><mo stretchy="true" form="prefix">(</mo><mn>0</mn><mo>,</mo><mn>0.1</mn><mo stretchy="true" form="postfix">)</mo></mrow></mrow><annotation encoding="application/x-tex">\mathcal{N}(0, 0.1)</annotation></semantics></math>,
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>𝒩</mi><mo stretchy="false" form="prefix">(</mo><mn>0</mn><mo>,</mo><mn>0.1</mn><mo stretchy="false" form="postfix">)</mo></mrow><annotation encoding="application/x-tex">\mathcal{N}(0, 0.1)</annotation></semantics></math>,
 analogous to the 1mm measurement precision and approximate standard
-deviation of the real-world source data used in <span class="citation">O’Brien, Warton, and Falster (2024)</span>.</p>
+deviation of the real-world source data used in <span class="citation">O’Brien et al. (2024)</span>.</p>
 </div>
 <div class="section level3">
 <h3 id="the-model">The model<a class="anchor" aria-label="anchor" href="#the-model"></a>
 </h3>
 <p>We are implementing a longitudinal model of the form in Equation (1)
 within a hierarchical Bayesian longitudinal model where
-<math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>f</mi><mrow><mo stretchy="true" form="prefix">(</mo><mi>Y</mi><mrow><mo stretchy="true" form="prefix">(</mo><mi>t</mi><mo stretchy="true" form="postfix">)</mo></mrow><mo>,</mo><msub><mi>β</mi><mn>0</mn></msub><mo>,</mo><msub><mi>β</mi><mn>1</mn></msub><mo stretchy="true" form="postfix">)</mo></mrow><mo>=</mo><msub><mi>β</mi><mn>0</mn></msub><mo>−</mo><msub><mi>β</mi><mn>1</mn></msub><mi>Y</mi><mrow><mo stretchy="true" form="prefix">(</mo><mi>t</mi><mo stretchy="true" form="postfix">)</mo></mrow><mspace width="2.0em"></mspace><mrow><mo stretchy="true" form="prefix">(</mo><mn>2</mn><mo stretchy="true" form="postfix">)</mo></mrow></mrow><annotation encoding="application/x-tex">f(Y(t), \beta_0, \beta_1) = \beta_0 - \beta_1 Y(t)\qquad (2)</annotation></semantics></math>
+<math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>f</mi><mo stretchy="false" form="prefix">(</mo><mi>Y</mi><mo stretchy="false" form="prefix">(</mo><mi>t</mi><mo stretchy="false" form="postfix">)</mo><mo>,</mo><msub><mi>β</mi><mn>0</mn></msub><mo>,</mo><msub><mi>β</mi><mn>1</mn></msub><mo stretchy="false" form="postfix">)</mo><mo>=</mo><msub><mi>β</mi><mn>0</mn></msub><mo>−</mo><msub><mi>β</mi><mn>1</mn></msub><mi>Y</mi><mo stretchy="false" form="prefix">(</mo><mi>t</mi><mo stretchy="false" form="postfix">)</mo><mspace width="2.0em"></mspace><mo stretchy="false" form="prefix">(</mo><mn>2</mn><mo stretchy="false" form="postfix">)</mo></mrow><annotation encoding="application/x-tex">f(Y(t), \beta_0, \beta_1) = \beta_0 - \beta_1 Y(t)\qquad (2)</annotation></semantics></math>
 Equation (2) is known to produce pathological behaviour from numerical
 methods <span class="citation">(Butcher 2016)</span>, so serves as an
 ideal simple example of the interaction between those pathologies and
 the MCMC sampling process. For the purpose of estimation we shift
 Equation (2) by the mean observed size which gives
-<math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>f</mi><mrow><mi>f</mi><mi>i</mi><mi>t</mi></mrow></msub><mrow><mo stretchy="true" form="prefix">(</mo><mi>Y</mi><mrow><mo stretchy="true" form="prefix">(</mo><mi>t</mi><mo stretchy="true" form="postfix">)</mo></mrow><mo>,</mo><msub><mi>β</mi><mi>c</mi></msub><mo>,</mo><msub><mi>β</mi><mn>1</mn></msub><mo stretchy="true" form="postfix">)</mo></mrow><mo>=</mo><msub><mi>β</mi><mi>c</mi></msub><mo>−</mo><msub><mi>β</mi><mn>1</mn></msub><mrow><mo stretchy="true" form="prefix">(</mo><mi>Y</mi><mrow><mo stretchy="true" form="prefix">(</mo><mi>t</mi><mo stretchy="true" form="postfix">)</mo></mrow><mo>−</mo><mover><mi>y</mi><mo accent="true">‾</mo></mover><mo stretchy="true" form="postfix">)</mo></mrow><mo>,</mo></mrow><annotation encoding="application/x-tex">f_{fit}(Y(t), \beta_c, \beta_1) = \beta_c - \beta_1(Y(t) - \bar{y}),</annotation></semantics></math>
+<math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>f</mi><mrow><mi>f</mi><mi>i</mi><mi>t</mi></mrow></msub><mo stretchy="false" form="prefix">(</mo><mi>Y</mi><mo stretchy="false" form="prefix">(</mo><mi>t</mi><mo stretchy="false" form="postfix">)</mo><mo>,</mo><msub><mi>β</mi><mi>c</mi></msub><mo>,</mo><msub><mi>β</mi><mn>1</mn></msub><mo stretchy="false" form="postfix">)</mo><mo>=</mo><msub><mi>β</mi><mi>c</mi></msub><mo>−</mo><msub><mi>β</mi><mn>1</mn></msub><mo stretchy="false" form="prefix">(</mo><mi>Y</mi><mo stretchy="false" form="prefix">(</mo><mi>t</mi><mo stretchy="false" form="postfix">)</mo><mo>−</mo><mover><mi>y</mi><mo accent="true">‾</mo></mover><mo stretchy="false" form="postfix">)</mo><mo>,</mo></mrow><annotation encoding="application/x-tex">f_{fit}(Y(t), \beta_c, \beta_1) = \beta_c - \beta_1(Y(t) - \bar{y}),</annotation></semantics></math>
 then the back-transformation
 <math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>β</mi><mn>0</mn></msub><mo>=</mo><msub><mi>β</mi><mi>c</mi></msub><mo>+</mo><msub><mi>β</mi><mn>1</mn></msub><mover><mi>y</mi><mo accent="true">‾</mo></mover><mi>.</mi></mrow><annotation encoding="application/x-tex">\beta_0 = \beta_c + \beta_1 \bar{y}.</annotation></semantics></math></p>
 <p>We are attempting to estimate the parameters
@@ -165,10 +165,10 @@ from observations
 which is based on estimating
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mover><mi>Y</mi><mo accent="true">̂</mo></mover><mi>j</mi></msub><annotation encoding="application/x-tex">\hat{Y}_j</annotation></semantics></math>
 given the prior distribution
-<math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>y</mi><mi>j</mi></msub><mo>∼</mo><mi>𝒩</mi><mrow><mo stretchy="true" form="prefix">(</mo><msub><mover><mi>Y</mi><mo accent="true">̂</mo></mover><mi>j</mi></msub><mo>,</mo><mn>0.1</mn><mo stretchy="true" form="postfix">)</mo></mrow><mi>.</mi></mrow><annotation encoding="application/x-tex">y_j \sim \mathcal{N}(\hat{Y}_j, 0.1).</annotation></semantics></math></p>
+<math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>y</mi><mi>j</mi></msub><mo>∼</mo><mi>𝒩</mi><mo stretchy="false" form="prefix">(</mo><msub><mover><mi>Y</mi><mo accent="true">̂</mo></mover><mi>j</mi></msub><mo>,</mo><mn>0.1</mn><mo stretchy="false" form="postfix">)</mo><mi>.</mi></mrow><annotation encoding="application/x-tex">y_j \sim \mathcal{N}(\hat{Y}_j, 0.1).</annotation></semantics></math></p>
 <p>As we are looking at a single individual, we have prior distributions
 for the default parameters which are
-<math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>β</mi><mn>1</mn></msub><mo>,</mo><msub><mi>β</mi><mi>c</mi></msub><mo>∼</mo><mo>log</mo><mi>𝒩</mi><mrow><mo stretchy="true" form="prefix">(</mo><mn>0</mn><mo>,</mo><mn>2</mn><mo stretchy="true" form="postfix">)</mo></mrow><mo>,</mo></mrow><annotation encoding="application/x-tex">\beta_1, \beta_c \sim \log\mathcal{N}(0,2),</annotation></semantics></math>
+<math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>β</mi><mn>1</mn></msub><mo>,</mo><msub><mi>β</mi><mi>c</mi></msub><mo>∼</mo><mrow><mi mathvariant="normal">log</mi><mo>⁡</mo></mrow><mi>𝒩</mi><mo stretchy="false" form="prefix">(</mo><mn>0</mn><mo>,</mo><mn>2</mn><mo stretchy="false" form="postfix">)</mo><mo>,</mo></mrow><annotation encoding="application/x-tex">\beta_1, \beta_c \sim \log\mathcal{N}(0,2),</annotation></semantics></math>
 and enforce
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>β</mi><mi>k</mi></msub><mo>&gt;</mo><mn>0</mn></mrow><annotation encoding="application/x-tex">\beta_k &gt; 0</annotation></semantics></math>.</p>
 </div>
@@ -226,6 +226,7 @@ measurement error and rounding to a precision of 0.1.</p>
 <span></span>
 <span><span class="co">#Observed data frame</span></span>
 <span><span class="va">obs_data_frame</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://tibble.tidyverse.org/reference/tibble.html" class="external-link">tibble</a></span><span class="op">(</span></span>
+<span>  ind_id <span class="op">=</span> <span class="fl">1</span>,</span>
 <span>  time <span class="op">=</span> <span class="va">time</span>,</span>
 <span>  y_obs <span class="op">=</span> <span class="va">y_obs</span>,</span>
 <span>  obs_index <span class="op">=</span> <span class="fl">1</span><span class="op">:</span><span class="fu"><a href="https://rdrr.io/r/base/length.html" class="external-link">length</a></span><span class="op">(</span><span class="va">y_obs</span><span class="op">)</span></span>
@@ -287,7 +288,7 @@ posterior can be constrained by such methods.</p>
 <p>We’re going to run 100 fits with a step size of 1 using the custom
 RK4 solver and a single chain each. Each chain is expected to converge
 to a parameter combination that gives estimated
-<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mover><mi>Y</mi><mo accent="true">̂</mo></mover><mrow><mo stretchy="true" form="prefix">(</mo><msub><mi>t</mi><mi>j</mi></msub><mo stretchy="true" form="postfix">)</mo></mrow></mrow><annotation encoding="application/x-tex">\hat{Y}(t_j)</annotation></semantics></math>
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mover><mi>Y</mi><mo accent="true">̂</mo></mover><mo stretchy="false" form="prefix">(</mo><msub><mi>t</mi><mi>j</mi></msub><mo stretchy="false" form="postfix">)</mo></mrow><annotation encoding="application/x-tex">\hat{Y}(t_j)</annotation></semantics></math>
 close to the analytic solution, but which combination is converged to is
 random. We do single chains because each can fall into the numerical
 error trap, and the easiest way to identify that trap is to extract the
@@ -299,7 +300,8 @@ Divergent transitions in particular are to be expected when we have the
 very different parameter estimates we see. Results are hidden for this
 block.</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">runs</span> <span class="op">&lt;-</span> <span class="fl">100</span></span>
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/Random.html" class="external-link">set.seed</a></span><span class="op">(</span><span class="fl">2026</span><span class="op">)</span> <span class="co">#For replicable results</span></span>
+<span><span class="va">runs</span> <span class="op">&lt;-</span> <span class="fl">100</span></span>
 <span><span class="va">step_size</span> <span class="op">=</span> <span class="fl">0.5</span></span>
 <span><span class="va">par_est_tibble</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://tibble.tidyverse.org/reference/tibble.html" class="external-link">tibble</a></span><span class="op">(</span>run <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="op">)</span>,</span>
 <span>                         step_size <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="op">)</span>,</span>
@@ -309,26 +311,26 @@ block.</p>
 <span><span class="kw">for</span><span class="op">(</span><span class="va">i</span> <span class="kw">in</span> <span class="fl">1</span><span class="op">:</span><span class="va">runs</span><span class="op">)</span><span class="op">{</span></span>
 <span>  <span class="co">#Run the model</span></span>
 <span>  <span class="fu"><a href="https://rdrr.io/r/base/warning.html" class="external-link">suppressWarnings</a></span><span class="op">(</span></span>
-<span>    <span class="va">fit</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/hmde_model.html">hmde_model</a></span><span class="op">(</span><span class="st">"affine_single_ind"</span><span class="op">)</span> <span class="op">|&gt;</span></span>
-<span>    <span class="fu"><a href="../reference/hmde_assign_data.html">hmde_assign_data</a></span><span class="op">(</span>n_obs <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">nrow</a></span><span class="op">(</span><span class="va">obs_data_frame</span><span class="op">)</span>,</span>
-<span>                     y_obs <span class="op">=</span> <span class="va">obs_data_frame</span><span class="op">$</span><span class="va">y_obs</span>,</span>
-<span>                     obs_index <span class="op">=</span> <span class="va">obs_data_frame</span><span class="op">$</span><span class="va">obs_index</span>,</span>
-<span>                     time <span class="op">=</span> <span class="va">obs_data_frame</span><span class="op">$</span><span class="va">time</span>,</span>
-<span>                     y_bar <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html" class="external-link">mean</a></span><span class="op">(</span><span class="va">obs_data_frame</span><span class="op">$</span><span class="va">y_obs</span><span class="op">)</span>,</span>
-<span>                     step_size <span class="op">=</span> <span class="va">step_size</span>,</span>
-<span>                     int_method <span class="op">=</span> <span class="fl">1</span><span class="op">)</span>  <span class="op">|&gt;</span>  <span class="co">#RK4</span></span>
+<span>    <span class="va">fit</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/hmde_data_template-class.html">hmde_data_template</a></span><span class="op">(</span><span class="st">"affine_single_ind"</span>,</span>
+<span>                              n_obs <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">nrow</a></span><span class="op">(</span><span class="va">obs_data_frame</span><span class="op">)</span>,</span>
+<span>                              y_obs <span class="op">=</span> <span class="va">obs_data_frame</span><span class="op">$</span><span class="va">y_obs</span>,</span>
+<span>                              obs_index <span class="op">=</span> <span class="va">obs_data_frame</span><span class="op">$</span><span class="va">obs_index</span>,</span>
+<span>                              time <span class="op">=</span> <span class="va">obs_data_frame</span><span class="op">$</span><span class="va">time</span>,</span>
+<span>                              y_bar <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html" class="external-link">mean</a></span><span class="op">(</span><span class="va">obs_data_frame</span><span class="op">$</span><span class="va">y_obs</span><span class="op">)</span>,</span>
+<span>                              step_size <span class="op">=</span> <span class="va">step_size</span>,</span>
+<span>                              int_method <span class="op">=</span> <span class="fl">1</span><span class="op">)</span>  <span class="op">|&gt;</span>  <span class="co">#RK4</span></span>
 <span>    <span class="fu"><a href="../reference/hmde_run.html">hmde_run</a></span><span class="op">(</span>chains <span class="op">=</span> <span class="fl">1</span>, cores <span class="op">=</span> <span class="fl">1</span>, iter <span class="op">=</span> <span class="fl">2000</span><span class="op">)</span></span>
 <span>  <span class="op">)</span></span>
 <span>  </span>
 <span>  <span class="co">#Extract parameter estimates</span></span>
-<span>  <span class="va">ests</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/hmde_extract_estimates.html">hmde_extract_estimates</a></span><span class="op">(</span>fit <span class="op">=</span> <span class="va">fit</span>,</span>
-<span>                                 input_measurement_data <span class="op">=</span> <span class="va">obs_data_frame</span><span class="op">)</span></span>
+<span>  <span class="va">ests</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/hmde_estimates-class.html">hmde_estimates</a></span><span class="op">(</span>fit <span class="op">=</span> <span class="va">fit</span>,</span>
+<span>                         obs_data <span class="op">=</span> <span class="va">obs_data_frame</span><span class="op">)</span></span>
 <span>  </span>
 <span>  <span class="va">temp</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://tibble.tidyverse.org/reference/tibble.html" class="external-link">tibble</a></span><span class="op">(</span></span>
 <span>    run <span class="op">=</span> <span class="va">i</span>,</span>
 <span>    step_size <span class="op">=</span> <span class="va">step_size</span>,</span>
-<span>    beta_0 <span class="op">=</span> <span class="va">ests</span><span class="op">$</span><span class="va">individual_data</span><span class="op">$</span><span class="va">ind_beta_0_mean</span>,</span>
-<span>    beta_1 <span class="op">=</span> <span class="va">ests</span><span class="op">$</span><span class="va">individual_data</span><span class="op">$</span><span class="va">ind_beta_1_mean</span></span>
+<span>    beta_0 <span class="op">=</span> <span class="fu"><a href="../reference/individual_ests-generic.html">individual_ests</a></span><span class="op">(</span><span class="va">ests</span><span class="op">)</span><span class="op">[[</span><span class="st">"ind_beta_0_mean"</span><span class="op">]</span><span class="op">]</span>,</span>
+<span>    beta_1 <span class="op">=</span> <span class="fu"><a href="../reference/individual_ests-generic.html">individual_ests</a></span><span class="op">(</span><span class="va">ests</span><span class="op">)</span><span class="op">[[</span><span class="st">"ind_beta_1_mean"</span><span class="op">]</span><span class="op">]</span></span>
 <span>  <span class="op">)</span></span>
 <span>  </span>
 <span>  <span class="va">par_est_tibble</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/cbind.html" class="external-link">rbind</a></span><span class="op">(</span><span class="va">par_est_tibble</span>, <span class="va">temp</span><span class="op">)</span></span>
@@ -413,10 +415,10 @@ because of the bimodality and distance between clusters.</p>
 <span><span class="co">#&gt; [1] "Summary of mixture model for step size 0.5"</span></span>
 <span><span class="co">#&gt; summary of mvnormalmixEM object:</span></span>
 <span><span class="co">#&gt;          comp 1   comp 2</span></span>
-<span><span class="co">#&gt; lambda 0.670000  0.33000</span></span>
-<span><span class="co">#&gt; mu1    9.810421 49.16390</span></span>
-<span><span class="co">#&gt; mu2    0.980554  4.92054</span></span>
-<span><span class="co">#&gt; loglik at estimate:  992.063 </span></span>
+<span><span class="co">#&gt; lambda 0.640000  0.36000</span></span>
+<span><span class="co">#&gt; mu1    9.811281 49.16118</span></span>
+<span><span class="co">#&gt; mu2    0.980647  4.92053</span></span>
+<span><span class="co">#&gt; loglik at estimate:  974.1422 </span></span>
 <span><span class="co">#&gt; NULL</span></span></code></pre></div>
 <p><img src="here_be_dragons_files/figure-html/unnamed-chunk-6-1.png" class="r-plt" alt="" width="700"></p>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
@@ -426,7 +428,7 @@ because of the bimodality and distance between clusters.</p>
 <span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 1 × 7</span></span></span>
 <span><span class="co">#&gt;   good_beta_0 good_beta_1 error_beta_0 error_beta_1 step_size error_prob dist   </span></span>
 <span><span class="co">#&gt;         <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>       <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>        <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>        <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>      <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dist&gt;</span> </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">1</span>        9.81       0.981         49.2         4.92       0.5       0.33 39.550…</span></span></code></pre></div>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">1</span>        9.81       0.981         49.2         4.92       0.5       0.36 39.546…</span></span></code></pre></div>
 <p>We get bimodality in the posterior distributions. If you look at
 multiple step sizes you will see that smaller step sizes push the second
 cluster further away. Bias in the estimates closest to the true values
@@ -578,7 +580,7 @@ which has an implementation of RK4 and allows us to choose the step
 sizes using the time parameter.</p>
 <div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co">#install.packages("deSolve")</span></span>
-<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="http://desolve.r-forge.r-project.org/" class="external-link">deSolve</a></span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/tpetzoldt/deSolve/" class="external-link">deSolve</a></span><span class="op">)</span></span>
 <span></span>
 <span><span class="co">#Create DE function</span></span>
 <span><span class="va">DE</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">Time</span>, <span class="va">State</span>, <span class="va">Pars</span><span class="op">)</span> <span class="op">{</span> <span class="co">#Implementation of DE</span></span>
@@ -662,7 +664,7 @@ to identify bad estimates, we show that RK4 with step size 0.001
 diverges from the true sizes over time. The lines in this plot are based
 on the small step size numerical estimates, while the points come from
 the
-<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>Y</mi><mrow><mo stretchy="true" form="prefix">(</mo><msub><mi>t</mi><mi>j</mi></msub><mo stretchy="true" form="postfix">)</mo></mrow></mrow><annotation encoding="application/x-tex">Y(t_j)</annotation></semantics></math>
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>Y</mi><mo stretchy="false" form="prefix">(</mo><msub><mi>t</mi><mi>j</mi></msub><mo stretchy="false" form="postfix">)</mo></mrow><annotation encoding="application/x-tex">Y(t_j)</annotation></semantics></math>
 values for the discrete observation times.</p>
 <div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co">#Generate y(t) with RK4 given the parameter estimates</span></span>
@@ -822,7 +824,7 @@ because MCMC estimation moves around, you need numerical stability in a
 potentially quite large part of the parameter space. The good news is
 that simulated data and posterior plots with more accurate numerical
 methods can at least identify that something is going wrong.</p>
-<div id="refs" class="references csl-bib-body hanging-indent" entry-spacing="0">
+<div id="refs" class="references csl-bib-body hanging-indent">
 <div id="ref-butcher2016numerical" class="csl-entry">
 Butcher, John Charles. 2016. <em>Numerical Methods for Ordinary
 Differential Equations</em>. Third. John Wiley &amp; Sons.

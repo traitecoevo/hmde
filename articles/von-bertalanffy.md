@@ -3,6 +3,7 @@
 ### Load dependencies
 
 ``` r
+
 # remotes::install_github("traitecoevo/hmde")
 # install.packages(c("dplyr", "ggplot2"))
 
@@ -23,52 +24,66 @@ library(ggplot2)
 
 Our second demo introduces size-dependent growth based on the von
 Bertalanffy function
-$$f\left( Y(t);S_{max},\beta \right) = \beta\left( S_{max} - Y(t) \right),$$
-where $S_{max}$ is the asymptotic maximum size and $\beta$ controls the
-growth rate. We have implemented the analytic solution
-$$Y(t) = S_{max} + \left( Y(0) - S_{max} \right)\exp( - t\beta)$$ which
-is independent of age at the starting size $Y(0)$ and instead uses the
-first size as the initial condition. The key behaviour of the von
-Bertalanffy model is a high growth rate at small sizes that declines
-linearly as the size approaches $S_{max}$. This manifests as growth
+``` math
+\begin{equation}\label{eqn_vb_DE}
+f(Y(t); S_{max}, \beta) = \beta(S_{max} - Y(t)),
+\end{equation}
+```
+where $`S_{max}`$ is the asymptotic maximum size and $`\beta`$ controls
+the growth rate. We have implemented the analytic solution
+``` math
+\begin{equation}\label{eqn_vb_soln}
+Y(t) = S_{max} + (Y(0) - S_{max}) \exp(-t\beta)
+\end{equation}
+```
+which is independent of age at the starting size $`Y(0)`$ and instead
+uses the first size as the initial condition. The key behaviour of the
+von Bertalanffy model is a high growth rate at small sizes that declines
+linearly as the size approaches $`S_{max}`$. This manifests as growth
 slowing as a creature matures with a hard finite limit on the eventual
-size. We restrict $\beta$ and $S_{max}$ to be positive. As a result the
-growth rate is non-negative.
+size. We restrict $`\beta`$ and $`S_{max}`$ to be positive. As a result
+the growth rate is non-negative.
 
 ### Priors
 
 The default priors for the constant top-level parameters in the single
 individual model are
-$$S_{max} \sim \log\mathcal{N}\left( \log\left( \max\left( y_{obs} \right) \right),2 \right),$$$$\beta \sim \log\mathcal{N}(0,2),$$$$0 < \sigma_{e} \sim Cauchy(0,2).$$
+``` math
+S_{max} \sim \log\mathcal{N}(\log(\max(y_{obs})), 2),
+```
+``` math
+\beta \sim \log\mathcal{N}(0, 2),
+```
+``` math
+0 <\sigma_e \sim Cauchy(0, 2).
+```
 
 For the multi-individual model the prior structure and default
 parameters are
-$$\mu_{S_{max}} \sim \mathcal{N}\left( \log\left( \max\left( y_{obs} \right) \right),2 \right),$$$$0 < \sigma_{S_{max}} \sim Cauchy(0,2),$$$$\mu_{\beta} \sim \mathcal{N}(0,2),$$$$0 < \sigma_{\beta} \sim Cauchy(0,2),$$$$0 < \sigma_{e} \sim Cauchy(0,2).$$
+``` math
+\mu_{S_{max}} \sim \mathcal{N}(\log(\max(y_{obs})), 2),
+```
+``` math
+0 < \sigma_{S_{max}} \sim Cauchy(0, 2),
+```
+``` math
+\mu_{\beta} \sim \mathcal{N}(0, 2),
+```
+``` math
+0 < \sigma_{\beta} \sim Cauchy(0, 2),
+```
+``` math
+0 < \sigma_{e} \sim Cauchy(0, 2).
+```
 The max size parameter priors are always centred at the (transformed)
 maximum observed size. This is not changeable, but the standard
 deviation is. To see the name for the prior parameter run `hmde_model`.
-For example in the following we want to change the prior for $S_{max}$
+For example in the following we want to change the prior for $`S_{max}`$
 standard deviation (`ind_max_size`) in the individual model:
 
 ``` r
-hmde_model("vb_single_ind")
-#> [1] "Model: vb_single_ind"
-#> [1] "Input data template:"
-#> $n_obs
-#> NULL
-#> 
-#> $y_obs
-#> NULL
-#> 
-#> $obs_index
-#> NULL
-#> 
-#> $time
-#> NULL
-#> 
-#> $y_bar
-#> NULL
-#> 
+
+prior_pars(hmde_model("vb_single_ind"))
 #> $prior_pars_ind_max_size_sd_only
 #> [1] 2
 #> 
@@ -77,9 +92,6 @@ hmde_model("vb_single_ind")
 #> 
 #> $prior_pars_global_error_sigma
 #> [1] 0 2
-#> 
-#> $model
-#> [1] "vb_single_ind"
 #prior_pars_ind_max_size_sd_only is the argument name for the prior parameter
 ```
 
@@ -89,6 +101,7 @@ In the following code we plot an example of the growth function and the
 solution to get a feel for the behaviour.
 
 ``` r
+
 #Analytic solution in function form
 solution <- function(t, pars = list(y_0, beta, S_max)){
   return(
@@ -124,6 +137,7 @@ ggplot() +
 
 ``` r
 
+
 #Size over time
 ggplot() +
   geom_function(fun=solution, 
@@ -132,7 +146,7 @@ ggplot() +
                 xlim=c(time)) +
   xlim(time) +
   ylim(0, y_final*1.05) +
-  labs(x = "Time", y = "Y(t)", title = "von Bertalanffy growth") +
+  labs(x = "Time", y = "Y(t)", title = "von Bertalanffy size") +
   theme_classic() +
   theme(axis.text=element_text(size=16),
         axis.title=element_text(size=18,face="bold"))
@@ -146,10 +160,10 @@ Edmonds et al. (2021) and Zhao et al. (2020).
 
 ## Lizard size data
 
-Our data is sourced from Kar, Nakagawa, and Noble (2023) which measured
-mass and snout-vent-length (SVL) of delicate skinks – – under
-experimental conditions to examine the effect of temperature on
-development. We are going to use the SVL metric for size.
+Our data is sourced from Kar et al. (2023) which measured mass and
+snout-vent-length (SVL) of delicate skinks – – under experimental
+conditions to examine the effect of temperature on development. We are
+going to use the SVL metric for size.
 
 We took a simple random sample without replacement of 50 individuals
 with at least 5 observations each. The von Bertalanffy model can be fit
@@ -162,14 +176,16 @@ The workflow for the second example is the same as the first, with the
 change in model name and data object.
 
 ``` r
-lizard_vb_fit <- hmde_model("vb_multi_ind") |>
-  hmde_assign_data(data = Lizard_Size_Data)  |>
+
+set.seed(2026)
+lizard_vb_fit <- hmde_data_template("vb_multi_ind",
+                                    obs_data = Lizard_Size_Data ) |>
   hmde_run(chains = 4, cores = 1, iter = 2000)
 #> 
 #> SAMPLING FOR MODEL 'vb_multi_ind' NOW (CHAIN 1).
 #> Chain 1: 
-#> Chain 1: Gradient evaluation took 0.00019 seconds
-#> Chain 1: 1000 transitions using 10 leapfrog steps per transition would take 1.9 seconds.
+#> Chain 1: Gradient evaluation took 0.000193 seconds
+#> Chain 1: 1000 transitions using 10 leapfrog steps per transition would take 1.93 seconds.
 #> Chain 1: Adjust your expectations accordingly!
 #> Chain 1: 
 #> Chain 1: 
@@ -186,15 +202,15 @@ lizard_vb_fit <- hmde_model("vb_multi_ind") |>
 #> Chain 1: Iteration: 1800 / 2000 [ 90%]  (Sampling)
 #> Chain 1: Iteration: 2000 / 2000 [100%]  (Sampling)
 #> Chain 1: 
-#> Chain 1:  Elapsed Time: 10.384 seconds (Warm-up)
-#> Chain 1:                8.038 seconds (Sampling)
-#> Chain 1:                18.422 seconds (Total)
+#> Chain 1:  Elapsed Time: 18.595 seconds (Warm-up)
+#> Chain 1:                5.508 seconds (Sampling)
+#> Chain 1:                24.103 seconds (Total)
 #> Chain 1: 
 #> 
 #> SAMPLING FOR MODEL 'vb_multi_ind' NOW (CHAIN 2).
 #> Chain 2: 
-#> Chain 2: Gradient evaluation took 0.000101 seconds
-#> Chain 2: 1000 transitions using 10 leapfrog steps per transition would take 1.01 seconds.
+#> Chain 2: Gradient evaluation took 0.000119 seconds
+#> Chain 2: 1000 transitions using 10 leapfrog steps per transition would take 1.19 seconds.
 #> Chain 2: Adjust your expectations accordingly!
 #> Chain 2: 
 #> Chain 2: 
@@ -211,15 +227,15 @@ lizard_vb_fit <- hmde_model("vb_multi_ind") |>
 #> Chain 2: Iteration: 1800 / 2000 [ 90%]  (Sampling)
 #> Chain 2: Iteration: 2000 / 2000 [100%]  (Sampling)
 #> Chain 2: 
-#> Chain 2:  Elapsed Time: 5.675 seconds (Warm-up)
-#> Chain 2:                3.106 seconds (Sampling)
-#> Chain 2:                8.781 seconds (Total)
+#> Chain 2:  Elapsed Time: 9.381 seconds (Warm-up)
+#> Chain 2:                2.903 seconds (Sampling)
+#> Chain 2:                12.284 seconds (Total)
 #> Chain 2: 
 #> 
 #> SAMPLING FOR MODEL 'vb_multi_ind' NOW (CHAIN 3).
 #> Chain 3: 
-#> Chain 3: Gradient evaluation took 0.000101 seconds
-#> Chain 3: 1000 transitions using 10 leapfrog steps per transition would take 1.01 seconds.
+#> Chain 3: Gradient evaluation took 0.000108 seconds
+#> Chain 3: 1000 transitions using 10 leapfrog steps per transition would take 1.08 seconds.
 #> Chain 3: Adjust your expectations accordingly!
 #> Chain 3: 
 #> Chain 3: 
@@ -236,15 +252,15 @@ lizard_vb_fit <- hmde_model("vb_multi_ind") |>
 #> Chain 3: Iteration: 1800 / 2000 [ 90%]  (Sampling)
 #> Chain 3: Iteration: 2000 / 2000 [100%]  (Sampling)
 #> Chain 3: 
-#> Chain 3:  Elapsed Time: 10.456 seconds (Warm-up)
-#> Chain 3:                12.642 seconds (Sampling)
-#> Chain 3:                23.098 seconds (Total)
+#> Chain 3:  Elapsed Time: 6.195 seconds (Warm-up)
+#> Chain 3:                2.969 seconds (Sampling)
+#> Chain 3:                9.164 seconds (Total)
 #> Chain 3: 
 #> 
 #> SAMPLING FOR MODEL 'vb_multi_ind' NOW (CHAIN 4).
 #> Chain 4: 
-#> Chain 4: Gradient evaluation took 0.000101 seconds
-#> Chain 4: 1000 transitions using 10 leapfrog steps per transition would take 1.01 seconds.
+#> Chain 4: Gradient evaluation took 0.000108 seconds
+#> Chain 4: 1000 transitions using 10 leapfrog steps per transition would take 1.08 seconds.
 #> Chain 4: Adjust your expectations accordingly!
 #> Chain 4: 
 #> Chain 4: 
@@ -261,14 +277,14 @@ lizard_vb_fit <- hmde_model("vb_multi_ind") |>
 #> Chain 4: Iteration: 1800 / 2000 [ 90%]  (Sampling)
 #> Chain 4: Iteration: 2000 / 2000 [100%]  (Sampling)
 #> Chain 4: 
-#> Chain 4:  Elapsed Time: 19.362 seconds (Warm-up)
-#> Chain 4:                6.255 seconds (Sampling)
-#> Chain 4:                25.617 seconds (Total)
+#> Chain 4:  Elapsed Time: 6.412 seconds (Warm-up)
+#> Chain 4:                15.867 seconds (Sampling)
+#> Chain 4:                22.279 seconds (Total)
 #> Chain 4:
-#> Warning: There were 122 divergent transitions after warmup. See
+#> Warning: There were 397 divergent transitions after warmup. See
 #> https://mc-stan.org/misc/warnings.html#divergent-transitions-after-warmup
 #> to find out why this is a problem and how to eliminate them.
-#> Warning: There were 4 chains where the estimated Bayesian Fraction of Missing Information was low. See
+#> Warning: There were 3 chains where the estimated Bayesian Fraction of Missing Information was low. See
 #> https://mc-stan.org/misc/warnings.html#bfmi-low
 #> Warning: Examine the pairs() plot to diagnose sampling problems
 #> Warning: The largest R-hat is NA, indicating chains have not mixed.
@@ -281,15 +297,15 @@ lizard_vb_fit <- hmde_model("vb_multi_ind") |>
 #> Running the chains for more iterations may help. See
 #> https://mc-stan.org/misc/warnings.html#tail-ess
 
-lizard_estimates <- hmde_extract_estimates(fit = lizard_vb_fit,
-                                           input_measurement_data = Lizard_Size_Data)
+lizard_estimates <- hmde_estimates(fit = lizard_vb_fit,                                           obs_data = Lizard_Size_Data)
 ```
 
 As before, we can compare the observed sizes over time to those
 predicted by the model.
 
 ``` r
-measurement_data_transformed <- lizard_estimates$measurement_data %>%
+
+measurement_data_transformed <- measurement_ests(lizard_estimates) %>%
   group_by(ind_id) %>%
   mutate(
     delta_y_obs = y_obs - lag(y_obs),
@@ -310,6 +326,7 @@ hist(measurement_data_transformed$y_hat,
 ![](von-bertalanffy_files/figure-html/unnamed-chunk-5-1.png)
 
 ``` r
+
 hist(measurement_data_transformed$delta_y_est, 
      main = "Estimated growth increments",
      xlab = "Growth increment (cm)")
@@ -318,6 +335,7 @@ hist(measurement_data_transformed$delta_y_est,
 ![](von-bertalanffy_files/figure-html/unnamed-chunk-5-2.png)
 
 ``` r
+
 hist(measurement_data_transformed$est_growth_rate, 
      main = "Estimated annualised growth rate distribution",
      xlab = "Growth rate (cm/yr)")
@@ -327,16 +345,17 @@ hist(measurement_data_transformed$est_growth_rate,
 
 ``` r
 
+
 #Quantitative R^2
 cor(measurement_data_transformed$y_obs, measurement_data_transformed$y_hat)^2
-#> [1] 0.7416779
-r_sq_est <- cor(lizard_estimates$measurement_data$y_obs,
-                lizard_estimates$measurement_data$y_hat)^2
+#> [1] 0.7463515
+r_sq_est <- cor(measurement_data_transformed$y_obs,
+                measurement_data_transformed$y_hat)^2
 r_sq <- paste0("R^2 = ", 
                signif(r_sq_est,
                       digits = 3))
 
-obs_scatter <- ggplot(data = lizard_estimates$measurement_data, 
+obs_scatter <- ggplot(data = measurement_data_transformed,
        aes(x = y_obs, y = y_hat)) +
   geom_point(shape = 16, size = 1, colour = "green4") +
   xlab("Y obs.") +
@@ -347,8 +366,8 @@ obs_scatter <- ggplot(data = lizard_estimates$measurement_data,
   theme_classic()
 
 #Plots of size over time for a sample of 5 individuals
-obs_est_ind <- hmde_plot_obs_est_inds(n_ind_to_plot = 5,
-                       measurement_data = lizard_estimates$measurement_data) +
+obs_est_ind <- hmde_plot_obs_est_inds(estimates = lizard_estimates,
+                                      n_ind_to_plot = 5) +
   theme(legend.position = "inside",
         legend.position.inside = c(0.8, 0.2))
 ```
@@ -359,8 +378,9 @@ relationship between them. We can also use the individual parameter
 estimates and estimated sizes to plot the growth function pieces.
 
 ``` r
+
 #1-dimensional parameter distributions
-s_max_hist <- ggplot(lizard_estimates$individual_data, 
+s_max_hist <- ggplot(individual_ests(lizard_estimates), 
        aes(ind_max_size_mean)) +
   geom_histogram(bins = 10,
                  colour = "black",
@@ -368,7 +388,7 @@ s_max_hist <- ggplot(lizard_estimates$individual_data,
   labs(x="S_max estimate") +
   theme_classic()
 
-beta_hist <- ggplot(lizard_estimates$individual_data, 
+beta_hist <- ggplot(individual_ests(lizard_estimates), 
        aes(ind_growth_rate_mean)) +
   geom_histogram(bins = 10,
                  colour = "black",
@@ -377,7 +397,7 @@ beta_hist <- ggplot(lizard_estimates$individual_data,
   theme_classic()
 
 #2-dimensional parameter distribution
-par_scatter <- ggplot(data = lizard_estimates$individual_data, 
+par_scatter <- ggplot(data = individual_ests(lizard_estimates), 
        aes(x = ind_max_size_mean, y = ind_growth_rate_mean)) +
   geom_point(shape = 16, size = 1, colour = "green4") +
   xlab("Individual max sizes (mm)") +
@@ -385,20 +405,21 @@ par_scatter <- ggplot(data = lizard_estimates$individual_data,
   theme_classic()
 
 #Correlation of parameters
-cor(lizard_estimates$individual_data$ind_max_size_mean,
-    lizard_estimates$individual_data$ind_growth_rate_mean,
+cor(individual_ests(lizard_estimates)$ind_max_size_mean,
+    individual_ests(lizard_estimates)$ind_growth_rate_mean,
     method = "spearman")
-#> [1] 0.5702281
+#> [1] 0.622569
 
 #Plot function pieces over estimated sizes.
 de_pieces <- hmde_plot_de_pieces(lizard_estimates)
 ```
 
 At the hyper-parameter level for the whole population we have centre and
-spread parameters for the log-normal distributions of $S_{max}$ and
-$\beta$. As before, we can look at these as species-level features.
+spread parameters for the log-normal distributions of $`S_{max}`$ and
+$`\beta`$. As before, we can look at these as species-level features.
 
 ``` r
+
 pars_CI_names <- c(
   "mean log max size",
   "mean max size in mm",
@@ -413,31 +434,31 @@ exp_vec <- c(FALSE, TRUE, FALSE,
              FALSE, TRUE, FALSE)
 
 #Print mean estimates and CIs
-for(i in 1:nrow(lizard_estimates$population_data)){
+for(i in 1:nrow(population_ests(lizard_estimates))){
   if(!exp_vec[i]){
-    lizard_estimates$population_data$mean[i] 
+    population_ests(lizard_estimates)$mean[i] 
     print(paste0("95% CI for ", 
                  pars_CI_names[i],
                  ": (",
-                 lizard_estimates$population_data$CI_lower[i],
+                 population_ests(lizard_estimates)$CI_lower[i],
                  ", ",
-                 lizard_estimates$population_data$CI_upper[i],
+                 population_ests(lizard_estimates)$CI_upper[i],
                  ")"))
   } else {
-    exp(lizard_estimates$population_data$mean[i])
+    exp(population_ests(lizard_estimates)$mean[i])
     print(paste0("95% CI for ",
                  pars_CI_names[i], 
                  ": (",
-                 exp(lizard_estimates$population_data$CI_lower[i]),
+                 exp(population_ests(lizard_estimates)$CI_lower[i]),
                  ", ",
-                 exp(lizard_estimates$population_data$CI_upper[i]),
+                 exp(population_ests(lizard_estimates)$CI_upper[i]),
                  ")"))
   }
 }
-#> [1] "95% CI for mean log max size: (3.17647083072528, 3.21407083090968)"
-#> [1] "95% CI for mean max size in mm: (1.01045823319106, 1.04954895929649)"
-#> [1] "95% CI for log max size standard deviation: (-4.14301908332485, -3.75812194862982)"
-#> [1] "95% CI for mean log growth par: (0.0233751801356016, 0.237118800131887)"
+#> [1] "95% CI for mean log max size: (3.1772234356058, 3.21755925274251)"
+#> [1] "95% CI for mean max size in mm: (1.01297660128619, 1.05967039836475)"
+#> [1] "95% CI for log max size standard deviation: (-4.18189397646355, -3.75792527014421)"
+#> [1] "95% CI for mean log growth par: (0.017634933127216, 0.239454359949831)"
 ```
 
 ## References
@@ -450,8 +471,8 @@ Maturational Differences in a Small, Long-Lived Species.” *PloS One* 16
 Flinn, Shane A, and Stephen R Midway. 2021. “Trends in Growth Modeling
 in Fisheries Science.” *Fishes* 6 (1): 1.
 
-Kar, Fonti, Shinichi Nakagawa, and Daniel W Noble. 2023. “Heritability
-and Developmental Plasticity of Growth in an Oviparous Lizard.” OSF.
+Kar, Fonti, Shinichi Nakagawa, and Daniel W Noble. 2023. *Heritability
+and Developmental Plasticity of Growth in an Oviparous Lizard*. OSF.
 <https://doi.org/10.17605/OSF.IO/HJKXD>.
 
 Zhao, Wei, Yangyang Zhao, Rui Guo, Yue Qi, Xiaoning Wang, and Na Li.

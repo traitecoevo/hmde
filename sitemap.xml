@@ -14,13 +14,15 @@
 <url><loc>https://traitecoevo.github.io/hmde/reference/Tree_Size_Data.html</loc></url>
 <url><loc>https://traitecoevo.github.io/hmde/reference/Tree_Size_Ests.html</loc></url>
 <url><loc>https://traitecoevo.github.io/hmde/reference/Trout_Size_Data.html</loc></url>
+<url><loc>https://traitecoevo.github.io/hmde/reference/error_ests-generic.html</loc></url>
+<url><loc>https://traitecoevo.github.io/hmde/reference/fit_summary-generic.html</loc></url>
 <url><loc>https://traitecoevo.github.io/hmde/reference/hmde-package.html</loc></url>
 <url><loc>https://traitecoevo.github.io/hmde/reference/hmde_affine_de.html</loc></url>
-<url><loc>https://traitecoevo.github.io/hmde/reference/hmde_assign_data.html</loc></url>
 <url><loc>https://traitecoevo.github.io/hmde/reference/hmde_canham_de.html</loc></url>
 <url><loc>https://traitecoevo.github.io/hmde/reference/hmde_const_de.html</loc></url>
+<url><loc>https://traitecoevo.github.io/hmde/reference/hmde_data_template-class.html</loc></url>
+<url><loc>https://traitecoevo.github.io/hmde/reference/hmde_estimates-class.html</loc></url>
 <url><loc>https://traitecoevo.github.io/hmde/reference/hmde_extract_Rhat.html</loc></url>
-<url><loc>https://traitecoevo.github.io/hmde/reference/hmde_extract_estimates.html</loc></url>
 <url><loc>https://traitecoevo.github.io/hmde/reference/hmde_model.html</loc></url>
 <url><loc>https://traitecoevo.github.io/hmde/reference/hmde_model_des.html</loc></url>
 <url><loc>https://traitecoevo.github.io/hmde/reference/hmde_model_names.html</loc></url>
@@ -31,8 +33,14 @@
 <url><loc>https://traitecoevo.github.io/hmde/reference/hmde_run.html</loc></url>
 <url><loc>https://traitecoevo.github.io/hmde/reference/hmde_vb_de.html</loc></url>
 <url><loc>https://traitecoevo.github.io/hmde/reference/index.html</loc></url>
-<url><loc>https://traitecoevo.github.io/hmde/reference/plot.hmde_model_template.html</loc></url>
-<url><loc>https://traitecoevo.github.io/hmde/reference/print.hmde_model_template.html</loc></url>
-<url><loc>https://traitecoevo.github.io/hmde/reference/summary.hmde_model_template.html</loc></url>
+<url><loc>https://traitecoevo.github.io/hmde/reference/individual_ests-generic.html</loc></url>
+<url><loc>https://traitecoevo.github.io/hmde/reference/measurement_ests-generic.html</loc></url>
+<url><loc>https://traitecoevo.github.io/hmde/reference/method-generic.html</loc></url>
+<url><loc>https://traitecoevo.github.io/hmde/reference/model_level-generic.html</loc></url>
+<url><loc>https://traitecoevo.github.io/hmde/reference/model_name-generic.html</loc></url>
+<url><loc>https://traitecoevo.github.io/hmde/reference/par_names-generic.html</loc></url>
+<url><loc>https://traitecoevo.github.io/hmde/reference/population_ests-generic.html</loc></url>
+<url><loc>https://traitecoevo.github.io/hmde/reference/prior_pars-generic.html</loc></url>
+<url><loc>https://traitecoevo.github.io/hmde/reference/runtime-generic.html</loc></url>
 </urlset>
 

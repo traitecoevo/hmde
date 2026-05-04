@@ -11,7 +11,7 @@ the hmde_extract_estimates function."></head><body>
 
     <a class="navbar-brand me-2" href="../index.html">hmde</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.3.1</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.4.0</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -40,7 +40,7 @@ the hmde_extract_estimates function."></head><body>
   <main id="main" class="col-md-9"><div class="page-header">
 
       <h1>Plot estimated and observed values over time for a chosen number of individuals based on posterior estimates. Structured to take in the measurement_data tibble constructed by the hmde_extract_estimates function.</h1>
-      <small class="dont-index">Source: <a href="https://github.com/traitecoevo/hmde/blob/1.3.1/R/hmde_plot_obs_est_inds.R" class="external-link"><code>R/hmde_plot_obs_est_inds.R</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/traitecoevo/hmde/blob/master/R/hmde_plot_obs_est_inds.R" class="external-link"><code>R/hmde_plot_obs_est_inds.R</code></a></small>
       <div class="d-none name"><code>hmde_plot_obs_est_inds.Rd</code></div>
     </div>
 
@@ -53,8 +53,7 @@ the hmde_extract_estimates function.</p>
     <div class="section level2">
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">hmde_plot_obs_est_inds</span><span class="op">(</span></span>
-<span>  estimate_list <span class="op">=</span> <span class="cn">NULL</span>,</span>
-<span>  measurement_data <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  estimates <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  ind_id_vec <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  n_ind_to_plot <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  xlab <span class="op">=</span> <span class="st">"Time"</span>,</span>
@@ -67,12 +66,8 @@ the hmde_extract_estimates function.</p>
     <h2 id="arguments">Arguments<a class="anchor" aria-label="anchor" href="#arguments"></a></h2>
 
 
-<dl><dt id="arg-estimate-list">estimate_list<a class="anchor" aria-label="anchor" href="#arg-estimate-list"></a></dt>
-<dd><p>list output of hmde_extract_estimates</p></dd>
-
-
-<dt id="arg-measurement-data">measurement_data<a class="anchor" aria-label="anchor" href="#arg-measurement-data"></a></dt>
-<dd><p>tibble with estimated measurements</p></dd>
+<dl><dt id="arg-estimates">estimates<a class="anchor" aria-label="anchor" href="#arg-estimates"></a></dt>
+<dd><p>hmde_estimates class object</p></dd>
 
 
 <dt id="arg-ind-id-vec">ind_id_vec<a class="anchor" aria-label="anchor" href="#arg-ind-id-vec"></a></dt>
@@ -103,7 +98,7 @@ the hmde_extract_estimates function.</p>
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="co"># basic usage of hmde_plot_obs_est_inds</span></span></span>
-<span class="r-in"><span><span class="fu">hmde_plot_obs_est_inds</span><span class="op">(</span>estimate_list <span class="op">=</span> <span class="va">Tree_Size_Ests</span>,</span></span>
+<span class="r-in"><span><span class="fu">hmde_plot_obs_est_inds</span><span class="op">(</span>estimates <span class="op">=</span> <span class="va">Tree_Size_Ests</span>,</span></span>
 <span class="r-in"><span>                       n_ind_to_plot <span class="op">=</span> <span class="fl">5</span><span class="op">)</span></span></span>
 <span class="r-plt img"><img src="hmde_plot_obs_est_inds-1.png" alt="" width="700" height="433"></span>
 <span class="r-in"><span></span></span>

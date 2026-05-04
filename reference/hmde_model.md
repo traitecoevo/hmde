@@ -1,6 +1,8 @@
-# Select data configuration template for hmde supported model
+# helper function for hmde_data_template that provides data structure for model, Also used to guide the user on the required structure for the model they want.
 
-Select data configuration template for hmde supported model
+helper function for hmde_data_template that provides data structure for
+model, Also used to guide the user on the required structure for the
+model they want.
 
 ## Usage
 
@@ -16,34 +18,16 @@ hmde_model(model = NULL)
 
 ## Value
 
-hmde_model_template class named list that matches Stan model parameters
+hmde_data_template class that suits Stan model input
 
 ## Examples
 
 ``` r
 # basic usage of hmde_model
 hmde_model("constant_single_ind")
-#> [1] "Model: constant_single_ind"
-#> [1] "Input data template:"
-#> $n_obs
-#> NULL
-#> 
-#> $y_obs
-#> NULL
-#> 
-#> $obs_index
-#> NULL
-#> 
-#> $time
-#> NULL
-#> 
-#> $prior_pars_ind_beta
-#> [1] 0 2
-#> 
-#> $prior_pars_global_error_sigma
-#> [1] 0 2
-#> 
-#> $model
-#> [1] "constant_single_ind"
-#> 
+#> hmde_data_template
+#>   Model name: constant_single_ind
+#>   Model level:  single_ind
+#>   Input data names:  n_obs, y_obs, obs_index, time
+#>   Prior names:  prior_pars_ind_beta, prior_pars_global_error_sigma
 ```

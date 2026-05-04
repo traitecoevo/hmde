@@ -7,7 +7,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">hmde</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.3.1</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.4.0</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -78,6 +78,20 @@
 
         <dt>
 
+          <code><a href="error_ests-generic.html">error_ests()</a></code> <code><a href="error_ests-generic.html">`error_ests&lt;-`()</a></code>
+
+        </dt>
+        <dd>generic error_ests getter</dd>
+
+        <dt>
+
+          <code><a href="fit_summary-generic.html">fit_summary()</a></code> <code><a href="fit_summary-generic.html">`fit_summary&lt;-`()</a></code>
+
+        </dt>
+        <dd>generic fit_summary getter</dd>
+
+        <dt>
+
           <code><a href="hmde-package.html">hmde-package</a></code> <code><a href="hmde-package.html">hmde</a></code>
 
         </dt>
@@ -89,13 +103,6 @@
 
         </dt>
         <dd>Differential equation for affine growth single individual model</dd>
-
-        <dt>
-
-          <code><a href="hmde_assign_data.html">hmde_assign_data()</a></code>
-
-        </dt>
-        <dd>Assign data to template for chosen model</dd>
 
         <dt>
 
@@ -120,17 +127,10 @@
 
         <dt>
 
-          <code><a href="hmde_extract_estimates.html">hmde_extract_estimates()</a></code>
-
-        </dt>
-        <dd>Extract samples and return measurement, individual, and population-level estimates</dd>
-
-        <dt>
-
           <code><a href="hmde_model.html">hmde_model()</a></code>
 
         </dt>
-        <dd>Select data configuration template for hmde supported model</dd>
+        <dd>helper function for hmde_data_template that provides data structure for model, Also used to guide the user on the required structure for the model they want.</dd>
 
         <dt>
 
@@ -165,7 +165,7 @@
           <code><a href="hmde_plot_de_pieces.html">hmde_plot_de_pieces()</a></code>
 
         </dt>
-        <dd>Plot pieces of chosen differential equation model for each individual. Structured to take the individual data tibble that is built by the hmde_extract_estimates function using the ind_par_name_mean estimates. Function piece will go from the first fitted size to the last. Accepted ggplot arguments will change the axis labels, title, line colour, alpha</dd>
+        <dd>Plot pieces of chosen differential equation model for each individual. Structured to take the individual data tibble that is built by the hmde_estimates function using the ind_par_name_mean estimates. Function piece will go from the first fitted size to the last. Accepted ggplot arguments will change the axis labels, title, line colour, alpha</dd>
 
         <dt>
 
@@ -190,24 +190,66 @@
 
         <dt>
 
-          <code><a href="plot.hmde_model_template.html">plot(<i>&lt;hmde_model_template&gt;</i>)</a></code>
+          <code><a href="individual_ests-generic.html">individual_ests()</a></code> <code><a href="individual_ests-generic.html">`individual_ests&lt;-`()</a></code>
 
         </dt>
-        <dd>Plot function for hmde_model_template object</dd>
+        <dd>generic individual_ests getter</dd>
 
         <dt>
 
-          <code><a href="print.hmde_model_template.html">print(<i>&lt;hmde_model_template&gt;</i>)</a></code>
+          <code><a href="measurement_ests-generic.html">measurement_ests()</a></code> <code><a href="measurement_ests-generic.html">`measurement_ests&lt;-`()</a></code>
 
         </dt>
-        <dd>Print function for hmde_model_template object</dd>
+        <dd>generic measurement_ests getter</dd>
 
         <dt>
 
-          <code><a href="summary.hmde_model_template.html">summary(<i>&lt;hmde_model_template&gt;</i>)</a></code>
+          <code><a href="method-generic.html">method()</a></code> <code><a href="method-generic.html">`method&lt;-`()</a></code>
 
         </dt>
-        <dd>Summary function for hmde_model_template object</dd>
+        <dd>generic method getter</dd>
+
+        <dt>
+
+          <code><a href="model_level-generic.html">model_level()</a></code> <code><a href="model_level-generic.html">`model_level&lt;-`()</a></code> <code><a href="model_level-generic.html">obs_data()</a></code> <code><a href="model_level-generic.html">`obs_data&lt;-`()</a></code>
+
+        </dt>
+        <dd>generic model_level setter</dd>
+
+        <dt>
+
+          <code><a href="model_name-generic.html">model_name()</a></code> <code><a href="model_name-generic.html">`model_name&lt;-`()</a></code>
+
+        </dt>
+        <dd>generic model_name getter</dd>
+
+        <dt>
+
+          <code><a href="par_names-generic.html">par_names()</a></code> <code><a href="par_names-generic.html">`par_names&lt;-`()</a></code>
+
+        </dt>
+        <dd>generic par_names getter</dd>
+
+        <dt>
+
+          <code><a href="population_ests-generic.html">population_ests()</a></code> <code><a href="population_ests-generic.html">`population_ests&lt;-`()</a></code>
+
+        </dt>
+        <dd>generic population_ests setter</dd>
+
+        <dt>
+
+          <code><a href="prior_pars-generic.html">prior_pars()</a></code> <code><a href="prior_pars-generic.html">`prior_pars&lt;-`()</a></code>
+
+        </dt>
+        <dd>generic prior_pars getter</dd>
+
+        <dt>
+
+          <code><a href="runtime-generic.html">runtime()</a></code> <code><a href="runtime-generic.html">`runtime&lt;-`()</a></code>
+
+        </dt>
+        <dd>generic runtime getter</dd>
       </dl></div>
   </main></div>
 

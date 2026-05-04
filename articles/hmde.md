@@ -11,6 +11,7 @@ functions.
 development version of `hmde` from [GitHub](https://github.com/) with:
 
 ``` r
+
 # install.packages("remotes")
 remotes::install_github("traitecoevo/hmde")
 ```
@@ -21,7 +22,11 @@ We treat growth as the continuous rate of change for size, and fit
 size-dependent growth functions. The repeat survey data requires
 multiple measurements from the same individuals over time that can be
 connected up as
-$$size\left( t_{j + 1} \right) = size\left( t_{j} \right) + growth\left( {\text{from}\mspace{6mu}}t_{j}{\mspace{6mu}\text{to}\mspace{6mu}}t_{j + 1} \right).$$
+``` math
+\begin{equation}\tag{1}\label{eqn_1}
+size(t_{j+1}) = size(t_{j}) + growth(\text{from }t_j\text{ to }t_{j+1}).
+\end{equation}
+```
 
 We assume that different individuals will have variation in the
 specifics of their growth function governed by the function parameters,
@@ -30,28 +35,36 @@ function description.
 
 ### Notation
 
-For notation we will express the true size for individual $i$ at time
-$t_{j}$ as $Y_{i}\left( t_{j} \right)$, the growth function as $f$, and
-a parameter of individual $i$ as $\beta_{i}$. So Equation can be
-expressed as
-$$Y_{i}\left( t_{j + 1} \right) = Y_{i}\left( t_{j} \right) + \int_{t_{j}}^{t_{j + 1}}f\left( Y(t),\beta_{i} \right)\, dt$$
+For notation we will express the true size for individual $`i`$ at time
+$`t_j`$ as $`Y_i(t_j)`$, the growth function as $`f`$, and a parameter
+of individual $`i`$ as $`\beta_i`$. So Equation can be expressed as
+``` math
+\begin{equation}\tag{2}\label{eqn_2_longitudinal}
+Y_i(t_{j+1}) = Y_i(t_j) + \int_{t_j}^{t_{j+1}} f(Y(t), \beta_i)\,dt
+\end{equation}
+```
 where the integral adds up all the growth over the intervening time.
 Each model we use will comes with its specific growth parameters that we
 will describe. Some are more biologically interpretable than others. We
 don’t assume that we see the true sizes, and instead have observed size
-$$y_{ij} = Y_{i}\left( t_{j} \right) + {\mspace{6mu}\text{error}}.$$ We
-have assumed normally distributed error in `hmde`,this has proven
+``` math
+y_{ij} = Y_i(t_j) + \text{ error}.
+```
+We have assumed normally distributed error in `hmde`,this has proven
 reasonably robust in simulation for a more general size-dependent error
-model. For details see O’Brien, Warton, and Falster (2024).
+model. For details see O’Brien et al. (2024).
 
 Due to the hierarchical structure of the statistical model, we have
 distributions that govern the behaviour of growth parameters. If we are
 modeling only a single individual, we don’t worry about the underlying
 distribution so much. If we have multiple individuals then we have a
 distribution with hyper-parameters that acts as a population-level
-feature, so $$\beta_{i} \sim \log\mathcal{N}(\mu,\sigma)$$ for example,
-and we can examine the behaviour of the mean and standard deviation as
-population-level features.
+feature, so
+``` math
+\beta_i \sim \log\mathcal{N}(\mu, \sigma)
+```
+for example, and we can examine the behaviour of the mean and standard
+deviation as population-level features.
 
 ## `hmde` supported growth functions
 
@@ -76,6 +89,7 @@ growth functions that are supported in `hmde`. You can find these on our
 website or you can view these in R using:
 
 ``` r
+
 vignettes("constant-growth")
 vignettes("von-bertalanffy")
 vignettes("canham")
@@ -86,7 +100,7 @@ in the context of the survey process as data availability is a key
 factor in determining which functions can be used. We will not discuss
 the mathematical and statistical theory in depth, if that is of
 interest, check out the vignette ‘hmde for Mathematicians’ or check out
-the methodology paper O’Brien, Warton, and Falster (2024).
+the methodology paper O’Brien et al. (2024).
 
 ## References
 

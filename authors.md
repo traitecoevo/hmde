@@ -16,16 +16,16 @@
 ## Citation
 
 Source:
-[`DESCRIPTION`](https://github.com/traitecoevo/hmde/blob/1.3.1/DESCRIPTION)
+[`DESCRIPTION`](https://github.com/traitecoevo/hmde/blob/master/DESCRIPTION)
 
-Falster D, O'Brien T, Warton D (2025). *hmde: Hierarchical Methods for
-Differential Equations*. R package version 1.3.1,
+Falster D, O'Brien T, Warton D (2026). *hmde: Hierarchical Methods for
+Differential Equations*. R package version 1.4.0,
 <https://traitecoevo.github.io/hmde/>.
 
     @Manual{,
       title = {hmde: Hierarchical Methods for Differential Equations},
       author = {Daniel Falster and Tess O'Brien and David Warton},
-      year = {2025},
-      note = {R package version 1.3.1},
+      year = {2026},
+      note = {R package version 1.4.0},
       url = {https://traitecoevo.github.io/hmde/},
     }

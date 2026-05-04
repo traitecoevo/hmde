@@ -20,24 +20,32 @@ file here.
 
 ## The Maths
 
-The general use case is to estimate a vector of parameters $\theta$ for
-a chosen differential equation
-$$f\left( Y(t),\theta \right) = \frac{dY}{dt}$$ based on the
-longitudinal structure
-$$Y\left( t_{j + 1} \right) = Y\left( t_{j} \right) + \int_{t_{j}}^{t_{j + 1}}f\left( Y(t),\theta \right)\, dt.$$
+The general use case is to estimate a vector of parameters $`\theta`$
+for a chosen differential equation
+``` math
+f\left( Y \left( t \right), \theta \right) = \frac{dY}{dt}
+```
+based on the longitudinal structure
+``` math
+Y \left( t_{j+1} \right) = Y\left( t_j \right) + \int_{t_j}^{t_{j+1}}f\left( Y \left( t \right), \theta \right)\,dt. 
+```
 
-The input data are observations of the form $y_{ij}$ for individual $i$
-at time $t_{j}$, with repeated observations coming from the same
-individual. We parameterise $f$ at the individual level by estimating
-$\theta_{i}$ as the vector of parameters. We have hyper-parameters that
-determine the distribution of $\theta_{i}$ with typical prior
+The input data are observations of the form $`y_{ij}`$ for individual
+$`i`$ at time $`t_j`$, with repeated observations coming from the same
+individual. We parameterise $`f`$ at the individual level by estimating
+$`\theta_i`$ as the vector of parameters. We have hyper-parameters that
+determine the distribution of $`\theta_i`$ with typical prior
 distribution
-$$\theta_{i} \sim \log\mathcal{N}\left( \mu_{\log{(\theta)}},\sigma_{\log{(\theta)}} \right),$$
-where $\mu_{\log{(\theta)}}$ and $\sigma_{\log{(\theta)}}$ are vectors
-of means and standard deviations. In the case of a single individual,
-these are chosen prior values. In the case of a multi-individual model
-$\mu_{\log{(\theta)}}$ and $\sigma_{\log{(\theta)}}$ have their own
-prior distributions and are fit to data.
+``` math
+\theta_i \sim \log \mathcal{N}\left(\mu_{\log\left(\theta\right)}, \sigma_{\log \left( \theta \right)}\right), 
+```
+where $`\mu_{\log\left(\theta\right)}`$ and
+$`\sigma_{\log\left(\theta\right)}`$ are vectors of means and standard
+deviations. In the case of a single individual, these are chosen prior
+values. In the case of a multi-individual model
+$`\mu_{\log\left(\theta\right)}`$ and
+$`\sigma_{\log\left(\theta\right)}`$ have their own prior distributions
+and are fit to data.
 
 ## Implemented Models
 
@@ -47,25 +55,32 @@ version for a single individual and multiple individuals.
 ### Constant Model
 
 The constant model is given by
-$$f\left( Y(t),\beta \right) = \frac{dY}{dt} = \beta,$$ and is best
-understood as describing the average rate of change over time.
+``` math
+f \left( Y \left( t \right), \beta \right) = \frac{dY}{dt} = \beta,
+```
+and is best understood as describing the average rate of change over
+time.
 
 ### von Bertalanffy
 
 The von Bertalanffy mode is given by
-$$f\left( Y(t),\beta,Y_{max} \right) = \frac{dY}{dt} = \beta\left( Y_{max} - Y(t) \right),$$
-where $\beta$ is the growth rate parameter and $Y_{max}$ is the maximum
-value that $Y$ takes.
+``` math
+f \left( Y \left( t \right), \beta, Y_{max} \right) = \frac{dY}{dt} = \beta \left( Y_{max} - Y \left( t \right) \right),
+```
+where $`\beta`$ is the growth rate parameter and $`Y_{max}`$ is the
+maximum value that $`Y`$ takes.
 
 ### Canham
 
 The Canham ([Canham et
 al. 2004](https://doi.org/10.1890/1051-0761(2006)016%5B0540:NAOCTC%5D2.0.CO;2))
 model is a hump-shaped function given by
-$$f\left( Y(t),f_{max},Y_{max},k \right) = \frac{dY}{dt} = f_{max}\exp( - \frac{1}{2}(\frac{\ln\left( Y(t)/Y_{max} \right)}{k})^{2}),$$
-where $f_{max}$ is the maximum growth rate, $Y_{max}$ is the $Y$-value
-at which that maximum occurs, and $k$ controls how narrow or wide the
-peak is.
+``` math
+f \left( Y \left( t \right), f_{max}, Y_{max}, k \right) = \frac{dY}{dt} = f_{max} \exp \Bigg( -\frac{1}{2} \bigg( \frac{ \ln \left( Y \left( t \right) / Y_{max} \right) }{k} \bigg)^2 \Bigg), 
+```
+where $`f_{max}`$ is the maximum growth rate, $`Y_{max}`$ is the
+$`Y`$-value at which that maximum occurs, and $`k`$ controls how narrow
+or wide the peak is.
 
 ## Installation
 
@@ -73,6 +88,7 @@ peak is.
 developmental version of ‘hmde’ from [GitHub](https://github.com/) with:
 
 ``` r
+
 # install.packages("remotes")
 remotes::install_github("traitecoevo/hmde")
 ```
@@ -82,17 +98,21 @@ remotes::install_github("traitecoevo/hmde")
 Create constant growth data with measurement error:
 
 ``` r
+
 library(hmde)
 y_obs <- seq(from=2, to=15, length.out=10) + rnorm(10, 0, 0.1)
 ```
 
 Measurement error is necessary as otherwise the normal likelihood
-$$s_{ij} \sim \mathcal{N}\left( 0,\sigma_{e} \right)$$ blows up as
-$\sigma_{e}$ approaches 0.
+``` math
+s_{ij} \sim \mathcal{N}\left( 0, \sigma_e \right)
+```
+blows up as $`\sigma_e`$ approaches 0.
 
 Fit the model:
 
 ``` r
+
 constant_fit <- hmde_model("constant_single_ind") |>
         hmde_assign_data(n_obs = 10,                  #Integer
                          y_obs = y_obs,               #vector length n_obs

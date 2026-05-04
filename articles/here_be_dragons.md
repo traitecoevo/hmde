@@ -3,6 +3,7 @@
 ### Load dependencies
 
 ``` r
+
 #remotes::install_github("traitecoevo/hmde")
 
 library(hmde)
@@ -37,74 +38,90 @@ adaptive step sizes where analytic solutions are not available.
 
 The underlying issue is that if, given errors in the chosen numerical
 integration method, two sets of parameters for a differential equation
-$f$ give “the same” (more in a second) output for
-$$Y\left( t_{j + 1} \right) = Y\left( t_{j} \right) + \int_{t_{j}}^{t_{j + 1}}f\left( Y(t),{\mathbf{θ}} \right)\, dt\qquad(1)$$
+$`f`$ give “the same” (more in a second) output for
+``` math
+Y(t_{j+1}) = Y(t_j) + \int_{t_j}^{t_{j+1}} f(Y(t), \boldsymbol{\theta})\,dt\qquad (1)
+```
 the MCMC sampler will be unable to meaningfully distinguish the
 parameter combinations. What you see in practice is chains converging to
 extremely different parameter combinations, one of which is the \`true’
 combination, the other of which is wrong but produces the same
-$\widehat{Y}\left( t_{j} \right)$ values due to the numerical error.
-Thus, there is a form of non-identifiability that arises from numerical
-errors in a longitudinal model based on Equation (1) that are separate
-to other issues of non-identifiability, and currently under-explored in
-the literature. In this demonstration we use a Runge-Kutta 4th order
+$`\hat{Y}(t_j)`$ values due to the numerical error. Thus, there is a
+form of non-identifiability that arises from numerical errors in a
+longitudinal model based on Equation (1) that are separate to other
+issues of non-identifiability, and currently under-explored in the
+literature. In this demonstration we use a Runge-Kutta 4th order
 numerical method () with different step sizes to show that even ‘small’
 step sizes can give problems.
 
-It is important to state that “the same” $Y(t)$ values in this context
+It is important to state that “the same” $`Y(t)`$ values in this context
 means within statistical error of each other. We assume that our data
-consists of observations of the form $y_{j}$ at time $t_{j}$ that look
-like $$y_{j} = Y\left( t_{j} \right) + \text{error},$$ and have some
-finite level of precision. The numerical method may produce estimated
-values $\widehat{Y}\left( t_{j} \right)$ that differ by some amount that
-is much smaller than the level of precision or observation error for the
-different parameter combinations, but due to the imprecision of the
-measurement process the MCMC sampler cannot meaningfully distinguish the
-estimates.
+consists of observations of the form $`y_{j}`$ at time $`t_j`$ that look
+like
+``` math
+y_j = Y(t_j) + \text{error},
+```
+and have some finite level of precision. The numerical method may
+produce estimated values $`\hat{Y}(t_j)`$ that differ by some amount
+that is much smaller than the level of precision or observation error
+for the different parameter combinations, but due to the imprecision of
+the measurement process the MCMC sampler cannot meaningfully distinguish
+the estimates.
 
 For this demonstration we will simulate data as though it is measured in
 centimetres. We use rounding to produce simulated data with measurement
-precision of 0.1cm, and error of $\mathcal{N}(0,0.1)$, analogous to the
-1mm measurement precision and approximate standard deviation of the
-real-world source data used in O’Brien, Warton, and Falster (2024).
+precision of 0.1cm, and error of $`\mathcal{N}(0, 0.1)`$, analogous to
+the 1mm measurement precision and approximate standard deviation of the
+real-world source data used in O’Brien et al. (2024).
 
 ### The model
 
 We are implementing a longitudinal model of the form in Equation (1)
 within a hierarchical Bayesian longitudinal model where
-$$f\left( Y(t),\beta_{0},\beta_{1} \right) = \beta_{0} - \beta_{1}Y(t)\qquad(2)$$
+``` math
+f(Y(t), \beta_0, \beta_1) = \beta_0 - \beta_1 Y(t)\qquad (2)
+```
 Equation (2) is known to produce pathological behaviour from numerical
 methods (Butcher 2016), so serves as an ideal simple example of the
 interaction between those pathologies and the MCMC sampling process. For
 the purpose of estimation we shift Equation (2) by the mean observed
 size which gives
-$$f_{fit}\left( Y(t),\beta_{c},\beta_{1} \right) = \beta_{c} - \beta_{1}\left( Y(t) - \bar{y} \right),$$
+``` math
+f_{fit}(Y(t), \beta_c, \beta_1) = \beta_c - \beta_1(Y(t) - \bar{y}),
+```
 then the back-transformation
-$$\beta_{0} = \beta_{c} + \beta_{1}\bar{y}.$$
+``` math
+\beta_0 = \beta_c + \beta_1 \bar{y}.
+```
 
-We are attempting to estimate the parameters $\beta_{0}$ and $\beta_{1}$
-from observations $y_{j}$, which is based on estimating
-${\widehat{Y}}_{j}$ given the prior distribution
-$$y_{j} \sim \mathcal{N}\left( {\widehat{Y}}_{j},0.1 \right).$$
+We are attempting to estimate the parameters $`\beta_0`$ and $`\beta_1`$
+from observations $`y_j`$, which is based on estimating $`\hat{Y}_j`$
+given the prior distribution
+``` math
+y_j \sim \mathcal{N}(\hat{Y}_j, 0.1).
+```
 
 As we are looking at a single individual, we have prior distributions
 for the default parameters which are
-$$\beta_{1},\beta_{c} \sim \log\mathcal{N}(0,2),$$ and enforce
-$\beta_{k} > 0$.
+``` math
+\beta_1, \beta_c \sim \log\mathcal{N}(0,2),
+```
+and enforce $`\beta_k > 0`$.
 
 ### Simulating data
 
-For this demo code we use $\beta_{0} = 10$ and $\beta_{1} = 1$, which
+For this demo code we use $`\beta_0 = 10`$ and $`\beta_1 = 1`$, which
 gives an asymptotic size of 10. If you wish to experiment with other
 values, input them in the next block and the rest will run based on
 that. We use the analytic solution to simulate true sizes over time,
 then add measurement error and round to the chosen measurement precision
 of 0.1cm to give a sequence of observations over time that become the
 `y_obs` data for the model fit. Notice that `y_obs` can produces values
-that are bigger than the theoretical asymptotic size
-$\beta_{0}/\beta_{1}$ due to error.
+that are bigger than the theoretical asymptotic size $`\beta_0/\beta_1`$
+due to error.
 
 ``` r
+
 #Change these values to change the model parameters. Must be positive values.
 beta_0 <- 10
 beta_1 <- 1
@@ -136,6 +153,7 @@ From the analytic solution we produce observations by adding measurement
 error and rounding to a precision of 0.1.
 
 ``` r
+
 #Produce observations with error and limited precision
 y_obs <- round(y_true + rnorm(length(y_true), 0, 0.1), digits = 1)
 
@@ -144,6 +162,7 @@ y_obs <- round(y_true + rnorm(length(y_true), 0, 0.1), digits = 1)
 
 #Observed data frame
 obs_data_frame <- tibble(
+  ind_id = 1,
   time = time,
   y_obs = y_obs,
   obs_index = 1:length(y_obs)
@@ -172,6 +191,7 @@ sizes_over_time
 ![](here_be_dragons_files/figure-html/unnamed-chunk-4-1.png)
 
 ``` r
+
 
 #Have a look at the observations against the analytic solution
 analytic_observed <- ggplot(obs_data_frame, aes(x = time, y = y_obs)) +
@@ -209,11 +229,11 @@ posterior can be constrained by such methods.
 
 We’re going to run 100 fits with a step size of 1 using the custom RK4
 solver and a single chain each. Each chain is expected to converge to a
-parameter combination that gives estimated
-$\widehat{Y}\left( t_{j} \right)$ close to the analytic solution, but
-which combination is converged to is random. We do single chains because
-each can fall into the numerical error trap, and the easiest way to
-identify that trap is to extract the estimates afterwards.
+parameter combination that gives estimated $`\hat{Y}(t_j)`$ close to the
+analytic solution, but which combination is converged to is random. We
+do single chains because each can fall into the numerical error trap,
+and the easiest way to identify that trap is to extract the estimates
+afterwards.
 
 Each fit takes a few seconds to run, so allow several minutes for the
 following block. There are likely to be diagnostic problems but that is
@@ -223,6 +243,8 @@ very different parameter estimates we see. Results are hidden for this
 block.
 
 ``` r
+
+set.seed(2026) #For replicable results
 runs <- 100
 step_size = 0.5
 par_est_tibble <- tibble(run = c(),
@@ -233,26 +255,26 @@ par_est_tibble <- tibble(run = c(),
 for(i in 1:runs){
   #Run the model
   suppressWarnings(
-    fit <- hmde_model("affine_single_ind") |>
-    hmde_assign_data(n_obs = nrow(obs_data_frame),
-                     y_obs = obs_data_frame$y_obs,
-                     obs_index = obs_data_frame$obs_index,
-                     time = obs_data_frame$time,
-                     y_bar = mean(obs_data_frame$y_obs),
-                     step_size = step_size,
-                     int_method = 1)  |>  #RK4
+    fit <- hmde_data_template("affine_single_ind",
+                              n_obs = nrow(obs_data_frame),
+                              y_obs = obs_data_frame$y_obs,
+                              obs_index = obs_data_frame$obs_index,
+                              time = obs_data_frame$time,
+                              y_bar = mean(obs_data_frame$y_obs),
+                              step_size = step_size,
+                              int_method = 1)  |>  #RK4
     hmde_run(chains = 1, cores = 1, iter = 2000)
   )
   
   #Extract parameter estimates
-  ests <- hmde_extract_estimates(fit = fit,
-                                 input_measurement_data = obs_data_frame)
+  ests <- hmde_estimates(fit = fit,
+                         obs_data = obs_data_frame)
   
   temp <- tibble(
     run = i,
     step_size = step_size,
-    beta_0 = ests$individual_data$ind_beta_0_mean,
-    beta_1 = ests$individual_data$ind_beta_1_mean
+    beta_0 = individual_ests(ests)[["ind_beta_0_mean"]],
+    beta_1 = individual_ests(ests)[["ind_beta_1_mean"]]
   )
   
   par_est_tibble <- rbind(par_est_tibble, temp)
@@ -272,6 +294,7 @@ threshold for extreme values because of the bimodality and distance
 between clusters.
 
 ``` r
+
 step_size_mix_models <- list()
 step_size_mix_model_plots <- list()
 step_size_mix_models_par_ests <- tibble(
@@ -338,10 +361,10 @@ for(i in 1:length(unique(par_est_tibble$step_size))){
 #> [1] "Summary of mixture model for step size 0.5"
 #> summary of mvnormalmixEM object:
 #>          comp 1   comp 2
-#> lambda 0.670000  0.33000
-#> mu1    9.810421 49.16390
-#> mu2    0.980554  4.92054
-#> loglik at estimate:  992.063 
+#> lambda 0.640000  0.36000
+#> mu1    9.811281 49.16118
+#> mu2    0.980647  4.92053
+#> loglik at estimate:  974.1422 
 #> NULL
 ```
 
@@ -349,12 +372,13 @@ for(i in 1:length(unique(par_est_tibble$step_size))){
 
 ``` r
 
+
 #Have a look at the estimates
 step_size_mix_models_par_ests
 #> # A tibble: 1 × 7
 #>   good_beta_0 good_beta_1 error_beta_0 error_beta_1 step_size error_prob dist   
 #>         <dbl>       <dbl>        <dbl>        <dbl>     <dbl>      <dbl> <dist> 
-#> 1        9.81       0.981         49.2         4.92       0.5       0.33 39.550…
+#> 1        9.81       0.981         49.2         4.92       0.5       0.36 39.546…
 ```
 
 We get bimodality in the posterior distributions. If you look at
@@ -369,6 +393,7 @@ second mode shifts based on the step size.
 Some aesthetics before plots.
 
 ``` r
+
 legend_spec <- tibble(
   step_size_name = c("0.5", "0.25", "0.125"),
   step_size = c(0.5, 0.25, 0.125),
@@ -437,6 +462,7 @@ cluster’s multivariate normal distribution identified by the finite
 mixture model.
 
 ``` r
+
 scatterplot_errors_only <- list()
 scatterplot_good_only <- list()
 
@@ -516,6 +542,7 @@ implementation of RK4 and allows us to choose the step sizes using the
 time parameter.
 
 ``` r
+
 #install.packages("deSolve")
 library(deSolve)
 
@@ -541,6 +568,7 @@ parameter estimates.
 First we generate the numerical and analytic solution data.
 
 ``` r
+
 yini  <- c(Y = true_y_0) #Initial condition
 y_over_time <- tibble(model="True Sizes",
                       y_analytic = y_true,
@@ -579,6 +607,7 @@ bad parameter combinations across different step sizes, compared to the
 true values.
 
 ``` r
+
 y_over_time_filtered <- y_over_time %>%
   filter(time %in% 0:max_time)
   
@@ -609,9 +638,10 @@ To demonstrate that a smaller step size to test the method is enough to
 identify bad estimates, we show that RK4 with step size 0.001 diverges
 from the true sizes over time. The lines in this plot are based on the
 small step size numerical estimates, while the points come from the
-$Y\left( t_{j} \right)$ values for the discrete observation times.
+$`Y(t_j)`$ values for the discrete observation times.
 
 ``` r
+
 #Generate y(t) with RK4 given the parameter estimates
 y_over_time_smallstep <- tibble(model=legend_spec_with_true$fancy_name[4],
                       y_hat = y_true,
@@ -676,6 +706,7 @@ exploit the fact that they are straight lines rather than plotting the
 functions properly.
 
 ``` r
+
 #Get asymptotic size
 step_size_mix_models_par_ests$Y_max <- step_size_mix_models_par_ests$error_beta_0/step_size_mix_models_par_ests$error_beta_1
 
@@ -712,6 +743,7 @@ error_de_plot
 ![](here_be_dragons_files/figure-html/unnamed-chunk-13-1.png)
 
 ``` r
+
 
 #Plot analytic solutions
 error_solution_plot <- ggplot() +
@@ -759,8 +791,8 @@ error_solution_plot
 ```
 
 ![](here_be_dragons_files/figure-html/unnamed-chunk-13-2.png) The
-limiting behaviour at $\beta_{0}/\beta_{1}$ is consistent, what changes
-is how fast line approaches the asymptote.
+limiting behaviour at $`\beta_0/\beta_1`$ is consistent, what changes is
+how fast line approaches the asymptote.
 
 ## Where to from here?
 
