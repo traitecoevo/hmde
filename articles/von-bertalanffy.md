@@ -184,8 +184,8 @@ lizard_vb_fit <- hmde_data_template("vb_multi_ind",
 #> 
 #> SAMPLING FOR MODEL 'vb_multi_ind' NOW (CHAIN 1).
 #> Chain 1: 
-#> Chain 1: Gradient evaluation took 0.000193 seconds
-#> Chain 1: 1000 transitions using 10 leapfrog steps per transition would take 1.93 seconds.
+#> Chain 1: Gradient evaluation took 0.000122 seconds
+#> Chain 1: 1000 transitions using 10 leapfrog steps per transition would take 1.22 seconds.
 #> Chain 1: Adjust your expectations accordingly!
 #> Chain 1: 
 #> Chain 1: 
@@ -202,15 +202,15 @@ lizard_vb_fit <- hmde_data_template("vb_multi_ind",
 #> Chain 1: Iteration: 1800 / 2000 [ 90%]  (Sampling)
 #> Chain 1: Iteration: 2000 / 2000 [100%]  (Sampling)
 #> Chain 1: 
-#> Chain 1:  Elapsed Time: 18.595 seconds (Warm-up)
-#> Chain 1:                5.508 seconds (Sampling)
-#> Chain 1:                24.103 seconds (Total)
+#> Chain 1:  Elapsed Time: 9.391 seconds (Warm-up)
+#> Chain 1:                2.808 seconds (Sampling)
+#> Chain 1:                12.199 seconds (Total)
 #> Chain 1: 
 #> 
 #> SAMPLING FOR MODEL 'vb_multi_ind' NOW (CHAIN 2).
 #> Chain 2: 
-#> Chain 2: Gradient evaluation took 0.000119 seconds
-#> Chain 2: 1000 transitions using 10 leapfrog steps per transition would take 1.19 seconds.
+#> Chain 2: Gradient evaluation took 6.6e-05 seconds
+#> Chain 2: 1000 transitions using 10 leapfrog steps per transition would take 0.66 seconds.
 #> Chain 2: Adjust your expectations accordingly!
 #> Chain 2: 
 #> Chain 2: 
@@ -227,15 +227,15 @@ lizard_vb_fit <- hmde_data_template("vb_multi_ind",
 #> Chain 2: Iteration: 1800 / 2000 [ 90%]  (Sampling)
 #> Chain 2: Iteration: 2000 / 2000 [100%]  (Sampling)
 #> Chain 2: 
-#> Chain 2:  Elapsed Time: 9.381 seconds (Warm-up)
-#> Chain 2:                2.903 seconds (Sampling)
-#> Chain 2:                12.284 seconds (Total)
+#> Chain 2:  Elapsed Time: 4.755 seconds (Warm-up)
+#> Chain 2:                1.492 seconds (Sampling)
+#> Chain 2:                6.247 seconds (Total)
 #> Chain 2: 
 #> 
 #> SAMPLING FOR MODEL 'vb_multi_ind' NOW (CHAIN 3).
 #> Chain 3: 
-#> Chain 3: Gradient evaluation took 0.000108 seconds
-#> Chain 3: 1000 transitions using 10 leapfrog steps per transition would take 1.08 seconds.
+#> Chain 3: Gradient evaluation took 5.6e-05 seconds
+#> Chain 3: 1000 transitions using 10 leapfrog steps per transition would take 0.56 seconds.
 #> Chain 3: Adjust your expectations accordingly!
 #> Chain 3: 
 #> Chain 3: 
@@ -252,15 +252,15 @@ lizard_vb_fit <- hmde_data_template("vb_multi_ind",
 #> Chain 3: Iteration: 1800 / 2000 [ 90%]  (Sampling)
 #> Chain 3: Iteration: 2000 / 2000 [100%]  (Sampling)
 #> Chain 3: 
-#> Chain 3:  Elapsed Time: 6.195 seconds (Warm-up)
-#> Chain 3:                2.969 seconds (Sampling)
-#> Chain 3:                9.164 seconds (Total)
+#> Chain 3:  Elapsed Time: 3.157 seconds (Warm-up)
+#> Chain 3:                1.526 seconds (Sampling)
+#> Chain 3:                4.683 seconds (Total)
 #> Chain 3: 
 #> 
 #> SAMPLING FOR MODEL 'vb_multi_ind' NOW (CHAIN 4).
 #> Chain 4: 
-#> Chain 4: Gradient evaluation took 0.000108 seconds
-#> Chain 4: 1000 transitions using 10 leapfrog steps per transition would take 1.08 seconds.
+#> Chain 4: Gradient evaluation took 6.7e-05 seconds
+#> Chain 4: 1000 transitions using 10 leapfrog steps per transition would take 0.67 seconds.
 #> Chain 4: Adjust your expectations accordingly!
 #> Chain 4: 
 #> Chain 4: 
@@ -277,9 +277,9 @@ lizard_vb_fit <- hmde_data_template("vb_multi_ind",
 #> Chain 4: Iteration: 1800 / 2000 [ 90%]  (Sampling)
 #> Chain 4: Iteration: 2000 / 2000 [100%]  (Sampling)
 #> Chain 4: 
-#> Chain 4:  Elapsed Time: 6.412 seconds (Warm-up)
-#> Chain 4:                15.867 seconds (Sampling)
-#> Chain 4:                22.279 seconds (Total)
+#> Chain 4:  Elapsed Time: 3.257 seconds (Warm-up)
+#> Chain 4:                8.015 seconds (Sampling)
+#> Chain 4:                11.272 seconds (Total)
 #> Chain 4:
 #> Warning: There were 397 divergent transitions after warmup. See
 #> https://mc-stan.org/misc/warnings.html#divergent-transitions-after-warmup

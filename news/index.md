@@ -1,7 +1,9 @@
 # Changelog
 
-## hmde 1.3.1
+## hmde 1.4
 
-CRAN release: 2025-12-23
-
-- Finalised and added vignettes to package.
+- Re-built for the S4 object-oriented standard
+- New workflow incorporating two special classes: the hmde_data_template
+  class that structures input to the Stan model, and the hmde_estimates
+  class that provides a coherent data structure for parameter estimates
+  and prior information.
