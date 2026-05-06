@@ -324,15 +324,15 @@ trout_constant_fit <- hmde_data_template("constant_multi_ind",
 #> Chain 1: Iteration: 1800 / 2000 [ 90%]  (Sampling)
 #> Chain 1: Iteration: 2000 / 2000 [100%]  (Sampling)
 #> Chain 1: 
-#> Chain 1:  Elapsed Time: 0.606 seconds (Warm-up)
-#> Chain 1:                0.434 seconds (Sampling)
-#> Chain 1:                1.04 seconds (Total)
+#> Chain 1:  Elapsed Time: 0.446 seconds (Warm-up)
+#> Chain 1:                0.332 seconds (Sampling)
+#> Chain 1:                0.778 seconds (Total)
 #> Chain 1: 
 #> 
 #> SAMPLING FOR MODEL 'constant_multi_ind' NOW (CHAIN 2).
 #> Chain 2: 
-#> Chain 2: Gradient evaluation took 2.2e-05 seconds
-#> Chain 2: 1000 transitions using 10 leapfrog steps per transition would take 0.22 seconds.
+#> Chain 2: Gradient evaluation took 2.3e-05 seconds
+#> Chain 2: 1000 transitions using 10 leapfrog steps per transition would take 0.23 seconds.
 #> Chain 2: Adjust your expectations accordingly!
 #> Chain 2: 
 #> Chain 2: 
@@ -349,15 +349,15 @@ trout_constant_fit <- hmde_data_template("constant_multi_ind",
 #> Chain 2: Iteration: 1800 / 2000 [ 90%]  (Sampling)
 #> Chain 2: Iteration: 2000 / 2000 [100%]  (Sampling)
 #> Chain 2: 
-#> Chain 2:  Elapsed Time: 0.588 seconds (Warm-up)
-#> Chain 2:                0.528 seconds (Sampling)
-#> Chain 2:                1.116 seconds (Total)
+#> Chain 2:  Elapsed Time: 0.444 seconds (Warm-up)
+#> Chain 2:                0.397 seconds (Sampling)
+#> Chain 2:                0.841 seconds (Total)
 #> Chain 2: 
 #> 
 #> SAMPLING FOR MODEL 'constant_multi_ind' NOW (CHAIN 3).
 #> Chain 3: 
-#> Chain 3: Gradient evaluation took 2.3e-05 seconds
-#> Chain 3: 1000 transitions using 10 leapfrog steps per transition would take 0.23 seconds.
+#> Chain 3: Gradient evaluation took 2e-05 seconds
+#> Chain 3: 1000 transitions using 10 leapfrog steps per transition would take 0.2 seconds.
 #> Chain 3: Adjust your expectations accordingly!
 #> Chain 3: 
 #> Chain 3: 
@@ -374,15 +374,15 @@ trout_constant_fit <- hmde_data_template("constant_multi_ind",
 #> Chain 3: Iteration: 1800 / 2000 [ 90%]  (Sampling)
 #> Chain 3: Iteration: 2000 / 2000 [100%]  (Sampling)
 #> Chain 3: 
-#> Chain 3:  Elapsed Time: 0.589 seconds (Warm-up)
-#> Chain 3:                0.546 seconds (Sampling)
-#> Chain 3:                1.135 seconds (Total)
+#> Chain 3:  Elapsed Time: 0.447 seconds (Warm-up)
+#> Chain 3:                0.414 seconds (Sampling)
+#> Chain 3:                0.861 seconds (Total)
 #> Chain 3: 
 #> 
 #> SAMPLING FOR MODEL 'constant_multi_ind' NOW (CHAIN 4).
 #> Chain 4: 
-#> Chain 4: Gradient evaluation took 2.5e-05 seconds
-#> Chain 4: 1000 transitions using 10 leapfrog steps per transition would take 0.25 seconds.
+#> Chain 4: Gradient evaluation took 2e-05 seconds
+#> Chain 4: 1000 transitions using 10 leapfrog steps per transition would take 0.2 seconds.
 #> Chain 4: Adjust your expectations accordingly!
 #> Chain 4: 
 #> Chain 4: 
@@ -399,9 +399,9 @@ trout_constant_fit <- hmde_data_template("constant_multi_ind",
 #> Chain 4: Iteration: 1800 / 2000 [ 90%]  (Sampling)
 #> Chain 4: Iteration: 2000 / 2000 [100%]  (Sampling)
 #> Chain 4: 
-#> Chain 4:  Elapsed Time: 0.74 seconds (Warm-up)
-#> Chain 4:                0.404 seconds (Sampling)
-#> Chain 4:                1.144 seconds (Total)
+#> Chain 4:  Elapsed Time: 0.556 seconds (Warm-up)
+#> Chain 4:                0.292 seconds (Sampling)
+#> Chain 4:                0.848 seconds (Total)
 #> Chain 4:
 ```
 
