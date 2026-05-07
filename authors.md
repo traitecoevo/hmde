@@ -16,7 +16,7 @@
 ## Citation
 
 Source:
-[`DESCRIPTION`](https://github.com/traitecoevo/hmde/blob/1.4/DESCRIPTION)
+[`DESCRIPTION`](https://github.com/traitecoevo/hmde/blob/master/DESCRIPTION)
 
 Falster D, O'Brien T, Warton D (2026). *hmde: Hierarchical Methods for
 Differential Equations*. R package version 1.4.0,

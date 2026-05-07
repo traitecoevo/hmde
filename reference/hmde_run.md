@@ -33,8 +33,8 @@ hmde_data_template("constant_single_ind",
 #> 
 #> SAMPLING FOR MODEL 'constant_single_ind' NOW (CHAIN 1).
 #> Chain 1: 
-#> Chain 1: Gradient evaluation took 7e-06 seconds
-#> Chain 1: 1000 transitions using 10 leapfrog steps per transition would take 0.07 seconds.
+#> Chain 1: Gradient evaluation took 8e-06 seconds
+#> Chain 1: 1000 transitions using 10 leapfrog steps per transition would take 0.08 seconds.
 #> Chain 1: Adjust your expectations accordingly!
 #> Chain 1: 
 #> Chain 1: 
@@ -99,7 +99,7 @@ hmde_data_template("constant_single_ind",
 #> check_prior_pars_global_error_sigma[2]  2.00  2.00   NaN  NaN
 #> lp__                                    2.42  3.38    55 1.06
 #> 
-#> Samples were drawn using NUTS(diag_e) at Wed May  6 23:42:39 2026.
+#> Samples were drawn using NUTS(diag_e) at Thu May  7 00:05:19 2026.
 #> For each parameter, n_eff is a crude measure of effective sample size,
 #> and Rhat is the potential scale reduction factor on split chains (at 
 #> convergence, Rhat=1).
