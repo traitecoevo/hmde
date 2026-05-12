@@ -88,7 +88,21 @@ hmde_stan_names <- function(model_name){
                 affine_single_ind = c("step_size", "n_obs", "y_obs", "obs_index",
                                       "time", "y_bar", "int_method",
                                       "prior_pars_ind_const",
-                                      "prior_pars_ind_beta_1"))
+                                      "prior_pars_ind_beta_1"),
+                zeide_single_ind = c("n_obs", "y_obs", "obs_index", "time",
+                                     "prior_pars_ind_a",
+                                     "prior_pars_ind_b",
+                                     "prior_pars_ind_c",
+                                     "prior_pars_global_error_sigma"),
+                zeide_multi_ind = c("n_obs", "n_ind", "y_obs", "obs_index",
+                                    "time", "ind_id",
+                                    "prior_pars_pop_log_a_mean",
+                                    "prior_pars_pop_log_a_sd",
+                                    "prior_pars_pop_log_b_mean",
+                                    "prior_pars_pop_log_b_sd",
+                                    "prior_pars_pop_log_c_mean",
+                                    "prior_pars_pop_log_c_sd",
+                                    "prior_pars_global_error_sigma"))
 
   return(out)
 }
@@ -105,7 +119,9 @@ hmde_run_model <- function(data_list, ...) {
          canham_multi_ind = rstan::sampling(stanmodels$canham_multi_ind, data = data_list, ...),
          vb_single_ind = rstan::sampling(stanmodels$vb_single_ind, data = data_list, ...),
          vb_multi_ind = rstan::sampling(stanmodels$vb_multi_ind, data = data_list, ...),
-         affine_single_ind = rstan::sampling(stanmodels$affine_single_ind, data = data_list, ...))
+         affine_single_ind = rstan::sampling(stanmodels$affine_single_ind, data = data_list, ...),
+         zeide_single_ind = rstan::sampling(stanmodels$zeide_single_ind, data = data_list, ...),
+         zeide_multi_ind = rstan::sampling(stanmodels$zeide_multi_ind, data = data_list, ...))
 
   return(out)
 }

@@ -22,7 +22,9 @@ hmde_model_des <- function(model = NULL){
     canham_multi_ind = hmde_canham_de,
     vb_single_ind = hmde_vb_de,
     vb_multi_ind = hmde_vb_de,
-    affine_single_ind = hmde_affine_de
+    affine_single_ind = hmde_affine_de,
+    zeide_single_ind = hmde_zeide_de,
+    zeide_multi_ind = hmde_zeide_de
   )
 
   return(output)
@@ -81,4 +83,17 @@ hmde_affine_de <- function(y = NULL, pars = NULL){
   return(
     pars[[1]] - pars[[2]] * y
     )
+}
+
+#' Differential equation for Zeide YD growth single and multi-individual models
+#' @param y input real (size)
+#' @param pars list of parameters a (growth at 1-cm), b (growth expansion factor), c (growth decline factor)
+#'
+#' @return value of differential equation at y
+#' @export
+
+hmde_zeide_de <- function(y = NULL, pars = NULL){
+  return(
+    pars[[1]] * y^pars[[2]] * exp(-pars[[3]] * (y - 1))
+  )
 }

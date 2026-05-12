@@ -22,7 +22,9 @@ hmde_model_pars <- function(model=NULL){
                    canham_multi_ind = hmde_canham_multi_ind_pars(),
                    vb_single_ind = hmde_vb_single_ind_pars(),
                    vb_multi_ind = hmde_vb_multi_ind_pars(),
-                   affine_single_ind = hmde_affine_single_ind_pars())
+                   affine_single_ind = hmde_affine_single_ind_pars(),
+                   zeide_single_ind = hmde_zeide_single_ind_pars(),
+                   zeide_multi_ind = hmde_zeide_multi_ind_pars())
 
   return(output)
 }
@@ -108,4 +110,29 @@ hmde_affine_single_ind_pars <- function(){
        individual_pars_names = c("ind_beta_0", "ind_beta_1"),
        error_pars_names = c(NULL),
        model = "affine_single_ind")
+}
+
+#' Parameter names for Zeide growth single individual model
+#' @keywords internal
+#' @noRd
+
+hmde_zeide_single_ind_pars <- function(){
+  list(measurement_pars_names = c("y_hat"),
+       individual_pars_names = c("ind_a", "ind_b", "ind_c"),
+       error_pars_names = c("global_error_sigma"),
+       model = "zeide_single_ind")
+}
+
+#' Parameter names for Zeide growth multi-individual model
+#' @keywords internal
+#' @noRd
+
+hmde_zeide_multi_ind_pars <- function(){
+  list(measurement_pars_names = c("y_hat"),
+       individual_pars_names = c("ind_a", "ind_b", "ind_c"),
+       population_pars_names = c("pop_log_a_mean", "pop_log_a_sd",
+                                 "pop_log_b_mean", "pop_log_b_sd",
+                                 "pop_log_c_mean", "pop_log_c_sd"),
+       error_pars_names = c("global_error_sigma"),
+       model = "zeide_multi_ind")
 }

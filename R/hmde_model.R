@@ -23,7 +23,9 @@ hmde_model <- function(model=NULL){
                    canham_multi_ind = hmde_canham_multi_ind(),
                    vb_single_ind = hmde_vb_single_ind(),
                    vb_multi_ind = hmde_vb_multi_ind(),
-                   affine_single_ind = hmde_affine_single_ind())
+                   affine_single_ind = hmde_affine_single_ind(),
+                   zeide_single_ind = hmde_zeide_single_ind(),
+                   zeide_multi_ind = hmde_zeide_multi_ind())
 
   return(output)
 }
@@ -203,5 +205,58 @@ hmde_affine_single_ind <- function(){
       prior_pars_ind_beta_1 = c(0,2)
     ),
     par_names = hmde_model_pars("affine_single_ind")
+  )
+}
+
+#' Data configuration template for Zeide growth single individual model
+#' @keywords internal
+#' @noRd
+
+hmde_zeide_single_ind <- function(){
+  new("hmde_data_template",
+    model_name = "zeide_single_ind",
+    model_level = "single_ind",
+    obs_data = list(
+      n_obs = NA_integer_,
+      y_obs = NA_real_,
+      obs_index = NA_integer_,
+      time = NA_real_
+    ),
+    prior_pars = list(
+      prior_pars_ind_a = c(0, 0.5),
+      prior_pars_ind_b = c(-1, 0.5),
+      prior_pars_ind_c = c(-1, 0.5),
+      prior_pars_global_error_sigma = c(0, 2)
+    ),
+    par_names = hmde_model_pars("zeide_single_ind")
+  )
+}
+
+#' Data configuration template for Zeide growth multi-individual model
+#' @keywords internal
+#' @noRd
+
+hmde_zeide_multi_ind <- function(){
+  new("hmde_data_template",
+    model_name = "zeide_multi_ind",
+    model_level = "multi_ind",
+    obs_data = list(
+      n_obs = NA_integer_,
+      n_ind = NA_integer_,
+      y_obs = NA_real_,
+      obs_index = NA_integer_,
+      time = NA_real_,
+      ind_id = NA_integer_
+    ),
+    prior_pars = list(
+      prior_pars_pop_log_a_mean = c(0, 0.5),
+      prior_pars_pop_log_a_sd = c(0, 1),
+      prior_pars_pop_log_b_mean = c(-1, 0.5),
+      prior_pars_pop_log_b_sd = c(0, 1),
+      prior_pars_pop_log_c_mean = c(-1, 0.5),
+      prior_pars_pop_log_c_sd = c(0, 1),
+      prior_pars_global_error_sigma = c(0, 2)
+    ),
+    par_names = hmde_model_pars("zeide_multi_ind")
   )
 }

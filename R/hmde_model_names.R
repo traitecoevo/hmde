@@ -15,7 +15,9 @@ hmde_model_names <- function(){
               "canham_multi_ind",
               "vb_single_ind",
               "vb_multi_ind",
-              "affine_single_ind")
+              "affine_single_ind",
+              "zeide_single_ind",
+              "zeide_multi_ind")
 
   return(output)
 }
