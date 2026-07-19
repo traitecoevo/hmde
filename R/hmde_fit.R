@@ -195,3 +195,310 @@ setMethod("par_names<-", signature = "hmde_fit", function(x, value) {
   x@par_names <- value
   x
 })
+
+
+#model_name
+#' generic model_name setter
+#' @param x hmde special class object
+#' @rdname model_name-generic
+#' @aliases model_name
+#' @export
+setGeneric("model_name", function(x) standardGeneric("model_name"))
+#' generic model_name setter
+#' @param x hmde special class object
+#' @param value character string
+#' @rdname model_name-generic
+#' @aliases model_name<-
+#' @export
+setGeneric("model_name<-", function(x, value) standardGeneric("model_name<-"))
+
+#' model_name getter
+#' Getter for model_name in hmde_fit object
+#' @param x hmde_fit class object
+#' @rdname hmde_fit-class
+#' @aliases hmde_fit-class
+#' @export
+setMethod("model_name", signature = "hmde_fit", function(x) x@model_name)
+#' model_name setter
+#' Setter for model_name in hmde_fit object
+#' @param x hmde_fit class object
+#' @param value character string
+#' @rdname hmde_fit-class
+#' @aliases hmde_fit-class
+#' @export
+setMethod("model_name<-", signature = "hmde_fit", function(x, value) {
+  x@model_name <- value
+  x
+})
+
+#model_pars
+#' generic model_pars setter
+#' @param x hmde special class object
+#' @rdname model_pars-generic
+#' @aliases model_pars
+#' @export
+setGeneric("model_pars", function(x) standardGeneric("model_pars"))
+#' generic model_pars setter
+#' @param x hmde special class object
+#' @param value character vector
+#' @rdname model_pars-generic
+#' @aliases model_pars<-
+#' @export
+setGeneric("model_pars<-", function(x, value) standardGeneric("model_pars<-"))
+
+#' model_pars getter
+#' Getter for model_pars in hmde_fit object
+#' @param x hmde_fit class object
+#' @rdname hmde_fit-class
+#' @aliases hmde_fit-class
+#' @export
+setMethod("model_pars", signature = "hmde_fit", function(x) x@model_pars)
+#' model_pars setter
+#' Setter for model_pars in hmde_fit object
+#' @param x hmde_fit class object
+#' @param value character vector
+#' @rdname hmde_fit-class
+#' @aliases hmde_fit-class
+#' @export
+setMethod("model_pars<-", signature = "hmde_fit", function(x, value) {
+  x@model_pars <- value
+  x
+})
+
+#par_dims
+#' generic par_dims setter
+#' @param x hmde special class object
+#' @rdname par_dims-generic
+#' @aliases par_dims
+#' @export
+setGeneric("par_dims", function(x) standardGeneric("par_dims"))
+#' generic par_dims setter
+#' @param x hmde special class object
+#' @param value list
+#' @rdname par_dims-generic
+#' @aliases par_dims<-
+#' @export
+setGeneric("par_dims<-", function(x, value) standardGeneric("par_dims<-"))
+
+#' par_dims getter
+#' Getter for par_dims in hmde_fit object
+#' @param x hmde_fit class object
+#' @rdname hmde_fit-class
+#' @aliases hmde_fit-class
+#' @export
+setMethod("par_dims", signature = "hmde_fit", function(x) x@par_dims)
+#' par_dims setter
+#' Setter for par_dims in hmde_fit object
+#' @param x hmde_fit class object
+#' @param value list
+#' @rdname hmde_fit-class
+#' @aliases hmde_fit-class
+#' @export
+setMethod("par_dims<-", signature = "hmde_fit", function(x, value) {
+  x@par_dims <- value
+  x
+})
+
+#mode
+#' generic mode setter
+#' @param x hmde special class object
+#' @rdname mode-generic
+#' @aliases mode
+#' @export
+setGeneric("mode", function(x) standardGeneric("mode"))
+#' generic mode setter
+#' @param x hmde special class object
+#' @param value integer vector
+#' @rdname mode-generic
+#' @aliases mode<-
+#' @export
+setGeneric("mode<-", function(x, value) standardGeneric("mode<-"))
+
+#' mode getter
+#' Getter for mode in hmde_fit object
+#' @param x hmde_fit class object
+#' @rdname hmde_fit-class
+#' @aliases hmde_fit-class
+#' @export
+setMethod("mode", signature = "hmde_fit", function(x) x@mode)
+#' mode setter
+#' Setter for mode in hmde_fit object
+#' @param x hmde_fit class object
+#' @param value integer vector
+#' @rdname hmde_fit-class
+#' @aliases hmde_fit-class
+#' @export
+setMethod("mode<-", signature = "hmde_fit", function(x, value) {
+  x@mode <- value
+  x
+})
+
+#sim
+#' generic sim setter
+#' @param x hmde special class object
+#' @rdname sim-generic
+#' @aliases sim
+#' @export
+setGeneric("sim", function(x) standardGeneric("sim"))
+#' generic sim setter
+#' @param x hmde special class object
+#' @param value list
+#' @rdname sim-generic
+#' @aliases sim<-
+#' @export
+setGeneric("sim<-", function(x, value) standardGeneric("sim<-"))
+
+#' sim getter
+#' Getter for sim in hmde_fit object
+#' @param x hmde_fit class object
+#' @rdname hmde_fit-class
+#' @aliases hmde_fit-class
+#' @export
+setMethod("sim", signature = "hmde_fit", function(x) x@sim)
+#' sim setter
+#' Setter for sim in hmde_fit object
+#' @param x hmde_fit class object
+#' @param value list
+#' @rdname hmde_fit-class
+#' @aliases hmde_fit-class
+#' @export
+setMethod("sim<-", signature = "hmde_fit", function(x, value) {
+  x@sim <- value
+  x
+})
+
+#inits
+#' generic inits setter
+#' @param x hmde special class object
+#' @rdname inits-generic
+#' @aliases inits
+#' @export
+setGeneric("inits", function(x) standardGeneric("inits"))
+#' generic inits setter
+#' @param x hmde special class object
+#' @param value list
+#' @rdname inits-generic
+#' @aliases inits<-
+#' @export
+setGeneric("inits<-", function(x, value) standardGeneric("inits<-"))
+
+#' inits getter
+#' Getter for inits in hmde_fit object
+#' @param x hmde_fit class object
+#' @rdname hmde_fit-class
+#' @aliases hmde_fit-class
+#' @export
+setMethod("inits", signature = "hmde_fit", function(x) x@inits)
+#' inits setter
+#' Setter for inits in hmde_fit object
+#' @param x hmde_fit class object
+#' @param value list
+#' @rdname hmde_fit-class
+#' @aliases hmde_fit-class
+#' @export
+setMethod("inits<-", signature = "hmde_fit", function(x, value) {
+  x@inits <- value
+  x
+})
+
+#stan_args
+#' generic stan_args setter
+#' @param x hmde special class object
+#' @rdname stan_args-generic
+#' @aliases stan_args
+#' @export
+setGeneric("stan_args", function(x) standardGeneric("stan_args"))
+#' generic stan_args setter
+#' @param x hmde special class object
+#' @param value list
+#' @rdname stan_args-generic
+#' @aliases stan_args<-
+#' @export
+setGeneric("stan_args<-", function(x, value) standardGeneric("stan_args<-"))
+
+#' stan_args getter
+#' Getter for stan_args in hmde_fit object
+#' @param x hmde_fit class object
+#' @rdname hmde_fit-class
+#' @aliases hmde_fit-class
+#' @export
+setMethod("stan_args", signature = "hmde_fit", function(x) x@stan_args)
+#' stan_args setter
+#' Setter for stan_args in hmde_fit object
+#' @param x hmde_fit class object
+#' @param value list
+#' @rdname hmde_fit-class
+#' @aliases hmde_fit-class
+#' @export
+setMethod("stan_args<-", signature = "hmde_fit", function(x, value) {
+  x@stan_args <- value
+  x
+})
+
+#stanmodel
+#' generic stanmodel setter
+#' @param x hmde special class object
+#' @rdname stanmodel-generic
+#' @aliases stanmodel
+#' @export
+setGeneric("stanmodel", function(x) standardGeneric("stanmodel"))
+#' generic stanmodel setter
+#' @param x hmde special class object
+#' @param value stanmodel object
+#' @rdname stanmodel-generic
+#' @aliases stanmodel<-
+#' @export
+setGeneric("stanmodel<-", function(x, value) standardGeneric("stanmodel<-"))
+
+#' stanmodel getter
+#' Getter for stanmodel in hmde_fit object
+#' @param x hmde_fit class object
+#' @rdname hmde_fit-class
+#' @aliases hmde_fit-class
+#' @export
+setMethod("stanmodel", signature = "hmde_fit", function(x) x@stanmodel)
+#' stanmodel setter
+#' Setter for stanmodel in hmde_fit object
+#' @param x hmde_fit class object
+#' @param value stanmodel object
+#' @rdname hmde_fit-class
+#' @aliases hmde_fit-class
+#' @export
+setMethod("stanmodel<-", signature = "hmde_fit", function(x, value) {
+  x@stanmodel <- value
+  x
+})
+
+#.MISC
+#' generic .MISC setter
+#' @param x hmde special class object
+#' @rdname .MISC-generic
+#' @aliases .MISC
+#' @export
+setGeneric(".MISC", function(x) standardGeneric(".MISC"))
+#' generic .MISC setter
+#' @param x hmde special class object
+#' @param value environment
+#' @rdname .MISC-generic
+#' @aliases .MISC<-
+#' @export
+setGeneric(".MISC<-", function(x, value) standardGeneric(".MISC<-"))
+
+#' .MISC getter
+#' Getter for .MISC in hmde_fit object
+#' @param x hmde_fit class object
+#' @rdname hmde_fit-class
+#' @aliases hmde_fit-class
+#' @export
+setMethod(".MISC", signature = "hmde_fit", function(x) x@.MISC)
+#' .MISC setter
+#' Setter for .MISC in hmde_fit object
+#' @param x hmde_fit class object
+#' @param value environment
+#' @rdname hmde_fit-class
+#' @aliases hmde_fit-class
+#' @export
+setMethod(".MISC<-", signature = "hmde_fit", function(x, value) {
+  x@.MISC <- value
+  x
+})
