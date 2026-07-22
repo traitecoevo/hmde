@@ -281,6 +281,7 @@ setMethod("individual_ests", signature = "hmde_estimates", function(x) x@individ
 #' @param value tibble
 #' @rdname hmde_estimates-class
 #' @aliases hmde_estimates-class
+#' @export
 setMethod("individual_ests<-", signature = "hmde_estimates", function(x, value) {
   x@individual_ests <- value
   x
@@ -600,7 +601,7 @@ hmde_extract_individual_par_ests <- function(samples = NULL,
   return(individual_data)
 }
 
-#' #' Sample extraction for population-level parameters
+#' Sample extraction for population-level parameters
 #' @keywords internal
 #' @noRd
 hmde_extract_pop_par_ests <- function(samples = NULL,
@@ -623,7 +624,7 @@ hmde_extract_pop_par_ests <- function(samples = NULL,
   return(population_data)
 }
 
-#' #' Sample extraction for error parameters
+#' Sample extraction for error parameters
 #' @keywords internal
 #' @noRd
 hmde_extract_error_par_ests <- function(samples = NULL,
@@ -646,7 +647,7 @@ hmde_extract_error_par_ests <- function(samples = NULL,
   return(error_data)
 }
 
-#' #' Prior parameter extraction
+#' Prior parameter extraction
 #' @keywords internal
 #' @noRd
 hmde_extract_prior_pars <- function(samples = NULL,

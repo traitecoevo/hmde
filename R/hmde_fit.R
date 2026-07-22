@@ -51,6 +51,9 @@ setValidity("hmde_fit",
               if(length(object@model_level) != 1)
                 return("'model_level' slot must be of length 1.")
 
+              if(!inherits(object, "stanfit"))
+                return("object not stanfit class.")
+
               TRUE
             }
 )
@@ -58,20 +61,6 @@ setValidity("hmde_fit",
 #-----------------------------------------------------------------------------#
 # Setters and getters for slots
 #Model level
-#' generic model_level setter
-#' @param x hmde special class object
-#' @rdname model_level-generic
-#' @aliases model_level
-#' @export
-setGeneric("model_level", function(x) standardGeneric("model_level"))
-#' generic model_level setter
-#' @param x hmde special class object
-#' @param value character string
-#' @rdname model_level-generic
-#' @aliases model_level<-
-#' @export
-setGeneric("model_level<-", function(x, value) standardGeneric("model_level<-"))
-
 #' model_level getter
 #' Getter for model_level in hmde_fit object
 #' @param x hmde_fit class object
@@ -92,20 +81,6 @@ setMethod("model_level<-", signature = "hmde_fit", function(x, value) {
 })
 
 #Observation data
-#' generic obs_data setter
-#' @param x hmde hmde_fit
-#' @rdname model_level-generic
-#' @aliases model_level
-#' @export
-setGeneric("obs_data", function(x) standardGeneric("obs_data"))
-#' generic obs_data setter
-#' @param x hmde hmde_fit
-#' @param value character string
-#' @rdname model_level-generic
-#' @aliases model_level<-
-#' @export
-setGeneric("obs_data<-", function(x, value) standardGeneric("obs_data<-"))
-
 #' obs_data getter
 #' Getter for obs_data in hmde_fit object
 #' @param x hmde_fit class object
@@ -127,20 +102,6 @@ setMethod("obs_data<-", signature = "hmde_fit", function(x, value) {
 })
 
 #Prior paramerters
-#' generic prior_pars getter
-#' @param x hmde special class object
-#' @rdname prior_pars-generic
-#' @aliases prior_pars
-#' @export
-setGeneric("prior_pars", function(x) standardGeneric("prior_pars"))
-#' generic prior_pars setter
-#' @param x hmde special class object
-#' @param value list of prior parameters
-#' @rdname prior_pars-generic
-#' @aliases prior_pars<-
-#' @export
-setGeneric("prior_pars<-", function(x, value) standardGeneric("prior_pars<-"))
-
 #' prior_pars getter
 #' Getter for prior_pars in hmde_fit object
 #' @param x hmde_fit class object
@@ -162,20 +123,6 @@ setMethod("prior_pars<-", signature = "hmde_fit", function(x, value) {
 })
 
 #Model paramerters
-#' generic par_names getter
-#' @param x hmde special class object
-#' @rdname par_names-generic
-#' @aliases par_names
-#' @export
-setGeneric("par_names", function(x) standardGeneric("par_names"))
-#' generic par_names setter
-#' @param x hmde special class object
-#' @param value vector of parameter names
-#' @rdname par_names-generic
-#' @aliases par_names<-
-#' @export
-setGeneric("par_names<-", function(x, value) standardGeneric("par_names<-"))
-
 #' par_names getter
 #' Getter for par_names in hmde_fit object
 #' @param x hmde_fit class object
@@ -198,20 +145,6 @@ setMethod("par_names<-", signature = "hmde_fit", function(x, value) {
 
 
 #model_name
-#' generic model_name setter
-#' @param x hmde special class object
-#' @rdname model_name-generic
-#' @aliases model_name
-#' @export
-setGeneric("model_name", function(x) standardGeneric("model_name"))
-#' generic model_name setter
-#' @param x hmde special class object
-#' @param value character string
-#' @rdname model_name-generic
-#' @aliases model_name<-
-#' @export
-setGeneric("model_name<-", function(x, value) standardGeneric("model_name<-"))
-
 #' model_name getter
 #' Getter for model_name in hmde_fit object
 #' @param x hmde_fit class object
@@ -472,14 +405,14 @@ setMethod("stanmodel<-", signature = "hmde_fit", function(x, value) {
 #.MISC
 #' generic .MISC setter
 #' @param x hmde special class object
-#' @rdname .MISC-generic
+#' @rdname MISC-generic
 #' @aliases .MISC
 #' @export
 setGeneric(".MISC", function(x) standardGeneric(".MISC"))
 #' generic .MISC setter
 #' @param x hmde special class object
 #' @param value environment
-#' @rdname .MISC-generic
+#' @rdname MISC-generic
 #' @aliases .MISC<-
 #' @export
 setGeneric(".MISC<-", function(x, value) standardGeneric(".MISC<-"))
@@ -502,3 +435,65 @@ setMethod(".MISC<-", signature = "hmde_fit", function(x, value) {
   x@.MISC <- value
   x
 })
+
+
+#------------------------------------------------------------------------------#
+# Helper functions
+
+# Constructor
+#' Constructor function for hmde_fit class, internal function for hmde_run_model.
+#'
+#' @param data_template hmde_data_template class object
+#' @param fit stanfit class object
+#' @return hmde_fit class object
+#'
+#' @rdname hmde_data_template-class
+#' @aliases hmde_data_template-class
+#' @keywords internal
+hmde_fit <- function(data_template, #Mandatory hmde_data_template object
+                     fit #Mandatory stanfit object
+                     ){
+  #Validation
+  if(!inherits(data_template, "hmde_data_template")){
+    stop("data_template not of hmde_data_template class.")
+  }
+
+  if(!inherits(fit, "stanfit")){
+    stop("fit not of stanfit class.")
+  }
+
+  if(!model_name(data_template) %in% hmde_model_names()){
+    stop("Model name not recognised. Run hmde_model_names() to see available models.")
+  }
+
+  if(model_name(data_template) != fit@model_name){
+    stop("Model name for data_template and fit different.")
+  }
+
+  #Initial object
+  out <- new("hmde_fit")
+
+  #Assign slots
+  model_level(out) <- model_level(data_template)
+  obs_data(out) <- obs_data(data_template)
+  prior_pars(out) <- prior_pars(data_template)
+  par_names(out) <- par_names(data_template)
+  model_name(out) <- fit@model_name
+  model_pars(out) <- fit@model_pars
+  par_dims(out) <- fit@par_dims
+  mode(out) <- fit@mode
+  sim(out) <- fit@sim
+  inits(out) <- fit@inits
+  stan_args(out) <- fit@stan_args
+  stanmodel(out) <- fit@stanmodel
+  date(out) <- fit@date
+  .MISC(out) <- fit@.MISC
+
+  #Validate
+  #Check validity
+  if(!validObject(out)){
+    stop("Invalid hmde_fit object.")
+  }
+
+  return(out)
+}
